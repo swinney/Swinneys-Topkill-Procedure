@@ -14,8 +14,6 @@ if ($success_msg) {
   unset($success_msg);
 }
 
-
-
 if (!$uid | $uid==0) {
   $html .= "<P>this user has no id. could be this is an old user reference from back before id's, or it could be you got here the wrong way. try finding the user in this list:</P>";
   $query = "SELECT user_id,username FROM user ORDER BY username";
@@ -74,38 +72,24 @@ function get_nature() {
 
 $nature = get_nature();
 
-$html .= <<<EOT
-<TABLE>
-  <TR>
-    <TD><P>user: </TD>
-    <TD><B>$username</B></TD>
-  </TR>
-  <TR>
-    <TD><P>alias: </TD>
-    <TD><B>$names_html</B></TD>
-  </TR>
-  <TR>
-    <TD>number of articles: </TD>
-    <TD><B>$num_articles</B></TD>
-  </TR>
-  <TR>
-    <TD>number of comments: </TD>
-    <TD><B>$num_comments</B></TD>
-  </TR>
-  <TR>
-    <TD>average nature: </TD>
-    <TD><B>$nature</B></TD>
-  </TR>
-</TABLE>
-EOT;
+include_once("HTML/IT.php");
+$tpl = new IntegratedTemplate("./templates");
+$tpl->loadTemplateFile("info_user.tpl.html",true,true);
+$tpl->setCurrentBlock("info");
+$tpl->setVariable("username",$username);
+$tpl->setVariable("names_html",$names_html);
+$tpl->setVariable("num_articles",$num_articles);
+$tpl->setVariable("num_comments",$num_comments);
+$tpl->setVariable("nature",$nature);
+$tpl->setVariable("uid",$uid);
+$tpl->parseCurrentBlock("info");
+$tpl->show();
 
-$html .= <<<EOT
-<FORM NAME="bozo" METHOD="POST" ACTION="process_bozo_id.phtml">
-<INPUT TYPE=HIDDEN NAME=uid VALUE=$uid>
-<INPUT TYPE=SUBMIT NAME=add_bozo_id VALUE="add to bozo list">
-</FORM>
-EOT;
+ include("Swinsite/Articles.php");
+ $a = new Articles();
+ $articles_html = $a->getUserTitles($uid,"id",5);
+ echo $articles_html;
+
 }
 
-echo $html;
 ?>
