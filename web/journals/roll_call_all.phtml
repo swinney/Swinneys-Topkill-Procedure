@@ -1,9 +1,10 @@
 <?
 #$Id$
 // insert banner
-include "global.inc";
- include "templates/top.inc";
- include "templates/swinney.req";
+  require_once("./global.inc");
+  $title = "Roll Call (Complete List)";
+ include ("./templates/top.inc");
+ include ("./templates/swinney.req");
 ?>
 
 <br>
@@ -35,7 +36,7 @@ while ($d = mysql_fetch_object($res)) {
   $remainder = $index % 5;
 
   if ($remainder==0) {
-  echo "</TR><TR>\n";  
+  echo "</tr>\r<tr>\n";  
   }
 
 }
