@@ -1,32 +1,27 @@
 <?
-
 #########################################################
 # $Id$
 # global.inc
 # global vars for use in the site
 # functions for use in the site
 
-define("URLBASE", "http://swinney.org/dev"); // no trailing slash!
-define("DIRBASE", "/u/swinney/htdocs/dev/swinney.org");
-define("IMGBASE", "/sky/www/swinney.org/html/dev/journals/images");
-define("IMGURL", URLBASE . "/journals/images");
-define("CSS_URL", URLBASE . "/journals/main.css");
-define("DB_HOST", "localhost");
-define("DB_USER", "swinney");
-define("DB_PASSWD", "jgf934nfg");
-define("DB_NAME", "swindev");
+@include_once('./local_conf.php');
+@include_once('./journals/local_conf.php');
 
-/*
-require_once 'DB.php';
-
-$dsn = "msyql://".DB_USER.":".DB_PASSWD."@".DB_HOST."/".DB_NAME;
-$db = DB::connect($dsn, true);
-if (DB::isError($db)) {
-  die ($db->getMessage());
+if (!URLBASE) {
+  define("URLBASE", "http://swinney.org"); // no trailing slash!
+  define("DIRBASE", "/sky/www/swinney.org/html");
+  define("IMGBASE", "/sky/www/swinney.org/html/dev/journals/images");
+  define("IMGURL", URLBASE . "/journals/images");
+  define("CSS_URL", URLBASE . "/journals/main.css");
+  define("DB_HOST", "localhost");
+  define("DB_USER", "swinney");
+  define("DB_PASSWD", "xxxxxxx");
+  define("DB_NAME", "swinney");
 }
-*/
+
 /*
-* initialize the session
+ * initialize the session
  * 
  * XXX: make the session cookie persist until the user clicks logout
  * (and therefore causes a session_destroy().
@@ -39,14 +34,21 @@ session_set_cookie_params(time()+9999999);
  * no reason to make this a function, since nobody would ever have a
  * need to call it!
  */
+require_once 'DB.php';
+$dsn = array(
+	     'phptype' => "mysql",
+	     'hostspec' => DB_HOST,
+	     'database' => DB_NAME,
+	     'username' => DB_USER,
+	     'password' => DB_PASSWD
+	     );
 
-$conn = @mysql_connect(DB_HOST, DB_USER, DB_PASSWD) or
-die(error_page("Connection failed for user '" . DB_USER .
-	       "' to database server '" . DB_HOST . "'"));
 
-@mysql_select_db(DB_NAME) or
-die(error_page(mysql_error()));
+$db = DB::connect($dsn, true);
 
+if (PEAR::isError($db)) {
+   die ($db->getMessage());
+}
 
 ##########################################################
 #################  FUNCTION LIST #########################
