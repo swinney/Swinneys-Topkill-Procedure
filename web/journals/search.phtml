@@ -34,6 +34,23 @@ while ($d=mysql_fetch_object($res)) {
 	echo "\n<LI><P><a href=\"article.phtml?id=$article_id\">$title</a>"
 	   . "\n by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
 }
+
+echo "<h2>and from the comments</h2>\n";
+
+$query = "select comments.comment_id,comments.article_id,comments.username,articles_info.title from comments, articles_info where comments.article_id=articles_info.article_id AND comment like '%". addslashes($search_this) ."%' order by article_id";
+
+$res = mysql_query($query);
+$num = mysql_num_rows($res);
+echo "\n<P>number of returns: $num</P>";
+
+while ($d=mysql_fetch_object($res)) {
+        $article_id=$d->article_id;
+	$comment_id=$d->comment_id;
+        $title=$d->title;
+        $username=$d->username;
+        echo "\n<LI><P>$username on <a href=\"article.phtml?id=$article_id#$comment_id\">$title</a></P>";
+}
+
 echo "\n</OL>";
 
 $query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1, ip_addr='$ip_addr' WHERE word='$search_this'";
