@@ -9,17 +9,29 @@ if ($login_error_msg) {
 </p>
 EOT;
 }
+
+
+
 ?>
+<TABLE><TR><TD>
 <form action="process_login.phtml" method="POST">
-username:
+<INPUT TYPE=HIDDEN NAME=back_to VALUE="<? echo $HTTP_REFERER;?>">
+<P>username:</P>
+</TD><TD>
 <input type="text" name="username" size="10" maxlength="20"
   value="<? echo $username ?>">
-<br>
-password:
-<input type="password" name="password" size="10" maxlength="20">
-<br>
+</TD></TR>
+<TR><TD>
+<P>password:</P>
+</TD><TD>
+<P><input type="password" name="password" size="10" maxlength="20"></P>
+</TD></TR>
+<TR><TD></TD><TD>
 <input type="submit" value="that's me">
 </form>
 </div>
-
+</TD></TR></TABLE>
 <!-- end login form -->
+
+
+
