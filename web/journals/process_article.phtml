@@ -1,30 +1,37 @@
 <?
-// $Id$
-session_register("bin");
+###################################################
+# $Id$
+# process them articles
+#
 require_once("global.inc");
-
+#
+# register session var for $bin used in category 
+# combination.
+#
+session_register("bin");
 $bin=0;
-// Init the date and time
+
+#
+# Init the date and time
+#
 $date = date("Y-m-d");
 $time = time();
 
-// Work out what subjects
-
+#
+# Work out what subjects
+#
 foreach ($cat as $one => $two) {
    if (!isset($bin)) {
      $bin=$two;
-     echo "starting with: ". bin(32,$bin) . "<BR><HR>";
    } else {
-     echo bin(32,$bin) ." <BR> ". bin(32,$two) . "<BR>";
      $bin=$bin|$two;
-#        echo bin(32,$bin);
-	echo bin(32,$bin) ."<BR>";
-        echo "<HR>";
    }
 }
-$bin=0;
+#
+# set bin to category for db
+#
+$category=$bin;
 
-/*
 if ($username) {
   $ip_addr = getenv ("REMOTE_ADDR");
 
@@ -82,7 +89,9 @@ if ($error_msg) {
     $loc = "submit_image.phtml?article_id=$article_id";
   }
 
-#  header("Location: $loc");
+  header("Location: $loc");
 }
-*/
+#
+# kill registered sessions
+session_unregister("bin");
 ?>
