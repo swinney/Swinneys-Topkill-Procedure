@@ -31,9 +31,14 @@ $text = explode(".",$article_id);
 
 $res = mysql_query ("SELECT text FROM articles_text WHERE article_id=$text[0]");
 
-$d = mysql_fetch_row($res);
+# fetch the item
+$r = mysql_result($res,0);
 
-echo "$d[0]<BR>";
+# remove all slashes added to protect the database
+$text=stripslashes($r);
+
+# put the article on the web page
+echo "$text<BR>";
 
 ?>
 
