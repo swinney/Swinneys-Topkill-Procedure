@@ -49,7 +49,7 @@ if (count($bozos)) {
   $query .= " AND articles_info.username NOT IN $bozo_set ";
 }
 $query .= <<<EOT
-ORDER BY article_id DESC
+ ORDER BY article_id DESC
    LIMIT 15
 EOT;
 
