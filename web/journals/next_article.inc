@@ -27,16 +27,25 @@ $next = mysql_fetch_row($res3);
 // if no set, then dont display, M'kay?
 if (isset($previous[0])) {
 
-echo " <a href=\"article.phtml?id=$previous[0].txt\">previous</a> ";
+echo " <P><TT><a href=\"article.phtml?id=$previous[0].txt\"><<</a> | ";
+$addbar=1;
+} else {
+
+echo " <P><TT><< | ";
 
 }
+
 
 // same here
 if (isset($next[0])) {
 
-echo "| <a href=\"article.phtml?id=$next[0].txt\">next</a></P>";
+echo "<a href=\"article.phtml?id=$next[0].txt\">>></a></TT></P>";
 
+} else {
+
+echo " >></TT></P>";
 }
+
 
 // unset them all to irradicate confusion on later selects
 unset($res1);
