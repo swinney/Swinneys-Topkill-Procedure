@@ -10,10 +10,16 @@ SELECT user_id, username, password
   FROM user
  WHERE username='$username'
 EOT;
-
-  $res = mysql_query($query)or
-    die(error_page(mysql_error()));
-  $user = mysql_fetch_object($res);
+#  var_dump($auth_dsn);
+  $auth_db = DB::connect($auth_dsn);
+  if (DB::isError($auth_db)) {
+    die ($auth_db->getMessage());
+  }
+  $res = $auth_db->query($query);
+  $user = $res->fetchRow(DB_FETCHMODE_OBJECT);
+  if (DB::isError($user)) {
+    die ($user->getMessage());
+  }
 
   // make sure the user exists
   if ($user) {
@@ -55,6 +61,7 @@ $bozo_set=get_bozo_set();
 if (!$back_to) {
     $back_to=URLBASE;
 }
+$auth_db->disconnect();
 header ("Location: $back_to");
 ?>
 
