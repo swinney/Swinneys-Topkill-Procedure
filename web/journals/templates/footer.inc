@@ -2,23 +2,25 @@
 <?
 
 $noslogan = array( 1 => 
-            'oven',
-            'affectation',
-            'loves',
-            'old',
-            'tastes',
-            'not',
-            'doughnuts',
-            'estrellas',
-            'interrogative',
-            'why',
-            'smile',
-            'enduring',
-            'routine',
-            'life',
-            'dinner',
-            'exploder'
-		 );
+		   'affectation',
+		   'car',
+		   'dinner',
+		   'doughnuts',
+		   'enduring',
+		   'estrellas',
+		   'exploder',
+		   'interrogative',
+		   'life',
+		   'loves',
+		   'not',
+		   'old',
+		   'oven',
+		   'routine',
+		   'shit',
+		   'smile',
+		   'tastes',
+		   'why'
+		   );
 
   $num = dice(1, count($noslogan));
 
