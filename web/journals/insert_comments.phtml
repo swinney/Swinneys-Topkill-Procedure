@@ -38,7 +38,7 @@ $query = <<<EOT
    WHERE article_id=$id 
      AND status=0 
 EOT;
-echo "<!-- \n$query\n-->";
+
 /*
  * bozo filter is set at login time and contains user_id's to 
  * avoid.
@@ -97,12 +97,14 @@ while ($d = mysql_fetch_object($res)) {
 
 <tr>
 <td>
-<a name="$d->comment_id"><img src="img/no.gif" alt="" width="1" height="4" border="0"></a><br></td>
+<a name="$d->comment_id"><img src="img/no.gif" alt="" width="1" height="4" border="0"></a><br>
+</td>
 </tr>
 
 <tr>
 <td bgcolor="#999999">
-<img src="img/no.gif" alt="" width="1" height="1" border="0"><br></td>
+<img src="img/no.gif" alt="" width="1" height="1" border="0"><br>
+</td>
 </tr>
 
 <tr>
@@ -145,12 +147,12 @@ if (mysql_num_rows($res) >= 5) {
 <td align="right">
 <a href="submit_comment.phtml?id=$id" accesskey="s" target="_top" onmouseover="MM12.mouseOver(); window.status='Add a Comment'; return true" onmouseout="MM12.mouseOut(); window.status=' '; return true"><img src="img/addcomment.gif" alt="Add A Comment" width="104" height="23" border="0" name="addcomment2"></a></td>
 </tr>
-</TABLE>
 EOT;
 }
 echo $first;
 echo $html;
 echo $last;
+echo "</table>";
 unset ($to_users);
 ?>
 
