@@ -42,16 +42,15 @@ if ($affected=="0"||$affected=="-1") { # UPDATE was invalid, do INSERT
 #
 # Work out what subjects
 #
-foreach ($cat as $one => $two) {
-   if (!isset($bin)) {
-     $bin=$two;
-   } else {
-     $bin=$bin|$two;
-   }
-}
- $category=$bin;
+      if (isset($cat)) {
+	$end=array_pop($cat);
+	foreach ($cat as $value) {
+          $query=$query . $value . " | ";
+	}
+	$cat_str="(". $query . $end .")";
+      }
 
-$res = mysql_query("UPDATE articles_info SET web='$web', status='$status', title='$article_title', blurb='$blurb', category=$category WHERE article_id='$article_id'");
+$res = mysql_query("UPDATE articles_info SET web='$web', status='$status', title='$article_title', blurb='$blurb', category=$cat_str WHERE article_id='$article_id'");
 
     }
 
