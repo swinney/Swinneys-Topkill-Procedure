@@ -1,6 +1,6 @@
 <?
 #$Id$
-$query="SELECT article_id,articles_info.username,title,web FROM articles_info,articles_user WHERE articles_info.article_id=articles_user.most_recent AND articles_user.most_recent ORDER BY article_id DESC";
+$query="SELECT article_id,articles_info.username,title,web FROM articles_info,articles_user WHERE articles_info.article_id=articles_user.most_recent AND articles_user.most_recent ORDER BY article_id DESC LIMIT 15";
 
 $res = mysql_query($query);
 
