@@ -11,20 +11,16 @@
 Tue Aug 28 17:57:52 PDT 2001 (bcm)
 
 - user registration
-   o username, password, email address, url
+   o url?
    o require confirmation message?
 
 - user self-management (vip)
-   o change password, email address, url
    o edit own articles and comments
-   o bozo filter (hide comments and articles from bozos)
    o "since you've been gone..." articles and comments posted since
      last visit
 
 - admin user management
    o create user
-   o list all users
-   o modify existing user (including username?)
    o delete user
    o grant/revoke permissions for user
 
@@ -32,6 +28,8 @@ Tue Aug 28 17:57:52 PDT 2001 (bcm)
    o admin (can manage users and permissions)
    o editor (can edit and change status of articles and comments)
    o content types (vanilla/no permission, porny, etc)
+
+- auto fill in username fields on all forms when user is logged in
 
 
 Sat Aug 25, 2001 10:23 AM
