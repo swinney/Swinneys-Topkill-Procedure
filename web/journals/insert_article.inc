@@ -10,44 +10,11 @@ $article_id = $chunks[0];
 
 if ($a_user_id) {
   // retrieve the id of the author's previous article
-  $query = <<<EOT
-  SELECT article_id
-    FROM articles_info
-   WHERE article_id < $a_article_id
-    AND user_id=$a_user_id
-     AND status=2
-ORDER BY article_id DESC
-   LIMIT 1
-EOT;
 
-  $res = mysql_query($query) or
-    die(error_page(mysql_error()));
-  if ($row = mysql_fetch_row($res)) {
-    $o_article_id = $row[0];
-  }
+}
 
-  // retrieve the id of the author's next article
-
-  $query = <<<EOT
-  SELECT article_id
-    FROM articles_info
-   WHERE article_id > $article_id
-     AND user_id=$a_user_id
-     AND status=2
-ORDER BY article_id ASC
-   LIMIT 1
-EOT;
-
-  $res = mysql_query($query) or
-    die(error_page(mysql_error()));
-  if ($row = mysql_fetch_row($res)) {
-    $newer_article_id = $row[0];
-  }
-
-  }
-
-  if ($article_row['text']) {
-    if ($article_row['image']>0) {
+  if ($a_text) {
+    if ($a_image>0) {
       require_once("Madmin/Image.php");
       $Image = new Image();
       $img_array = $Image->get_img($image,$article_id);
@@ -103,23 +70,23 @@ EOT;
 <p class="text">
 EOT;
 
-  if ($o_article_id or $newer_article_id) {
+  if ($p_article_id or $newer_article_id) {
   echo "<b><a href=\"userpages.phtml?uid=$a_user_id\">more from this writer</a>:</b><br>";
   }
 
-  if ($o_article_id) {
+  if ($p_article_id) {
     echo <<<EOT
-<a href="article.phtml?id=$o_article_id">&laquo; earlier</a>
+<a href="article.phtml?id=$p_article_id">&laquo; earlier</a>
 EOT;
     }
 
-  if ($o_article_id and $newer_article_id) {
+  if ($p_article_id && $n_article_id) {
   echo " - ";
   }
   
-  if ($newer_article_id) {
+  if ($n_article_id) {
     echo <<<EOT
-<a href="article.phtml?id=$newer_article_id">later &raquo;</a>
+<a href="article.phtml?id=$n_article_id">later &raquo;</a>
 EOT;
     }
 

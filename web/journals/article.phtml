@@ -25,6 +25,10 @@ $a_image      = $row['image'];
 $a_text       = $row['text'];
 unset($row);
 
+$p_article_id = $a->otherArticleId($a_article_id,$a_user_id,"<",$db);
+$n_article_id = $a->otherArticleId($a_article_id,$a_user_id,">",$db);
+
+
 //
 // if they dont have an article id, then
 // they should not be here, or their status is 4 (deleted)
