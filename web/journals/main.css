@@ -1,0 +1,22 @@
+body {
+background: black;
+color: #CCCCCC;
+}
+
+p {  
+font-family: Times New Roman,Times; 
+font-size: 10pt;
+color: #CCCCCC;
+} 
+
+A:link, A:visited {
+color: red;
+}
+
+H1,H2,H3,H4 {
+color: #CCCCCC;
+}
+
+pre { 
+color: navy 
+} 
