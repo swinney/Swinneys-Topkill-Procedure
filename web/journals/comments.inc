@@ -32,7 +32,7 @@ $query .= <<<EOT
 EOT;
 
 $res = mysql_query($query) or
-  die(error_page(mysql_error(). " with query: $query"));
+  die(error_page(mysql_error()));
 $row = mysql_fetch_row($res);
 
 if (!$row) {
