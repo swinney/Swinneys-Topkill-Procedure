@@ -52,7 +52,7 @@ while ( $individual_row = mysql_fetch_object( $res ) ) {
    echo "$individual_row->blurb</font><br>";
    echo "<font face=\"arial\" size='1'>$individual_row->date ";
 
-$res2 = mysql_db_query("$DB", "SELECT * FROM comments WHERE article_id='$individual_row->article_id'");
+$res2 = mysql_db_query("$DB", "SELECT * FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
 
 $numrows =  mysql_num_rows($res2);
 
@@ -70,23 +70,25 @@ echo " | $numrows comments";
 
 
      if($page_num > 1){
-	     print "<PRE><a href=\"index.phtml?select=$select&page_num=$page_back\"><b> $page_num <-- </a></b>  X  ";
+	     print "<PRE><a href=\"index.phtml?select=$select&page_num=$page_back\"><b> $page_num</a></b>  of  ";
 
 
      } 
 
   
      if($page_num < $num_of_pages) { 
-             print "<a href=\"index.phtml?select=$select&page_num=$page_forward\"><b>--> $num_of_pages</b></a></PRE>";
+             print "<a href=\"index.phtml?select=$select&page_num=$page_forward\"><b> $num_of_pages</b></a></PRE>";
      } 
 
      if($page_num == $num_of_pages) {
-             print "<b>--> $num_of_pages</b></PRE>";
+             print "<b>$num_of_pages</b></PRE>";
      }
 
  echo "</P>";
 
 ?>
+
+
 
 
 
