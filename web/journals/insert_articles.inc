@@ -50,7 +50,14 @@ while ( $individual_row = mysql_fetch_object( $res ) ) {
    echo "<font face='arial' size='2'>\n";
    echo "<a href=\"$url$individual_row->article_id.txt\">\n";
    echo "<B>$individual_row->title</a></B> by\n";
-   echo "<a href='$individual_row->web' target='new'>$individual_row->username</a><br> \n";
+
+   $name = $individual_row->username;
+   $web = $individual_row->web;
+      if ($web == "") {
+         echo "$name<BR>\n";
+      } else {
+         echo "<a href='$individual_row->web' target='new'>$individual_row->username</a><br> \n";
+      }
    echo "$individual_row->blurb</font><br>";
    echo "<font face=\"arial\" size='1'>$individual_row->date ";
 
