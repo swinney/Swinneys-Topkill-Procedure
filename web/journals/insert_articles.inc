@@ -40,9 +40,32 @@ if (isset($res)) {
 
 $url = "article.phtml?id=$d->article_id";
 
-   echo "<h1>Last 25 Entries</h1>";
-   echo "<P><a href='submit_article.phtml'><strong>I want to write</strong></a></P>";
 
+   //   echo "<h1>Last 25 Entries</h1>";
+   //   echo "<P><a href='submit_article.phtml'><strong>I want to write</strong></a></P>";
+   echo "<P>";
+
+     if($page_num == 1){
+            print "<PRE><b><<</b> <a href='submit_article.phtml'><strong>I want to write</strong></a>";
+     }
+
+
+     if($page_num > 1){
+	     print "<PRE><a href=\"index.phtml?select=$select&page_num=$page_back\"><b><<</a></b> <a href='submit_article.phtml'><strong>I want to write</strong></a>";
+
+
+     } 
+
+  
+     if($page_num < $num_of_pages) { 
+             print " <a href=\"index.phtml?select=$select&page_num=$page_forward\"><b>>></b></a></PRE>";
+     } 
+
+     if($page_num == $num_of_pages) {
+             print "<b>>></b></PRE>";
+     }
+
+ echo "</P>";
 // multiple rows
 while ( $individual_row = mysql_fetch_object( $res ) ) {
 
@@ -71,29 +94,7 @@ echo " | $d->num comments";
 
 }
 }
- echo "<P>";
 
-     if($page_num == 1){
-            print "<PRE><b>$page_num</b> <-- X ";
-     }
-
-
-     if($page_num > 1){
-	     print "<PRE><a href=\"index.phtml?select=$select&page_num=$page_back\"><b> $page_num</a></b>  of  ";
-
-
-     } 
-
-  
-     if($page_num < $num_of_pages) { 
-             print "<a href=\"index.phtml?select=$select&page_num=$page_forward\"><b> $num_of_pages</b></a></PRE>";
-     } 
-
-     if($page_num == $num_of_pages) {
-             print "<b>$num_of_pages</b></PRE>";
-     }
-
- echo "</P>";
 
 ?>
 
