@@ -7,7 +7,7 @@ require_once("global.inc");
 // count the number of articles so we can calculate the number of
 // pages to use
 $query = <<<EOT
-SELECT count(*) AS num_articles
+SELECT count(article_id) AS num_articles
   FROM articles_info
  WHERE status=2 
 EOT;
@@ -84,7 +84,7 @@ EOT;
 
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_forward">&laquo; earlier articles</a>
+<a href="index.phtml?page_num=$page_forward">&laquo; earlier articles</a>
 
 EOT;
   }  
@@ -95,7 +95,7 @@ EOT;
   
   if ($page_num > 1){
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_back">later articles &raquo;</a>
+<a href="index.phtml?page_num=$page_back">later articles &raquo;</a>
 EOT;
   }
   
