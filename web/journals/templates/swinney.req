@@ -19,7 +19,7 @@
 <TD><FONT SIZE="2" FACE="Verdana, Arial, Helvetica, sans-serif">
  <A HREF="../index.phtml">Home</A><BR>
  <A HREF="index.phtml">latest articles</A><BR>
- <A HREF="comments.phtml>latest comments</A><BR>
+ <A HREF="comments.phtml">latest comments</A><BR>
  <A HREF="admin/index.phtml">Admin</A><BR>
 </TD>
 </TR>
