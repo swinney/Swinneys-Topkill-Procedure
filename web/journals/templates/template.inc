@@ -23,9 +23,12 @@ if (basename($PHP_SELF)=="article.phtml") {
  */
 require_once("Swinsite/Multi.php");
 $m = new Multi();
-$num=$m->is_multi($id);
-if ($num>0) {
-  $multi=$m->get_multi($id);
+$multi=$m->is_multi($id);
+$is_multi_num=$multi[0];
+$multi_id=$multi[1];
+
+if ($is_multi_num>0) {
+  $multi=$m->get_multi($id,$multi_id);
   /*
    * $multi is html returned.
    */
