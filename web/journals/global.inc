@@ -115,4 +115,22 @@ function bin($pos,$dec){
   return $bin;
 }
 
+
+####################################
+# get_cat_names() get the cat names
+
+function get_cat_names($category) {
+  $query="SELECT name FROM categories WHERE level1&$category";
+  $res=mysql_query($query) or die(error_page("function: ". $query));
+  $num=mysql_num_rows($res);
+  $i=0;
+  while ($d=mysql_fetch_object($res)) {
+    $names=$names . $d->name;
+    $i++;
+    if ($i>0 && $i<$num) {
+      $names=$names . "/";
+    }
+  }
+     return $names;
+}
 ?>
