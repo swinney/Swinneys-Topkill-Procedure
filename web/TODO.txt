@@ -8,6 +8,31 @@
 
 			 "SWINNEY NEEDS YOU"!
 
+Tue Aug 28 17:57:52 PDT 2001 (bcm)
+
+- user registration
+   o username, password, email address, url
+   o require confirmation message?
+
+- user self-management (vip)
+   o change password, email address, url
+   o edit own articles and comments
+   o bozo filter (hide comments and articles from bozos)
+   o "since you've been gone..." articles and comments posted since
+     last visit
+
+- admin user management
+   o create user
+   o list all users
+   o modify existing user (including username?)
+   o delete user
+   o grant/revoke permissions for user
+
+- permissions
+   o admin (can manage users and permissions)
+   o editor (can edit and change status of articles and comments)
+   o content types (vanilla/no permission, porny, etc)
+
 
 Sat Aug 25, 2001 10:23 AM
 
@@ -25,10 +50,6 @@ add image submit to the comments area, work it into the comment admin area too.
 
 
 Thu Aug  9, 2001 10:35 PM
-
-user area for editing articles, /journals/vip or swinney.org/vip?
-										
-user authentication in there is forwarding to the wrong swinney.org...
 
 porny.swinney.org or to say it better subdomain.swinney.org
 
