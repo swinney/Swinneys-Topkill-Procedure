@@ -33,5 +33,40 @@ echo <<<EOT
   </TR>
 </TABLE>
 EOT;
+
+//
+// start the second levels
+//
+
+$article_sub=array(
+		   "Info" => "article_info.phtml",
+		   "Edit" => "edit_article.phtml",
+		   "Preview" => "preview_article.phtml",
+		   "Categoize" => "categorize_article.phtml",
+		   "View Images" => "view_images.phtml",
+		   "Add Image" => "add_image.phtml"
+		   );
+
+if (in_array("$last", $article_sub)) {
+  foreach ($article_sub as $name => $url) {
+    if ("$last"!="$url") {
+      $into = "<TD><A HREF=\"$url?id=$id\">$name</a></TD>\n";
+    } else {
+      $into = "<TD  BGCOLOR=\"#CCCCFF\">$name</TD>\n";
+    }
+    if ($sub) $sub .= $into;
+    if (!$sub) $sub = $into;      
+  }
+echo <<<EOT
+<TABLE ALIGN="CENTER" BGCOLOR="#FFFFFF" BORDERCOLOR="red" BORDER=2 CELLSHADING=0 CELLSPACING=0>
+<TR>
+$sub
+</TR>
+</TABLE>
+EOT;
+
+}
+
+
 ?>
 
