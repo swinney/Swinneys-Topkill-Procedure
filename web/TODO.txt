@@ -8,6 +8,13 @@
 
 			 "SWINNEY NEEDS YOU"!
 
+Sun Aug 19, 2001  5:31 PM
+
+add image submit to the comments area, work it into the comment admin area too.
+    add a column to the comments table that is image and use the incrmenting scheme
+    will have to auto detect the image and dispay it after any comment with the words figure x.x
+
+
 
 Thu Aug  9, 2001 10:35 PM
 
