@@ -3,13 +3,9 @@
 // "log in" link was clicked so we can redirect back to it upon
 // successful authentication
 $error_msg=<<<EOT
-Whatever you just tried to do,<BR>
-you must log in first in order to do it.
+<P><B>Please log in first:</B></P>
 EOT;
 
-if (!$back_to) {
-    $back_to = URLBASE;
-}
 ?>
 
 <!-- begin login form-->
@@ -20,13 +16,14 @@ if (!$back_to) {
 <td colspan="2">
 
 <?
-if ($error_msg) {
+if ($back_to) {
   session_unregister("error_msg");
   echo <<<EOT
 <span class="header"><b>$error_msg</b></span>
 EOT;
 } else {
   echo '<span class="header"><b>', $title, ': </b></span>';
+  $back_to = URLBASE;
 }
 ?></td>
 </tr>
