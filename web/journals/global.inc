@@ -489,13 +489,12 @@ EOT;
  * get cat none () - display link to categorize
  */
 
-function get_cat_none() {
-    global $id;
+function get_cat_none($id) {
     $url=URLBASE;
-    $names=<<<EOT
+    $none=<<<EOT
 &raquo; <a href="$url/journals/submit_category.phtml?id=$id">categorize this</a>
 EOT;
-    return $names;
+    return $none;
 }
 
 function get_bozo_set() {

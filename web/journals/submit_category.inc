@@ -5,9 +5,7 @@
 
 require_once("Swinsite/Articles.php");
 $a = new Articles();
-$article = $a->get_article($id,$db);
-
-
+$article = $a->getArticle($id,$db);
 
 $html .="<P><B>$article[title]</B></P>";
 if ($article[blurb]) {

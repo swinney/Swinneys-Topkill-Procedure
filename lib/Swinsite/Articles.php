@@ -61,7 +61,7 @@ EOT;
 
 
 
-    function get_articles($num,$rand) {
+    function getTitles($order,$limit) {
       global $id;
        $query = <<<EOT
 	 SELECT articles_info.article_id,
@@ -78,13 +78,13 @@ EOT;
 	    $query .= " AND articles_info.user_id NOT IN $bozo_set ";
 	}
 
-	if ($rand==1) {
+	if ($order=="rand") {
 	  $query .= " ORDER BY RAND()";
-	} else {
+	} elseif($order=="id") {
 	// lets try ordering by time
 	  $query .= " ORDER BY article_id DESC";
 	}
-	$query .= " LIMIT $num";
+	$query .= " LIMIT $limit";
 
 	$res = mysql_query($query);
 
@@ -95,7 +95,7 @@ EOT;
 	    if ($category=$d->category) {
 	    $names=get_cat_names($category);
 	    } else {
-	    $names=get_cat_none();
+	    $names=get_cat_none($aid);
 	    }
             unset($category);
 	    $username=stripslashes($d->username);
@@ -126,8 +126,8 @@ ORDER BY article_id DESC
 EOT;
 
       $id = $db->getOne($query);
-      if (DB::isError($db)) {
-	die($db->getMessage());
+      if (DB::isError($id)) {
+	die($id->getMessage());
       }
       return $id;
     }
@@ -141,9 +141,10 @@ EOT;
     function AddHit($aid) {
       $query = "update articles_info set num_hits=num_hits+1 
                 where article_id=$aid";
-      $res=@mysql_query($query) or die(error_page("failed to update num_hits ".
-                                                mysql_error() . 
-                                                " on ". $query));
+      $res=$db->query($query);
+      if (DB::isError($res)) {
+	die($res->getMessage());
+      }
     }
 }
 ?>
