@@ -45,8 +45,9 @@ EOT;
 
   $res = mysql_query($query) or
     die(error_page(mysql_error()));
-
-  $previous_article_id = mysql_result($res, 0);
+  if ($row = mysql_fetch_row($res)) {
+    $previous_article_id = $row[0];
+  }
 
   // retrieve the id of the author's next article
 
@@ -62,8 +63,9 @@ EOT;
 
   $res = mysql_query($query) or
     die(error_page(mysql_error()));
-
-  $next_article_id = mysql_result($res, 0);
+  if ($row = mysql_fetch_row($res)) {
+    $next_article_id = $row[0];
+  }
 
   // generate the paginator
 
