@@ -20,17 +20,21 @@ $time = time();
 #
 # Work out what subjects
 #
-foreach ($cat as $one => $two) {
-   if (!isset($bin)) {
-     $bin=$two;
-   } else {
-     $bin=$bin|$two;
-   }
-}
+if (isset($cat)) {
+    foreach ($cat as $one => $two) {
+       if (!isset($bin)) {
+           $bin=$two;
+       } else {
+           $bin=$bin|$two;
+       }
+    }
 #
 # set bin to category for db
 #
-$category=$bin;
+    $category=$bin;
+} else {
+    $category=0;
+}
 
 if ($username) {
   $ip_addr = getenv ("REMOTE_ADDR");
