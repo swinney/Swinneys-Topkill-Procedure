@@ -61,6 +61,7 @@ EOT;
        WHERE multi_info.multi_id=$multi_id 
          AND multi_articles.multi_id=$multi_id
          AND articles_info.article_id=multi_articles.article_id
+    ORDER BY multi_articles.article_id
 EOT;
         $res = mysql_query($query);
         while ($d=mysql_fetch_object($res)) {
