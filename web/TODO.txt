@@ -8,7 +8,26 @@
 
 			 "SWINNEY NEEDS YOU"!
 
+Tue Oct  2 16:13:15 EST 2001 (bcm)
+
+- news
+   o add a page where we put news about system updates, downtime, new
+     features, etc
+
+- templates
+   o use a template system based on jsp and/or struts tiles, which
+     removes the need for a .phtml and a .inc for each form or page
+
+- structure
+   o use a namespace for file names so that multiple php apps with
+     "global.inc" do not conflict
+   o figure out how to have site-specific config/defines that aren't
+     stored in cvs
+   o reorg - put toplevel *.txt in docs dir outside web dir; move vip
+     and admin up one level?
+
 Wed Sep 26, 2001  4:45 PM (austin)
+
 - usernames
    o filter out " " with "_"
 
@@ -24,9 +43,11 @@ Tue Aug 28 17:57:52 PDT 2001 (bcm)
      last visit
 
 - admin user management
+   o list all users
    o create user
    o delete user
    o grant/revoke permissions for user
+   o batch ops on a selected set of users
 
 - permissions
    o admin (can manage users and permissions)
