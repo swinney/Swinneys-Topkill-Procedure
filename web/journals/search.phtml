@@ -4,13 +4,20 @@
 # create table search_words (word_id int(11) primary key not null auto_increment, word varchar(25) not null, num_rows int(5) NOT NULL DEFAULT 0, num_times int(4) NOT NULL DEFAULT 0); 
 $title="Justin Hall's Quest For Links";
 include "templates/top.inc";
+include "templates/line_nav.inc";
 conn();
+echo "\n<CENTER>";
 echo "\n<P>swinney.org beta search engine</P>"; 
 echo "\n<FORM ACTION=\"search.phtml\" METHOD=\"POST\">";
 echo "\n<INPUT TYPE=\"text\" NAME=\"search_this\">";
 echo "\n<INPUT TYPE=\"submit\" NAME=\"search\" VALUE=\"search\">";
 echo "\n</FORM>";
-echo "\n<P>(full string, it looks for exactly what you type)</P>";
+echo "\n<P>(full string search of text body for exactly what you type)</P>";
+echo "\n</CENTER>";
+
+# get that IP Address
+$ip_addr = getenv ("REMOTE_ADDR"); 
+
 if (isset($search_this)) {
 echo "<P>looking for <B>$search_this</B></P>";
 
@@ -29,19 +36,20 @@ while ($d=mysql_fetch_object($res)) {
 }
 echo "\n</OL>";
 
-$query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1 WHERE word='$search_this'";
+$query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1, ip_addr='$ip_addr' WHERE word='$search_this'";
 $res = mysql_query($query);
 $affected = mysql_affected_rows();
 if ($affected==0) { # UPDATE was invalid, do INSERT
 	echo "<P>well, there is a first time for everything.</P>";
-	$query = "INSERT INTO search_words (word_id,word,num_rows,num_times) VALUES ('','$search_this','$num','1')";
+	$query = "INSERT INTO search_words (word_id,word,num_rows,num_times,ip_addr) VALUES ('','$search_this','$num','1','$ip_addr')";
 	$res = mysql_query($query) or die ("<P>invalid query</P>");
 
 }
 
 }
-
+include "templates/footer.inc";
 ?>
+
 
 
 
