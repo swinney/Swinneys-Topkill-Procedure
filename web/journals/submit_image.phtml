@@ -1,44 +1,32 @@
-<HTML>
-<HEAD>
-<TITLE>Swinney's Black Image Submit Page, W/Color For Yeti</TITLE>
-</HEAD>
-<BODY BGCOLOR="BLACK">
-<FONT color="white">
-
 <?
+include "templates/top.inc";
+conn();
 
+$query = "SELECT count(image_id) from articles_img where article_id=$article_id";
+$res = mysql_query($query);
+$row = mysql_fetch_row($res);
+	$num=$row[0];
 
+if (isset($num))
 
-   
+{
 
-// have an incrementing number in the filename
+	echo "<P>you have $num images.</P>";
 
-  if (! isset($index))
-    $index = 0;
+}
 
-  if ($index <= 15) {
-    if ($index == 0) 
-      echo "If you have any images to upload for this article, select them here, otherwise click continue.\n";
+	else
 
-    elseif ($index >= 1 )
-      echo "You have uploaded <b>$index</b> images for this article<br>\nIf you have any <b>more</b> images to upload for this article, select them here, otherwise click continue.\n";
+{
 
-    $res = mysql ("swinney", "UPDATE articles_info SET image='$index' WHERE article_id='$article_id'");
+	echo "<P>upload an image.</P>";
 
-    if ( $res = false) 
-      echo "<b>Oops!</b> - Could not update database";
-  } elseif ($index >= 5) {
-    echo "<CENTER><h1>You have bagged your limit</h1>\n";
-    echo "<a href='index.phtml'><img border='no' src='../art/homepages/car8.gif'></a></CENTER>\n";
-    exit;
-  }
+}
 ?>
 
 
-<br>
-
 <form action='process_image.phtml' method='post' enctype='multipart/form-data'>
-file: <input type='file' name='userfile'>
+file: <input type='file' name='image'>
 <input type='hidden' name='article_id' value='<? echo $article_id ?>'>
 <input type='hidden' name='index' value='<? echo $index ?>'><br>
 <input type='submit' value='go!'>

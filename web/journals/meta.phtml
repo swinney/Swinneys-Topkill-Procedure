@@ -1,0 +1,302 @@
+<html>
+<head>
+<title>Advanced Meta Index</title>
+</head>
+
+<body>
+
+<center>
+
+<font size=+4><b><tt>AMI: Advanced Meta Index</b></font> forked from
+<a href="http://links.net">Justin Hall</a></TT> 
+<!--
+#################################
+# meta.phtml - The Advaced
+# Justin Hall Meta Index.
+# technology like this 
+# doesnt come around every day.
+# updated for 2001 by 
+# austin swinney
+# Thu Jul  5, 2001  9:31 AM
+#################################
+-->
+
+<!-- inlude news links -->
+<? 
+include "meta/news_links.inc"; 
+include "meta/m-w.com.inc";
+include "meta/maps.yahoo.com.inc";
+?>
+
+
+<table cellspacing=0 cellpadding=4 border=0 bgcolor=#9999dd>
+<tr nowrap>
+<td valign=top align=right>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr>
+<td colspan=2>
+<a href="http://www.search.com">search(.com)ing engines</a>:
+<form action="http://www.search.com/search" method="get" name="a">
+<font size=-1 face="arial, helvetica"><a href="http://search.com">search.com</a></FONT>
+<input name="q" size="18">
+&nbsp;<input type="submit" value="Go">&nbsp;
+</td>
+</tr>
+<td align=right valign=top>
+<font size=-1 face="arial, helvetica">
+<FORM ACTION="http://www.alltheweb.com/cgi-bin/search" METHOD="GET">
+<a href="http://www.alltheweb.com/">all the web</a>:</td><td>
+    <INPUT TYPE="text" NAME="query" SIZE=15>&nbsp;<INPUT TYPE="submit" VALUE="Go">
+    <SELECT NAME="type">
+     <OPTION VALUE="all">all of the words
+     <OPTION VALUE="any">any of the words
+     <OPTION VALUE="phrase">the exact phrase
+    </SELECT>
+   </FONT>
+</FORM>
+</font>
+</td></tr>
+<tr><td align=right valign=top><font size=-1 face="arial, helvetica"><FORM METHOD=GET ACTION="http://search.yahoo.com/bin/search"><a href="http://www.yahoo.com/">Yahoo</a></td><td><INPUT SIZE=12 NAME=p><INPUT TYPE=submit VALUE="Go"></FORM></font></td></tr>
+<tr><td align=right valign=top><font size=-1><FORM name=mfrm method=GET action="http://www.altavista.com/cgi-bin/query"><a href="http://www.altavista.com/">AltaVista</a>:</td><td><INPUT NAME=q size=12 maxlength=800 VALUE=""><input type=submit name=search value="Go"></form></font></td></tr>
+<tr><td align=right valign=top><font size=-1 face="arial, helvetica"><FORM ACTION="http://www.lycos.com/cgi-bin/pursuit" METHOD=GET><INPUT TYPE=hidden NAME=matchmode VALUE=and><INPUT TYPE=hidden NAME=cat VALUE=lycos><a HREF="http://www.lygo.com/">Lycos</A>:</td><td><INPUT TYPE=text NAME=query SIZE=12><INPUT TYPE=submit value="Go"></form></font></td></tr>
+<tr><td align=right valign=top><font size=-1 face="arial, helvetica"><form action="http://www.infoseek.com/Titles" method="get" name="WW_dir_search"><A href="http://www.infoseek.com/">InfoSeek</a>: </td><td><input type="text" name="qt" value="" size="12" maxlength="511"><input type="submit" value="Go"></form></font></td></tr><tr><td></td></tr></table></font></td>
+
+<td><table border=0><tr><td><font size=-1 face="arial, helvetica">
+<FORM action="http://www.google.com/search" method=get name=f>
+<a href="http://www.google.com/">Google</a>: 
+<INPUT type=text value="" framewidth=4 name=q size=40>
+<NOBR>
+<input name=btnG type=submit value="Google Search">
+<input name=btnI type=submit value="I'm Feeling *Lucky*">
+
+</NOBR><BR> 
+</FORM> 
+</td></tr>
+<td><FORM METHOD="GET" ACTION="http://search.dogpile.com/search" ENCTYPE="application/x-www-form-urlencoded"><font size=-1 face="arial, helvetica"><a href="http://www.dogpile.com/">dogpile</a>: <INPUT TYPE="text" NAME="q" SIZE=30><br>
+Search <SELECT NAME="fs"><OPTION SELECTED VALUE="web">The Web<OPTION  VALUE="use">Usenet<OPTION  VALUE="ftp">FTP<OPTION  VALUE="qte">Stock Quotes<OPTION  VALUE="bns">Business News<OPTION  VALUE="nws">Newswires<OPTION  VALUE="wth">Weather</SELECT>and then <SELECT NAME="ss"><OPTION  VALUE="web">The Web<OPTION  VALUE="use">Usenet<OPTION  VALUE="ftp">FTP<OPTION  VALUE="nws">Newswires<OPTION SELECTED VALUE="stop">STOP</SELECT><INPUT TYPE="submit" VALUE="Fetch"><BR>
+Wait max of <SELECT NAME="to"><OPTION  VALUE="ten">Ten<OPTION SELECTED VALUE="twenty">Twenty<OPTION  VALUE="thirty">Thirty<OPTION  VALUE="forty">Forty<OPTION  VALUE="fifty">Fifty<OPTION  VALUE="sixty">Sixty</SELECT> Seconds.</CENTER></FORM></td></tr>
+<tr><td><font size=-1 face="arial, helvetica"><form action="http://www.hotbot.com/"><a href="http://www.hotbot.com/">hotbot</a>:<INPUT type=text name="MT" value="" size=15 maxlength=300><input type=submit  name=submit value="go"><br><SELECT name="SM" ><OPTION value="MC" selected>all<OPTION value="SC">any<OPTION value="phrase">exact<OPTION value="title">pgtitl<OPTION value="name">person <OPTION value="url">links2<OPTION value="B">Buln</SELECT><SELECT name="DV" ><OPTION value="0" selected>any<OPTION value="7">-wk<OPTION value="14">-2wks<OPTION value="30">-mon<OPTION value="90">-3mos<OPTION value="180">-6mos<OPTION value="365">-yr<OPTION value="730">-2yrs</SELECT><SELECT name="RG" ><OPTION value="all" selected>any<OPTION value=".com">.com<OPTION value=".net">.net<OPTION value=".edu">.edu<OPTION value=".org">.org<OPTION value=".gov">.gov<OPTION value=".mil">.mil<OPTION value="NA">all<OPTION value="EU">Europe<OPTION value="SE">SEAsia<OPTION value="AS">IndiaAsia<OPTION value="SA">SouthAm<OPTION value="DU">Oceania<OPTION value="AF">Africa<OPTION value="ME">MidEast<OPTION value="CA">CntralAm</SELECT><!-- Hidden Value representing the radio button placeSel --><input type="hidden" name="RD" value="RG"><br>Return Results:</font><SELECT name="DC" ><OPTION value="10">10<OPTION value="25">25<OPTION value="50">50<OPTION value="100" selected>100</SELECT><SELECT name="DE" ><OPTION value="2" selected>full<OPTION value="1">brief<OPTION value="0">URLs</SELECT><input type=SUBMIT name="act.super" value="Mo'"></td> <INPUT type=hidden name="_v" value="2" ><INPUT type=hidden name="OPs" value="MDRTP" ></font></form> </td></tr>
+<tr><td><font size=-1 face="arial, helvetica">
+<FORM ACTION="http://www.askjeeves.com/main/askjeeves.asp" NAME="mainForm" METHOD="GET">
+<a href="http://www.askjeeves.com/">Ask Jeeves</a>: <INPUT TYPE="text" NAME="ask" SIZE=36><INPUT TYPE="hidden" NAME="origin" SIZE=40 VALUE=""><INPUT TYPE="hidden" NAME="site_name" SIZE=40 VALUE="Jeeves"><INPUT TYPE="hidden" NAME="metasearch" SIZE=40 VALUE="yes">&nbsp;&nbsp;<INPUT type=submit value="Ask">
+        </FORM>
+</td></tr></table></td></tr></table>
+
+
+<table width="100%" cellspacing=0 cellpadding=5 border=0 bgcolor=#cccccc>
+<TR><TD>
+<FORM NAME="seek_top" METHOD=GET ACTION="http://search.cnn.com:8765/query.html">
+<font size=+1><b><tt>news:</tt></b></font> 
+<a href="http://www.cnn.com/">cnn</a>: 
+<A href="http://www.cnn.com/SEARCH/">search</A>:
+<INPUT TYPE=TEXT NAME="qt" SIZE=10 VALUE="" MAXLENGTH=50>
+<INPUT TYPE=HIDDEN NAME="qc" VALUE="">
+<INPUT TYPE=HIDDEN NAME="col" VALUE="cnni">
+<INPUT TYPE=HIDDEN NAME="qm" VALUE="0">
+<INPUT TYPE=HIDDEN NAME="st" VALUE="1">
+<INPUT TYPE=HIDDEN NAME="nh" VALUE="10">
+<INPUT TYPE=HIDDEN NAME="lk" VALUE="1">
+<INPUT TYPE=HIDDEN NAME="rf" VALUE="1">
+</FORM></td>
+<td nowrap valign=top>
+<form action="http://www.dejanews.com/dnquery.xp" method="get">
+<a href="http://www.dejanews.com/">dejanews</a> 
+(<a href="http://www.dejanews.com/home_ps.shtml">power</a>):&nbsp;
+<input type="text" name="QRY" size="10" value="">
+<input type="submit" value="Find">archive: 
+<select name="DBS">
+<option value=1 >plete
+<option value=2 selected>std
+<option value=3 >adult
+<option value=4 >jobs
+<option value=5 >4sale
+</select>
+<input type="hidden" name="maxhits" value="20">
+<input type="hidden" name="format" value="terse">
+<input type="hidden" name="showsort" value="score">
+<input type="hidden" name="ST" value="QS">
+<input type="hidden" name="LNG" value="ALL">
+</td><font size="0">
+</form>
+</font>
+</tr>
+</table>
+
+
+<table width="100%" cellpadding=10 bgcolor=cc99cc>
+<tr nowrap><td valign=top nowrap>
+<table><tr><td align=right valign=top><font size=-1 face="arial, helvetica">
+<form action="http://search.ebay.com/cgi-bin/texis/ebay/results.html" method="GET">
+</font><a href="http://www.ebay.com/">ebay</a>:
+</td><td><font size=-1 face="arial, helvetica">
+<input type=text name=query size=20 maxlength=100 value="">
+<input type=hidden name=ht value=1>
+<input type=submit value=search>
+</font><font size="2"><a href="http://pages.ebay.com/help/buyerguide/search.htm
+l">tips</a></font>
+<input type=hidden name="maxRecordsReturned" value="300">
+<input type=hidden name="maxRecordsPerPage" value="50">
+<input type=hidden name="SortProperty" value="MetaEndSort">
+</form>
+</td></tr><tr><td align=right valign=top><font size=-1 face="arial, helvetica">
+<form method="post" action="http://www.amazon.com/exec/obidos/generic-quicksearch-query/002-2137439-2850250" >
+<a href="http://www.amazon.com/">amazon</a>:
+</td><td><font size=-1 face="arial, helvetica"><select name="mode">
+<option value="books">Books
+<option value="music">Music
+<option value="classical">Classical
+<option value="video">Video
+<option value="toys">Toys/Games
+<option value="electronics">Electronics
+<option value="ae-current">Auctions
+<option value="blended" selected>All Products
+</select>
+<input type="text" name="keyword-query" size="15">
+<input type="submit" value="Go" name="Go" align=absmiddle>
+</form>
+</td></tr><tr><td align=right valign=top><font size=-1 face="arial, helvetica">
+<form method="GET" action="http://shopper.cnet.com/search/redirector/1,10207,0-0,00.html">
+<a href="http://shopper.cnet.com/">shopper.cnet</a>: </td><td>
+<input type="Text" name="qt" size="18" maxlength="255">
+<input name='search' type='submit' value='Go'>
+<a href="http://shopper.cnet.com/search/advanced/0,10043,0-0,00.html?tag=st.sh.1257.srchsrch_adv">Advanced</a>
+<input type="hidden" name="tt" value="st.sh.1257.sbsr">
+</form>
+</td></tr></table>
+</TD>
+<td valign=top nowrap><font size=-1 face="arial, helvetica">
+<form action="http://www.imdb.com/Find" method=post>
+<a href="http://www.imdb.com/">IMDB</a>:
+<input type=text name="for" size=14>&nbsp;<input type=submit value="Go">
+<select name=select>
+<option selected>All</option>
+<option>Titles</option>
+<option>People</option>
+<option>Characters</option>
+<option>Quotes</option>
+<option>Bios</option>
+<option>Plots</option>
+</select>
+</form>
+
+<form method="get" action="http://www.reel.com/search.asp" id=form1 name=form1>
+<a href="http://www.reel.com/">Reel</a> :
+<input type="HIDDEN" name="START" value="0">
+<SELECT name="SFor">
+<OPTION value="1">Title</OPTION>
+<OPTION value="2">Actor</OPTION>
+<OPTION value="3">Director</OPTION>
+</SELECT>
+<INPUT name="STRING" TYPE="TEXT" size="12" MAXLENGTH="30">
+<input type="submit" name="subtitle" value="Search">
+</form>
+
+<a href="http://www.dvdpricesearch.com/">DVD Price Search</a> | 
+<a href="http://www.dvdexpress.com">dvdexpress</a> | 
+<a href="http://www.800.com">800</a> | 
+<a href="http://www.dvdwave.com">dvdwave</a><br>
+<a href="http://www.rotz.com">rotz</a> | 
+<a href="http://www.dvdutils.com/">DVDUtils</a> | 
+<a href="http://www.fightdivx.com">fightdivx</a> | 
+<a href="http://www.animeondvd.com/">AnimeDVD</a> | 
+<a href="http://www.cdnow.com">cdnow</a>  
+</font></td></tr>
+</table>
+
+<table width="100%" bgcolor="737373">
+<tr>
+<td>
+<form action="http://audiogalaxy.com/search/search.php3" method="post">
+<a href="http://audiogalaxy.com/">AudioGalaxy</a> MP3s:<br>
+<input class=formtext name="MP3Name" type="text" value="" size=15>
+<input type="submit" value="Go"><br>
+No Ratio: <input type="checkbox" name="ratio" value=0 >
+</form>
+</td><td>
+<FORM ACTION="http://mp3.lycos.com/cgi-bin/search" METHOD=GET>
+<a href="http://mp3.lycos.com/">LycosMP3</a>:<br>
+<INPUT TYPE=hidden NAME=form VALUE=lycosnet>
+<INPUT NAME=query VALUE="" SIZE=12>
+<INPUT NAME=doit TYPE=submit VALUE="Go">
+</FORM>
+</td></tr></table>
+</td></tr></form></table>
+
+<table width="100%" cellspacing=0 cellpadding=4>
+<tr>
+<td valign=top bgcolor=#8888aa><font size=-1 face="arial, helvetica">
+<b><u>Windows</u></b>:<a href="http://www.annoyances.org/">Annoyances</a><br>
+software: <a href="http://www.nonags.com/">nonags</a> | <a href="http://www.tucows.com/">tucows</a> | <a href="http://www.shareware.com/">shareware</a> | <a href="http://www.hotfiles.com">HotFiles</a><p>
+<FORM METHOD="get" action="http://www.winfiles.com/cgi-bin/search.cgi" ENCTYPE="application/x-www-form-urlencoded">
+<A href="http://www.winfiles.com/">WinFiles</a>: 
+<INPUT TYPE=TEXT NAME="words" VALUE="" size=12><INPUT TYPE="submit" NAME="Find" VALUE="Find">
+<SELECT NAME="scope">
+<OPTION CHECKED> Whole Site
+<OPTION > ALL Win
+<OPTION > Win95/98
+<OPTION > WinNT
+<OPTION > WinCE
+<OPTION > WinDrivers
+<OPTION > HowTo Articles
+<OPTION > Newsletter
+</SELECT></FORM>
+</td>
+
+<td valign=top align=right><font size=-1 face="arial, helvetica"><b><u>Macintosh</u></b>: News: <a href="http://www.macintouch.com/">Macintouch</a> | <a href="http://www.macosrumors.com/">MacOSRumors</a><br>Software:<A HREF="http://www.versiontracker.com/">versiontracker</A> | <a href="http://hyperarchive.lcs.mit.edu/HyperArchive.html">hyperarchive</a><p><FORM action="http://www.versiontracker.com/search.cgi" method="get" enctype="application/x-www-form-urlencoded"><font size=-1><A HREF="http://www.versiontracker.com/">versiontracker</A>:<INPUT type="HIDDEN" value="Search" name="SearchType"><INPUT name="SearchFor" size="10" type="TEXT"><SELECT name="SearchIn" size="1"><OPTION value="ProgName" selected>title<OPTION value="MainDescrip">desc</SELECT><INPUT type="SUBMIT" value="Go"></font></FORM>
+</td></tr>
+
+
+
+
+
+
+<tr><td valign=top bgcolor=#999999>
+
+
+<b>Linux</b>:news:<a href="http://www.slashdot.org/">slashdot</a> | <a href="http://www.rootshell.com/beta/news.html">RootShell</a><br>
+software: 
+<a href="http://www.linuxapps.com/">LinuxApps</a> | 
+<a href="http://www.rpmfind.net">rpmfind.net</a><BR>
+<a href="http://www.freshmeat.net/">freshmeat:</a> 
+<FORM METHOD="post" ACTION="http://core.freshmeat.net/search.php3">
+<INPUT TYPE="text" SIZE="15" NAME="query">
+</FORM>
+
+</td>
+<td align=right>
+<b><u>Pilot</u></b>:<a href="http://www.pilotgear.com/">PilotGear</a> |<a href="http://www.eurocool.com/">eurocool</a> | <a href="http://www.memoware.com/">memoware</a><p>
+</td></tr></table>
+
+<center>
+<font size=-1 face="arial, helvetica">
+<a href="http://www.transitinfo.org/">Bay Area Public Transit Info</a> | 
+<a href="http://www.movielink.com/">MovieFone</a> | 
+<a href="http://www.dine.com/sfbay/">SF Dining Guide</a> | 
+<a href="http://bayarea.sidewalk.citysearch.com/">CitySearch: San Francisco</a><br>
+
+<a href="http://www.intellicast.com/">weather</a>: <a href="http://www.intellicast.com/LocalWeather/World/UnitedStates/Northeast/NewYork/NewYorkCity/Forecast/">New York</a>, 
+<a href="http://www.intellicast.com/LocalWeather/World/UnitedStates/Midwest/Illinois/Chicago/Forecast/">Chicago</a>, <a href="http://www.intellicast.com/LocalWeather/World/UnitedStates/Southwest/California/LosAngeles/Forecast/">Los Angeles</a>, <a href="http://www.intellicast.com/LocalWeather/World/UnitedStates/SouthCentral/Texas/Austin/Forecast/">Austin</a>, <a href="http://www.intellicast.com/LocalWeather/World/UnitedStates/Southwest/California/SanFrancisco/Forecast/">San Francisco</a>, <a href="http://www.intellicast.com/LocalWeather/World/UnitedStates/Southwest/California/Oakland/Forecast/">Oakland, baby</a><br>
+
+<a href="http://www.ual.com/">UAL</a> <a href="http://www.continental.com/">Continental</a><p>
+
+<a href="https://banking.wellsfargo.com/">Wells-Fargo</a> | 
+<a href="http://www.bankofamerica.com">BofA</a> | 
+<a href="http://www.citibank.com/">Citibank</a> | 
+<A href="http://www.americanexpress.com/igotblue/">AmEx Blue</a><br>
+
+<a href="http://www.datek.com/">Datek</a> | 
+<a href="http://www.etrade.com/">ETrade</a><p>
+
+<a href="http://www.point.com/">Point.com</a> | 
+<a href="https://www.sprintpcs.com/manage/manage.asp">SprintPCS</a> | 
+<a href="http://www.cellularone.com/">Cellular One</a> | 
+<a href="http://www.cellwest.com/">CellWest</a> | 
+<a href="http://store.yahoo.com/wsigns/index.html">ACDC Wireless</a> |
+<a href="http://www.mobilserver.com/">MobilServer</a>
+
+ </center>
+
+</font>
+
+</body>
+</html>

@@ -65,14 +65,11 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
     exit;
   }
 
-#echo "article id: $article_id <BR>";
-#echo "content: <BR> $content";
-
  strip_tags($blurb);
  strip_tags($content);
  mail("articles@swinney.org","$username wrote $title", "$blurb\n $content");
 
-  header (" Location: submit_image.phtml?article_id=$article_id"); 
+ header ("Location: submit_image.phtml?article_id=$article_id"); 
 ?>
 
 

@@ -6,6 +6,8 @@
 # functions for use in the site
 
 
+define("WWW_ROOT", "http://swinney.org/dev/journals");
+
 
 ##########################################################
 #################  FUNCTION LIST #########################

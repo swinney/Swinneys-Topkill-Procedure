@@ -1,5 +1,6 @@
 <?
-
+include "global.inc";
+conn();
 // austin swinney to the year 3000, swinney.org
 
 // save, rename, insert into database, other crap
@@ -20,63 +21,28 @@
 #
 
 
-  if (!isset($index)) {
-    $index=1;
-  } else { 
-    $index++;
-  }
+if (isset($image)) 
 
+{
 
-  if ($userfile) {
-     $temp = substr(strtolower($userfile_name),-3);
-     # gen a file name
-     if ( $temp == "jpg" ) {  // ADD THEM JAYPEGS!
-     $filename = $article_id."_".$index.".jpg";
-     } elseif ( $temp == "gif") {  // ADD THEM JIFFFFFFZ
-     $filename = $article_id."_".$index.".gif";
-     } elseif ( $temp == "png") {  // ADD THEM PEE-EN-JEEEY MAJIGGERS
-     $filename = $article_id."_".$index.".png";
-     } else {
+	# Copy the file to our server. 
+	$query="INSERT INTO articles_img (article_id,image) values ($article_id,$image)"; 
+	$res=mysql_query($query);
 
-     # echo "filename: $filename <br> <a href = '$HTTP_REFERER'>Back or submit another</a><br>";
-     }  # end if
-        # Copy the file to our server.  
-   if (copy($userfile, "/sky/www/swinney.org/html/journals/images/$filename")) {
-#       echo ("<B>File sucessfully copied: $filename</B>");
-   } else {
-       echo ("<B>Error: failed to copy file: $filename</b>");
-   }
+}
+
+	else
+
+{
+
+	echo "<P>error.</P>";
+
 }
 
 
-
-
- header("Location:submit_image.phtml?index=$index&article_id=$article_id");
-
+#header ("Location: submit_image.phtml?article_id=$article_id");
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
