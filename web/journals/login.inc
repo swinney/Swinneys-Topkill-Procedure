@@ -2,6 +2,11 @@
 // the first time the page is visited, save the location where the
 // "log in" link was clicked so we can redirect back to it upon
 // successful authentication
+$error_msg=<<<EOT
+Whatever you just tried to do,<BR>
+you must log in first in order to do it.
+EOT;
+
 if (!$back_to) {
     $back_to = URLBASE;
 }
