@@ -1,4 +1,4 @@
-<?
+<?php
 // -*- Mode: PHP; indent-tabs-mode: nil; =*-
 ////////////////////////////////////////////////////////
 // $Id$
@@ -270,6 +270,15 @@ function get_username($user_id) {
   $username=mysql_result($res,0,0);
   return $username;
 }
+
+/////////////////////////////////////////
+// SPACED_OUT()
+/////////////////////////////////////////
+function spaced_out ($text) {
+  $spaced_out=ereg_replace(" ","%20",$text);
+  return $text;
+}
+ 
 
 ////////////////////////////
 // check authorization
