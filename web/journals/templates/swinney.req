@@ -6,13 +6,13 @@
 <TABLE WIDTH="500" BORDER="0" CELLSPACING="0" CELLPADDING="0" align=center>
 <TR>
 <TD>
-<TABLE WIDTH="100%" CELLSPACING="0" CELLPADDING="10" BORDER="0" valign=top>
+<TABLE WIDTH="100%" CELLSPACING="0" CELLPADDING="10" BORDER="0" valign="top">
 <tr>
 <td valign=top width=20>
 <TABLE BORDER=0 WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
 <TR ALIGN="left" VALIGN="top">
 <TD valign="top">
-<TABLE BORDER=0 CELLSPACING="0" CELLPADDING="2" WIDTH="100%" valign=left>
+<TABLE BORDER=0 CELLSPACING="0" CELLPADDING="2" WIDTH="100%" valign="top">
 <TR ALIGN="left" VALIGN="top">
 <TD>
 <P><A HREF="<? echo URLBASE ?>/index.phtml">swinney.org</A><BR>
