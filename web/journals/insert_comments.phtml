@@ -1,5 +1,9 @@
+<?
+#$Id$
+
+?>
+
 <!-- 
-$Id$
 here is where we voice our ideas.  raise you hands and i'll call on you in order. 
 -->
 <P align='center'><a href='submit_comment.phtml?article_id=<? echo "$article_id"; ?>' accesskey="s">comment</a></P>
@@ -48,8 +52,8 @@ while ( $d = mysql_fetch_object( $res ) )
 
 	// echo and strip
 
-	echo "<hr border=0>";
-	echo "<a name=\"$comment_id\">".stripslashes($username).":  ".stripslashes($comment)."\n";
+	echo "<BR>";
+	echo "<P><a name=\"$comment_id\">".stripslashes($username).":  ".stripslashes($comment)."</P>\n";
 
 }
 
@@ -62,23 +66,6 @@ if ($num>=5)
 }
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
