@@ -1,0 +1,46 @@
+<?
+# $Id$
+# searching for stuff on the internet reminds me of justin hall
+$title="Justin Hall's Quest For Links";
+include "templates/top.inc";
+conn();
+echo "\n<P>swinney.org beta search engine</P>"; 
+echo "\n<FORM ACTION=\"$PHPSELF\" METHOD=\"POST\">";
+echo "\n<INPUT TYPE=\"text\" NAME=\"search_this\">";
+echo "\n<INPUT TYPE=\"submit\" NAME=\"search\" VALUE=\"search\">";
+echo "\n</FORM>";
+echo "\n<P>(full string, it looks for exactly what you type)</P>";
+if (isset($search_this)) {
+echo "<P>looking for <B>$search_this</B></P>";
+
+$query = "SELECT articles_info.title,articles_text.article_id,articles_info.username FROM articles_info,articles_text WHERE articles_info.article_id=articles_text.article_id AND articles_info.status=2 AND articles_text.text like '%". addslashes($search_this) ."%' LIMIT 300";
+
+$res = mysql_query($query);
+$num = mysql_num_rows($res);
+echo "\n<P>number of returns: $num</P>";
+echo "\n<OL>";
+while ($d=mysql_fetch_object($res)) {
+	$article_id=$d->article_id;
+	$title=$d->title;
+	$username=$d->username;
+	echo "\n<LI><P><a href=\"article.phtml?id=$article_id\">$title</a> by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
+}
+echo "\n</OL>";
+
+
+$query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1 WHERE word='$search_this'";
+$res = mysql_query($query);
+$affect = mysql_affected_rows();
+if ($res==0) {
+echo "<P>error: update was malformed</P>";
+} elseif ($affected=="TRUE") {
+echo "<P>Updated ($affected) term in search_words</P>";
+} elseif ($affected=="FALSE") {
+
+$query = "INSERT INTO search_words (word_id,word,num_rows,num_times) VALUES ('','$search_this','$num','1')";
+$res = mysql_query($res);
+echo "<P>New term inserted into search_words</P>";
+}
+
+}
+?>
