@@ -8,35 +8,29 @@ $article_id = $chunks[0];
 
 // retrieve the article info
 
-$query = <<<EOT
-  SELECT *
-    FROM articles_info
-   WHERE article_id=$article_id
-EOT;
+include_once("Swinsite/Articles.php");
+$a = new Articles();
+$row = $a->getArticle($article_id,$db);
 
-$res = mysql_query($query) or
-  die(error_page(mysql_error()));
-
-if ($d = mysql_fetch_object($res)) {
-  // retrieve the article text
-  $query = <<<EOT
-  SELECT text
-    FROM articles_text
-   WHERE article_id=$article_id
-EOT;
-
-  $res = mysql_query($query) or
-    die(error_page(mysql_error()));
-
-  $text = mysql_result($res, 0);
-
+$a_article_id = $row['article_id'];
+$a_user_id    = $row['user_id']; 
+$a_username   = $row['username'];
+$a_web        = $row['web'];
+$a_date       = $row['date'];
+$a_status     = $row['status'];
+$a_title      = $row['title'];
+$a_blurb      = $row['blurb'];
+$a_category   = $row['category'];
+$a_image      = $row['image'];
+$a_text       = $row['text'];
+unset($row);
+if ($a_user_id) {
   // retrieve the id of the author's previous article
-
   $query = <<<EOT
   SELECT article_id
     FROM articles_info
-   WHERE article_id < $article_id
-     AND user_id='$d->user_id'
+   WHERE article_id < $a_article_id
+    AND user_id=$a_user_id
      AND status=2
 ORDER BY article_id DESC
    LIMIT 1
@@ -45,7 +39,7 @@ EOT;
   $res = mysql_query($query) or
     die(error_page(mysql_error()));
   if ($row = mysql_fetch_row($res)) {
-    $older_article_id = $row[0];
+    $o_article_id = $row[0];
   }
 
   // retrieve the id of the author's next article
@@ -54,7 +48,7 @@ EOT;
   SELECT article_id
     FROM articles_info
    WHERE article_id > $article_id
-     AND username='$d->username'
+     AND user_id=$a_user_id
      AND status=2
 ORDER BY article_id ASC
    LIMIT 1
@@ -68,21 +62,12 @@ EOT;
 
   }
 
-  $title = stripslashes($d->title);
-  $blurb = stripslashes($d->blurb);
-  $category= $d->category; 
-  $username = stripslashes($d->username);
-  $usernamenourl= urlencode($username);
-  $image=$d->image;
-  if ($text) {
-    $text = stripslashes($text);
-    if ($image>0) {
+  if ($article_row['text']) {
+    if ($article_row['image']>0) {
       require_once("Madmin/Image.php");
       $Image = new Image();
-      $id = explode(".",$id);
-      $id = $id[0];
-      $img_array = $Image->get_img($image,$id);
-      $text = $Image->show_img($img_array,$text);
+      $img_array = $Image->get_img($image,$article_id);
+      $article_row['text'] = $Image->show_img($img_array,$article_row['text']);
     }
   }
 
@@ -93,26 +78,26 @@ EOT;
 
   if ($d->web) {
     $username = <<<EOT
-<a href="$web">$d->username</a>
+<a href="$a_web">$a_username</a>
 EOT;
 
 
   }
-  if ($category) {
-      $names=get_cat_names($category);
+  if ($a_category) {
+      $a_names=get_cat_names($a_category);
   }
   echo <<<EOT
 <table cellpadding="0" cellspacing="0" border="0" width="375">
 <tr>
 <td colspan="2">
-<div class="header"><b>$title</b></div>
+<div class="header"><b>$a_title</b></div>
  
 <div class="text">
-<b>$blurb</b></div></td>
+<b>$a_blurb</b></div></td>
 </tr>
 <tr>
 <td>
-<P><FONT SIZE=1>$names</font></P>
+<P><FONT SIZE=1>$a_names</font></P>
 </td>
 </tr>
 <tr>
@@ -123,9 +108,9 @@ EOT;
 <tr>
 <td>
 <div class="subheader">
-<b>by $username</b></div>
+<b>by <a href="info_user.phtml?uid=$a_user_id">$a_username</a></b></div>
 <div class="text">
-<b>0$d->date</b></div></td>
+<b>$a_date</b></div></td>
 
 <td align="right" nowrap>
 <table cellpadding="0" cellspacing="0" border="0">
@@ -134,23 +119,23 @@ EOT;
 <p class="text">
 EOT;
 
-  if ($older_article_id or $newer_article_id) {
-  echo "<b><a href=\"userpages.phtml?username=$usernamenourl\">more from this writer</a>:</b><br>";
+  if ($o_article_id or $newer_article_id) {
+  echo "<b><a href=\"userpages.phtml?uid=$a_user_id\">more from this writer</a>:</b><br>";
   }
 
-  if ($older_article_id) {
+  if ($o_article_id) {
     echo <<<EOT
-<a href="article.phtml?id=$older_article_id.txt">&laquo; earlier</a>
+<a href="article.phtml?id=$o_article_id">&laquo; earlier</a>
 EOT;
     }
 
-  if ($older_article_id and $newer_article_id) {
+  if ($o_article_id and $newer_article_id) {
   echo " - ";
   }
   
   if ($newer_article_id) {
     echo <<<EOT
-<a href="article.phtml?id=$newer_article_id.txt">later &raquo;</a>
+<a href="article.phtml?id=$newer_article_id">later &raquo;</a>
 EOT;
     }
 
@@ -167,7 +152,7 @@ EOT;
 
 <tr>
 <td colspan="2"> 
-$text</td>
+$a_text</td>
 </tr>
 </table>
 
