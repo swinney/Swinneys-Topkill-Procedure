@@ -1,24 +1,86 @@
 <?
+#$Id$
 include "global.inc";
-conn();  
 
+if (!$PHPSESSID) {
+	session_register('page');
+}
+
+$page=$HTTP_POST_VARS['page'];
+
+conn();
+
+# STAGE 0: starting from blank, form is submitted
+# STAGE 1: form processed for first time
+# STAGE 2: preview what was written
+# STAGE 3: view submitted code again
+
+/*
+Possible flow:
+
+Stage 0		--> 	Stage 1		-->	Stage 2
+blank form	-->	process		-->	preview
+     ||                     ||                    ||
+      \\                     \\                  //
+        =========================================
+*/
 
 ##################################################
 ##################################################
-## THIS IS THE BEGINING OF STAGE TWO, PROCESSING
+## This IS THE BEGINING OF STAGE TWO, PROCESSING
 ## THE ARTICLE.  ROCK ON OALKAND.  ROCK ON SANTA
 ## CRUZ.  PRETZELS, THEY ARE GOOD.
 
+if ($page=="exit") {
+header("Location: ../index.phtml");
 
-if ($page=="submit") 
-
-{
+}
 
 
+if (!isset($page)||$page=="submit"||$page=="edit") {
 
-// include the top with the global include 
 
-echo "<form action=\"submit_article.phtml?page=process\" method=post>\n";
+if (isset($article_id)) {
+
+	echo "<P ALIGN=CENTER><TT>article_id: $article_id</TT></P>";
+
+
+
+$res = mysql_query("
+	SELECT 	articles_info.username,
+		articles_info.title,
+		articles_info.blurb,
+		articles_info.web,
+		articles_info.keywords, 
+		articles_text.text 
+	FROM	articles_info,
+		articles_text 
+	WHERE	articles_info.article_id=$article_id 
+	AND 	articles_text.article_id = articles_info.article_id
+	");
+
+
+while ($d=mysql_fetch_object($res)) {
+
+$username	= $d->username;
+$title		= $d->title;
+$blurb 		= $d->blurb;
+$web 		= $d->web;
+$keywords	= $d->keywords;
+$text		= $d->text;
+
+}
+
+}
+
+// include the top with the global include
+
+# Here we submit or resubmit the form, depending on the value of page
+if (!isset($article)) {
+echo "<FORM METHOD=\"POST\" ACTION=\"submit_article.phtml\">\n";
+} else {
+echo "<FORM METHOD=\"POST\" ACTION=\"submit_article.phtml\?article_id=$article_id\">\n";
+}
 echo "<TABLE WIDTH=400 BORDER=0 CELLSPACING=0 CELLPADDING=0>\n";
 echo "<TR><TD COLSPAN=2>page: $page</TD></TR>\n";
 echo "<TR>\n";
@@ -27,7 +89,7 @@ echo "<TD ALIGN=\"right\">\n";
 
 
 
-if (isset($username)) 
+if (isset($username))
 
 {
 	echo "\n<TT>ck</TT><INPUT TYPE=TEXT NAME=username VALUE=$username SIZE=30 maxlength=50>";
@@ -98,22 +160,13 @@ echo "\n<P>Blurb</P>";
 echo "\n</TD>";
 echo "\n<TD ALIGN=\"right\">";
 
-if (isset($blurb))
+if (isset($blurb)) {
 
-{       
-        
 	echo "\n<TT>ck</TT><INPUT TYPE=text NAME=blurb VALUE=$blurb SIZE=30 maxlength=255>";
 
+} else {
 
-}       
-        
-        else
-
-{       
-        
 	echo "\n<INPUT TYPE=text NAME=blurb SIZE=30 maxlength=255>";
-
-
 }
 
 
@@ -129,22 +182,15 @@ echo "\n</TD>";
 echo "\n<TD ALIGN=\"right\">";
 
 
-if (isset($keywords))
+if (isset($keywords)) {
 
-{       
+	echo "\n<TT>ck</TT><INPUT TYPE=text NAME=keywords VALUE=$keywords SIZE=30 maxlength=100>";
 
-echo "\n<TT>ck</TT><INPUT TYPE=text NAME=keywords VALUE=$keywords SIZE=30 maxlength=100>";
+} else {
 
-}       
-        
-        else
-
-{     
-  
-echo "\n<INPUT TYPE=text NAME=keywords SIZE=30 maxlength=100>";        
+	echo "\n<INPUT TYPE=text NAME=keywords SIZE=30 maxlength=100>";
 
 }
-
 
 
 echo "\n</TD>";
@@ -157,16 +203,12 @@ echo "\n  If you don't know what that means, then don't worry about it.</P>";
 
 if (isset($text)) {
 
-echo "\n<TEXTAREA TYPE=text  NAME=text COLS=50 ROWS=20 wrap=virtual>$text</TEXTAREA>";
+	echo "\n<TEXTAREA TYPE=text  NAME=text COLS=50 ROWS=20 wrap=virtual>$text</TEXTAREA>";
 
-} 
+} else {
 
-else 
+	echo "\n<TEXTAREA TYPE=text  NAME=text COLS=50 ROWS=20 wrap=virtual></TEXTAREA>";
 
-{
-
-echo "\n<TEXTAREA TYPE=text  NAME=text COLS=50 ROWS=20 wrap=virtual></TEXTAREA>";
- 
 }
 
 echo "\n</TD>".
@@ -176,24 +218,22 @@ echo "\n</TD>".
 
 echo "\n<P>What category best describes you?</P>";
 
-  
-$res = mysql_query ( "SELECT * FROM categories ORDER BY name ASC");
+
+$res = mysql_query("SELECT * FROM categories ORDER BY name ASC");
 
 
 echo "\n<TABLE><TR>";
-$index=1;
-while ( $d = mysql_fetch_object($res) ) 
 
-{
+# for the next loop, index
+$index=1;
+
+while ($d=mysql_fetch_object($res)) {
 
 	$index++;
 	$remainder = $index % 3;
-
 	echo "\n<TD><input type='checkbox' name='cat$d->category_id'> $d->name </TD>";
 
-	if($remainder==0)
-
-	{
+	if ($remainder==0) {
 
 		echo "\n</TR><TR>";
 
@@ -204,11 +244,9 @@ while ( $d = mysql_fetch_object($res) )
 
 echo "\n</TR></TABLE>";
 
-
-echo "<input name='page' type='submit' value='process'>\n";
-echo "<input name='page' type='submit' value='preview'>\n";
-
-echo "\n</form>\n";
+echo "\n<input name='page' type='submit' value='process'>";
+echo "\n<input name='page' type='submit' value='preview'>";
+echo "\n</form>";
 
 }
 
@@ -220,57 +258,45 @@ echo "\n</form>\n";
 ## CRUZ.  PRETZELS, THEY ARE GOOD.
 
 
-if ($page=="process")
-
-{
-
+if ($page=="process"||$page=="preview"||$page=="update") {
 
 
   // Init the date and time
   $date = date("Y-m-d");
   $time = time();
 
-  if ( empty($username)) {
-    echo "This username is not set";
-    exit;
-  }
-/*
-  // Work out what subjects
-  $res = mysql_query ("SELECT MAX(category_id) FROM categories");
-  $maxid = mysql_result($res, 0, 0);
-  $subject_value = 0;
-  for ( $i = 1 ; $i <= $maxid ; $i++ ) {
-    $str = "cat".$i;
-    if ( $$str == "on" ) {
-      $val = pow(2, $i-1);
-      $subject_value += $val;
-    }
-  }
-*/
-// get the users ip address.  maybe this is uncool, but i think it is a
-// necessary precaution.  like dont i want to know who the person is who
-// tries to send malicious unix commands in to the thoughts database?
+if ( empty($username)) {
+$username="anonymous";
+}
+
+# get the users ip address.  maybe this is uncool, but i think it is a
+# necessary precaution.  like dont i want to know who the person is who
+# tries to send malicious unix commands in to the thoughts database?
 
 $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
   // Insert into the database
+
+
+
+
   $res = mysql_query("INSERT INTO articles_info
-	 VALUES ( 
-	'NULL', 
-	'$username', 
-        '$web',
-	'$date', 
-	'$time', 
-	'1', 
+	 VALUES (
+	'NULL',
+	'".addslashes($username)."',
+        '".addslashes($web)."',
+	'$date',
+	'$time',
+	'1',
 	'".addslashes($keywords)."',
 	'".addslashes($title)."',
-	'".addslashes($blurb)."', 
+	'".addslashes($blurb)."',
 	'$category',
 	'$image',
 	'$ip_addr'
 	)");
 
-  if ( $res == false ) { 
+  if ( $res == false ) {
     echo("Bullocks on one!");
     exit;
   }
@@ -278,43 +304,158 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
 
 # Create a file in  /articles_info
-# if you don't have the auto_increment integer, 
+# if you don't have the auto_increment integer,
 # then mysql_insert_id is not going to work
+
   $article_id = mysql_insert_id();
   $text = addslashes($text);
 
   $res = mysql_query("INSERT INTO articles_text VALUES ($article_id,'$text')");
 
-  if ( $res == false ) { 
+  if ( $res == false ) {
     echo("Bullocks on two!");
     exit;
   }
 
- strip_tags($blurb);
- strip_tags($text);
- mail("articles@swinney.org","$username wrote $title", "$blurb\n $text");
+# for preview go to the preview page that gets the values 
+# just inserted into the database and updates them, this
+# way we dont lose anything at any point in the process
+# just in case...
+
+
+	unset($username);
+	unset($title);
+	unset($blurb);
+	unset($keywords);
+	unset($text);
+
+if ($page=="preview") {
+	$page="preprocess";
+	header("Location: submit_article.phtml");
+
+# but if they just want to submit and to the homepage, let them
+} elseif ($page=="process") {
+	header("Location: ../index.phtml");
+
+}
+
+
+
+} # end mother loop
+
+#####################################################################
+#####################################################################
+##
+##	END OF THE PROCESS ONLY LOOP -> FORWARDS NOW TO ../INDEX.PHML
+##
+#####################################################################
+#####################################################################
+
+
+
+if ($page=="update") {
+
+  $res = mysql_query("
+	UPDATE 	articles_info
+	SET	username=$username,
+		web=$web,
+		keywords=".addslashes($keywords).",
+		title=".addslashes($title).",
+		blurb=".addslashes($blurb)."
+	WHERE	article_id=$article_id
+	"); 
+
+  if ( $res == false ) {
+    echo("Bullocks on one!");
+    exit;
+  }
+
+
+
+# Create a file in  /articles_info
+# if you don't have the auto_increment integer,
+# then mysql_insert_id is not going to work
+
+  $res = mysql_query("
+	UPDATE 	articles_text 
+	SET 	text='$text'
+	WHERE	article_id=$article_id
+	");
+
+  if ( $res == false ) {
+    echo("Bullocks on two!");
+    exit;
+  }
+
 
 # get ready to loop
 
 # exits
-header("Location: submit_article.phtml?page=check");
 
-} 
+header("Location: ../index.phtml");
+
+} # end mother loop
 
 
-if ($page=="preview") {
+#####################################################################
+#####################################################################
+##
+##	END OF THE UPDATE ONLY LOOP -> FORWARDS NOW TO ../INDEX.PHML
+##
+#####################################################################
+#####################################################################
 
-echo "<H1>title: 	$title</H1>\n";
-echo "<H2>blurb: 	$blurb</H2>\n";
-echo "<H3>author: 	$author</H3";
-echo "<H4>web: 		$web</H4>";
-echo "<H5>body:</H5><P>$text</P>";
+
+
+if ($page=="preprocess") {
+
+#fetch the article submitted
+if (isset($article_id)) {
+
+$res = mysql_query("
+	SELECT 	articles_info.username,
+		articles_info.title,
+		articles_info.blurb,
+		articles_info.web,
+		articles_info.keywords, 
+		articles_text.text 
+	FROM	articles_info,
+		articles_text 
+	WHERE	articles_info.article_id=$article_id 
+	AND 	articles_text.article_id = articles_info.article_id
+	");
+
+
+while ($d=mysql_fetch_object($res)) {
+
+$username	= $d->username;
+$title		= $d->title;
+$blurb 		= $d->blurb;
+$web 		= $d->web;
+$keywords	= $d->keywords;
+$text		= $d->text;
 
 }
+
+echo "<FORM ACTION=\"submit_article.phtml?article_id=$article_id\" METHOD=\"POST\">";
+echo "<TT>article_id:   $article_id</TT>";
+echo "<H1>title: 	$title</H1>\n";
+echo "<H2>blurb: 	$blurb</H2>\n";
+echo "<H4>web: 		$web</H4>";
+echo "<H5>text:</H5><P>$text</P>";
+
+echo "<INPUT NAME='article_id' TYPE='hidden' VALUE=$article_id>\n";
+echo "<INPUT NAME='page' TYPE='submit' VALUE='resubmit'>\n";
+echo "<INPUT NAME='page' TYPE='submit' VALUE='exit'>\n";
+echo "</FORM>";
+
+$all_ready_been_processed_fool=1;
+
+}
+
+}
+
 ?>
-
-
-
 
 
 
