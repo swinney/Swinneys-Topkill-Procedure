@@ -1,50 +1,58 @@
-
-
-
-
-
-
-
+<!--
+$Id$
+###################################
+# rollcall.inc - who is out there?
+# this is the most major shit script
+# in all of swinney.org.  UNTIL TODAY
+# i just figured out how to generate the
+# entire thing in one select statement.
+# worship me.  suck my dick.  it does not matter
+# i do this all for the bitches.  word up 
+# in two thousand.  -OMS 
+# Thu Jul 12, 2001 10:13 AM
+-->
 
 <!-- BEGIN PHP Dynamically Required File: rollcall.inc -->
 
 
-<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="2" BORDERCOLOR="#333333">
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2" BORDERCOLOR="#333333">
 
-<TR BGCOLOR="#999999">
+<TR>
 <TD>
-<CENTER><FONT FACE="Verdana, Arial, Helvetica, sans-serif"
-SIZE="2"><STRONG><FONT
-COLOR="#333333">By Author</FONT></STRONG></FONT></CENTER> </TD>
+<P>By Author<BR>
+<a href="roll_call_all.phtml">big list</a></P>
+</TD>
 </TR>
-<TR BGCOLOR="#DED3D3" ALIGN="left" VALIGN="top">
+<TR ALIGN="left" VALIGN="top">
 <TD>
 <DIV ALIGN="left">
 <P><FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2">
 
-<A HREF="roll_call_all.phtml">complete list</A><BR>
-<TT>--------</TT><BR>
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 
 <?
-
-include "connect.inc";
-
-$res = mysql ("$DB", "SELECT DISTINCT username FROM pending_articles WHERE status='2' OR status='3' ORDER BY username");
-
-
+/*
+#########################################
+# here is said bad ass select statement
+# it gets the distinct pending_articles username
+# then the count of articles by said username
+# which come to think of it, might be un necessary.
+# hm.  comments are good. no no, you cannot get
+# the count by username organized without first
+# getting the distinct.  i dont think. -OMS
+# Thu Jul 12, 2001 10:36 AM
+*/
+$res = mysql ("$DB", "SELECT DISTINCT username, count(username) AS number FROM pending_articles GROUP BY username");
 
 while ($row = mysql_fetch_object ($res)) {
-  $res2 = mysql ("$DB", "SELECT count(*) FROM pending_articles WHERE username='$row->username'");
-  $res3 = mysql ("$DB", "SELECT count(*) FROM comments WHERE username='$row->username'");
-  
-  $count2 = mysql_fetch_row($res2);
-  $count3 = mysql_fetch_row($res3);
-  if ($count2[0] > 5) {
-  echo "<a href='userpages.phtml?username=$row->username'>$row->username($count2[0]|$count3[0])</a><br>";
+
+$username=$row->username;
+$number=$row->number;
+
+  if ($number > 5) {
+  echo "<a href='userpages.phtml?username=$username'>$username($number)</a><br>";
   }
 }
-
 
 
 ?>
