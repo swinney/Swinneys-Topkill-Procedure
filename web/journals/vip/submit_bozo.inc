@@ -1,6 +1,24 @@
 <?
 // $Id$
+require_once("Swinsite/User.php");
+
+$user = new Swinsite_User($authenticated_user_id);
+$rv = $user->restore();
+if (PEAR::isError($rv)) {
+    die(error_page($rv));
+}
+
+$bozoSet = $user->bozos();
+$bozos = $bozoSet->getAll();
+if (PEAR::isError($bozos)) {
+    die(error_page($bozos));
+}
+
 ?>
+
+<pre>
+bozo_set: <? var_dump($bozo_set) ?>
+</pre>
 
 <table cellpadding="2" cellspacing="0" border="0" width="375">
 <tr>
@@ -9,28 +27,56 @@
 <?
 if ($error_msg) {
   session_unregister("error_msg");
-  echo <<<EOT
-<span class="header"><b>$error_msg</b></span>
-EOT;
+?>
+<span class="header"><b><?=htmlspecialchars($error_msg)?></b></span>
+<?
 }
 elseif ($success_msg) {
   session_unregister("success_msg");
-  echo <<<EOT
-<span class="header"><b>$success_msg</b></span>
-EOT;
+?>
+<span class="header"><b><?=htmlspecialchars($success_msg)?></b></span>
+<?
 }
 else
 {
-  echo <<<EOT
-<span class="header"><b>$title</b></span>
-EOT;
+?>
+<span class="header"><b><?=htmlspecialchars($title)?></b></span>
+<?
 }
 ?>
 
+<br>
+Is someone a clown? Don't want to see what they have to say? Add them
+to your bozolist and their articles and comments will be filtered from
+your view of the site.
+</p>
+</td>
+</tr>
+</table>
+
 <form method="POST" action="process_bozo.phtml">
+
+<table cellpadding="2" cellspacing="0" border="0">
+<tr>
+<td align="right">
+<p>username:</p></td>
+<td align="left">
+<input type="text" name="bozo_username" size="20" maxlength="20">
+</td>
+</tr>
+<tr>
+<td align="left">
+&nbsp;
+</td>
+<td align="left">
+<input type="submit" name="add" value="add bozo">
+</td>
+</tr>
+</table>
+
 <?
 
-if ($bozo_set) {
+if ($bozos) {
 
   echo <<<EOT
   
@@ -40,7 +86,7 @@ if ($bozo_set) {
 <tr>
 <td>
 <p>
-If forgiveness is on order, select one or more usernames below and
+If forgiveness is in order, select one or more usernames below and
 remove them from the list.
 </p></td>
 </tr>
@@ -54,15 +100,15 @@ remove them from the list.
 <p>username:</p>
 </td>
 <td align="left">
-<select name="username[]" size="5" multiple>
+<select name="bozo_ids[]" size="5" multiple>
 
 EOT;
 
-$query = "SELECT bozo_id,bozoname FROM user_bozo WHERE user_id=$authenticated_user_id";
-$res = mysql_query($query) or die($query);
-while ($d=mysql_fetch_object($res)) {
+foreach ($bozos as $bozo) {
+    $id = $bozo->id();
+    $name = htmlspecialchars($bozo->username());
     echo <<<EOT
-<option value=$d->bozo_id> $d->bozoname
+<option value="$id"> $name
 EOT;
   }
 
