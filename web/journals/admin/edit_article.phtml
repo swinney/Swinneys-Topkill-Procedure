@@ -67,28 +67,44 @@ if ($web != "") {
 }
 
 echo <<<EOT
-<TABLE WIDTH=400 border=1 CELLSPACING=0 CELLPADDING=0 NOSHADE bordercolor="black">
+<TABLE BORDER=0 WIDTH=400 CELLSPACING=0 CELLPADDING=0 NOSHADE>
 <TR>
+<TD BGCOLOR="#cccccc">
+  <P>Username</P>
+</TD>
 <TD>
-<P><B>$username</B></P>
+<P>$username</P>
+</TD>
+<TD align="right">
+<INPUT TYPE="text" NAME="username" VALUE="$username">
 </TD>
 </TR>
-<TD><B>$date</B></TD>
+<TR>
+<TD>Date</TD>
+<TD>$date</TD>
+<TD align="right">
+<INPUT TYPE="text" NAME="date" VALUE="$date">
 </TR>
 <TR>
-<TD COLSPAN=4>
-<P>Keywords: $keylist</P>
+<TD>
+<P>Keywords</P>
+</TD>
+<TD>
+<P>$keylist</P>
+</TD>
+<TD align="right">
+<INPUT TYPE="text" NAME="keywords" VALUE="$keywords">
 </TD>
 </TR>
 
 <TR>
 <TD>
-web:
+<P>Web</P>
 </TD>
 <TD>
-<a href="$web">hi $web</a>
+<a href="$web">$web</a>
 </TD>
-<TD COLSPAN=2 ALIGN="right">
+<TD align="right">
 <INPUT TYPE="text" name="web" VALUE="$web" cols=60>
 </TD>
 </TR>
@@ -136,7 +152,7 @@ if ( isset($article_id) ) {
     echo "<option value='3'>Archived\n";
     echo "<option value='4'>Trash\n";
     echo "\n</select>\n";
-    echo "\nfront? yes<INPUT name='front' type='radio' value='yes' CHECKED>";
+    echo "\nfront? yes<INPUT name='front' type='radio' value='yes'>";
     echo "\nno<INPUT name='front' type='radio' value='no'></P>";
 
     echo "<p>";
