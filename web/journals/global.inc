@@ -1,54 +1,103 @@
 <?
-#########################################################
-# $Id$
-# global.inc
-# global vars for use in the site
-# functions for use in the site
-
-//** TODO: this has to change. Mabye make a includes folder.
-@include_once('./local_conf.php');
-@include_once('./journals/local_conf.php');
-
-if (!URLBASE) {
-  define("URLBASE", "http://swinney.org"); // no trailing slash!
-  define("DIRBASE", "/sky/www/swinney.org/html");
-  define("IMGBASE", "/sky/www/swinney.org/html/dev/journals/images");
-  define("IMGURL", URLBASE . "/journals/images");
-  define("CSS_URL", URLBASE . "/journals/main.css");
-  define("DB_HOST", "localhost");
-  define("DB_USER", "swinney");
-  define("DB_PASSWD", "xxxxxxx");
-  define("DB_NAME", "swinney");
-}
+// -*- Mode: PHP; indent-tabs-mode: nil; =*-
+////////////////////////////////////////////////////////
+// $Id$
 
 /*
- * initialize the session
- * 
- * XXX: make the session cookie persist until the user clicks logout
- * (and therefore causes a session_destroy().
+ * initialize the session. make the session cookie persist for a long,
+ * long time. dot his before anything else so that if something dies,
+ * we don't get errors about sending headers.
  */
 session_start();
 session_set_cookie_params(time()+9999999);
+
+/*
+ * if the directory containing global.inc also contains
+ * local_conf.php, add that directory to the system include path so we
+ * can include local_conf.php.
+*/
+
+$thisdir = dirname(realpath(__FILE__));
+if (file_exists("$thisdir/local_conf.php")) {
+    use_lib($thisdir);
+    include_once('local_conf.php');
+}
+
+/*
+ * set default configuration values.
+ *
+ * XXX: would like to set these before including the local config
+ * file, but define("foo") seems to cause an error if define("foo")
+ * has already been executed. and we want to keep the
+ * if(!defined("foo")) statements out of the local config file, to
+ * keep it simple.
+ */
+
+if (!defined("URLBASE")) {
+    define("URLBASE", "http://swinney.org"); // no trailing slash!
+}
+
+if (!defined("DIRBASE")) {
+    define("DIRBASE", "/sky/www/swinney.org/html");
+}
+
+if (!defined("IMGBASE")) {
+    define("IMGBASE", "/sky/www/swinney.org/html/dev/journals/images");
+}
+
+if (!defined("IMGURL")) {
+    define("IMGURL", URLBASE . "/journals/images");
+}
+
+if (!defined("CSS_URLE")) {
+    define("CSS_URL", URLBASE . "/journals/main.css");
+}
+
+if (!defined("DB_HOST")) {
+    define("DB_HOST", "localhost");
+}
+
+if (!defined("DB_USER")) {
+    define("DB_USER", "swinney");
+}
+
+if (!defined("DB_PASSWD")) {
+    define("DB_PASSWD", "xxxxxxx");
+}
+
+if (!defined("DB_NAME")) {
+    define("DB_NAME", "swinney");
+}
+
+/*
+ * put all include files other than global.inc in this library
+ * directory, which should be located outside the site's document
+ * root.
+ */
+
+if (defined("LIBDIR")) {
+    use_lib(LIBDIR);
+}
 
 /*
  * connect to the database. if unsuccessful, display an error message.
  * no reason to make this a function, since nobody would ever have a
  * need to call it!
  */
-require_once 'DB.php';
+require_once('DB.php');
 $dsn = array(
-	     'phptype' => "mysql",
-	     'hostspec' => DB_HOST,
-	     'database' => DB_NAME,
-	     'username' => DB_USER,
-	     'password' => DB_PASSWD
-	     );
+             'phptype' => "mysql",
+             'hostspec' => DB_HOST,
+             'database' => DB_NAME,
+             'username' => DB_USER,
+             'password' => DB_PASSWD
+             );
 
 
 $db = DB::connect($dsn, true);
 
 if (PEAR::isError($db)) {
-   die ($db->getMessage());
+    die (error_page("can't connect to the database: " . $db->getMessage()));
 }
 
 ##########################################################
@@ -61,6 +110,21 @@ if (PEAR::isError($db)) {
 # notice.
 # austin
 ##########################################################
+
+/*
+ * use_lib($dir) - add $dir to the system include_path
+ * ix, Fri Feb  1 21:45:30 PST 2002
+ */
+
+function use_lib($dir) {
+    $include_path = ini_get("include_path");
+    if (isset($include_path)) {
+        $include_path = join(":", array($include_path, $dir));
+        if (! ini_set("include_path", $include_path)) {
+            die("can't set include_path [$include_path]");
+        }
+    }
+}
 
 /*
  * error_page($msg) - This generates an HTML error page (including

@@ -1,6 +1,7 @@
 <?
 
 // insert_userpages.inc/phtml
+require_once("./global.inc");
 
 $res1 = mysql( "", "SELECT * FROM articles_info WHERE username="$username" AND status='2' OR status='3' ORDER BY time DESC" );
 

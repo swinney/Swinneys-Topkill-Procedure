@@ -3,6 +3,7 @@
 // $Id$
 // converting binary form
 require_once('./global.inc');
+
 if (isset($num)) {
   $bin=bin($bit,$num);
   echo "<P><TT>base10: $num</TT><BR>\n";
