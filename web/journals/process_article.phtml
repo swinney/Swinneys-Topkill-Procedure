@@ -88,8 +88,6 @@
 # include "submit_image.phtml";
 
  mail("article@swinney.org", "$title by $username", "$blurb\n $content");
- mail("aswinney@swinney.org", "$title by $username", "$blurb\n $content");
- mail("steve@saturn5.com", "$title by $username", "$blurb\n $content");
  header("Location:submit_image.phtml?article_id=$article_id" ); 
 
 ?>
