@@ -71,12 +71,13 @@ EOT;
 	 FROM articles_info,articles_front
    WHERE articles_info.article_id=articles_front.article_id
 EOT;
+
 	if (count($bozos)) {
 	    $query .= " AND articles_info.user_id NOT IN $bozo_set ";
 	}
 	// lets try ordering by time
 	$query .= <<<EOT
-	    ORDER BY time DESC
+	    ORDER BY article_id DESC
 	       LIMIT $num
 EOT;
 
