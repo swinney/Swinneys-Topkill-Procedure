@@ -23,21 +23,22 @@ while ($d=mysql_fetch_object($res)) {
 	$article_id=$d->article_id;
 	$title=$d->title;
 	$username=$d->username;
-	echo "\n<LI><P><a href=\"article.phtml?id=$article_id\">$title</a> by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
+	echo "\n<LI><P><a href=\"article.phtml?id=$article_id\">$title</a>"
+	   . "\n by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
 }
 echo "\n</OL>";
 
 $query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1 WHERE word='$search_this'";
-$res = mysql_query($query) or die ("<P>invalid update</P>");
+$res = mysql_query($query);
 
-} elseif ($res=="FALSE") { # UPDATE was invalid, do INSERT
-	echo "num:$num<BR>search:$search_this<BR>";
+if ($res=="FALSE") { # UPDATE was invalid, do INSERT
+	echo "<P>well, there is a first time for everything.</P>";
 	$query = "INSERT INTO search_words (word_id,word,num_rows,num_times) VALUES ('','$search_this','$num','1')";
-	$res = mysql_query($res) or die ("<P>invalid query</P>");
+	$res = mysql_query($query) or die ("<P>invalid query</P>");
 
 }
 
-
+}
 
 ?>
 
