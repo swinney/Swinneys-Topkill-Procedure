@@ -142,6 +142,22 @@ if ( isset($article_id) ) {
 //
 // show article stuff
 //
+
+
+if ($web != "") {
+if (substr($web,0,7) !='http://' && substr($web,0,7) !='mailto:') {
+
+
+	if (strstr($web,'@')) { 
+	$web = "mailto:$web"; 
+		} else { 
+	$web = "http://$web"; 
+	}
+
+
+}
+}
+
     echo "<h2>web: $web</h2>";
     echo "<textarea name=web cols=60 rows=2>$web</textarea>";
     echo "<h2>Title: ".stripslashes($title)."</h2>";
@@ -256,38 +272,3 @@ if ( isset($article_id) ) {
     echo "</table>\n";
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
