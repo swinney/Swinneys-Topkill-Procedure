@@ -1,5 +1,6 @@
 <?
-include "header.inc";
+#$Id$
+include "../templates/top.inc";
 
 /* ---------------------------------------------------------------------------
    edit_comments.phtml // this is for editing comments // austin swinney, 2001
@@ -23,18 +24,8 @@ include "header.inc";
 
   ---------------------------------------------------------------------------*/
 
-include "../connect.inc";
 
-$res = mysql("$DB", 
-             "SELECT 
-             comment_id,
-             article_id,
-             username,
-             comment,
-             nature,
-             timestamp
-             FROM comments 
-             WHERE comment_id=$comment_id");
+$res = mysql_query("SELECT comment_id, article_id, username, comment, nature, timestamp FROM comments WHERE comment_id=$comment_id");
 
 
 
