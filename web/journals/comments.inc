@@ -190,7 +190,7 @@ EOT;
   }
     if ($to_user_id!=0) {
       $to_username = get_username($to_user_id);
-      $username .= " to <a href='\./info_user.phtml?uid=$to_user_id'>$to_username</a>";
+      $username .= " to <a href='./info_user.phtml?uid=$to_user_id'>$to_username</a>";
     } 
 
 
