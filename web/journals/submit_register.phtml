@@ -1,0 +1,99 @@
+<?
+#$Id$
+require_once("global.inc");
+include("templates/top.inc");
+?>
+<!-- begin login form-->
+
+<div align="center">
+<?
+if ($login_error_msg) {
+  echo <<<EOT
+<p>
+<b><font color="red">$login_error_msg</font></b>
+</p>
+EOT;
+}
+?>
+
+<P>please register your username.</P>
+<TABLE>
+<TR>
+	<TD ALIGN="left">
+
+	<form action="process_register.phtml" method="POST">
+	<P>username:</P>
+	</TD>
+	<TD VALIGN="left">
+
+	<input type="text" name="username" size="10" maxlength="20" value="<? echo $username ?>">
+
+	</TD>
+
+</TR>
+<TR>
+
+	<TD ALIGN="left">
+
+	<P>password:</P>
+
+	</TD>
+
+	<TD ALIGN="left">
+
+	<input type="password" name="password" size="10" maxlength="20">
+
+	</TD>
+
+</TR>
+<TR>
+
+	<TD ALIGN="left">
+
+	<P>confirm:</P>
+
+	</TD>
+
+	<TD ALIGN="right">
+
+	<input type="password" name="password" size="10" maxlength="20">
+
+	</TD>
+
+</TR>
+
+<TR>
+
+	<TD ALIGN="left">
+
+	<P>contact email:</P>
+
+	</TD>
+
+	<TD ALIGN="right">
+
+	<input type="text" name="email" size="10" maxlength="40">
+
+	</TD>
+
+</TR>
+
+<TR>
+	<TD></TD>
+	<TD ALIGN="left">
+
+	<input type="submit" value="that's me">
+	</form>
+	</div>
+	</TD>
+
+</TR>
+
+</TABLE>
+<!-- end register form -->
+
+<?
+include("templates/footer.inc");
+?>
+
+
