@@ -76,10 +76,13 @@ EOT;
 //
 // Apply the bozo filter
 //
+
 if ($bozo_set) {
   $query .= " AND username NOT IN $bozo_set";
 }
-$query .= " GROUP BY username";
+$query .= " GROUP BY username ORDER BY time DESC LIMIT 30";
+
+echo "<!-- \n$query \n-->";
 
 $res = mysql_query($query) or
   die(error_page(mysql_error()));
@@ -98,12 +101,10 @@ $number=$row[1];
 $status=$row[2];
 $time=$row[3];
 
-  if ($number >= 5) {
-  echo "<a href='userpages.phtml?username=$urlname'>$name</a> ($number)<br>\n";
-  }
+  $html_rollcall .= "<a href='userpages.phtml?username=$urlname'>$name</a> ($number)<br>\n";
 }
 
-
+echo $html_rollcall;
 ?>
 
 <img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>

@@ -54,6 +54,37 @@ $comment=addslashes("$comment");
 $ip_addr=addslashes("$ip_addr");
 $char=strlen($comment);
 
+/*
+ * moseley stlye error block.
+ * -austin, Tue Mar  5, 2002  9:34 AM
+ */
+
+if (!$article_id) {
+  $error_msg .= "<P>you dont have an article_id.</P>";
+  if (!$authenticated_user_id) {
+    $error_msg .= "<P>you dont have an authenticated_user_id.  try logging out and logging back in.  logging in sets this.</P>";
+    if (!$username) {
+      $error_msg .= "<P>you dont have an username.  this is not authenticated, you need to put one in the form field.</P>";
+      if (!$comment) {
+        $error_msg .= "<P>you dont have an comment.  what are you trying to pull?  do we pay you?  you are fired!</P>";
+	if (!$nature) {
+	  $nature = 0;
+	  if (!$char) {
+	    $error_msg .= "<P>you dont have a char (character count).  this is either a program error, or you didnt write anything.  bastard.</P>";
+	    if (!$to_user) {
+	      $to_user=0;
+	      if (!$ip_addr) {
+$error_msg .= "<P>you dont have an ip address for us.  what is up with that?  im not sure, but i dont trust that look in your eye.  GUARDS, SIEZE HIM!</P>";
+	      }
+	    }
+	  }
+	}
+      }
+    }
+  }
+}
+
+
 $query=<<<EOT
 INSERT INTO comments 
      VALUES (
@@ -74,7 +105,7 @@ EOT;
 $res = mysql_query($query); 
 
   if ( $res == false ) { 
-    echo ("Bollocks!: $query");
+    echo ("Bollocks!: $query <BR> $error_msg");
     exit;
   }
 

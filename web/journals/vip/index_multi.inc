@@ -9,7 +9,7 @@
 
 if ($submit) {
   $mtitle=addslashes($mtitle);
-  $query = "INSERT INTO multi_info SET user_id=$user_id, title='$mtitle'";
+  $query = "INSERT INTO multi_info SET user_id=$authenticated_user_id, title='$mtitle'";
   $res = $db->query($query);
   if (DB::isError($res)) {
     die($res->getMessage());

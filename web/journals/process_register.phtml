@@ -28,7 +28,6 @@ if ($username) {
 
         $res = mysql_query($query) or
           die(error_page("database error for query $query: " . mysql_error()));
-
         // log the user in and store some info in the session
         $user_id = mysql_insert_id();
         session_register("user_id");

@@ -23,19 +23,30 @@ EOT;
 function get_limit_chars() {
   global $db;
   global $authenticated_user_id;
+  global $set_limit_chars;
   if (!$authenticated_user_id) {
     $error_msg .= "<P>you dont have an authenticated_user_id.</P>";
   } else {
-    $query = "SELECT noise_filter FROM user_settings WHERE user_id=$authenticated_user_id";
-    $limit_chars = $db->getOne($query);
-    if (!$limit_chars) {
-      $query = "INSERT INTO user_settings (user_id,noise_filter) VALUES ($authenticated_user_id,0)";
+    $query = <<<EOT
+             SELECT user_id,
+                    noise_filter 
+               FROM user_settings 
+              WHERE user_id=$authenticated_user_id
+EOT;
+
+    $row = $db->getRow($query);
+    $num = $db->affectedRows($row);
+    echo $res .":$num :". $query;
+    if ($num==0) {
+      $query = "INSERT INTO user_settings (user_id,noise_filter) VALUES ($authenticated_user_id,$set_limit_chars)";
+      echo $query;
       $res=$db->query($query);
       if (DB::isError($res)) {
 	die($res->getMessages());
       }
-      $limit_chars=0;
+      $limit_chars=$set_limit_chars;
     }
+    unset($row);
   }    
   return $limit_chars;
 }
@@ -66,6 +77,7 @@ $html_form .= <<<EOT
 EOT;
 
 $set_val = array (
+		  "0"=>"i'm still in love with you, come back!",
 		  "100"=>"omit needless words",
 		  "200"=>"i am picky, but i commune with the people",
 		  "300"=>"this is the average comment",

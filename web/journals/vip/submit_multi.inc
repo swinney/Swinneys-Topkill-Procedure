@@ -20,6 +20,7 @@ SELECT multi_articles.article_id,
        articles_info 
  WHERE multi_articles.article_id=articles_info.article_id 
    AND multi_articles.multi_id=$multi_id
+ ORDER BY multi_articles.article_id
 EOT;
 // Beautiful.
 
@@ -44,7 +45,7 @@ $nav
 <FORM NAME="multi_articles" ACTION="./process_multi.phtml" METHOD=POST>
 <P><B>Submit Articles to <i>$title</i></B></P>
 <INPUT TYPE=HIDDEN NAME=multi_id VALUE=$multi_id>
-<INPUT TYPE=SUBMIT NAME=submit VALUE="Add">
+<INPUT TYPE=SUBMIT NAME=submit VALUE="Add">article by id:
 <INPUT TYPE=TEXT NAME=add_id VALUE="" SIZE=4>
 <BR>
 $html

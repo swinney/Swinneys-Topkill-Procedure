@@ -3,20 +3,28 @@
  * $Id$
  */
 
-echo $bozo_set;
-
 if ($error_msg) {
-  echo "<FONT COLOR=\"RED\">$error_msg</FONT>";
+  $html .= "<FONT COLOR=\"RED\">$error_msg</FONT>";
   session_unregister("error_msg");
   unset($error_msg);
 }
 if ($success_msg) {
-  echo "<FONT COLOR=\"GREEN\">$success_msg</FONT>";
+  $html .= "<FONT COLOR=\"GREEN\">$success_msg</FONT>";
   session_unregister("success_msg");
   unset($success_msg);
 }
 
-$username=get_username($uid);
+
+
+if (!$uid | $uid==0) {
+  $html .= "<P>this user has no id. could be this is an old user reference from back before id's, or it could be you got here the wrong way. try finding the user in this list:</P>";
+  $query = "SELECT user_id,username FROM user ORDER BY username";
+  $res = mysql_query($query) or die ("<P>Query failed to find users: ". $query);
+  while ($d=mysql_fetch_object($res)) {
+    $html .=" <a href='$PHP_SELF?uid=$d->user_id'>$d->username</a> | ";
+  }
+} else {
+    $username=get_username($uid);
 
 $query = "SELECT count(articles_info.user_id) FROM articles_info WHERE user_id=$uid";
 $num_articles = $db->getOne($query);
@@ -96,7 +104,7 @@ $html .= <<<EOT
 <INPUT TYPE=SUBMIT NAME=add_bozo_id VALUE="add to bozo list">
 </FORM>
 EOT;
-
+}
 
 echo $html;
 ?>

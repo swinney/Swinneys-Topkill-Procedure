@@ -340,7 +340,7 @@ EOT;
 //
 // Apply the bozo filter
 //
-  if (count($bozos)) {
+  if ($bozos_set) {
     $query .= " AND user_id NOT IN $bozo_set";
   }
   $query .= " GROUP BY username";
@@ -450,6 +450,7 @@ EOT;
 
 function get_bozo_set() {
     global $authenticated_user_id;
+    if ($authenticated_user_id) {
     session_register("bozo_set");
     $query = "SELECT bozo_id FROM user_bozo WHERE user_id=$authenticated_user_id";
     $res = mysql_query($query) or die($query);
@@ -464,6 +465,7 @@ function get_bozo_set() {
         $bozo_set .= ")";
     }
     return $bozo_set;
+    }
 }
 
 
