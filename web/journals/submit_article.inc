@@ -8,6 +8,7 @@
 <p class="header"><b><? echo $title ?></b></p></td>
 </tr>
 
+
 <form action="process_article.phtml" method="POST" name="isaiditform">
 
 <tr>
