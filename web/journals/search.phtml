@@ -27,20 +27,20 @@ while ($d=mysql_fetch_object($res)) {
 }
 echo "\n</OL>";
 
-
 $query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1 WHERE word='$search_this'";
-$res = mysql_query($query);
-$affect = mysql_affected_rows();
-if ($res==0) {
-echo "<P>error: update was malformed</P>";
-} elseif ($affected=="TRUE") {
-echo "<P>Updated ($affected) term in search_words</P>";
-} elseif ($affected=="FALSE") {
+$res = mysql_query($query) or die ("<P>invalid update</P>");
 
-$query = "INSERT INTO search_words (word_id,word,num_rows,num_times) VALUES ('','$search_this','$num','1')";
-$res = mysql_query($res);
-echo "<P>New term inserted into search_words</P>";
-}
+} elseif ($res=="FALSE") { # UPDATE was invalid, do INSERT
+	echo "num:$num<BR>search:$search_this<BR>";
+	$query = "INSERT INTO search_words (word_id,word,num_rows,num_times) VALUES ('','$search_this','$num','1')";
+	$res = mysql_query($res) or die ("<P>invalid query</P>");
 
 }
+
+
+
 ?>
+
+
+
+
