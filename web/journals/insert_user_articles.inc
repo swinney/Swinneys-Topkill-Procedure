@@ -13,16 +13,24 @@ $page_start = ($page_num-1) * $per_page;
  
 //Do a number query to see how many results match the category...
 
-$query="SELECT count(*) as num_articles FROM articles_info WHERE status='2' AND username='". addslashes($username) ."' ORDER BY time DESC";
+if (!$id) {
+  $query="SELECT count(*) as num_articles FROM articles_info WHERE status in (2,3) AND username='". addslashes($username) ."' ORDER BY article_id DESC";
+} else {
+  $query="SELECT count(*) as num_articles FROM articles_info WHERE status in (2,3) AND user_id=$id ORDER BY artcle_id DESC";
+}
 $num_res = mysql_query($query);
 $num_object = MYSQL_FETCH_OBJECT($num_res);
 $num_of_results = $num_object->num_articles;
 
 // lets try this userlist thingy $USERS
 
+if (!$id) {
+$query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status in (2,3) AND username='". addslashes($username) ."' ORDER BY time DESC limit $page_start,$per_page";
+} else {
+$query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status=(2,3) AND user_id=$id ORDER BY time DESC limit $page_start,$per_page";
+}
 
-$res = mysql_query ( "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status='2' AND username='". addslashes($username) ."' ORDER BY time DESC limit $page_start,$per_page");
-
+$res = mysql_query($query);
 
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
