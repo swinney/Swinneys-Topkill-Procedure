@@ -58,7 +58,7 @@ $res = mysql_query($query);
 while ($d = mysql_fetch_object($res)) {
   // display title
 
-  $username= stripslashes($username);
+  $username= stripslashes($d->username);
   if ($d->web != "") {
     $username=<<<EOT
 <a href="$d->web" target="_new"> $username</a>
