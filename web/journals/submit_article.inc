@@ -41,15 +41,6 @@ EOT;
 </tr>
 
 <tr>
-<td align="right" nowrap>
-<p>web or email address: </p></td>
-<td>
-<input type=text name=web value="<?=$web?>" size=25 maxlength=50>
-</td>
-<td>&nbsp;</td>
-</tr>
-
-<tr>
 <td nowrap colspan="3">
 &nbsp;</td>
 </tr>
