@@ -1,4 +1,5 @@
 <?
+#$Id$
 include "global.inc";
 conn();
 # austin swinney to the year 3000, swinney.org
@@ -44,13 +45,14 @@ $copy=@copy($userfile, "/sky/www/swinney.org/html/journals/images/$filename");
 
 }
 
-if ($copy=="TRUE"||$submit_image=="exit") {
+if ($copy=="TRUE") {
 
-header("Location:submit_image.phtml?index=$index&article_id=$article_id");
+header("Location: submit_image.phtml?index=$index&article_id=$article_id");
 
-} else {
+} elseif ($submit_image=="exit") {
 
-echo "<P>bad karma</P>";
+header("Location: ../index.phtml");
+
 }
 ?>
 
