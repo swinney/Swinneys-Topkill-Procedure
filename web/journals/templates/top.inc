@@ -21,5 +21,6 @@ echo <<<EOT
 <BODY>
 
 <!-- END PHP Dynamically Required File: top.inc -->
+
 EOT;
 ?>
