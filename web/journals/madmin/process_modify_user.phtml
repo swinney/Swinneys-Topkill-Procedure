@@ -1,0 +1,66 @@
+<?
+
+require_once("../global.inc");
+
+// these variables are propagated via hidden fields so we always know
+// what the original values were
+if (!$username && !$email) {
+  die(error_page("No username or email specified"));
+}
+
+// username and email are mandatory columns
+if ($new_username && $new_email) {
+
+  // only change the username if it's different from the old one
+  if ($new_username && $new_username != $username) {
+    $mods = "username ='$new_username'";
+  }
+
+  // only change the email if it's different from the old one
+  if ($new_email && $new_email != $email) {
+    if ($mods) {
+      $mods .= ", email ='$new_email'";
+    } else {
+      $mods = "email ='$new_email'";
+    }
+  }
+
+  // don't worry about checking the old password. assume admins know
+  // what they are doing.
+  if ($new_password1 && $new_password2) {
+    // confirm the submitted password
+    if ($new_password1 == $new_password2) {
+      $encrypted_password = crypt($new_password1);
+
+      if ($mods) {
+	$mods .= ", password ='$encrypted_password'";
+      } else {
+	$mods = "password ='$encrypted_password'";
+      }
+    } else {
+      $error_msg = "The new passwords do not match. Try again.";
+    }
+  }
+} else {
+  $error_msg = "Username and email are mandatory. Try again.";
+}
+
+if ($mods && !$error_msg) {
+  // at least one modification was specified, and there were no user
+  // input errors, so perform the update
+  $query = "UPDATE user SET $mods WHERE username='$username'";
+
+  mysql_query($query) or
+    die(error_page(mysql_error()));
+
+  $success_msg = "The user has been updated.";
+
+  // change to the new username so the included page can render itself
+  // appropriately
+  $username = $new_username;
+} else if (!$mods && !$error_msg) {
+  $error_msg = "You didn't change anything.";
+}
+
+include("users.phtml");
+?>
