@@ -6,13 +6,13 @@
 # global vars for use in the site
 # functions for use in the site
 
-define("URLBASE", "/~jim/swinney.org"); // no trailing slash!
-define("DIRBASE", "/u/jim/htdocs/swinney.org");
+define("URLBASE", "http://swinney.org/dev"); // no trailing slash!
+define("DIRBASE", "/u/swinney/htdocs/dev/swinney.org ");
 define("CSS_URL", URLBASE . "/journals/main.css");
 define("DB_HOST", "localhost");
 define("DB_USER", "swinney");
 define("DB_PASSWD", "mauf4rais");
-define("DB_NAME", "swinney");
+define("DB_NAME", "swindev");
 
 /*
  * initialize the session
@@ -96,68 +96,23 @@ EOT;
 # like 1d6, or 5d2
 # austin, Mon Jul 23, 2001  9:50 PM
 
-Function dice( $number, $value )
-
-{       
-        
-        $total = 0;
-
-
-        for ( $i = 0 ; $i < $number ; $i++ ) {
-                
-                srand((double)microtime()*1000000);
-                $total += rand(1, $value);
-
-        }
-        
-        return $total;
-
+Function dice( $number, $value ) {       
+    $total = 0;
+    for ($i=0;$i<$number;$i++) {
+        srand((double)microtime()*1000000);
+        $total += rand(1, $value);
+        }        
+    return $total;
 }
 
-
-
-
-###################################
-# check_web() - evaluates $web
-# this thing dont work yet.
-# austin, Mon Jul 23, 2001  9:50 PM  
-
-function check_web($web,$username) 
-
-{
-
-	if ($web != "") 
-
-	{
-
-		$username="<a href='".$web."'> ".stripslashes($username)."</a>";
-	}
-
-
-	if ($web == "") 
-
-	{
-
-
-		echo "$username ";
-	}
-
+##################################
+# bin($dec) function for converting
+# decimals to binary.
+function bin($pos,$dec){
+  $bin = sprintf("%". $pos."b", $dec);
+  $bin = ereg_replace(" ","0",$bin);
+  $bin = chunk_split($bin,4); 
+  return $bin;
 }
-
-function get_categories($something) {
-  // Work out what subjects
-  $res = mysql_query ("SELECT MAX(category_id) FROM categories");
-  $maxid = mysql_result($res, 0, 0);
-  $subject_value = 0;
-  for ( $i = 1 ; $i <= $maxid ; $i++ ) {
-    $str = "cat".$i;
-    if ( $$str == "on" ) {
-      $val = pow(2, $i-1);
-      $subject_value += $val;
-    }
-  }
-
-}
-
 
 ?>
