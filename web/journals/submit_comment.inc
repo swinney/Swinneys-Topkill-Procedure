@@ -27,20 +27,30 @@ EOT;
 </tr>
 
 <tr>
-<td align="right"><p>you are:</p></td>
-<td>
- <input type="text" name="username" size="25" maxlength="30" value="<?=$authenticated_username?>">
-</td>
+<td align="right" COLSPAN=2><p>thus spake:
+<input type="text" size="10" name="username" value="<? if ($authenticated_username) { echo "$authenticated_username"; } ?>">
 
-<td>
-&nbsp;</td>
+ to
+<SELECT NAME="to_user">
+<option value="">all
+<?
+$query="SELECT distinct(comments.username) FROM comments WHERE article_id=$article_id AND username NOT LIKE '%to%' ORDER BY username";
+$res=mysql_query($query);
+while ($d=mysql_fetch_object($res)) {
+  echo "<option value='$d->user_id'>$d->username\n";
+}
+?>
+</SELECT>
+</td><td></td>
 </tr>
-
 <tr>
-<td colspan="3">
-&nbsp;</td>
+<td></td>
+<td>
+one liner <input type="radio" name="type" value="0" CHECKED> or
+<input type="radio" name="type" value="1"> substantive
+</td>
+<td></td>
 </tr>
-
 <tr>
 <td colspan="2">
 <p>comment:<br>
