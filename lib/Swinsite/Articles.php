@@ -114,6 +114,54 @@ EOT;
 	return $html;
     }
 
+
+    function getUserTitles($uid,$order,$limit) {
+      global $id;
+       $query = <<<EOT
+	 SELECT articles_info.article_id,
+	 articles_info.title,
+	 articles_info.web,
+	 articles_info.category
+	 FROM articles_info
+   WHERE articles_info.user_id=$uid
+	 AND status IN (2,3)
+EOT;
+	if ($order=="rand") {
+	  $query .= " ORDER BY RAND()";
+	} elseif($order=="id") {
+	// lets try ordering by time
+	  $query .= " ORDER BY article_id DESC";
+	}
+	$query .= " LIMIT $limit";
+	$res = mysql_query($query);
+
+	while ($d = mysql_fetch_object($res)) {
+	    $aid=$d->article_id;
+            $uid=$d->user_id;
+	    // display title
+	    if ($category=$d->category) {
+	    $names=get_cat_names($category);
+	    } else {
+	    $names=get_cat_none($aid);
+	    }
+            unset($category);
+	    $username=stripslashes($d->username);
+	    $url_username=urlencode(stripslashes($d->username));
+	    $title=stripslashes($d->title);
+	    $html .= <<<EOT
+<P>
+<a href="journals/article.phtml?id=$aid">
+<b>$title</b></a>
+<br>
+<font size=1>$names</FONT>
+</P>
+EOT;
+	}
+        $html = "<P><B>5 most recent articles</B><BR><B><a href='userpages.phtml?uid=$uid'>&laquo; more from this writer</a></B></P>". $html;
+
+	return $html;
+    }
+
     function otherArticleId($a_article_id,$a_user_id,$flag,$db) {
       $query = <<<EOT
   SELECT article_id
