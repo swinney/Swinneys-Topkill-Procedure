@@ -6,7 +6,8 @@
 <tr>
 <td nowrap colspan="3">
 
-<p class="header"><b><? echo $title ?>:  <FONT COLOR=RED>be safe, have a backup!</B></b><? 
+<p class="header"><? echo $title?>
+<? 
 
 //
 // temp_aid is set if user just came from the VIP area
@@ -25,7 +26,8 @@ if ($error_msg) {
 EOT;
 }
 ?>
-</p></td>
+<P>Status: <? echo $status; ?></P>
+</td>
 </tr>
 
 
