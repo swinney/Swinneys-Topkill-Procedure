@@ -5,7 +5,7 @@
 
 
 
-$res1 = mysql( "swinney", "SELECT * FROM pending_articles WHERE username='$username' AND status='2' ORDER BY time DESC" );
+$res1 = mysql_query("SELECT * FROM articles_info WHERE username='$username' AND status='2' ORDER BY time DESC" );
 
 
 
@@ -38,4 +38,9 @@ echo " | $numrows comments";
 
 
 ?>
+
+
+
+
+
 
