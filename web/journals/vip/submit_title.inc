@@ -9,7 +9,7 @@
 
 if ($mtitle) {
   $title=addslashes($title);
-  $query = "UPDATE multi_info SET title='$mtitle'";
+  $query = "UPDATE multi_info SET title='$mtitle' WHERE multi_id=$multi_id";
   $res = $db->query($query);
   if (DB::isError($res)) {
     die($res->getMessage());
