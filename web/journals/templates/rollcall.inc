@@ -32,7 +32,7 @@
 <a href="roll_call_all.phtml"><img src="<? echo URLBASE ?>/journals/img/rollcall.gif" alt="Roll Call" width="65" height="13" border="0"></a><br>
 <img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
 
-recent writers:<br>
+writers:<br>
 
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 
@@ -65,12 +65,7 @@ recent writers:<br>
  $minus=time();
  $minus=$minus-7776000;
 $query = <<<EOT
-SELECT DISTINCT(username), 
-       COUNT(username) AS number, 
-       status, 
-       time
-  FROM articles_info
- WHERE status=2
+SELECT DISTINCT(username),COUNT(username) AS number,status,MAX(date) as date FROM articles_info WHERE status=2 
 EOT;
 
 //
@@ -78,11 +73,9 @@ EOT;
 //
 
 if ($bozo_set) {
-  $query .= " AND username NOT IN $bozo_set";
+  $query .= " AND user_id NOT IN $bozo_set";
 }
-$query .= " GROUP BY username ORDER BY time DESC LIMIT 30";
-
-echo "<!-- \n$query \n-->";
+$query .= " GROUP BY username HAVING date>DATE_ADD(CURRENT_DATE,INTERVAL -6 MONTH) AND number>5 ORDER BY username";
 
 $res = mysql_query($query) or
   die(error_page(mysql_error()));
