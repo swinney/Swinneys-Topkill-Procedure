@@ -28,10 +28,14 @@ COLOR="#333333">By Author</FONT></STRONG></FONT></CENTER> </TD>
 
 include "connect.inc";
 
-$res = mysql ("swinney", "SELECT DISTINCT username FROM pending_articles WHERE status='2' OR status='3' ORDER BY username");
+$res = mysql ("$DB", "SELECT DISTINCT username FROM pending_articles WHERE status='2' OR status='3' ORDER BY username");
 
 while ($row = mysql_fetch_object ($res)) {
-  echo "<a href='userpages.phtml?username=$row->username'>$row->username</a><br>";
+  $res2 = mysql ("$DB", "SELECT count(*) FROM pending_articles WHERE username='$row->username'");
+  $count = mysql_fetch_row($res2);
+  if ($count[0] > 5) {
+  echo "<a href='userpages.phtml?username=$row->username'>$row->username($count[0])</a><br>";
+  }
 }
 
 
