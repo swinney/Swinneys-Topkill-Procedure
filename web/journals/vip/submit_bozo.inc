@@ -1,5 +1,5 @@
 <?
-#$Id$
+// $Id$
 if ($error_msg) {
   session_unregister("error_msg");
   echo <<<EOT

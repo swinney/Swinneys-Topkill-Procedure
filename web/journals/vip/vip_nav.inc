@@ -1,8 +1,3 @@
-<!-- BEGIN PHP Dynamically Required Page : swinney.req  -->
-
-
-
-
 <TABLE WIDTH="500" BORDER="0" CELLSPACING="0" CELLPADDING="0" align=center>
 <TR>
 <TD>
@@ -45,7 +40,3 @@ if ($authenticated_username) {
 </TR>
 </TABLE>
 <BR>
-
-<!-- END PHP Dynamically Required Page: swinney.req -->
-
-

@@ -1,5 +1,5 @@
 <?
-#$Id$
+// $Id$
 if ($error_msg) {
   echo <<<EOT
 <p>

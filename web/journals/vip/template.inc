@@ -1,8 +1,8 @@
 <? 
-require_once("global.inc");
+require_once("../global.inc");
 
 include("../templates/top.inc");
-include("vip_nav.inc");
+include("./vip_nav.inc");
 include("../templates/endleft.inc");
 
 include($into_template);
