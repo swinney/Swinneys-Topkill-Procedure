@@ -2,26 +2,50 @@
 // $Id$
 require_once("global.inc");
 
-if (!isset($index)) {
-  $index = 1;
-} else { 
-  $index++;
-}
-
 if ($submit_image) {
-  if (ereg("\.(.+$)", $userfile_name, $matches)) {
-    $ext = strtolower($matches[1]);
-    $filename = $article_id . "_" . $index . "." . $ext;
-  } else {
-    $filename = $article_id . "_" . $index;
-  }
+  if ($userfile) {
+    if (is_uploaded_file($userfile)) {
+      if (ereg("^image/(.+)$", $userfile_type, $matches)) {
+        $ext = strtolower($matches[1]);
+        if ($ext == "jpeg") {
+          $ext = "jpg";
+        }
 
-  // Copy the file to our uploads directory
-  if (move_uploaded_file($userfile,
-                        DIRBASE . "/journals/images/$filename")) {
-    $success_msg = "Image saved.";
+	if (!isset($index)) {
+	  $index = 1;
+	} else { 
+	  $index++;
+	}
+
+        $filename = $article_id . "_" . $index . "." . $ext;
+
+        // Copy the file to our uploads directory
+        $destination = DIRBASE . "/journals/images/$filename";
+        if (move_uploaded_file($userfile, $destination)) {
+          $query = <<<EOT
+UPDATE articles_info
+   SET image='$index'
+ WHERE article_id='$article_id'
+EOT;
+
+          if (mysql_query($query)) {
+            // suppress success message.
+          } else {
+            // XXX: partially committed transaction! how to handle?
+            $error_msg = "Error updating database: " . mysql_error();
+          }
+        } else {
+          $error_msg = "Error saving image $userfile to $destination.";
+	  // roll back the index since the file wasn't moved
+        }
+      } else {
+        $error_msg = "Non-image file type $userfile_type. Try again.";
+      }
+    } else {
+      $error_msg = "Naughty! That is an invalid filename";
+    }
   } else {
-    $error_msg = "Error saving image.";
+    $error_msg = "No file specified. Try again.";
   }
 
   include("./submit_image.phtml");
