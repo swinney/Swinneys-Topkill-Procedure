@@ -69,13 +69,13 @@ EOT;
 	  $blurb    = stripslashes($d->blurb);
           $multi_user_id = $d->multi_user_id;
 	    if (!$html) {
-                $multi_username=get_username($d->editor_id);
+                $editor_username=get_username($d->editor_id);
 	        /* 
 	         * FIRST start by getting the title of the multi
 	         */
 	        $html= <<<EOT
 <P><B><a href='./multi_info.phtml?mid=$multi_id'>$multi_title</a></B>\n
-<BR>edited by <a href="./info_user.phtml?uid=$d->editor_id">$multi_username</A></P>\n
+<BR>edited by <a href="./info_user.phtml?uid=$d->editor_id">$editor_username</A></P>\n
 EOT;
             }
             /*
