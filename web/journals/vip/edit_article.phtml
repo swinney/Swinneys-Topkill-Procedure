@@ -1,33 +1,38 @@
 <?
 require_once("../global.inc");
-
+$title="Edit last submitted article";
 if (isset($authenticated_username)) {
   $query="SELECT articles_info.web,
                  articles_info.title,
                  articles_info.blurb,
                  articles_info.keywords,
-                 articles_text.text 
+                 articles_info.category,
+                 articles_text.text,
+                 articles_info.article_id
             FROM articles_info, 
                  articles_text 
            WHERE username='$authenticated_username' 
              AND articles_info.article_id=articles_text.article_id 
         ORDER BY articles_info.article_id DESC
            LIMIT 1";
-$res=mysql_query($query) or die(error_page($query));
-$web=mysql_result($res,0,0);
-$title=mysql_result($res,0,1);
-$blurb=mysql_result($res,0,2);
-$keywords=mysql_result($res,0,3);
-$text=mysql_result($res,0,4);
+  $res=mysql_query($query) or die(error_page($query));
+  $web=mysql_result($res,0,0);
+  $temp_title=mysql_result($res,0,1);
+  $blurb=mysql_result($res,0,2);
+  $keywords=mysql_result($res,0,3);
+  $category=mysql_result($res,0,4);
+  $text=mysql_result($res,0,5);
+  $temp_aid=mysql_result($res,0,6);
+  session_register("temp_aid");   
 } else {
   error_page("username unset");
 }
 
 include_once("../templates/top.inc");
-include("../templates/swinney.req");
-include("../templates/norollcall.inc");
+include_once("../templates/swinney.req");
+include_once("../templates/norollcall.inc");
 include_once("../submit_article.inc");
-include("../templates/bottom.req");
-include("../templates/footer.inc");
+include_once("../templates/bottom.req");
+include_once("../templates/footer.inc");
 
 ?>

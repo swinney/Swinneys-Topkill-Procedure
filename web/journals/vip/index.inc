@@ -17,4 +17,6 @@ else
 <p class="subheader">
 <b>&raquo;</b> <a href="submit_change_password.phtml">Change Password</a><br>
 
-<b>&raquo;</b> <a href="submit_bozo.phtml">Edit Bozolist</a></p>
+<b>&raquo;</b> <a href="submit_bozo.phtml">Edit Bozolist</a><BR>
+
+<b>&raquo;</b> <a href="edit_article.phtml">Edit Article</a></P>
