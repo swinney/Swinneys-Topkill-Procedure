@@ -5,38 +5,26 @@ require_once("global.inc");
 if ($add) {
   // make sure the submitted username isn't already in the bozo list
   if (! in_array($username, $bozos)) {
-    // make sure the submitted username refers to an existing user
-    $query = <<<EOT
-SELECT user_id
-  FROM user
- WHERE username='$username'
-EOT;
+    // add the username to the bozo table
+    $query = "INSERT INTO user_bozo VALUES ($user_id, '$username')";
     $res = mysql_query($query) or
-      die(error_page(mysql_error()));
+	  die(error_page(mysql_error()));
 
-    if (mysql_num_rows($res)) {
-      // add the username to the bozo table
-      $query = "INSERT INTO user_bozo VALUES ($user_id, '$username')";
-      $res = mysql_query($query) or
-	die(error_page(mysql_error()));
+    // ad the username to the session cache
+    array_push($bozos, $username);
+    sort($bozos);
+    session_register("bozos");
 
-      // ad the username to the session cache
-      array_push($bozos, $username);
-      session_register("bozos");
-
-      // bozo array as a set suitable for use in a sql NOT IN string
-      // also set at login time!
-      $b = array();
-      foreach ($bozos as $x) {
-	array_push($b, "'$x'");
-      }
-      $bozo_set = '(' . implode(", ", $b) . ')';
-      session_register("bozo_set");
-
-      $success_msg = "$username added to bozo list.";
-    } else {
-      $error_msg = "That username doesn't exist. Try again.";
+    // bozo array as a set suitable for use in a sql NOT IN string
+    // also set at login time!
+    $b = array();
+    foreach ($bozos as $x) {
+	  array_push($b, "'$x'");
     }
+    $bozo_set = '(' . implode(", ", $b) . ')';
+    session_register("bozo_set");
+
+    $success_msg = "$username added to bozo list.";
   } else {
     $error_msg = "That username is already in your bozo list.";
   }
