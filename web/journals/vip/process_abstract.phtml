@@ -1,0 +1,12 @@
+<?
+/*
+ * $Id$
+ */
+require_once("../global.inc");
+if ($abstract) {
+  $query = "UPDATE multi_info SET abstract='$abstract' WHERE multi_id=$multi_id";
+  $res = mysql_query($query) or die("Error on abstract update:<BR>". error_page($query));
+}
+header("Location: $HTTP_REFERER");
+
+?>
