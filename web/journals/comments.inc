@@ -28,7 +28,7 @@ if ($insert_since) {
   $query .= " AND timestamp > $insert_since ";
 }
 $query .= <<<EOT
- ORDER BY timestamp DESC
+ ORDER BY comment_id DESC
 EOT;
 
 $res = mysql_query($query) or
@@ -71,7 +71,7 @@ EOT;
     $query .= " AND timestamp > $insert_since";
   }
   $query .= <<<EOT
- ORDER BY timestamp DESC limit $page_start,$per_page
+ ORDER BY comment_id DESC limit $page_start,$per_page
 EOT;
   $res = mysql_query($query) or
     die(error_page(mysql_error()));
@@ -80,7 +80,7 @@ EOT;
   $url = "article.phtml?id=$d->article_id";
   
 // let's cut a nice little page header into here - J. 
-
+  /** TODO: make this nav crap a function in global.inc
 echo <<<EOT
 
 <table cellpadding="0" cellspacing="0" border="0">
@@ -91,7 +91,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><a href="index.phtml">Articles</a> | <b>Comments</b>
+<span class="subheader"><a href="index.phtml">Articles</a> by <a href="alpha.phtml">Alpha</a> | <b>Comments</b>
 EOT;
 
 if ($page_num < $num_of_pages or $page_num > 1) {
