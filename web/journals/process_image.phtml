@@ -1,55 +1,68 @@
 <?
-// $Id$
+##############################################
+# $Id$
 require_once("./global.inc");
+define("ERROR_REP",1);
 
-if ($submit_image) {
-  if ($userfile) {
-    if (is_uploaded_file($userfile)) {
-      if (ereg("^image/(.+)$", $userfile_type, $matches)) {
-        $ext = strtolower($matches[1]);
-        if ($ext == "pjpeg") {
-          $ext = "jpg";
-        }
-
-	if (!isset($index)) {
-	  $index = 1;
-	} else { 
-	  $index++;
-	}
-
-        $filename = $article_id . "_" . $index . "." . $ext;
-
-        // Copy the file to our uploads directory
-        $destination = IMGBASE . "/$filename";
-        if (move_uploaded_file($userfile, $destination)) {
-          $query = <<<EOT
-UPDATE articles_info
-   SET image='$index'
- WHERE article_id='$article_id'
-EOT;
-
-          if (mysql_query($query)) {
-            // suppress success message.
-          } else {
-            // XXX: partially committed transaction! how to handle?
-            $error_msg = "Error updating database: " . mysql_error();
-          }
-        } else {
-          $error_msg = "Error saving image $userfile to $destination.";
-	  // roll back the index since the file wasn't moved
-        }
-      } else {
-        $error_msg = "Non-image file type $userfile_type. Try again.";
-      }
-    } else {
-      $error_msg = "Naughty! That is an invalid filename";
-    }
+if (isset($submit_image)) {
+  if ($aindex) {
+    $aindex=$aindex+1;
   } else {
-    $error_msg = "No file specified. Try again.";
-  }
+    $query = 'SELECT COUNT('. AID .') 
+              FROM '. ARTICLES_FILES_TBL .' 
+              WHERE '. AID .'='. $article_id;
+    $aindex = $db->getOne($query);
 
-  include("./submit_image.phtml");
-} else {
-  header("Location: " . URLBASE);
+    if (!$aindex) {
+      $aindex=1;
+    } else {
+      $aindex++;
+    }
+  }
+  $error_msg .= "<BR>aindex is $aindex<BR>";
+    $ext=substr("$userfile_name",-3);
+    if ($ext == "peg") {
+        $ext = "jpg";
+    }
+    // dont name them zero, if there arnet any yet.
+    $filename = $article_id . "_" . $aindex . "." . $ext;
 }
-?> 
+
+// Copy the file to our uploads directory
+$filesize = filesize($userfile);
+
+$copy=copy($userfile, IMGBASE ."/". $filename);
+
+if (ERROR_REP) {
+$error_msg .= "<P>The copy() of $filename returned $copy.</P>";
+}
+
+if ($copy=="TRUE") {
+  $query = 'UPDATE '. ARTICLES_INFO_TBL .' 
+            SET '. IMAGE .'='. IMAGE .'+1
+            WHERE '. AID .'='. $article_id;
+  if (mysql_query($query)) {
+  $error_msg .= "<P>Update went fine.</P>";
+  } else {
+  // XXX: partially committed transaction! how to handle?
+    $error_msg .= "<P>Error updating database: " . mysql_error() ."</P>";
+  }
+  include_once("Swinsite/File.php");
+  $f = new File();
+  $f->addInfo($db,$article_id,$aindex,$filesize,$userfile_name,$ext);
+
+} elseif ($copy=="TRUE" && $over) {
+  $error_msg .= "Success.  File has been copied over.";
+} elseif (!$copy=="TRUE") {
+  $error_msg .= "Error saving image $userfile to ". IMGBASE .".";
+          // roll back the index since the file wasn't moved
+}
+
+if ($submit_image=="submit") {
+  header("Location: submit_image.phtml?article_id=$article_id&index=$aindex");
+}
+
+?>
+
+
+
