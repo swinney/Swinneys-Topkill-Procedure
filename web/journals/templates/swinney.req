@@ -17,17 +17,9 @@
 </TR>
 <TR BGCOLOR="#DED3D3" ALIGN="left" VALIGN="top">
 <TD><FONT SIZE="2" FACE="Verdana, Arial, Helvetica, sans-serif">
- <A HREF="http://swinney.org">Home</A><BR>
- <A HREF="http://www.swinney.org/journals/index.phtml">25 latest</A><BR>
- Userpages<BR>
-<!--
- <A HREF="http://www.swinney.org/journalx/index.phtml">J.Archive</A><BR>
--->
- <A HREF="http://www.swinney.org/journals/admin/index.phtml">Admin</A><BR>
-<!--
- <A HREF="http://www.swinney.org/links.html">Links</A><BR>
- <A HREF="http://www.swinney.org/resume/index.html">Resume</A><br>
--->
+ <A HREF="../index.phtml">Home</A><BR>
+ <A HREF="index.phtml">25 latest</A><BR>
+ <A HREF="admin/index.phtml">Admin</A><BR>
 </TD>
 </TR>
 </TABLE>
