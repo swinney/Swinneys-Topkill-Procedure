@@ -40,7 +40,6 @@ $noslogan = array( 1 =>
 
 <tr>
 <td align="center">
-<a href="http://www.thisishomemade.com/"><img src="<? echo URLBASE; ?>/journals/img/tih.gif" alt="" width="6" height="6" border="0"></a><br>
 <img src="<? echo URLBASE; ?>/journals/img/no.gif" alt="" width="1" height="30" border="0">
 </td>
 </tr>
