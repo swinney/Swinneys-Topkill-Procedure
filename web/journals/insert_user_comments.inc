@@ -27,7 +27,7 @@ $num_of_results = $num_object->num_articles;
 
 $query2="SELECT username,comment_id,comment,article_id FROM $table WHERE status='0' AND username = '$username' ORDER BY timestamp DESC limit $page_start,$per_page";
 
-$query = "select comments.comment_id,comments.comment,comments.article_id,comments.username,articles_info.title,articles_info.username from comments, articles_info where comments.article_id=articles_info.article_id AND comments.username = '". addslashes($username) ."' order by comment_id DESC limit $page_start,$per_page";
+$query = "select comments.comment_id,comments.comment,comments.article_id,comments.username,articles_info.title,articles_info.username,comments.user_id from comments, articles_info where comments.article_id=articles_info.article_id AND comments.username = '". addslashes($username) ."' order by comment_id DESC limit $page_start,$per_page";
 
 
 $res2 = mysql_query ($query);
@@ -65,7 +65,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><a href="userpages.phtml?username=$username">Articles</a> | <b>Comments</b>
+<span class="subheader"><a href="userpage.phtml?username=$username">Articles</a> | <b>Comments</b>
 EOT;
 
 if ($page_num < $num_of_pages or $page_num > 1) {
@@ -144,8 +144,8 @@ while ($d=mysql_fetch_object($res2)) {
 
 <tr>
 <td><a name="$comment_id"></a>
-<a href="article.phtml?id=$article_id.txt#$comment_id">$username</a> on
-"<b><a href="article.phtml?id=$article_id">$title</a></b>" 
+<a href="info_user.phtml?uid=$d->user_id">$username</a> on
+"<b><a href="article.phtml#$comment_id?id=$article_id">$title</a></b>" 
 by <a href='userpages.phtml?username=$articlewriter'>$articlewriter</a>:<br>
 $comment</td>
 </tr>
