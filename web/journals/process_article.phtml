@@ -1,12 +1,30 @@
 <?
 // $Id$
-
+session_register("bin");
 require_once("global.inc");
 
+$bin=0;
 // Init the date and time
 $date = date("Y-m-d");
 $time = time();
 
+// Work out what subjects
+
+foreach ($cat as $one => $two) {
+   if (!isset($bin)) {
+     $bin=$two;
+     echo "starting with: ". bin(32,$bin) . "<BR><HR>";
+   } else {
+     echo bin(32,$bin) ." <BR> ". bin(32,$two) . "<BR>";
+     $bin=$bin|$two;
+#        echo bin(32,$bin);
+	echo bin(32,$bin) ."<BR>";
+        echo "<HR>";
+   }
+}
+$bin=0;
+
+/*
 if ($username) {
   $ip_addr = getenv ("REMOTE_ADDR");
 
@@ -17,9 +35,18 @@ if ($username) {
 
   $query = <<<EOT
 INSERT INTO articles_info
-    VALUES (NULL, '$username', '$web', '$date', '$time', 1,
-	    '$esc_keywords', '$esc_title', '$esc_blurb',
-	    '$category', '$image', '$ip_addr')
+    SET
+     username='$username',
+     web='$web',
+     date='$date',
+     time='$time',
+     status=1,
+     keywords='$esc_keywords',
+     title='$esc_title',
+     blurb='$esc_blurb',
+     category='$category',
+     image='$image',
+     ip_addr='$ip_addr'
 EOT;
 
   if (mysql_query($query)) { 
@@ -55,7 +82,7 @@ if ($error_msg) {
     $loc = "submit_image.phtml?article_id=$article_id";
   }
 
-  header("Location: $loc");
+#  header("Location: $loc");
 }
-
+*/
 ?>
