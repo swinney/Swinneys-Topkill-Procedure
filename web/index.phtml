@@ -12,11 +12,11 @@ include "journals/templates/top.inc";
 <?
 if ($authenticated_username) {
   echo <<<EOT
-<a href="journals/process_logout.phtml" accesskey="j">LOG OUT</a> |
+<a href="journals/process_logout.phtml" accesskey="l">LOG OUT</a> | 
 EOT;
 } else {
   echo <<<EOT
-<a href="journals/login.phtml" accesskey="j">LOG IN</a> |
+<a href="journals/login.phtml" accesskey="l">LOG IN</a> | 
 EOT;
 }
 ?>

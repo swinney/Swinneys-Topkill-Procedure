@@ -1,6 +1,6 @@
 <? 
 #  $Id$
-include "global.inc";
+require_once("global.inc");
 include "templates/top.inc";
 include "templates/swinney.req";
 include "templates/rollcall.inc";

@@ -16,16 +16,17 @@
 <?
 if ($authenticated_username) {
   echo <<<EOT
-<a href="process_logout.phtml" accesskey="j">LOG OUT</a> |
+<a href="process_logout.phtml">log out</a><br>
 EOT;
 } else {
   echo <<<EOT
-<a href="login.phtml" accesskey="j">LOG IN</a> |
+<a href="login.phtml">log in</a><br>
 EOT;
 }
 ?>
  <A HREF="index.phtml">articles</A><BR>
  <A HREF="comments.phtml">comments</A><BR>
+ <A HREF="search.phtml">search</A><BR>
  <A HREF="admin/index.phtml">admin</A><BR>
 </TD>
 </TR>
