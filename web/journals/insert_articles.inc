@@ -64,7 +64,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><b>Articles</b> | <a href="comments.phtml">Comments</a>
+<span class="subheader"><b>Articles</b> by <a href="./alpha.phtml">Alpha</a> | <a href="comments.phtml">Comments</a>
 
 EOT;
 
