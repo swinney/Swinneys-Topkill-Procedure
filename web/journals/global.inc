@@ -23,17 +23,21 @@
     return $total;
   }
 
-// who do you like?
+// this thing dont work yet.  i never done a fucktion 
+function check_web($web,$username) {
 
-$USERS = "
-username='austin' OR 
-username='s5' OR 
-username='le' OR 
-username='egg' OR
-username='bmg'
-";
+  if ($web != "") {
+    $username="<a href='".$web."'> ".stripslashes($username)."</a>";
+  }
+
+  if ($web == "") {
+    echo "$username ";
+  }
+
+}
+
+
 ?>
-
 
 
 
