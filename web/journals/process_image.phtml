@@ -1,49 +1,58 @@
 <?
 include "global.inc";
 conn();
-// austin swinney to the year 3000, swinney.org
-
-// save, rename, insert into database, other crap
-
-// now wer're done with all of that.
-
-
-
-
+# austin swinney to the year 3000, swinney.org
+# save, rename, insert into database, other crap
+# now wer're done with all of that.
 #
 #  HERE ARE THE VARIABLES USED IN THIS PROCESS:
 #
-#   $article_id is the unique number of the article submitted and saved in the folder ARTICLES
-#   $index is the incremented number of the image submitted, plus one for every submit
-#   $filename is the processed name of the submitted image composed of $article_id and $index 
-#   $userfile is PHP's file name for any file submitted by form
-#   $userfile_name is PHP's designation for the original name of the file, prior to $userfile rename
+#   $article_id is the unique number of the article 
+#	submitted and saved in the folder ARTICLES
+#   $index is the incremented number of the image 
+#	submitted, plus one for every submit
+#   $filename is the processed name of the submitted 
+#	image composed of $article_id and $index
+#   $userfile is PHP's file name for any file submitted 
+#	by form
+#   $userfile_name is PHP's designation for the 
+#	original name of the file, prior to $userfile rename
 #
 
 
-if (isset($image)) 
+if (!isset($index)) {
+    $index=1;
+  } else { 
+    $index++;
+  }
 
-{
 
-	# Copy the file to our server. 
-	$query="INSERT INTO articles_img (article_id,image) values ($article_id,$image)"; 
-	$res=mysql_query($query);
+  if ($submit_image=="submit") {
+     $temp = substr(strtolower($userfile_name),-3);
+     # gen a file name
+     if ( $temp == "jpg" ) {  // ADD THEM JAYPEGS!
+     $filename = $article_id."_".$index.".jpg";
+     } elseif ( $temp == "gif") {  // ADD THEM JIFFFFFFZ
+     $filename = $article_id."_".$index.".gif";
+     } elseif ( $temp == "png") {  // ADD THEM PEE-EN-JEEEY MAJIGGERS
+     $filename = $article_id."_".$index.".png";
+     } 
+
+# Copy the file to our server.  
+
+$copy=@copy($userfile, "/sky/www/swinney.org/html/journals/images/$filename");
 
 }
 
-	else
+if ($copy=="TRUE"||$submit_image=="exit") {
 
-{
+header("Location:submit_image.phtml?index=$index&article_id=$article_id");
 
-	echo "<P>error.</P>";
+} else {
 
+echo "<P>bad karma</P>";
 }
-
-
-#header ("Location: submit_image.phtml?article_id=$article_id");
-
 ?>
-
 
 
 

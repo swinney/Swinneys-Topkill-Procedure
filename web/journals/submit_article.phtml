@@ -1,9 +1,12 @@
 <?
-// include the top with the global include 
 #$Id$
+#include the top with the global include 
+
 include "templates/top.inc";
 conn();
 ?>
+
+
 <form action="process_article.phtml" method=post>
 <TABLE WIDTH=400 BORDER=0 CELLSPACING=0 CELLPADDING=0>
 
@@ -51,6 +54,13 @@ conn();
 </TD>
 </TR>
 
+<TR>
+<TD colspan=2 ALIGN="RIGHT">
+<P>Got images?  
+<INPUT TYPE="radio" NAME="images_too" VALUE="yes">yes
+<INPUT TYPE="radio" NAME="images_too" VALUE="no" CHECKED>no</P>
+</TD></TR>
+
 
 <TR>
 <TD COLSPAN=2>
@@ -92,7 +102,8 @@ echo "\n</TR></TABLE>";
 
 ?>
 
-<INPUT TYPE="SUBMIT">   <INPUT TYPE="RESET">
+<INPUT TYPE="SUBMIT" VALUE="submit"> 
+<INPUT TYPE="RESET" VALUE="reset">
 
 </form>
 </BODY>

@@ -2,56 +2,49 @@
 include "templates/top.inc";
 conn();
 
-$query = "SELECT count(image_id) from articles_img where article_id=$article_id";
-$res = mysql_query($query);
-$row = mysql_fetch_row($res);
-	$num=$row[0];
+// have an incrementing number in the filename
 
-if (isset($num))
+  if (! isset($index))
+    $index = 0;
 
-{
+  if ($index <= 15) {
+    if ($index == 0) 
+      echo "<P>If you have any images to upload for this article, select them here, otherwise click continue.</P>\n";
 
-	echo "<P>you have $num images.</P>";
+    elseif ($index >= 1 )
+      echo "<P>You have uploaded <b>$index</b> images for this article<br>\n"
+           ."If you have any <b>more</b> images to upload for this article,"
+	   ." select them here.</P>\n"
+	   ."<P>Otherwise click <B>exit</B>.</P>\n";
 
-}
+$res = mysql_query ("UPDATE articles_info SET image='$index' WHERE article_id='$article_id'");
 
-	else
-
-{
-
-	echo "<P>upload an image.</P>";
-
-}
+    if ( $res = false) 
+      echo "<P><b>Oops!</b> - Could not update database</P>";
+  } elseif ($index >= 5) {
+    echo "<CENTER><h1>You have bagged your limit</h1>\n";
+    echo "<a href='index.phtml'><img border='no' src='../art/homepages/car8.gif'></a></CENTER>\n";
+    exit;
+  }
 ?>
 
 
+<br>
+
 <form action='process_image.phtml' method='post' enctype='multipart/form-data'>
-file: <input type='file' name='image'>
+<P>file: <input type='file' name='userfile'></P>
 <input type='hidden' name='article_id' value='<? echo $article_id ?>'>
 <input type='hidden' name='index' value='<? echo $index ?>'><br>
-<input type='submit' value='go!'>
+<input type='submit' name=submit_image value='submit'>
+<input type='submit' name=submit_image value='exit'>
 </form>
 <P>
 <a href='index.phtml'>Continue</a>
 </P>
-
-
 </FONT>
-</BODY>
-</HTML>
-
-
-
-
-
-
-
-
-
-
-
-
-
+<?
+include "templates/footer.inc";
+?>
 
 
 

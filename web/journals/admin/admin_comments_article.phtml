@@ -1,4 +1,8 @@
-<? include "header.inc"; ?>
+<? 
+#$Id$
+include "../templates/top.inc";
+include "admin_nav.inc";
+?>
 
 <TABLE border=1 cellspacing=0 cellpading=0>
 <TR>
@@ -8,11 +12,10 @@
 <TD>comment</TD>
 </TR>
 <?
-include "../connect.inc";
 
 $previous=1;
 
-$res = mysql("$DB", "select * from comments where article_id=$article_id order by comment_id DESC");
+$res = mysql_query("select * from comments where article_id=$article_id order by comment_id DESC");
 
 while ( $d = mysql_fetch_object ($res) ) {
 $comment_id = $d->comment_id;
@@ -26,29 +29,6 @@ echo "<TD valign='top'><a href='edit_comments.phtml?article_id=$article_id&comme
 echo "<TD valign='top'>$username</TD><TD>".stripslashes($comment)."</TD></TR>";
 
 }
-
-
+echo "</TABLE>";
+include "../templates/footer.inc";
 ?>
-</TABLE>
-</BODY>
-</HTML>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

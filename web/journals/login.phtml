@@ -8,7 +8,7 @@ if (user_isloggedin()) {
         user_logout();
         $user_name='';
 }
-
+user_set_tokens($user_name_in);
 if ($submit) {
 	user_login($user_name,$password);
 }

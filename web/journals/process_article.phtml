@@ -64,5 +64,16 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
     echo("Bullocks on two!");
     exit;
   }
-header("Location: ../index.phtml");
+
+
+if ($images_too=="no") {
+	header("Location: ../index.phtml");
+
+} else {
+# $images_too probably equals "yes" =-)
+header("Location: submit_image.phtml?article_id=$article_id");
+
+}
 ?>
+
+

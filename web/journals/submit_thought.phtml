@@ -7,15 +7,16 @@ $Id$
 
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
 <FORM ACTION="journals/process_thought.phtml" METHOD=post ENCTYPE="multipart/form-data">
-<TR><TD>
+<TR><TD valign="top">
 	<P>name</P>
-</TD><TD>
+</TD><TD valign="top" COLSPAN=2>
 	<P>thought</P>
 </TD</TR>
-<TR><TD>
-	<INPUT TYPE=TEXT NAME=username SIZE=10 maxlength=10>
-</TD><TD>
+<TR><TD valign="top">
+	<INPUT TYPE=TEXT NAME=username SIZE=10 maxlength=40>
+</TD><TD valign="top">
 <INPUT TYPE=TEXT  NAME=thought COLS=30 ROWS=1 maxlenth=250 wrap=hard>
+</TD><TD>
 <INPUT TYPE="SUBMIT" VALUE="I Thought It">
 </TD></TR>
 </FORM>

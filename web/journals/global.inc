@@ -25,22 +25,23 @@ define("TITLE", "swinney.org");
 # root on the domain swinney.org.
 
 # fire the session up or keep it going if it is already on fire
-session_start();
-
+# session_start();
+#  session_destroy();
 # step one, assing a random value user id
-if (!isset($id)) {
-	srand((double)microtime()*1000000);
-	$randval = rand();
-	# assign the user a random value cookie
-	setcookie("id",$randval,time()+14400,"/",".swinney.org",0);
-} 
+#if (!isset($id)) {
+#	srand((double)microtime()*1000000);
+#	$randval = rand();
+#	# assign the user a random value cookie
+#	setcookie("id",$randval,time()+14400,"/",".swinney.org",0);
+#} 
 
 # step two, validate the user
 # cookie named valid_user, yes, four hours, / , swinney.org
-setcookie("valid_user","yes",time()+14400,"/",".swinney.org",0);
+#setcookie("valid_user","yes",time()+14400,"/",".swinney.org",0);
+
 
 # to delete the cookie just dont set the username
-# setcookie("valid_user","",time()+14400,"/",".swinney.org",0);
+ setcookie("","",time()+14400,"/",".swinney.org",0);
 
 ##########################################################
 #################  FUNCTION LIST #########################

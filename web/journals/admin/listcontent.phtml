@@ -3,22 +3,28 @@
 # include the templates/top.inc
 include "../templates/top.inc";
 include "admin_nav.inc";
-echo "front: $front";
 
+# i created an articles_user table for keeping
+# record of the most recent post by a person
+# this will eliminate the problem of green posting
+# furiously throughout the day.
+# to create the table for this stuff
+# create table articles_user (user_id int(11) NOT NULL PRIMARY KEY auto_increment, username varchar(20) NOT NULL, most_recent int(11), total_submitted int(11));
 
-	if ($status==2 && $front=="yes") {
-	echo "id:$article_id<BR>username: $username";
+if ($status==2 && $front=="yes") {
+
+	echo "<P>id: $article_id</P>";
+	echo "<P>un: $username</P>";
 	$query = "UPDATE articles_user SET most_recent=$article_id, total_submitted=total_submitted+1 WHERE username='$username'";
 	$res = mysql_query($query) or die("\n<P>update failed</P>");
 #	echo (mysql_affected_rows()?"success":"failure"); 
 	$affected=mysql_affected_rows(); 
-	} 
+} 
 
-	if ($affected=="0"||$affected=="-1") { # UPDATE was invalid, do INSERT
+if ($affected=="0"||$affected=="-1") { # UPDATE was invalid, do INSERT
 	$query = "INSERT INTO articles_user (user_id,username,most_recent,total_submitted) VALUES ('','$username',$article_id,1)";
 	$front_res = mysql_query($query) or die ("\n<P>insert failed</P>");
-#echo "<P>hell hole</P>";
-	}
+}
 
 
 // update the articles
@@ -39,26 +45,9 @@ echo "front: $front";
 		SET web='$web', status='$status', title='$title', blurb='$blurb' 
 		WHERE article_id='$article_id'");
 
+    }
 
-# i created an articles_user table for keeping
-# record of the most recent post by a person
-# this will eliminate the problem of green posting
-# furiously throughout the day.
-
-
-/*
-		
-		$query="UPDATE articles_user SET most_recent=$article_id, total_submitted=total_submitted+1 WHERE username='$username'";
-		$res = @mysql_query($query);
-		if ($res == false) {
-		# res one failed, go res two
-		# this is a new username to swinney.org
-
-		$query = "INSERT INTO articles_user ('username','most_recent') VALUES ('$username','$article_id')";
-		$res = @mysql_query($query);
-		}
-*/
-	}
+	
 
     if ( $subby == "Save and Exit" ) { 
     unset($article_id); 
