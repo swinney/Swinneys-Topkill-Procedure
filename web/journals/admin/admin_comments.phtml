@@ -1,6 +1,7 @@
 <? 
-
-include "header.inc"; 
+#$Id$
+include "../templates/top.inc";
+include "admin_nav.inc";
 ?>
 
 <TABLE border=1 cellspacing=0 cellpading=0>
@@ -11,15 +12,16 @@ include "header.inc";
 <TD>comment</TD>
 </TR>
 <?
-include "../connect.inc";
+
 
 // this is set to determine header() in process_edit_comments.phtml
 $previous=0;
 echo "<!-- previous: $previous -->\n";
 
-$res = mysql("$DB", "select * from comments where status=0 order by comment_id DESC limit 20");
+$res = mysql_query("select comment_id,username,comment,article_id from comments where status=0 order by comment_id DESC limit 20");
 
 while ( $d = mysql_fetch_object ($res) ) {
+
 $comment_id = $d->comment_id;
 $username = $d->username;
 $comment = $d->comment;

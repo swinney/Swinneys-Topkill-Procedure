@@ -1,6 +1,8 @@
 <?
-// include the templates/top.inc
+#$Id$
+# include the templates/top.inc
 include "../templates/top.inc";
+
 ?>
 
 <CENTER>
@@ -18,7 +20,7 @@ include "../templates/top.inc";
 
   if ( $type == "resubmit" ) {
 
-    $res = mysql ("$DB","UPDATE articles SET text='$update' WHERE article_id=$article_id");
+    $res = mysql_query ("UPDATE articles_text SET text='$update' WHERE article_id=$article_id");
 
     if ( $subby == "Save and Exit" ) unset($article_id);
 
@@ -27,8 +29,7 @@ include "../templates/top.inc";
     //  or equal to 4 than update it in the database
     if ( $status >= 1 && $status <= 4 ) {
 
-      $res = mysql("$DB", 
-		"UPDATE pending_articles 
+      $res = mysql_query("UPDATE articles_info 
 		SET web='$web', status='$status', title='$title', blurb='$blurb' 
 		WHERE article_id='$article_id'");
 
@@ -69,17 +70,16 @@ if ( isset($article_id) ) {
 
 // select the article list
 
-    $res = mysql("$DB", 
-		"SELECT keywords, title, blurb, status, image, web 
-		FROM pending_articles 
+	$res = mysql_query("SELECT keywords, title, blurb, status, image, web 
+		FROM articles_info 
 		WHERE article_id='$article_id'");
-
-    $keywords = mysql_result($res, 0, 0);
-    $title = mysql_result( $res, 0, 1 );
-    $blurb = mysql_result( $res, 0, 2 );
-    $status = mysql_result ( $res, 0, 3);
-    $images = mysql_result ( $res, 0, 4);
-    $web = mysql_result ($res, 0, 5);
+	$d=mysql_fetch_object($res);
+    $keywords = $d->keywords;
+    $title = $d->title;
+    $blurb = $d->blurb;
+    $status = $d->status;
+    $images = $d->images;
+    $web = $d->web;
     $keyarray = explode(',', $keywords);
 
 
@@ -144,21 +144,35 @@ if ( isset($article_id) ) {
 //
 
 
-if ($web != "") {
-if (substr($web,0,7) !='http://' && substr($web,0,7) !='mailto:') {
+if ($web != "") 
+
+{
+
+	if (substr($web,0,7) !='http://' && substr($web,0,7) !='mailto:') 
+
+	{
 
 
-	if (strstr($web,'@')) { 
-	$web = "mailto:$web"; 
-		} else { 
-	$web = "http://$web"; 
+		if (strstr($web,'@')) 
+
+		{ 
+			$web = "mailto:$web"; 
+
+		} 
+
+			else 
+
+		{ 
+
+			$web = "http://$web"; 
+
+		}
+
 	}
 
-
-}
 }
 
-    echo "<h2>web: $web</h2>";
+    echo "<h2>web: <a href=\"$web\">$web</a></h2>";
     echo "<textarea name=web cols=60 rows=2>$web</textarea>";
     echo "<h2>Title: ".stripslashes($title)."</h2>";
     echo "<textarea name=title cols=60 rows=2>".stripslashes($title)."</textarea>";
@@ -168,7 +182,7 @@ if (substr($web,0,7) !='http://' && substr($web,0,7) !='mailto:') {
 
 // Look up the article
 
-$res = mysql("$DB","SELECT text FROM articles WHERE article_id='$article_id'");
+$res = mysql_query("SELECT text FROM articles_text WHERE article_id='$article_id'");
 
 $row = mysql_fetch_row($res);
 $text = $row[0];
@@ -216,12 +230,7 @@ if ( isset($article_id) ) {
 // article list
 
   echo "<p>";
-  $res = mysql("$DB", 
-		"SELECT * 
-		FROM pending_articles 
-		WHERE status<>4 
-		ORDER BY article_id 
-		DESC LIMIT 20");
+  $res = mysql_query("SELECT * FROM articles_info WHERE status<>4 ORDER BY article_id DESC LIMIT 20");
   
   echo "<table cellpadding=4 cellspacing=0 border=1 align=center>";
   echo "<tr>";
@@ -260,8 +269,7 @@ if ( isset($article_id) ) {
 //  so i changed to mysql_num_rows() on the results from selecting all the comment_id's associated
 //  with the article_id's.  :)    
 
-    $comments = mysql("$DB", 
-		"SELECT comment_id 
+    $comments = mysql_query("SELECT comment_id 
 		FROM comments 
 		WHERE article_id=$d->article_id");
     $num_comments=mysql_num_rows($comments);

@@ -1,4 +1,6 @@
-
+<!--
+$Id$
+-->
 <form action="process_comment.phtml" method=post enctype="multipart/form-data">
 <input type="hidden" name="article_id" value="<? echo "$article_id"?>">
 
@@ -28,8 +30,8 @@
 </td>
 <td><p>
 <?
-  include "connect.phtml";
-  $res = mysql("$DB", "SELECT * FROM nature ORDER BY nature_id ASC");
+
+  $res = mysql_query ( "SELECT * FROM nature ORDER BY nature_id ASC");
 
   while ( $d = mysql_fetch_object($res) ) {
     echo "<input type='radio' name='nature' value='$d->nature_id'> $d->nature <br>";
@@ -37,7 +39,8 @@
 
 ?>
 <br><br>
-<INPUT TYPE="SUBMIT" VALUE="I said it">   <INPUT TYPE="RESET" VALUE="reset">
+<INPUT TYPE="SUBMIT" VALUE="I said it">   
+<INPUT TYPE="RESET" VALUE="reset">
 </p>
 </td>
 </tr>

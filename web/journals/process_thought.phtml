@@ -1,8 +1,7 @@
 <?
-
-
+#$Id$
 include "global.inc";
-
+conn();
 /*
 mysql> describe thoughts;
 +------------+---------------+------+-----+-------------+----------------+
@@ -40,7 +39,7 @@ $article_id = $article_id[0];
     exit;
   }
 
-$res = mysql("$DB","INSERT INTO thoughts VALUES (NULL, NULL,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
+$res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
 
   if ( $res == false ) { 
     echo ("Bollocks!");
