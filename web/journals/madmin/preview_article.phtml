@@ -1,0 +1,40 @@
+<?
+// $Id$
+require_once("../global.inc");
+include_once("./top.inc");
+include_once("./nav.inc");
+
+$query="SELECT articles_info.username,
+               articles_info.title,
+               articles_info.blurb,
+               articles_text.text
+          FROM articles_info,
+               articles_text 
+         WHERE articles_info.article_id=$id 
+           AND articles_info.article_id=articles_text.article_id";
+
+$res=mysql_query($query) or die (error_page($query));
+
+$row=mysql_fetch_array($res);
+$username=stripslashes($row[username]);
+$title=stripslashes($row[title]);
+$blurb=stripslashes($row[blurb]);
+$text=stripslashes($row[text]);
+
+echo <<<EOT
+<TABLE ALIGN="CENTER">
+<TR>
+<TD>
+<H1>$title</H1>
+<H2>$blurb</H2>
+<P><i>by $username</I></P>
+    $text
+
+</TD>
+</TR>
+</TABLE>
+EOT;
+
+include_once("./bottom.inc");
+
+?>
