@@ -45,28 +45,26 @@ if (isset($res)) {
 $url = "article.phtml?id=$d->article_id";
 
 
-   //   echo "<h1>Last 25 Entries</h1>";
-   //   echo "<P><a href='submit_article.phtml'><strong>I want to write</strong></a></P>";
    echo "<P>";
 
      if($page_num == 1){
-            print "<PRE><b><<</b> <a href='submit_article.phtml'><strong>I want to write</strong></a>";
+            print "<P><< <a href='submit_article.phtml'>I want to write</a>";
      }
 
 
      if($page_num > 1){
-	     print "<PRE><a href=\"index.phtml?select=$select&page_num=$page_back\"><b><<</a></b> <a href='submit_article.phtml'><strong>I want to write</strong></a>";
+	     print "<P><a href=\"index.phtml?select=$select&page_num=$page_back\"><<</a> <a href='submit_article.phtml'>I want to write</a>";
 
 
      } 
 
   
      if($page_num < $num_of_pages) { 
-             print " <a href=\"index.phtml?select=$select&page_num=$page_forward\"><b>>></b></a></PRE>";
+             print " <a href=\"index.phtml?select=$select&page_num=$page_forward\">>></a></P>";
      } 
 
      if($page_num == $num_of_pages) {
-             print "<b>>></b></PRE>";
+             print ">></P>";
      }
 
  echo "</P>";
@@ -74,8 +72,8 @@ $url = "article.phtml?id=$d->article_id";
 while ( $individual_row = mysql_fetch_object( $res ) ) {
 
    echo "<table border=0 cellspacing=0 cellpadding=3><tr><td>\n";
-   echo "<font face='arial' size='2'>\n";
-   echo "<a href=\"$url$individual_row->article_id.txt\">\n";
+   echo "<font size='2'>\n";
+   echo "<P><a href=\"$url$individual_row->article_id.txt\">\n";
    echo "<B>$individual_row->title</a></B> by\n";
 
    $name = $individual_row->username;
@@ -86,13 +84,13 @@ while ( $individual_row = mysql_fetch_object( $res ) ) {
          echo "<a href='$individual_row->web' target='new'>$individual_row->username</a><br> \n";
       }
    echo "$individual_row->blurb</font><br>";
-   echo "<font face=\"arial\" size='1'>$individual_row->date ";
+   echo "<font size='1'>$individual_row->date ";
 
 $res2 = mysql_query ( "SELECT count(*) as num FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
 
 $d =  mysql_fetch_object($res2);
 
-echo " | $d->num comments";
+echo " | $d->num comments</P>";
 
    echo "</td></tr></table>\n";
 
