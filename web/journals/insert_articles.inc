@@ -52,11 +52,11 @@ while ( $individual_row = mysql_fetch_object( $res ) ) {
    echo "$individual_row->blurb</font><br>";
    echo "<font face=\"arial\" size='1'>$individual_row->date ";
 
-$res2 = mysql_db_query("$DB", "SELECT * FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
+$res2 = mysql("$DB", "SELECT count(*) as num FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
 
-$numrows =  mysql_num_rows($res2);
+$d =  mysql_fetch_object($res2);
 
-echo " | $numrows comments";
+echo " | $d->num comments";
 
    echo "</td></tr></table>\n";
 
