@@ -10,7 +10,7 @@ conn();
     echo "This username is not set";
     exit;
   }
-
+/*
   // Work out what subjects
   $res = mysql_query ( "SELECT MAX(category_id) FROM categories");
   $maxid = mysql_result($res, 0, 0);
@@ -22,7 +22,7 @@ conn();
       $subject_value += $val;
     }
   }
-
+*/
 // get the users ip address.  maybe this is uncool, but i think it is a
 // necessary precaution.  like dont i want to know who the person is who
 // tries to send malicious unix commands in to the thoughts database?
@@ -64,16 +64,5 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
     echo("Bullocks on two!");
     exit;
   }
-
- strip_tags($blurb);
- strip_tags($content);
- mail("articles@swinney.org","$username wrote $title", "$blurb\n $content");
-
- header ("Location: submit_image.phtml?article_id=$article_id"); 
+header("Location: ../index.phtml");
 ?>
-
-
-
-
-
-
