@@ -1,70 +1,49 @@
+
+
 <?
-include "journals/connect.inc"; 
+include "journals/templates/top.inc";
+// include global
+include "journals/global.inc";
 ?>
-<html>
-<head>
-<title>saturn5 - SWINNEY>ORG</title>
-<style>
-<!--
-P {color: white; font-family: arial; font-size= 11px; letter-spacing: 3px}
-ul {font-family: arial; font-size= 10px; letter-spacing: 3px}
-
--->
-</style>
-</Head>
-
-<body bgcolor= 000000  LINK="FFFFFF" vlink="CC99CC">
-
-
-
+<CENTER>
+<TABLE CELLSPACING=0 CELLPADDING=5><TR><TD COLSPAN=2 ALIGN="CENTER">
 <?
 // insert banner
-// include "banners/ghetto.inc";
-  include "banners/darwin.inc";
+// include "journals/banners/rand_banner.inc";
 ?>
-
-<CENTER>
-<table border=0 width=600><tr><td valign=top align=left width=50>
-</td><td valign=top align=left>
-
+<!-- </TD></TR><TR><TD COLSPAN=2 ALIGN="center"> -->
+<TABLE><TR><TD>
+<p align="center">(<a href="journals/index.phtml">JOURNAL</a> |
+<a href="journals/comments.phtml">COMMENTS</a> |   
+<a href="journals/submit_article.phtml">SUBMIT</a> | 
+<a href="journals/faq.phtml">ANSWERS</A>)</p>
 
 <? 
 // include the thoughts
 include "journals/submit_thought.phtml";
 include "journals/insert_thought.phtml"; 
-
 ?>
-
-</td></tr></table>
-</CENTER>
-
-<table align='center' border=0><tr><td colspan=2>
-<center>
-<p><font face='arial' size='4' color="CCCCCC">Please read <a href="journals/index.phtml">the journal</a>  
-or <a href="journals/submit_article.phtml">write in it</a> (and upload images too), but don't do nothing.</p>
-</font>
-</center>
+</TD></TR></TABLE>
+</TD></TR><TR><TD VALIGN="top">
+<CENTER><TT>5 new</TT></CENTER>
 <?
-include "journals/insert_5articles.inc";
+ include "journals/insert_5articles.inc";
+?>
+</TD><TD valign="top">
+<CENTER><TT>5 old</TT></CENTER>
+<?
+ include "journals/insert_5rand.inc";
 ?>
 
-</td>
-</tr>
+</TD></TR><TR><TD COLSPAN=2 ALIGN="CENTER">
 
-</table>
+<? include "journals/insert_stats.inc"; ?>
 
-
-
-<CENTER>
-<FONT color=white><TT>
-swinney.org<BR><BR>
-(austin || san francisco || melbs)
-</TT></FONT>
+</TD></TR></TABLE>
 </CENTER>
-</body>
-
-</HTML>
-
+<?
+include "journals/templates/footer.inc";
+?>
 
 
 
