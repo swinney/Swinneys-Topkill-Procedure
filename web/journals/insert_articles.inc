@@ -168,17 +168,18 @@ EOT;
       $num_comments .= " comments";
     }
 
-    $username = $article->username;
+    $username = stripslashes($article->username);
 
-    $blurb = $article->blurb;
+    $blurb = stripslashes($article->blurb);
     if ($blurb) {
       $blurb .= "<br>\n";
     }
+    $title= stripslashes($article->title);
 
     echo <<<EOT
 <p>
-<a href="article.phtml?id=$article->article_id.txt">
-<b>$article->title</b></a> by <a href="userpages.phtml?username=$username">$username</a><br>
+<a href="article.phtml?id=$article->article_id">
+<b>$title</b></a> by <a href="userpages.phtml?username=$username">$username</a><br>
 $blurb
 <span class="small">$article->date | $num_comments</span>
 </p>
