@@ -3,7 +3,7 @@
 // insert_userpages.inc/phtml
 
 
-include "connect.inc";
+
 
 $res1 = mysql( "swinney", "SELECT * FROM pending_articles WHERE username='$username' AND status='2' ORDER BY time DESC" );
 

@@ -1,7 +1,7 @@
 <?
 
-include "connect.inc";
 
+include "global.inc";
 
 /*
 mysql> describe thoughts;
@@ -40,8 +40,6 @@ $article_id = $article_id[0];
     exit;
   }
 
-// echo "$username<br>$comment<br>$nature<br>";
-
 $res = mysql("$DB","INSERT INTO thoughts VALUES (NULL, NULL,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
 
   if ( $res == false ) { 
@@ -49,7 +47,8 @@ $res = mysql("$DB","INSERT INTO thoughts VALUES (NULL, NULL,'".addslashes($usern
     exit;
   }
 //  mail("thoughts@swinney.org", "comment: $username",  "$thought"); 
-header("Location: http://swinney.org");
+header("Location: ../index.phtml");
+
 ?>
 
 

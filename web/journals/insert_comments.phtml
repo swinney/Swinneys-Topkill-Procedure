@@ -3,8 +3,9 @@
 <!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
 
 
-<?
+<P align='center'><a href='submit_comment.phtml?article_id=<? echo "$article_id" ?>'>comment below</a></P>
 
+<?
 /*
 +------------+---------------+------+-----+-----------+----------------+
 | Field      | Type          | Null | Key | Default   | Extra          |
@@ -21,7 +22,7 @@ $article_id = explode (".", $article_id);
 
 $no_extension = $article_id[0];
 
-$res = mysql ("$DB","SELECT * FROM comments WHERE article_id=$no_extension AND status=0 ORDER BY comment_id");
+$res = mysql ("$DB","SELECT username,comment_id,comment FROM comments WHERE article_id=$no_extension AND status=0 ORDER BY comment_id");
 
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {

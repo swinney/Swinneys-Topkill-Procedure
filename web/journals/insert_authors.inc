@@ -1,7 +1,7 @@
 <!-- insert_authors.inc -->
 <?
 
-include "connect.inc";
+
 
 $res1 = mysql( "", "SELECT distinct web, username FROM pending_articles WHERE status='2' ORDER BY username" );
 

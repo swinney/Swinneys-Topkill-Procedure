@@ -1,16 +1,10 @@
-<HTML>
-<HEAD>
-<TITLE>mind reader</TITLE>
-</HEAD>
-<BODY bgcolor="black">
-
 
 <!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
 
 
 <?
-
- include "connect.inc";
+include "templates/top.inc";
+ 
 
 /*
 mysql> describe thoughts;
@@ -27,7 +21,7 @@ $article_id = explode (".", $article_id);
 
 $no_extension = $article_id[0];
 
-$res = mysql ("swinney","SELECT * FROM thoughts ORDER BY timestamp DESC");
+$res = mysql ("$DB","SELECT * FROM thoughts ORDER BY timestamp DESC");
 
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {

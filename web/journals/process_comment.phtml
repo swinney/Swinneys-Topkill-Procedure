@@ -1,7 +1,5 @@
 <?
-
-include "connect.inc";
-
+include "global.inc";
 
 /*
 +------------+---------------+------+-----+-----------+----------------+
@@ -52,7 +50,7 @@ $article_id = $article_id[0];
 
 // echo "$username<br>$comment<br>$nature<br>";
 
-$res = mysql("swinney","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."','0','$ip_addr')"); 
+$res = mysql("$DB","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."','0','$ip_addr')"); 
 
   if ( $res == false ) { 
     echo ("Bollocks!");
@@ -62,7 +60,7 @@ $res = mysql("swinney","INSERT INTO comments VALUES (NULL,'".addslashes($article
 
 
 // mail("theCommentator@swinney.org", "comment: $username on $article_id", "$nature", "$comment"); 
-header("Location: http://swinney.org/journals/article.phtml?id=$article_id.txt")
+header("Location: article.phtml?id=$article_id.txt")
 ?>
 
 

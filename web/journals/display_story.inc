@@ -3,7 +3,7 @@
 <h1>Trying to figure out how to display the articles.</h1>
 
 <?
-include "connect.inc";
+
 
 $result_set = mysql( "lifestyle", "SELECT * FROM pending_articles" );
 

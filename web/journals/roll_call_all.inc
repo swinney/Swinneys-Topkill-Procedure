@@ -17,7 +17,7 @@
 
 <?
 
-include "connect.inc";
+
 
 $res = mysql ("$DB", "SELECT DISTINCT username FROM pending_articles WHERE status='2' OR status='3' ORDER BY username");
 

@@ -1,7 +1,7 @@
 <?
 // comment.inc
 
-include "connect.inc";
+
 echo "<TABLE border=0 cellspacing=0 cellpading=0>";
 
 // this is set to determine header() in process_edit_comments.phtml

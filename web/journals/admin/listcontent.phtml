@@ -14,14 +14,7 @@ include "../templates/top.inc";
 
 <?
 
-/*
-This is where we fopen an article, fwrite() it and fclose() it.
-make sure the folders and files are:
-drwxrwxrwx   2 aswinney host         5120 Dec 30 06:17 pending
--rw-r--r--   1 nobody   nogroup      1128 Dec 29 09:43 284.txt
-Do this with commands CHMOD and CHOWN.  Play with it til you get
-it right.
-*/
+// update the articles
 
   if ( $type == "resubmit" ) {
 
@@ -182,10 +175,10 @@ $text = $row[0];
 
 if ( isset($article_id) ) {
 
-    echo "<input type='hidden' name='type' value='resubmit'>";
-    echo "<input type='hidden' name='article_id' value='$article_id'>";
-    echo "<table border=0 width=400><tr><td>$text</td></tr></table><br><br>";
-    echo "<textarea name=update cols=80 rows=20 wrap=virtual>$text</textarea><br>";
+    echo "<input type='hidden' name='type' value='resubmit'>\n";
+    echo "<input type='hidden' name='article_id' value='$article_id'>\n";
+    echo "<table border=0 width=400><tr><td>$text</td></tr></table>\n<br>\n<br>\n";
+    echo "<textarea name=update cols=80 rows=20 wrap=virtual>$text</textarea>\n<br>\n";
 
 } 
 
@@ -203,19 +196,19 @@ if ( isset($article_id) ) {
     } else if ( $status == 4 ) {
       echo "<option value='4' selected>Trash";
     }
-    echo "<option>---";
-    echo "<option value='1'>Pending";
-    echo "<option value='2'>Active";
-    echo "<option value='3'>Archived";
-    echo "<option value='4'>Trash";
+    echo "<option>---\n";
+    echo "<option value='1'>Pending\n";
+    echo "<option value='2'>Active\n";
+    echo "<option value='3'>Archived\n";
+    echo "<option value='4'>Trash\n";
 
-    echo "</select>";
+    echo "</select>\n";
 
     echo "<p>";
-    echo "<input name='subby' type='submit' value='Save and Reload'>";
-    echo "<input name='subby' type='submit' value='Save and Exit'>";
-    echo "<br><br>";
-    echo "</form>";
+    echo "<input name='subby' type='submit' value='Save and Reload'>\n";
+    echo "<input name='subby' type='submit' value='Save and Exit'>\n";
+    echo "<br><br>\n";
+    echo "</form>\n";
 
     exit;
   }

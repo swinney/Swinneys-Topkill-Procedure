@@ -1,15 +1,11 @@
-<?
-// comment.inc
 
-include "connect.inc";
+<?
+// comments.inc
+
 
 // this is set to determine header() in process_edit_comments.phtml
-$previous=0;
+
 echo "<!-- previous: $previous -->\n";
-
-// $res = mysql("$DB", "select * from comments order by article_id DESC limit 20");
-
-$res = mysql("$DB", "select * from comments order by comment_id DESC limit 20");
 
 while ( $d = mysql_fetch_object ($res) ) {
 $comment_id = $d->comment_id;
@@ -27,6 +23,19 @@ echo "<TR><TD>".stripslashes($comment)."</TD></TR></TABLE>";
 
 }
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

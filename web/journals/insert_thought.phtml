@@ -5,8 +5,6 @@
 
 <?
 
-// include "connect.phtml";
-
 /*
 mysql> describe thoughts;
 +------------+---------------+------+-----+-------------+----------------+
@@ -22,8 +20,8 @@ $article_id = explode (".", $article_id);
 
 $no_extension = $article_id[0];
 
-$res = mysql ("swinney","SELECT * FROM thoughts ORDER BY timestamp DESC LIMIT 5");
-
+$res = mysql ("$DB","SELECT * FROM thoughts ORDER BY timestamp DESC LIMIT 5");
+echo "<P>";
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {
 
@@ -33,13 +31,11 @@ $thought=$d->thought;
 
 // echo and strip
 
-echo "<font color='red'><strong>";
-echo stripslashes($username)."</strong></font>";
-echo "<font color='FF9966'>";
-echo " .o0O(".stripslashes($thought).")\n";
-echo "</font><br>\n"; 
-}
+echo stripslashes($username);
+echo " .o0O(".stripslashes($thought).")<BR>\n";
 
+}
+echo "</P>";
 ?>
 
 

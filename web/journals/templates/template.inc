@@ -1,12 +1,21 @@
 <? 
-   include "../templates/top.req";
-   include "../templates/swinney.req";
-//   include "user_login.inc";
-   include "../templates/rollcall.inc";
-   include "../templates/endleft.inc";
+
+   include "templates/top.inc";
+   include "templates/swinney.req";
+   include "templates/rollcall.inc";
+   include "templates/endleft.inc";
+
    include "$into_template";
-   include "../templates/image.req";
-   include "../templates/bottom.req";
+
+if (isset($into_template2)) {
+
+   include "$into_template2";
+
+}
+
+   include "templates/image.req";
+   include "templates/bottom.req";
+   include "templates/footer.inc";
 ?>
 
 

@@ -2,7 +2,7 @@
 // protal.inc
 // swinney.org, austin swinney, for weeb
 
-include "connect.inc";
+
 
 if(!$page_num || $page_num < 1) { //No Page Number? Set it to Page 1 then...
         $page_num = 1;

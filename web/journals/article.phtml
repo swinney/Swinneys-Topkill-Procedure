@@ -1,17 +1,12 @@
 <? 
-   include "../templates/top.req";
-   include "../templates/swinney.req";
-// include "../templates/journalists.req";
-// include "../templates/homies.req";
-   include "../templates/rollcall.inc";
-   include "../templates/endleft.inc";
-   include "insert_article.inc";
-   include "../templates/article_break.inc";
-   include "../templates/image.req";
-// include "../templates/help.inc";
-// include "../templates/fan.inc";
-// include "../templates/elly.inc";
-   include "../templates/bottom.req";
+
+$into_template="insert_article.inc";
+
+// do you have comments?
+$into_template2="insert_comments.phtml";
+
+include "template.inc";
+
 ?>
 
 

@@ -1,6 +1,7 @@
 <?
- # include "header.inc";
-    include "connect.inc";
+  
+include "global.inc";
+  
   // Init the date and time
   $date = date("Y-m-d");
   $time = time();
@@ -9,9 +10,9 @@
     echo("This username is not set");
     exit;
   }
-
+/*
   // Work out what subjects
-  $res = mysql("swinney", "SELECT MAX(category_id) FROM categories");
+  $res = mysql("$DB", "SELECT MAX(category_id) FROM categories");
   $maxid = mysql_result($res, 0, 0);
   $subject_value = 0;
   for ( $i = 1 ; $i <= $maxid ; $i++ ) {
@@ -21,7 +22,7 @@
       $subject_value += $val;
     }
   }
-
+*/
 // get the users ip address.  maybe this is uncool, but i think it is a
 // necessary precaution.  like dont i want to know who the person is who
 // tries to send malicious unix commands in to the thoughts database?
@@ -29,7 +30,7 @@
 $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
   // Insert into the database
-  $res = mysql	 ("swinney", "INSERT INTO pending_articles
+  $res = mysql	 ("$DB", "INSERT INTO pending_articles
 	 VALUES ( 
 	'NULL', 
 	'$username', 
@@ -46,7 +47,7 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 	)");
 
   if ( $res == false ) { 
-    echo("Bullocks!");
+    echo("Bullocks on one!");
     exit;
   }
 
@@ -55,19 +56,25 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
   // Create a file in  /pending_articles
   // if you don't have the auto_increment integer, then mysql_insert_id is not going to work
   $article_id = mysql_insert_id();
-  $content = mysql_add_slashes($content);
-  $res = mysql ("$DB", "INSERT INTO article VALUES article_id=$article_id, text=$content");
+  $content = addslashes($content);
+  $res = mysql ("$DB", "INSERT INTO articles VALUES ($article_id,'$content') ");
 
-  // Now get the images
+  if ( $res == false ) { 
+    echo("Bullocks on two!");
+    exit;
+  }
+
+echo "article id: $article_id <BR>";
+echo "content: <BR> $content";
 
  strip_tags($blurb);
  strip_tags($content);
- mail("article@swinney.org", 
+/* mail("article@swinney.org", 
       "$username makes a swinney\n", 
       "$title\n\nby $username\n\n $blurb\n $content");
 
- header("Location:submit_image.phtml?article_id=$article_id" ); 
-
+  header("Location:submit_image.phtml?article_id=$article_id" ); 
+*/
 ?>
 
 

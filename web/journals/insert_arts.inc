@@ -1,7 +1,7 @@
 <!-- insert_articles.inc -->
 <?
 
-include "connect.inc";
+
 
 $result_set = mysql( "", "SELECT * FROM pending_articles WHERE status='5' ORDER BY time DESC" );
 

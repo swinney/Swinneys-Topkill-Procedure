@@ -1,10 +1,44 @@
-<?
+<?php
 
-echo "$username\n";
-echo "$password\n";
+include('database.phtml');
+include('pre.phtml');
+include('user.phtml');
 
+if (user_isloggedin()) {
+        user_logout();
+        $user_name='';
+}
 
+if ($submit) {
+	user_login($user_name,$password);
+}
 
+site_header('Login To Swinney');
 
-// header("Location:$HTTP_REFERER");
+if ($feedback) {
+	echo '<FONT COLOR="RED"><H2>'.$feedback.'</H2></FONT>';
+}
+
+echo '<H3>Login To Swinney</H3>
+	<P>
+	Enter your user name and password and we\'ll set a cookie so we know you\'re logged in.
+	<P>
+	<FORM ACTION="'. $PHP_SELF .'" METHOD="POST">
+	<B>User Name:</B><BR>
+	<INPUT TYPE="TEXT" NAME="user_name" VALUE="" SIZE="10" MAXLENGTH="15">
+	<P>
+	<B>Password:</B><BR>
+	<INPUT TYPE="password" NAME="password" VALUE="" SIZE="10" MAXLENGTH="15">
+	<P>
+	<INPUT TYPE="SUBMIT" NAME="submit" VALUE="Login To Swinney">
+	</FORM>
+	<P>
+	<A HREF="register.phtml">[ Register A New Account ]</A>
+	<P>
+	<A HREF="changepass.phtml">[ Change Your Password ]</A>
+	<P>
+	<A HREF="changeemail.phtml">[ Change Your Email Address ]</A>';
+
+site_footer();
+
 ?>

@@ -2,7 +2,7 @@
 <!--insert_article.inc-->
 <?
 
-include "connect.inc";
+
 
 //  $url = "/article.phtml?id=$article_id";
   $article_id=$id;

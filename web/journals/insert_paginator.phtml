@@ -1,9 +1,6 @@
 
 <?
 
-include "connect.inc";
-
-
 // what table are you paginating?
 $table="comments";
 
@@ -28,7 +25,7 @@ $num_res = mysql ("$DB", "SELECT count(*) as num_articles FROM $table WHERE stat
 $num_object = MYSQL_FETCH_OBJECT($num_res);
 $num_of_results = $num_object->num_articles;
 
-$res = mysql ("$DB", "SELECT * FROM $table WHERE status='0' ORDER BY timestamp DESC limit $page_start,$per_page");
+$res = mysql ("$DB", "SELECT username,comment_id,comment,article_id FROM $table WHERE status='0' ORDER BY timestamp DESC limit $page_start,$per_page");
 
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
@@ -56,51 +53,29 @@ $url = "article.phtml?id=$d->article_id";
    echo "<P>";
 
      if($page_num == 1){
-            print "<PRE><b><<</b> <a href='submit_article.phtml'><strong>I want to write</strong></a>";
+            print "<TT><< |";
      }
 
 
      if($page_num > 1){
-	     print "<PRE><a href=\"$return.phtml?&page_num=$page_back\"><b><<</a></b> <a href='submit_article.phtml'><strong>I want to write</strong></a>";
+	     print "<TT><a href=\"$return.phtml?&page_num=$page_back\"><<</a> |";
 
 
      } 
 
   
      if($page_num < $num_of_pages) { 
-             print " <a href=\"$return.phtml?page_num=$page_forward\"><b>>></b></a></PRE>";
+             print " <a href=\"$return.phtml?page_num=$page_forward\">>></a></TT>";
      } 
 
      if($page_num == $num_of_pages) {
-             print "<b>>></b></PRE>";
+             print ">></TT>";
      }
 
  echo "</P>";
 
 }
 
-// comments.inc
-
-
-// this is set to determine header() in process_edit_comments.phtml
-
-echo "<!-- previous: $previous -->\n";
-
-while ( $d = mysql_fetch_object ($res) ) {
-$comment_id = $d->comment_id;
-$username = $d->username;
-$comment = $d->comment;
-$article_id = $d->article_id;
-
-$res2 = mysql("$DB", "SELECT username,title FROM pending_articles WHERE article_id=$article_id");
-$row = mysql_fetch_row($res2);
-
-echo "<TABLE border=1 cellspacing=0 cellpading=0 width='100%'>";
-echo "<TR><TD valign='top' bgcolor=#999999>\n";
-echo "$username on \"<a href='article.phtml?id=$article_id.txt#$comment_id'>$row[1]</A>\" by <a href='userpages.phtml?username=$row[0]'>$row[0]</a></TD></TR>";
-echo "<TR><TD>".stripslashes($comment)."</TD></TR></TABLE>";
-
-}
 ?>
 
 

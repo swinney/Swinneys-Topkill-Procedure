@@ -1,7 +1,7 @@
 
 <?
 
-include "connect.inc";
+
 
 if(!$page_num || $page_num < 1) { //No Page Number? Set it to Page 1 then...
         $page_num = 1;
@@ -17,6 +17,10 @@ $page_start = ($page_num-1) * $per_page;
 $num_res = mysql ("$DB", "SELECT count(*) as num_articles FROM pending_articles WHERE status='2' ORDER BY time DESC");
 $num_object = MYSQL_FETCH_OBJECT($num_res);
 $num_of_results = $num_object->num_articles;
+
+// lets try this userlist thingy $USERS
+
+
 
 $res = mysql ("$DB", "SELECT * FROM pending_articles WHERE status='2' ORDER BY time DESC limit $page_start,$per_page");
 // Find out how many pages there are going to be
