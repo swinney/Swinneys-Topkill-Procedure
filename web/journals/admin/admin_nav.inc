@@ -1,5 +1,5 @@
 <?
-#$Id$
+// $Id$
 ?>
 <CENTER>
 <TT><a href='../../index.phtml'>Swinney.org</a> Admin Area</TT></h3>
