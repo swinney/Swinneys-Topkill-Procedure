@@ -14,16 +14,41 @@ $page_start = ($page_num-1) * $per_page;
  
 //Do a number query to see how many results match the category...
 
-$query="SELECT count(*) as num_articles FROM articles_info WHERE status='2' ORDER BY time DESC";
+$query = <<<EOT
+SELECT count(*) AS num_articles
+  FROM articles_info
+ WHERE status=2 
+EOT;
+if (count($bozos)) {
+  $query .= " AND username NOT IN $bozo_set";
+}
+if ($insert_since) {
+  $query .= " AND time > $insert_since";
+}
+$query .= " ORDER BY time DESC";
 $num_res = mysql_query($query);
 $num_object = MYSQL_FETCH_OBJECT($num_res);
 $num_of_results = $num_object->num_articles;
 
 // lets try this userlist thingy $USERS
 
+$query = <<<EOT
+  SELECT *
+    FROM articles_info
+   WHERE status=2 
+EOT;
+if (count($bozos)) {
+  $query .= " AND username NOT IN $bozo_set";
+}
+if ($insert_since) {
+  $query .= " AND time > $insert_since ";
+}
+$query .= <<<EOT
+ORDER BY time DESC
+   LIMIT $page_start,$per_page
+EOT;
+$res = mysql_query ($query);
 
-
-$res = mysql_query ( "SELECT * FROM articles_info WHERE status='2' ORDER BY time DESC limit $page_start,$per_page");
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
 $num_of_pages = $num_of_results/$per_page; 
