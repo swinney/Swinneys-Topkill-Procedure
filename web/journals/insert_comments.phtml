@@ -21,7 +21,7 @@ $article_id = explode (".", $article_id);
 
 $no_extension = $article_id[0];
 
-$res = mysql ("swinney","SELECT * FROM comments WHERE article_id=$no_extension AND status=0 ORDER BY comment_id");
+$res = mysql ("$DB","SELECT * FROM comments WHERE article_id=$no_extension AND status=0 ORDER BY comment_id");
 
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {
@@ -30,7 +30,16 @@ while ( $d = mysql_fetch_object( $res ) ) {
 $username=$d->username;
 $comment=$d->comment;
 $comment_id=$d->comment_id;
+
+
+// LULU MADNESS
+if ($username=="lulu") {
+$username="<span style=\"background-color:pink\">$username"; 
+$comment="$comment</span>";
+}
+
 // echo and strip
+
 echo "<hr border=0>";
 echo "<a name=\"$comment_id\">".stripslashes($username).":  ".stripslashes($comment)."\n";
 
