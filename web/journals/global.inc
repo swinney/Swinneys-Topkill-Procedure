@@ -8,8 +8,6 @@
 # functions for use in the site
 
 
-define("WWW_ROOT", "http://localhost/~bcm/swinney/journals");
-define("TITLE", "~bcm | swinney.org");
 define("DB_HOST", "localhost");
 define("DB_USER", "swinney");
 define("DB_PASSWD", "mang");
