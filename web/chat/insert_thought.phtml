@@ -32,8 +32,13 @@ echo <<<EOT
 EOT;
 
 } else {
-
-echo "<tr>\n<td valign=\"top\" class=\"thoughts\">\n$hour:$min &lt;$username&gt; $thought</td>\n</tr>\n\n";
+/**
+ * i am becoming a script kiddy.  feeling lucky?  google search.
+ */
+$encthought=urlencode(strip_tags($thought));
+echo "<tr>\n<td valign=\"top\" class=\"thoughts\"><a href=\"http://www.google.com/search?hl=en&ie=ISO-8859-1&q=$encthought&btnI=I%27m+Feeling+Lucky\">goo</A>
+\n$hour:$min &lt;$username&gt; $thought</td>\n</tr>
+\n\n";
    }
 }
 ?>
