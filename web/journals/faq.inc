@@ -111,7 +111,7 @@ dont come here to be annoying.  be thoughtful.  be challenging.  do
 not be a prick.  this site is moderated by a hand full of fair people
 who are not annoying or mean.  if your comment was removed and you feel
 it was done so unjustly, email <a
-href="mailto:editors@swinney.org">editors@swinney.org</a>.
+href="mailto:editorsNO@SPAMswinney.org">editorsNO@SPAMswinney.org</a>.
 </p>
 
 <p>
@@ -135,7 +135,7 @@ see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. war
 
 <p class="subheader"><b>for general assistance with this site, inquiries:</b></p>
 <P>the swinney.org editorial staff<BR>
-editors[=NO @ SPAM=]swinney.org</P>
+<a href="mailto:editorsNO@SPAMswinney.org">editorsNO@SPAMswinney.org</a></P>
 
 </td>
 </tr>
