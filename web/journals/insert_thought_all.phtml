@@ -33,12 +33,14 @@ $res = mysql ("swinney","SELECT * FROM thoughts ORDER BY timestamp DESC");
 while ( $d = mysql_fetch_object( $res ) ) {
 
 // move it to strip slashes
+$comment_id=$d->comment_id;
 $username=$d->username;
 $thought=$d->thought;
 
 // echo and strip
 
 echo "<font color='red'><strong>";
+echo "$comment_id -- ";
 echo stripslashes($username)."</strong></font>";
 echo "<font color='FF9966'>";
 echo " .o0O(".stripslashes($thought).")\n";
