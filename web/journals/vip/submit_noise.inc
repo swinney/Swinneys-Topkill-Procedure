@@ -28,12 +28,21 @@ function get_limit_chars() {
   } else {
     $query = "SELECT noise_filter FROM user_settings WHERE user_id=$authenticated_user_id";
     $limit_chars = $db->getOne($query);
+    if (!$limit_chars) {
+      $query = "INSERT INTO user_settings (user_id,noise_filter) VALUES ($authenticated_user_id,0)";
+      $res=$db->query($query);
+      if (DB::isError($res)) {
+	die($res->getMessages());
+      }
+      $limit_chars=0;
+    }
   }    
   return $limit_chars;
 }
 
 $html .=<<<EOT
 <P><B>$title</B></P>
+<P><B>this is beta.  <a href="mailto:bugs@swinney.org">bugs@swinney.org</A> if you have problems, get an error, or feel kind of dirty after using it.</B></P>
 <P>The noise filter is for <B>comments</B>: ridding your swinney 
 experience of those pesky one liner, or those 
 pesky two sentencers, or gosh darn it, those 
@@ -84,3 +93,4 @@ EOT;
 echo $html;
 echo $html_form;
 ?>
+
