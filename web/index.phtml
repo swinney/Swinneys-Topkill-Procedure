@@ -3,9 +3,8 @@
 // $Id$
 require_once("./journals/global.inc");
 
-include("./journals/insert_stats.inc");
 $title = "this is it.";
-include("./journals/templates/top.inc");
+include(INCDIR ."/top.inc");
 
 if ($success_msg) {
   session_unregister("success_msg");
@@ -19,6 +18,11 @@ if ($success_msg) {
 <table cellpadding="2" cellspacing="1" border="0">
 
 <? 
+if ($error_msg) {
+  echo "<FONT COLOR=\"red\"><B>$error_msg</B></FONT>";
+  unset($error_msg);
+  session_unregister("error_msg");
+}
 // include i thought it
 include("./journals/submit_thought.phtml");
 ?>
@@ -105,8 +109,7 @@ document.write('<a href="javascript:document.searchform.submit()" target="_top" 
 
 <table width="600">
 <tr>
-<td>
-<img src="journals/img/no.gif" alt="" width="58" height="1" border="0"></td>
+
 
 <td align="right" valign="top">
 <img src="journals/img/now.gif" alt="Now:" width="66" height="20" border="0"></td>
@@ -114,29 +117,23 @@ document.write('<a href="javascript:document.searchform.submit()" target="_top" 
 <td valign="top">
 
 <?
- include "journals/insert_titles.inc";
+require_once("Swinsite/Articles.php");
+$a = new Articles();
+$articles = $a->get_articles(10);
+echo $articles;
+
 ?>
-
 </td>
-</tr>
-
-<tr>
 <td colspan="3">
 <img src="journals/img/no.gif" alt="" width="58" height="25" border="0">
 </td>
-</tr>
-
-<tr>
-<td>
-<img src="journals/img/no.gif" alt="" width="58" height="1" border="0"></td>
-
 <td align="right" valign="top">
 <img src="journals/img/before.gif" alt="Before:" width="87" height="24" border="0"></td>
 
-<td valign="top">
+<td valign="top" colspan="2">
 
 <?
- include "journals/insert_5rand.inc";
+include_once("journals/insert_5rand.inc");
 ?>
 
 </td>
