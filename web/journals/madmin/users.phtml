@@ -1,13 +1,9 @@
-
-<center>
-<p class="subheader">
-<a href='index.phtml'>firebird</a> | 
-<a href='listcontent.phtml'>articles</a> | 
-<a href='admin_comments.phtml'>comments</a> | 
-<b>users</b>
-</p>
-</center>
-
+<?
+// $Id$
+require_once("../global.inc");
+include_once("./top.inc");
+include_once("./nav.inc");
+?>
 
 <div align="center">
 
@@ -111,10 +107,13 @@ EOT;
     die(error_page(mysql_error()));
 
   if ($u = mysql_fetch_object($res)) {
+    if ($u->confidence==0) $lo="SELECTED ";
+    if ($u->confidence==1) $hi="SELECTED ";
     echo <<<EOT
 <form method="POST" action="process_modify_user.phtml">
 <input type="hidden" name="username" value="$u->username">
 <input type="hidden" name="email" value="$u->email">
+<input type="hidden" name="confidence" value="$u->confidence">
 <table>
 <tr>
 <td align="right" valign="middle">
@@ -160,6 +159,17 @@ $u->ip_addr
 </tr>
 <tr>
 <td align="right" valign="middle">
+      confidence:
+</td>
+<td>
+<SELECT NAME="new_confidence">
+<OPTION $lo VALUE="0">lo
+<OPTION $hi VALUE="1">hi
+</SELECT>
+</td>
+</tr>
+<tr>
+<td align="right" valign="middle">
 &nbsp;
 </td>
 <td align="left" valign="middle">
@@ -199,3 +209,7 @@ EOT;
 </form>
 
 </div>
+
+<?
+include_once("./bottom.inc");
+?>
