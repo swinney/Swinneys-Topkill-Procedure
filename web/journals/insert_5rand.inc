@@ -1,4 +1,6 @@
-<!-- insert_5rand.inc -->
+<!-- 
+$Id$
+-->
 <?
 
 // random?
@@ -8,9 +10,8 @@ $rand2 = dice( 1 , 1000 );
 $rand3 = dice( 1 , 1000 );
 $rand4 = dice( 1 , 1000 );
 $rand5 = dice( 1 , 1000 );
-// echo "$rand1<BR>";
 
-$res = mysql( "$DB", "SELECT article_id,username,title,date,web FROM pending_articles WHERE status='2' AND article_id=$rand1 OR article_id=$rand2 OR article_id=$rand3 OR article_id=$rand4 OR article_id=$rand5 ORDER BY time limit 5" );
+$res = mysql_query("SELECT article_id,username,title,date,web FROM articles_info WHERE status='2' AND article_id=$rand1 OR article_id=$rand2 OR article_id=$rand3 OR article_id=$rand4 OR article_id=$rand5 ORDER BY time limit 5" );
 
 // multiple rows, limit 10 latest
 while ( $d = mysql_fetch_object( $res ) ) {
