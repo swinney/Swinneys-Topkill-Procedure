@@ -6,6 +6,11 @@ require_once("global.inc");
 $chunks = explode(".", $id);
 $article_id = $chunks[0];
 
+if (!$article_id) {
+  header("Location: ./index.phtml?no_aricle_id");
+  exit();
+}
+
 
 $query = <<<EOT
   SELECT *
@@ -17,6 +22,10 @@ $res = mysql_query($query) or
   die(error_page(mysql_error()));
 
 if ($d = mysql_fetch_object( $res)) {
+  if ($d->status>3) {
+  header("Location: ./index.phtml?bi=$d->status");
+  exit();
+}
   // retrieve the article text
   $query = <<<EOT
   SELECT text
