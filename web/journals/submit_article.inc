@@ -6,12 +6,8 @@
 <tr>
 <td nowrap colspan="3">
 
-<p class="header"><b><? echo $title ?></b><FONT="GREEN"><? 
-if ($authenticated_user_id) { 
-  echo ': <FONT COLOR="GREEN">You are logged in.</FONT>';
-} else {
-  echo ': <FONT COLOR="RED">Warning, you are NOT logged in.</FONT>';
-}
+<p class="header"><b><? echo $title ?></b><? 
+
 //
 // temp_aid is set if user just came from the VIP area
 //
