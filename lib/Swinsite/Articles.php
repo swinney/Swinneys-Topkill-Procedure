@@ -61,10 +61,14 @@ EOT;
 
 
     function get_articles($num) {
-      global $id;
-        $query = <<<EOT
-	    SELECT article_id,username,title,web,category
-	      FROM articles_info WHERE status=2
+       $query = <<<EOT
+	 SELECT articles_info.article_id,
+	 articles_info.username,
+	 articles_info.title,
+	 articles_info.web,
+	 articles_info.category
+	 FROM articles_info,articles_front
+   WHERE articles_info.article_id=articles_front.article_id
 EOT;
 	if (count($bozos)) {
 	    $query .= " AND articles_info.user_id NOT IN $bozo_set ";
@@ -80,8 +84,12 @@ EOT;
 	while ($d = mysql_fetch_object($res)) {
 	    $id=$d->article_id;
 	    // display title
-	    $names=get_cat_names($d->category);
-	    $names=get_cat_none($names);
+	    if ($category=$d->category) {
+	    $names=get_cat_names($category);
+	    } else {
+	    $names=get_cat_none();
+	    }
+            unset($category);
 	    $username=stripslashes($d->username);
 	    $url_username=urlencode(stripslashes($d->username));
 	    $title=stripslashes($d->title);
@@ -92,7 +100,6 @@ EOT;
 <b>$title</b></a>
 <br>
 <font size=1>$names</FONT>
-<BR>
 </P>
 EOT;
 	}
@@ -125,8 +132,11 @@ EOT;
 	// multiple rows, limit 10 latest
 	while ($d = mysql_fetch_object($res)) {
 	    $id=$d->article_id;
-	    $names=get_cat_names($d->category);
-	    $names=get_cat_none($names);
+            if ($category=$d->category) {
+                $names=get_cat_names($category);
+	    } else {
+                $names=get_cat_none();
+	    }
 	    $username = stripslashes($d->username);
 	    $url_username=urlencode(stripslashes($d->username));
 	    $title=stripslashes($d->title);
