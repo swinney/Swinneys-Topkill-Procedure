@@ -24,6 +24,13 @@ EOT;
 if ($bozo_set) {
   $query .= " AND user_id NOT IN $bozo_set ";
 }
+/*
+ * this limits the number of characters, part of the noise filter
+ * -austin, Fri Mar  1, 2002 11:47 AM
+ */
+if ($limit_chars) {
+  $query .= " AND chars > $limit_chars";
+}
 if ($insert_since) {
   $query .= " AND timestamp > $insert_since ";
 }
@@ -56,12 +63,15 @@ if ($row) {
 
   // pull the current page's comments
   $query = <<<EOT
-  SELECT username, comment, comment_id, comment, article_id
+  SELECT username, user_id, to_user_id, comment, comment_id, comment, article_id
     FROM comments
    WHERE status=0
 EOT;
   if ($bozo_set) {
     $query .= " AND user_id NOT IN $bozo_set";
+  }
+  if ($limit_chars) {
+    $query .= " AND chars > $limit_chars";
   }
   if ($insert_since) {
     $query .= " AND timestamp > $insert_since";
@@ -150,12 +160,40 @@ echo <<<EOT
 EOT;
 
 
+ if (mysql_num_rows($res)==0) {
+echo <<<EOT
+  <P><FONT COLOR="red" SIZE=7>HA HA HA, it will be a cold day in hell when i read comments on this website.  i have my noise filter set to the max!</FONT>
+EOT;
+ }
   // write comments
   while ($d = mysql_fetch_object($res)) {
     $comment_id = $d->comment_id;
     $username   = stripslashes($d->username);
+    $user_id    = $d->user_id;
+    $to_user_id = $d->to_user_id;
     $comment    = stripslashes($d->comment);
     $article_id = $d->article_id;
+
+
+  /* build the user link
+   */
+    if ($user_id!=0) {
+        $username = "<a href=\"./info_user.phtml?uid=$user_id\">$username</a>";
+    }
+  /* LULU MADNESS
+   * the things we do for chicks - J.
+   * awwwwe yea - a.
+   */
+  if ($username == "lulu") {
+    $username = "<span style=\"background-color:pink\">$username";
+    $comment = "$comment</span>";
+  }
+    if ($to_user_id!=0) {
+      $to_username = get_username($to_user_id);
+      $username .= " to <a href=\./info_user.phtml?uid=$user_id\">$to_username</a>";
+    } 
+
+
 
     $query = <<<EOT
   SELECT username, title
@@ -169,8 +207,8 @@ EOT;
     echo <<<EOT
 <tr>
 <td><a name="$comment_id"></a>
-<b><a href='article.phtml?id=$article_id.txt#$comment_id'>$username</a></b> on
-"<a href="article.phtml?id=$article_id.txt">$a_title</a>" 
+<b>$username</b> on
+"<a href="article.phtml?id=$article_id#$comment_id">$a_title</a>" 
 by <a href='userpages.phtml?username=$row[0]'>$a_username</a>:<br>
 
 $comment
@@ -231,4 +269,5 @@ EOT;
   
   }
   }
+var_dump($to_users);
 ?>

@@ -3,7 +3,7 @@
 
 <?
 $query = "SELECT * FROM thoughts ";
-if ($bozo_set) {
+if ($bozo_set && $bozo_set!="") {
   if ($bozo_set=="()") {
       $bozo_set=get_bozo_set();
   }
