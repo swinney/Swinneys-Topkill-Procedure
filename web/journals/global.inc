@@ -23,13 +23,13 @@
 # returns error if db is down.
 # austin, Mon Jul 23, 2001  9:50 PM
 
-function conn()
+Function conn()
 
 {       
         
         $conn=@mysql_connect("localhost", "swinney", "XXXXXXXX");
         @mysql_select_db("swindev");
-
+ 
         if ( $conn == false)
 
         {       
