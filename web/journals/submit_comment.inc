@@ -38,7 +38,7 @@ EOT;
 $query="SELECT distinct(username), user_id FROM comments WHERE article_id=$id AND username NOT LIKE '%to%' ORDER BY username";
 $res=mysql_query($query);
 while ($d=mysql_fetch_object($res)) {
-  if ($d->user_id) echo "<option value='$d->user_id'>$d->username\n";
+  if ($d->user_id) echo "<option value='$d->user_id'>". stripslashes($d->username) ."\n";
 }
 ?>
 </SELECT>
