@@ -7,10 +7,24 @@ require_once("./global.inc");
 $chunks = explode(".", $id);
 $article_id = $chunks[0];
 
-$row = $db->getRow("SELECT username,title,status FROM articles_info WHERE article_id=$article_id");
-$username=stripslashes($row[0]);
-$title=stripslashes($row[1]);
-$status=$row[2];
+
+include_once("Swinsite/Articles.php");
+$a = new Articles();
+$row = $a->getArticle($article_id,$db);
+
+$a_article_id = $row['article_id'];
+$a_user_id    = $row['user_id']; 
+$a_username   = $row['username'];
+$a_web        = $row['web'];
+$a_date       = $row['date'];
+$a_status     = $row['status'];
+$a_title      = $row['title'];
+$a_blurb      = $row['blurb'];
+$a_category   = $row['category'];
+$a_image      = $row['image'];
+$a_text       = $row['text'];
+unset($row);
+
 //
 // if they dont have an article id, then
 // they should not be here, or their status is 4 (deleted)
@@ -18,8 +32,8 @@ if ($status==4) {
   header("Location: ./index.phtml?no_aricle_id");
   exit();
 }
-if (isset($title))
-$title = "$title by $username";
+if (isset($a_title))
+$title = "$a_title by $a_username";
 $into_template="insert_article.inc";
 // do you have comments?
 $into_template2="insert_comments.phtml";
