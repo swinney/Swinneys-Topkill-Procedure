@@ -1,30 +1,58 @@
-<!-- insert_articles.inc -->
+
 <?
 
 include "connect.inc";
 
-$res1 = mysql( "swinney", "SELECT * FROM pending_articles WHERE status='2' ORDER BY time DESC LIMIT 25" );
+if(!$page_num || $page_num < 1) { //No Page Number? Set it to Page 1 then...
+        $page_num = 1;
+}
+
+//How many pages per page will be displayed...
+$per_page = 20;
+
+//Set the page start variable...
+$page_start = ($page_num-1) * $per_page;
+ 
+ //Do a number query to see how many results match the category...
+ $num_res = mysql ("$DB", "SELECT count(*) as num_articles FROM pending_articles WHERE status='2' ORDER BY time DESC");
+ $num_object = MYSQL_FETCH_OBJECT($num_res);
+ $num_of_results = $num_object->num_articles;
+ 
+ $res = mysql ("$DB", "SELECT * FROM pending_articles WHERE status='2' ORDER BY time DESC limit $page_start,$per_page");
 
 
+$num_of_pages = $num_of_results/$per_page; //Find out how many pages there are going to be
+                                           // number of results returned divided by the number per page displayed...$   
+$remainders = $num_of_results%$per_page; //Find out if the num_of_pages was a decimal.. Can't have 2.1 pages...
+
+
+if($remainders != 0){ //If is was a decimal, turn it into an integer and add 1 to it...
+       $num_of_pages = intval($num_of_pages) + 1;
+}
+
+$page_back = $page_num - 1;
+$page_forward = $page_num + 1;
+
+
+while ($row = mysql_fetch_object($res)) {
 
 $url = "article.phtml?id=$d->article_id";
 
    echo "<h1>Last 25 Entries</h1>";
    echo "<P><a href='submit_article.phtml'><strong>I want to write</strong></a></P>";
 
-// multiple rows 
-while ( $individual_row = mysql_fetch_object( $res1 ) ) {
+// multiple rows
+while ( $individual_row = mysql_fetch_object( $res ) ) {
 
-// one row
-//$individual_row = mysql_fetch_object( $res1 ); 
-
-   echo "<table border=0 cellspacing=0 cellpadding=3><tr><td>"; 
-
-   echo "<font face='arial' size='2'><a href=\"$url$individual_row->article_id.txt\"><B>$individual_row->title</a></B> by <a href='$individual_row->web' target='new'>$individual_row->username</a><br> ";
+   echo "<table border=0 cellspacing=0 cellpadding=3><tr><td>\n";
+   echo "<font face='arial' size='2'>\n";
+   echo "<a href=\"$url$individual_row->article_id.txt\">\n";
+   echo "<B>$individual_row->title</a></B> by\n";
+   echo "<a href='$individual_row->web' target='new'>$individual_row->username</a><br> \n";
    echo "$individual_row->blurb</font><br>";
-   echo "<font face=\"arial\" size='1'>$individual_row->date "; 
+   echo "<font face=\"arial\" size='1'>$individual_row->date ";
 
-$res2 = mysql_db_query("swinney", "SELECT * FROM comments WHERE article_id='$individual_row->article_id'");
+$res2 = mysql_db_query("$DB", "SELECT * FROM comments WHERE article_id='$individual_row->article_id'");
 
 $numrows =  mysql_num_rows($res2);
 
@@ -33,9 +61,33 @@ echo " | $numrows comments";
    echo "</td></tr></table>\n";
 
 }
+}
+ echo "<P>";
 
+     if($page_num == 1){
+            print "<PRE><b>$page_num</b> <-- X ";
+     }
+
+
+     if($page_num > 1){
+	     print "<PRE><a href=\"index.phtml?select=$select&page_num=$page_back\"><b> $page_num <-- </a></b>  X  ";
+
+
+     } 
+
+  
+     if($page_num < $num_of_pages) { 
+             print "<a href=\"index.phtml?select=$select&page_num=$page_forward\"><b>--> $num_of_pages</b></a></PRE>";
+     } 
+
+     if($page_num == $num_of_pages) {
+             print "<b>--> $num_of_pages</b></PRE>";
+     }
+
+ echo "</P>";
 
 ?>
+
 
 
 
