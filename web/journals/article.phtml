@@ -26,6 +26,31 @@ $a_image      = $row['image'];
 $a_text       = $row['text'];
 unset($row);
 
+if ($a_image > 0) {
+    $imgurl=IMGURL;
+      $query = "SELECT file_id, ext, filename, description 
+                FROM articles_files 
+                WHERE article_id=$a_article_id 
+                ORDER BY file_id";
+      $res = mysql_query($query);
+      $i=0;
+      while ($row = mysql_fetch_row($res)) {
+
+        $file_id   = $row[0];
+        $ext       = $row[1];
+        $given     = $row[2];
+        $desc      = $row[3];
+        $img_loc   = $id .'_'. $file_id .'.'. $ext;
+        if ($img_names) {
+          array_push($img_names, "$img_loc");
+        } else {
+          $img_names = array("$img_loc");
+        }
+      }  
+  include_once("Swinsite/File.php");
+  $f = new File();
+  $a_text = $f->regexFilePath($img_names,$a_text);
+}
 $p_article_id = $a->otherArticleId($a_article_id,$a_user_id,"<",$db);
 $n_article_id = $a->otherArticleId($a_article_id,$a_user_id,">",$db);
 
