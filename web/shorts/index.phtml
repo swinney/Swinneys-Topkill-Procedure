@@ -14,13 +14,18 @@ $username=stripslashes(mysql_result($res,0,1));
 $text=stripslashes(mysql_result($res,0,2));
 
 echo <<<EOT
+<TABLE BORDER=0 width=400 align=center>
+<TR><TD>
 <blockquote><P>
 $text
-</P></blockquote>
-<BR>
-<P><FONT class=".smaller">by $username</font></P>
+</P>
+
+<P><SMALL>- $username</SMALL></P>
+</blockquote>
 
 
+
+</TD></TR></TABLE>
 EOT;
 
 include_once("bottom.inc");
