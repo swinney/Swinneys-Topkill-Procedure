@@ -8,6 +8,14 @@
 
 			 "SWINNEY NEEDS YOU"!
 
+
+Sat Aug 25, 2001 10:23 AM
+
+if there is no blurb, then put in article #2345 or just dont echo
+anything.  right now it echos <P></P> i think which creates an
+annoying blank line.
+
+
 Sun Aug 19, 2001  5:31 PM
 
 add image submit to the comments area, work it into the comment admin area too.
