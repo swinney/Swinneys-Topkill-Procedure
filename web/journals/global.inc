@@ -14,7 +14,7 @@ define("CSS_URL", URLBASE . "/journals/main.css");
 define("DB_HOST", "localhost");
 define("DB_USER", "swinney");
 define("DB_PASSWD", "jgf934nfg");
-define("DB_NAME", "swindev");
+define("DB_NAME", "swinney");
 
 
 /*
@@ -199,9 +199,11 @@ function get_username($user_id) {
 // check authorization
 ///////////////////////////
 
-if (preg_match("/(vip)/i","$SCRIPT_NAME") && !$user_id) {
-  $msg = 'Please log in to continue.';
-  header("Location: ".URLBASE."/journals/login.phtml");
+if (preg_match("/(vip|submit)/i","$SCRIPT_NAME") && !$user_id) {
+  session_register("back_to");
+  $back_to=$PHP_SELF;
+  $url=URLBASE;
+  header("Location: $url/journals/login.phtml");
   exit();
 }
 
