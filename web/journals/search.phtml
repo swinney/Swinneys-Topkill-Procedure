@@ -14,72 +14,151 @@ echo "\n<INPUT TYPE=\"submit\" NAME=\"search\" VALUE=\"search\">";
 echo "\n</FORM>";
 echo "\n<P>(full string search of text body and comments for exactly what you type)</P>";
 echo "\n</CENTER>";
-echo "\n<P>looking for <B>$search_this</B></P>";
 
 # get that IP Address
 $ip_addr = getenv ("REMOTE_ADDR"); 
 
 if (isset($search_this)) {
 
+# echo search string only if it exists
+echo "\n<P>looking for <B>$search_this</B></P>";
+
 $query = "SELECT articles_info.title,articles_text.article_id,articles_info.username FROM articles_info,articles_text WHERE articles_info.article_id=articles_text.article_id AND articles_info.status=2 AND articles_text.text like '%". addslashes($search_this) ."%' LIMIT 300";
 
+# query articles_text.text for string and match 
+# article_text.article_id with articles_info.article_id 
+# to get the title and author username and stuff. 
+
 $res = mysql_query($query);
+
+# get the number of returned rows for shits and giggles.
+
 $num = mysql_num_rows($res);
+
+# here we go with the searched output
 echo "\n<P>from the articles</P>";
+
+# indent slightly
 echo "\n<BLOCKQUOTE>";
+
+# print the number of returns from a few lines up
 echo "\n<P>number of returns: $num</P>";
+
+# number the returns using html
 echo "\n<OL>";
+
+# start the return loop on $res
 while ($d=mysql_fetch_object($res)) {
+	# assign values
 	$article_id=$d->article_id;
 	$title=$d->title;
 	$username=$d->username;
+	# print out record
 	echo "\n<LI><P><a href=\"article.phtml?id=$article_id\">$title</a>"
 	   . "\n by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
-}
+
+} # close the $res loop
+
+# close the html numbered returns
 echo "\n</OL>";
+
+# close the indent
 echo "\n</BLOCKQUOTE>";
+
 
 $query = "select comments.comment_id,comments.article_id,comments.username,articles_info.title from comments, articles_info where comments.article_id=articles_info.article_id AND comment like '%". addslashes($search_this) ."%' order by article_id";
 
+# query comments.comment for $search_this and 
+# get articles_info.title based on comments.article_id 
+
 $res = mysql_query($query);
+
+# number of rows returned just for displays sake
 $num = mysql_num_rows($res);
 
+# start output of comments search
 echo "\n<p>and from the comments<p>";
+# html indent for display, a little visual separation
 echo "\n<BLOCKQUOTE>";
+# show the number of records
 echo "\n<P>number of returns: $num</P>";
+# start html numbered list
 echo "\n<OL>";
 
+#loop through the records from $res
 while ($d=mysql_fetch_object($res)) {
         $article_id=$d->article_id;
 	$comment_id=$d->comment_id;
         $title=$d->title;
         $username=$d->username;
 
+
+	# this loop first determines if the first record has been printed
+	# if so, then format text with "... sez ", if not then just format
+	# with "sez" because it is picking up the idea from scratch
 	if ($title==$last) {
 		echo "... sez <a href=\"article.phtml?id=$article_id#$comment_id\">$username</a>";
 	} else {
-	
+	# there was no first record so ...
         echo "\n<LI><P><a href=\"article.phtml?id=$article_id\">$title</a><BR>";
 	echo "\n sez <a href=\"article.phtml?id=$article_id#$comment_id\">$username</a>";
 
 	}
-
+	# loop has gone through once, there was the last title,
+	# unique to the loops last relavent run.  hope that 
+	# makes sense.
 	$last=$title;
 }
 
 echo "\n</OL>";
 echo "\n</BLOCKQUOTE>";
+
+# now we move on to the database.  we are keeping track of 
+# all search terms so as to better improve our search performance
+# in the future.  i am not certain how this helps, but i may
+# have a dream or something.
+#				see?
+# mysql> desc search_words;
+# +-----------+-------------+------+-----+---------+----------------+
+# | Field     | Type        | Null | Key | Default | Extra          |
+# +-----------+-------------+------+-----+---------+----------------+
+# | word_id   | int(11)     |      | PRI | NULL    | auto_increment |
+# | word      | varchar(50) |      |     | 0       |                |
+# | num_rows  | int(5)      |      |     | 0       |                |
+# | num_times | int(4)      |      |     | 0       |                |
+# | ip_addr   | text        |      |     |         |                |
+# +-----------+-------------+------+-----+---------+----------------+
+# 5 rows in set (0.01 sec)
+
+
 $query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1, ip_addr='$ip_addr' WHERE word='$search_this'";
+# update the search terms number of rows and number of times searched
 $res = mysql_query($query);
+
+# get affected rows in case none were affected, in which case we need
+# to do an insert because there is a first time for everything.
+
 $affected = mysql_affected_rows();
+
 if ($affected==0) { # UPDATE was invalid, do INSERT
+
 	echo "<P>well, there is a first time for everything.</P>";
+	
 	$query = "INSERT INTO search_words (word_id,word,num_rows,num_times,ip_addr) VALUES ('','$search_this','$num','1','$ip_addr')";
-	$res = mysql_query($query) or die ("<P>invalid query</P>");
+
+	# insert new search_words into table allong with the number of returns
+	# and the searcher's ip addr in case they try some sort of funny 
+	# business we can send qq and yeti to destroy them.
+	$res = mysql_query($query) 
+		# if this thing doesnt work at all, then die. 
+		# but we tested it.
+		or die ("<P>invalid query</P>");
 
 }
 
 }
+# lets unset the search term
+unset($search_this);
 include "templates/footer.inc";
 ?>
 
