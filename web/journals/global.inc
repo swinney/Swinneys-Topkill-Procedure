@@ -14,9 +14,17 @@ define("CSS_URL", URLBASE . "/journals/main.css");
 define("DB_HOST", "localhost");
 define("DB_USER", "swinney");
 define("DB_PASSWD", "jgf934nfg");
-define("DB_NAME", "swinney");
+define("DB_NAME", "swindev");
 
+/*
+require_once 'DB.php';
 
+$dsn = "msyql://".DB_USER.":".DB_PASSWD."@".DB_HOST."/".DB_NAME;
+$db = DB::connect($dsn, true);
+if (DB::isError($db)) {
+  die ($db->getMessage());
+}
+*/
 /*
 * initialize the session
  * 
@@ -38,6 +46,7 @@ die(error_page("Connection failed for user '" . DB_USER .
 
 @mysql_select_db(DB_NAME) or
 die(error_page(mysql_error()));
+
 
 ##########################################################
 #################  FUNCTION LIST #########################
@@ -202,7 +211,11 @@ function get_username($user_id) {
 if (preg_match("/(vip|submit|admin)/i","$SCRIPT_NAME") && !$user_id) {
   session_register("back_to");
   $back_to= $SCRIPT_NAME;
+  if ($article_id) {
+    $back_to .= "?article_id=$article_id";
+  }
   $url=URLBASE;
+  //echo $back_to;
   header("Location: $url/journals/login.phtml");
   exit();
 }
