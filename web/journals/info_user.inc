@@ -39,7 +39,8 @@ if (DB::isError($db)) {
   die ($db->getMessage());
 }
 
-$query = "SELECT distinct(username) from articles_info WHERE user_id=$uid AND username<>'$username'";
+$query = "SELECT distinct(username) from articles_info WHERE user_id=$uid AND username<>'$username' AND username NOT LIKE '% to %'";
+
 $los_nombres = $db->query($query);
 unset($query);
 if (DB::isError($db)) {
