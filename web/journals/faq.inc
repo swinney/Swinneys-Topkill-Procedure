@@ -22,7 +22,7 @@ entries (usually text, with occasional images), or;
 <br>
 <br>
 
-<LI>one who belongs to the family of writer on swinney.org.
+<LI>one who belongs to the family of writers on swinney.org.
 </OL>
 </p>
 
