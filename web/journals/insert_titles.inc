@@ -3,15 +3,15 @@
 // $Id$
 
 $query = <<<EOT
-SELECT article_id,articles_info.username,title,web,category
-    FROM articles_info,articles_user
-   WHERE articles_info.article_id=articles_user.most_recent
+SELECT article_id,username,title,web,category
+    FROM articles_info WHERE status=2
 EOT;
 if (count($bozos)) {
   $query .= " AND articles_info.username NOT IN $bozo_set ";
 }
+// lets try ordering by time
 $query .= <<<EOT
- ORDER BY article_id DESC
+ ORDER BY time DESC
    LIMIT 10
 EOT;
 
