@@ -66,6 +66,7 @@ remove them from the list.
 
 EOT;
 
+  sort($bozos);
   foreach($bozos as $bozo) {
     echo <<<EOT
 <option> $bozo
