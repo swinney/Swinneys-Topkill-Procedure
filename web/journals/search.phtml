@@ -14,17 +14,19 @@ echo "\n<INPUT TYPE=\"submit\" NAME=\"search\" VALUE=\"search\">";
 echo "\n</FORM>";
 echo "\n<P>(full string search of text body and comments for exactly what you type)</P>";
 echo "\n</CENTER>";
+echo "\n<P>looking for <B>$search_this</B></P>";
 
 # get that IP Address
 $ip_addr = getenv ("REMOTE_ADDR"); 
 
 if (isset($search_this)) {
-echo "<P>looking for <B>$search_this</B></P>";
 
 $query = "SELECT articles_info.title,articles_text.article_id,articles_info.username FROM articles_info,articles_text WHERE articles_info.article_id=articles_text.article_id AND articles_info.status=2 AND articles_text.text like '%". addslashes($search_this) ."%' LIMIT 300";
 
 $res = mysql_query($query);
 $num = mysql_num_rows($res);
+echo "\n<P>from the articles</P>";
+echo "\n<BLOCKQUOTE>";
 echo "\n<P>number of returns: $num</P>";
 echo "\n<OL>";
 while ($d=mysql_fetch_object($res)) {
@@ -35,14 +37,17 @@ while ($d=mysql_fetch_object($res)) {
 	   . "\n by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
 }
 echo "\n</OL>";
+echo "\n</BLOCKQUOTE>";
 
-echo "<h2>and from the comments</h2>\n";
-echo "\n<OL>";
 $query = "select comments.comment_id,comments.article_id,comments.username,articles_info.title from comments, articles_info where comments.article_id=articles_info.article_id AND comment like '%". addslashes($search_this) ."%' order by article_id";
 
 $res = mysql_query($query);
 $num = mysql_num_rows($res);
+
+echo "\n<p>and from the comments<p>";
+echo "\n<BLOCKQUOTE>";
 echo "\n<P>number of returns: $num</P>";
+echo "\n<OL>";
 
 while ($d=mysql_fetch_object($res)) {
         $article_id=$d->article_id;
@@ -63,7 +68,7 @@ while ($d=mysql_fetch_object($res)) {
 }
 
 echo "\n</OL>";
-
+echo "\n</BLOCKQUOTE>";
 $query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1, ip_addr='$ip_addr' WHERE word='$search_this'";
 $res = mysql_query($query);
 $affected = mysql_affected_rows();
