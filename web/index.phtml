@@ -9,6 +9,17 @@ include "journals/templates/top.inc";
 <TABLE width="100%" cellpadding="4"><TR><TD valign="top"><b>
 <p>(
 <a href="journals/index.phtml" accesskey="j">JOURNAL</a> |
+<?
+if ($authenticated_username) {
+  echo <<<EOT
+<a href="journals/process_logout.phtml" accesskey="j">LOG OUT</a> |
+EOT;
+} else {
+  echo <<<EOT
+<a href="journals/login.phtml" accesskey="j">LOG IN</a> |
+EOT;
+}
+?>
 <a href="journals/comments.phtml" accesskey="c">COMMENTS</a> |   
 <a href="journals/submit_article.phtml" accesskey="s">SUBMIT</a> | 
 <a href="journals/faq.phtml" accesskey="f">ANSWERS</A>)</p></b>
@@ -46,10 +57,3 @@ include "journals/insert_thought.phtml";
 <?
 include "journals/templates/footer.inc";
 ?>
-
-
-
-
-
-
-
