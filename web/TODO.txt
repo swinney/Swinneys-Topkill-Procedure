@@ -2,7 +2,7 @@
     |  Download Now           -->       http://www.swinney.org  |
     |  Request a CDROM           -->       request@swinney.org  |
     |___________________________________________________________|
-$Id$
+	$Id$
 
  Welcome to the world of Swinney.org's Code, serve the call of need:
 
@@ -10,5 +10,18 @@ $Id$
 
 
 Thu Aug  9, 2001 10:35 PM
-+ things 
-+ stuff
+
+user area for editing articles, /journals/vip or swinney.org/vip?
+										
+user authentication in there is forwarding to the wrong swinney.org...
+
+porny.swinney.org or to say it better subdomain.swinney.org
+
+this needs to some how use the same code that is already around?  wb
+wants this.  i want to see it too.  i just dont know how to go about doing it.  perhaps a shit load of if statements like:
+
+if (isset(SUB)) {
+   $res = mysql("SELECT * FROM tablename_SUB");
+} else {
+   $res = mysql("SELECT * FROM tablename");
+} # er something like that
