@@ -2,7 +2,7 @@
 <!--insert_article.inc-->
 <?
 
-include "connect.inc";
+
 include "next_article.inc";
 
 //  $url = "/article.phtml?id=$article_id";
@@ -25,16 +25,15 @@ include "next_article.inc";
       }
 
  
+// open that file up
 
-$fp = fopen("pending/$article_id", "r");
-  if ( $fp == false ) {
-    echo "Could not open file!";
-    echo "<br>$article_id.txt";
-    exit;
-  }
-  fpassthru($fp);
+$text = explode(".",$article_id);
 
+$res = mysql ("$DB","SELECT text FROM articles WHERE article_id=$text[0]");
 
+$d = mysql_fetch_row($res);
+
+echo "$d[0]<BR>";
 
 ?>
 
