@@ -5,6 +5,7 @@
 # global vars for use in the site
 # functions for use in the site
 
+//** TODO: this has to change. Mabye make a includes folder.
 @include_once('./local_conf.php');
 @include_once('./journals/local_conf.php');
 
