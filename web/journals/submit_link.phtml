@@ -27,14 +27,6 @@
 </TR>
 
 <TR>
-<TD>Your Website or email</TD>
-<TD ALIGN="right">
-<INPUT TYPE=TEXT NAME=web SIZE=30 maxlength=50>
-</TD>
-</TR>
-
-
-<TR>
 <TD>Link to submit</TD>
 <TD ALIGN="right">
 <INPUT TYPE=TEXT NAME=url SIZE=30 maxlength=50>
@@ -65,11 +57,11 @@
 <P>What category best describes the link?</P>
 
 <?
-  include "admin/connect.inc";
-  $res = mysql("", "SELECT * FROM categories_links ORDER BY name ASC");
+  include "global.inc";
+  $res = mysql("$DB", "SELECT * FROM categories_links ORDER BY name ASC");
 
   while ( $d = mysql_fetch_object($res) ) {
-    echo "<input type='radio' name=category value='cat$d->category_id'> $d->name <br>";
+    echo "<input type='radio' name=category value='$d->category_id'> $d->name <br>\n";
   }
 
 ?>
