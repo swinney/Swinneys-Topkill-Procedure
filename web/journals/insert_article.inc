@@ -120,8 +120,7 @@ $names=get_cat_names($category);
 EOT;
 
   if ($older_article_id or $newer_article_id) {
-    $nospace=spaced_out($usernamenourl);
-  echo "<b><a href=\"userpages.phtml?username=$nospace\">more from this writer</a>:</b><br>";
+  echo "<b><a href=\"userpages.phtml?username=$usernamenourl\">more from this writer</a>:</b><br>";
   }
 
   if ($older_article_id) {
