@@ -6,7 +6,7 @@
 
 
 <p>
-the word 'swinney' can be used to refer to two different things:
+the word 'swinney' can be used to refer to three different things:
 </p>
 
 <p>
@@ -17,7 +17,12 @@ the word 'swinney' can be used to refer to two different things:
 <br>
 
 <LI>swinney.org, the website where people (humans) write journal
-entries (usually text, with occasional images).
+entries (usually text, with occasional images), or;
+
+<br>
+<br>
+
+<LI>one who belongs to the family of writer on swinney.org.
 </OL>
 </p>
 
@@ -65,12 +70,11 @@ censor's the censor?</a>
 
 <p class="subheader"><b>who will read what i write?</b></p>
 
-<p>
-no one can really say who reads what on this here
-internet. all you can really bet is that some of the people who write
+<p> no one can really say who reads what on this here internet, though
+<a href="http://stats.saturn5.com/swinney.org/">there are
+stats</a>. all you can really bet is that some of the people who write
 on swinney.org a lot also read swinney.org a lot, so they will
-probably read what you write.  
-</p> 
+probably read what you write.  </p>
 
 <p class="subheader"><b>ok i wrote something, how come it isn't showing up?</b></p>
 
