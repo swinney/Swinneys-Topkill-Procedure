@@ -20,6 +20,7 @@ session_set_cookie_params(time()+9999999);
 $thisdir = dirname(realpath(__FILE__));
 if (file_exists("$thisdir/local_conf.php")) {
     use_lib($thisdir);
+    use_lib("/sky/users/swinney/htdocs/dev/php4/pear");
     include_once('local_conf.php');
 }
 
@@ -32,6 +33,10 @@ if (file_exists("$thisdir/local_conf.php")) {
  * if(!defined("foo")) statements out of the local config file, to
  * keep it simple.
  */
+
+if (!defined("SITE_NAME")) {
+    define("SITE_NAME", "Swinney.org");
+}
 
 if (!defined("URLBASE")) {
     define("URLBASE", "http://swinney.org"); // no trailing slash!
@@ -286,5 +291,148 @@ if (preg_match("/(vip|submit|admin)/i","$SCRIPT_NAME") && !$user_id) {
   header("Location: $url/journals/login.phtml");
   exit();
 }
+
+///////////////////////////
+// get_rollcall() - 
+// the roll call list
+///////////////////////////
+
+function get_rollcall() {
+  $minus=time();
+  $minus=$minus-7776000;
+  $query = <<<EOT
+SELECT DISTINCT(username), 
+       COUNT(username) AS number, 
+       status, 
+       time
+  FROM articles_info
+ WHERE status=2
+EOT;
+
+//
+// Apply the bozo filter
+//
+  if (count($bozos)) {
+    $query .= " AND username NOT IN $bozo_set";
+  }
+  $query .= " GROUP BY username";
+
+  $res = mysql_query($query) or
+    die(error_page(mysql_error()));
+
+  while ($row = mysql_fetch_row ($res)) {
+
+##########################################
+# this cannot be called $username
+# without interfearing with the url's
+# $username.  so it will be called $user.
+# austin, Thu Jul 12, 2001  1:40 PM
+
+    $name=$row[0];
+    $urlname=urlencode($row[0]);
+    $number=$row[1];
+    $status=$row[2];
+    $time=$row[3];
+
+    if ($number >= 5) {
+      $rollcall .= "<a href='userpages.phtml?username=$urlname'>$name</a> ($number)<br>\n";
+    }
+  }
+  return $rollcall;
+}
+
+//////////////////////////////////////////
+// get_article() -- retrieve the article info
+// this has to coincide with the use of the list() function
+// if the values as they are returned and their order in list()
+// do not align, there will be smoke.
+// austin, Tue Feb  5, 2002  1:35 PM
+
+function get_article($id,$db) {
+
+$query = <<<EOT
+   SELECT articles_info.user_id,
+          articles_info.username,
+          articles_info.web,
+          articles_info.date,
+          articles_info.status,
+          articles_info.title,
+          articles_info.blurb,
+          articles_info.category,
+          articles_info.image,
+          articles_text.text 
+     FROM articles_info,articles_text
+    WHERE articles_info.article_id=$id
+      AND articles_info.article_id=articles_text.article_id
+EOT;
+
+$row=$db->getRow($query); 
+return $row;
+}  // end function get_article
+
+//////////////////////////////////////
+// get_comments($id,$db) - 
+// selects out all the comments into
+// a big ass multi-dimensional array
+// then delivers the good through a for
+// loop and formats it in html using
+// PEARS Table.php formatting library.
+// austin, Tue Feb  5, 2002  4:41 PM
+//////////////////////////////////////
+
+function get_comments($id,$db) {
+  require_once ("/sky/users/swinney/htdocs/dev/php4/pear/HTML/Table.php");
+  $query = <<<EOT
+  SELECT username,comment_id,comment
+    FROM comments
+   WHERE article_id=$id
+     AND status=0 
+EOT;
+
+  if (count($bozos)) {
+    $query .= " AND username NOT IN $bozo_set";
+  }
+  if ($insert_since) {
+    $query .= " AND timestamp > $insert_since";
+  }
+
+  $query .= <<<EOT
+ORDER BY comment_id
+EOT;
+
+  $comments = $db->getAll($query);
+  $table = new HTML_TABLE("cellpadding=0 cellspacing=0 border=0 width=375");
+
+   // $contentABC are formatting elements.
+   // they go in addRow("$content","$attr","$type")
+
+   // contentA is specific to the loop, see below.
+   $attrA='';
+   $contentB=array('<img src="img/no.gif" alt="" width="1" height="1" border="0"><br>');
+   $attrB='bgcolor="#999999"';
+   $contentC=array('<img src="img/no.gif" alt="" width="1" height="4" border="0"><br>');
+   $attrC='';
+   // contentD is specific to the loop, see below.
+   $attrD='';
+
+  foreach ($comments as $key=>$val) {
+    /**
+     * strip the slashes
+     */
+    $val[0]=stripslashes($val[0]); // is username
+    $val[2]=stripslashes($val[2]); // is text
+    /**
+     * here is the loop specific content.
+     */
+    $contentA=array("<a name='$val[1]'><img src='img/no.gif' alt='' width=1 height=4 border=0></a><br>");
+    $contentD=array("<P><B>$val[0]:</B> $val[2]</P>");
+
+    $table->addRow($contentA,$attrA,"TD");
+    $table->addRow($contentB,$attrB,"TD");
+    $table->addRow($contentC,$attrC,"TD");
+    $table->addRow($contentD,$attrD,"TD");
+  }
+  return $table->toHTML();
+} // end function get_comments()
 
 ?>
