@@ -8,11 +8,41 @@
 
 require_once("global.inc");
 
-$query = "select username from where username='$username'";
+$query = "SELECT username FROM user WHERE username='$username'";
 $res = mysql_query($query);
-$rows = myql_num_rows($res);
+$row = mysql_num_rows($res);
 
-if ($rows == 1 ) {
+if ($row == 1 ) {
+   $rand=dice(1,99);
+   $username=$username ."_dork$rand";
+   $login_error_msg = "that username is taken, can i suggest $username";
+   include("submit_register.phtml");
+   exit;
+}
+
+if ("$password1" != "$password2") {
+   $login_error_msg = "your passwords do not match.";
+   include("submit_register.phtml");
+   exit;
+}
+
+# get this stinkers ip address
+$ip_addr = getenv ("REMOTE_ADDR"); 
+$encrypted_password = crypt($password1);
+$query = "INSERT INTO user (username,password,email,ip_addr) 
+         VALUES ('$username','$encrypted_password','$email','$ip_addr')";
+
+$res = mysql_query($query) or
+   die(error_page(mysql_error()));
+
+#echo "<P>$query</P>";
+
+#$row = mysql_affected_rows($res);
+
+#if ($row == 1) {
+   header("Location: login.phtml?username=$username");
+#}
 
 
+?>
 
