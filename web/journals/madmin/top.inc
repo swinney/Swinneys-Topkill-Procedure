@@ -10,5 +10,5 @@
 </HEAD>
 <BODY>
 <?
-echo "u: ". $authenticated_username;
+echo "<CENTER>logged in: ". $authenticated_username ."</CENTER>";
 ?>
