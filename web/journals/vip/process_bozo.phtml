@@ -49,30 +49,42 @@ EOT;
   // don't check "if ($add)" since they may have just hit enter, in
   // which case the button parameter won't be set
 
-  // make sure the submitted username isn't already in the bozo list
-  if (! in_array($username, $bozos)) {
-    // add the username to the bozo table
-    $query = "INSERT INTO user_bozo VALUES ($user_id, '$username')";
-    $res = mysql_query($query) or
-          die(error_page(mysql_error()));
-
-    // ad the username to the session cache
-    array_push($bozos, $username);
-    natcasesort($bozos);
-    session_register("bozos");
-
-    // bozo array as a set suitable for use in a sql NOT IN string
-    // also set at login time!
-    $b = array();
-    foreach ($bozos as $x) {
-          array_push($b, "'$x'");
+  if ($username) {
+    // see if the submitted username is already in the list. be case
+    // insensitive, since the bozo table is that way.
+    foreach ($bozos as $b) {
+      if (strtolower($b) == strtolower($username)) {
+	$found = 1;
+	break;
+      }
     }
-    $bozo_set = '(' . implode(", ", $b) . ')';
-    session_register("bozo_set");
 
-    $success_msg = "$username added to bozo list.";
+    if (! $found) {
+      // add the username to the bozo table
+      $query = "INSERT INTO user_bozo VALUES ($user_id, '$username')";
+      $res = mysql_query($query) or
+	die(error_page("database error for query $query: " . mysql_error()));
+
+      // ad the username to the session cache
+      array_push($bozos, $username);
+      natcasesort($bozos);
+      session_register("bozos");
+
+      // bozo array as a set suitable for use in a sql NOT IN string
+      // also set at login time!
+      $b = array();
+      foreach ($bozos as $x) {
+	array_push($b, "'$x'");
+      }
+      $bozo_set = '(' . implode(", ", $b) . ')';
+      session_register("bozo_set");
+
+      $success_msg = "$username added to bozo list.";
+    } else {
+      $error_msg = "That username is already in your bozo list.";
+    }
   } else {
-    $error_msg = "That username is already in your bozo list.";
+    $error_msg = "You didn't specify a username. Try again.";
   }
 }
 
