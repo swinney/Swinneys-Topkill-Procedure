@@ -60,11 +60,12 @@ EOT;
 
 
 
-    function get_articles($num) {
+    function get_articles($num,$rand) {
       global $id;
        $query = <<<EOT
 	 SELECT articles_info.article_id,
 	 articles_info.username,
+         articles_info.user_id,
 	 articles_info.title,
 	 articles_info.web,
 	 articles_info.category
@@ -75,16 +76,20 @@ EOT;
 	if (count($bozos)) {
 	    $query .= " AND articles_info.user_id NOT IN $bozo_set ";
 	}
+
+	if ($rand==1) {
+	  $query .= " ORDER BY RAND()";
+	} else {
 	// lets try ordering by time
-	$query .= <<<EOT
-	    ORDER BY article_id DESC
-	       LIMIT $num
-EOT;
+	  $query .= " ORDER BY article_id DESC";
+	}
+	$query .= " LIMIT $num";
 
 	$res = mysql_query($query);
 
 	while ($d = mysql_fetch_object($res)) {
-	    $id=$d->article_id;
+	    $aid=$d->article_id;
+            $uid=$d->user_id;
 	    // display title
 	    if ($category=$d->category) {
 	    $names=get_cat_names($category);
@@ -97,8 +102,8 @@ EOT;
 	    $title=stripslashes($d->title);
 	    $html .= <<<EOT
 <P>
-<a href="journals/userpages.phtml?username=$url_username">$username</a> writes
-<a href="journals/article.phtml?id=$id">
+<a href="journals/info_user.phtml?uid=$uid">$username</a> writes
+<a href="journals/article.phtml?id=$aid">
 <b>$title</b></a>
 <br>
 <font size=1>$names</FONT>
@@ -107,53 +112,4 @@ EOT;
 	}
 	return $html;
     }
-
-
-
-
-    function get_articles_rand($num) {
-        global $id;
-        // generate a set of 10 random ids just to hedge our bets, since we
-        // could may be filtering a lot of bozos and some articles may no
-        // longer be public
-        $query = <<<EOT
-	    SELECT article_id,username,title,date,web,category
-	    FROM articles_info
-	    WHERE status=2
-EOT;
-	if (count($bozos)) {
-	    $query .= " AND user_id NOT IN $bozo_set ";
-	}
-	$query .= <<<EOT
-	    ORDER BY RAND()
-               LIMIT $num
-EOT;
-
-	$res = mysql_query($query);
-
-	// multiple rows, limit 10 latest
-	while ($d = mysql_fetch_object($res)) {
-	    $id=$d->article_id;
-            if ($category=$d->category) {
-                $names=get_cat_names($category);
-	    } else {
-                $names=get_cat_none();
-	    }
-	    $username = stripslashes($d->username);
-	    $url_username=urlencode(stripslashes($d->username));
-	    $title=stripslashes($d->title);
-	    $html .= <<<EOT
-<p>
-<a href="journals/userpages.phtml?username=$url_username">$username</a> wrote
-<a href="journals/article.phtml?id=$d->article_id">
-<strong>$title</strong></a>
-<BR>
-<font size=1>$names</FONT>
-<BR>
-</p>
-EOT;
-	}
-	return $html;
-    }
-} // end class
 ?>
