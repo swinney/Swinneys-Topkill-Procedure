@@ -37,8 +37,22 @@ include "../templates/top.inc";
         error("Could not update pending_articles");
         exit;
       }
-    }
-  }
+# i created an articles_user table for keeping
+# record of the most rescent post by a person
+# this will eliminate the problem of green posting
+# furiously throughout the day.
+
+		$query="UPDATE articles_user SET most_rescent=$article_id, total_submitted=total_submitted+1 WHERE username='$username'";
+		$res = @mysql_query($query);
+		if ($res == false) {
+		# res one failed, go res two
+		# this is a new username to swinney.org
+
+		$query = "INSERT INTO articles_user ('username','most_rescent') VALUES ('$username','$article_id')";
+		$res = @mysql_query($query);
+		}
+	}
+}
 
 
 //

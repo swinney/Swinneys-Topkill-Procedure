@@ -1,4 +1,6 @@
 <?
+
+
 #########################################################
 # $Id$
 # global.inc
@@ -7,7 +9,38 @@
 
 
 define("WWW_ROOT", "http://swinney.org/dev/journals");
+define("TITLE", "swinney.org");
 
+
+#########################################################
+# mangage the cookie system
+# syntax for php ccookie is:
+# setcookie(name, value, expiration, path, domain, security);
+# note: expiration is in seconds, domain must start with period. 
+#
+# we are calling the cookie "id" and assigning it the 
+# value $randval . This particular cookie will expire 
+# in four hours (the current time plus 14,400 seconds). 
+# The cookie is valid for any page below the document 
+# root on the domain swinney.org.
+
+# fire the session up or keep it going if it is already on fire
+session_start();
+
+# step one, assing a random value user id
+if (!isset($id)) {
+	srand((double)microtime()*1000000);
+	$randval = rand();
+	# assign the user a random value cookie
+	setcookie("id",$randval,time()+14400,"/",".swinney.org",0);
+} 
+
+# step two, validate the user
+# cookie named valid_user, yes, four hours, / , swinney.org
+setcookie("valid_user","yes",time()+14400,"/",".swinney.org",0);
+
+# to delete the cookie just dont set the username
+# setcookie("valid_user","",time()+14400,"/",".swinney.org",0);
 
 ##########################################################
 #################  FUNCTION LIST #########################
@@ -100,4 +133,21 @@ function check_web($web,$username)
 	}
 
 }
+
+function get_categories($something) {
+  // Work out what subjects
+  $res = mysql_query ("SELECT MAX(category_id) FROM categories");
+  $maxid = mysql_result($res, 0, 0);
+  $subject_value = 0;
+  for ( $i = 1 ; $i <= $maxid ; $i++ ) {
+    $str = "cat".$i;
+    if ( $$str == "on" ) {
+      $val = pow(2, $i-1);
+      $subject_value += $val;
+    }
+  }
+
+}
+
+
 ?>

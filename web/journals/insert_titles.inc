@@ -3,7 +3,9 @@ $Id$
 -->
 <?
 
-$res = mysql_query("SELECT article_id,username,web,date,title,blurb FROM articles_info WHERE status='2' ORDER BY time DESC limit 10" );
+$query="SELECT article_id,articles_info.username,title FROM articles_info,articles_user WHERE articles_info.article_id=articles_user.most_rescent AND articles_user.most_rescent ORDER BY article_id";
+
+$res = mysql_query($query);
 
 // multiple rows, limit 10 latest
 while ( $d = mysql_fetch_object( $res ) ) {

@@ -1,5 +1,5 @@
 <?php
-
+# $Id$
 $hidden_hash_var='your_password_here';
 
 $LOGGED_IN=false;
@@ -18,7 +18,7 @@ real_name text,
 email text,
 password text,
 remote_addr text,
-confirm_hash text,
+cofirm_hash text,
 is_confirmed int not null default 0
 );
 
@@ -225,7 +225,7 @@ function user_send_confirm_email($email,$hash) {
 		as well as the change email address function
 	*/
 
-	$message = "Thank You For Registering at Swinney.com".
+	$message = "Thank You For Registering at swinney.org".
 		"\nSimply follow this link to confirm your registration: ".
 		"\n\nhttp://swinney.org/journals/confirm.phtml?hash=$hash&email=". urlencode($email).
 		"\n\nOnce you confirm, you can use the services on Swinney.";
