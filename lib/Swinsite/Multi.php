@@ -30,8 +30,7 @@ EOT;
         return $row;
     }
 
-    function is_multi() {
-      global $id;
+    function is_multi($id) {
         $query =<<<EOT
 	  SELECT count(multi_articles.article_id) as num, 
                  multi_articles.multi_id as multi_id 
@@ -45,9 +44,7 @@ EOT;
         return $num;
     }
 
-    function get_multi() {
-      global $id;
-      global $multi_id;
+    function get_multi($id,$multi_id) {
         $query =<<<EOT
       SELECT multi_info.user_id as editor_id,
              multi_info.title as multi_title,
