@@ -1,0 +1,46 @@
+
+<!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
+
+<?
+$res = mysql_query ("SELECT * FROM thoughts ORDER BY comment_id DESC LIMIT 60");
+
+// multiple rows 
+while ( $d = mysql_fetch_object( $res ) ) {
+
+// move it to strip slashes
+$username=$d->username;
+$thought=$d->thought;
+$timestamp=$d->timestamp;
+
+// echo and strip
+
+$username=stripslashes($username);
+$thought=stripslashes($thought);
+$timestamp=stripslashes($timestamp);   
+
+$ext = substr($thought,-3);
+
+
+$hour = substr($timestamp, 8, 2);
+$min  = substr($timestamp, 10, 2);
+
+if ($ext == "jpg"||$ext == "gif"||$ext == "png") {
+
+echo <<<EOT
+<tr>\n
+<td colspan=3 align="center" class="thoughts"><IMG SRC="$thought" ALT="$username"></td>\n
+<tr>
+EOT;
+
+} else {
+
+echo "<tr>\n<td valign=\"top\" class=\"thoughts\">\n$hour:$min &lt;$username&gt; $thought</td>\n</tr>\n\n";
+   }
+}
+?>
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+<?
+// $Id$ 
+?>
+
+<tr>
+<td>
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td>
+<img src="../journals/img/name.gif" alt="name:" width="40" height="17" border="0"></td>
+
+<td>
+&nbsp;</td>
+
+<td>
+<img src="../journals/img/thought.gif" alt="thought:" width="53" height="17" border="0"></td>
+
+<td>
+&nbsp;</td>
+
+<td rowspan="2" nowrap><img src="../journals/img/no.gif" alt="" width="70" height="1" border="0"><form name="refreshform" action="index.phtml" method="POST" enctype="multipart/form-data"></td>
+
+
+<td class="thoughts" align="center" valign="bottom" rowspan="2">
+<select name="refreshrate">
+
+<? if ($refreshrate) {} else {$refreshrate="0";} ?>
+
+<option value="0"<? if ($refreshrate == "0") {echo " selected";} ?>>don't refresh automatically</option>
+<option value="10"<? if ($refreshrate == "10") {echo " selected";} ?>>refresh every ten seconds</option>
+<option value="30"<? if ($refreshrate == "30") {echo " selected";} ?>>refresh every 30 seconds</option>
+<option value="60"<? if ($refreshrate == "60") {echo " selected";} ?>>refresh every minute</option>
+<option value="120"<? if ($refreshrate == "120") {echo " selected";} ?>>refresh every two minutes</option>
+<option value="300"<? if ($refreshrate == "300") {echo " selected";} ?>>refresh every five minutes</option>
+<option value="3600"<? if ($refreshrate == "3600") {echo " selected";} ?>>refresh every hour</option>
+<option value="1209600"<? if ($refreshrate == "1209600") {echo " selected";} ?>>refresh fortnightly</option>
+</select>
+
+<input type="submit" value="change">
+</form>
+
+
+</td>
+
+<td rowspan="2">
+
+<form name="ithoughtitform" action="journals/process_thought.phtml" method="POST" enctype="multipart/form-data">
+</td>
+
+</tr>
+
+<tr>
+<td>
+<input type="text" size="10" name="username" value=""></td>
+
+<td>
+&nbsp;</td>
+
+<td>
+<input type="text" name="thought"></td>
+
+<td>&nbsp;
+<input type=submit value="I Thought It">
+</form></td>
+
+</tr>
+</table></td>
+</tr>
+
+
