@@ -6,8 +6,12 @@
 <tr>
 <td nowrap colspan="3">
 
-<p class="header"><b><? echo $title ?></b>
-<?
+<p class="header"><b><? echo $title ?></b><FONT="GREEN"><? 
+if ($user_id) { 
+  echo ': <FONT COLOR="GREEN">You are logged in, and can edit your article later.</FONT>';
+} else {
+  echo ': <FONT COLOR="RED">Warning, users not logged in cannot edit after posting</FONT>';
+}
 //
 // temp_aid is set if user just came from the VIP area
 //
@@ -92,7 +96,8 @@ EOT;
 <td>
 <p>  
 <input type="radio" name="images_too" value="yes">yes
-&nbsp;<input type="radio" name="images_too" value="no" checked>no</p></td>
+&nbsp;<input type="radio" name="images_too" value="no" checked>no
+</p></td>
 <td>&nbsp;</td>
 </tr>
 <tr>
