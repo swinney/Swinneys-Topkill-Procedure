@@ -4,7 +4,65 @@ require_once("../global.inc");
 include_once("./top.inc");
 include_once("./nav.inc");
 
-echo "<P><I>Coming Soon</I> ...</P>";
+if (!$id) header("./articles.phtml");
+
+$query="SELECT articles_info.*,articles_text.text FROM articles_info,articles_text WHERE articles_info.article_id=$id AND articles_info.article_id=articles_text.article_id";
+$res=mysql_query($query) or die($query);
+$row=mysql_fetch_array($res);
+
+echo <<<EOT
+<TABLE>
+<TR>
+<TD>
+Username:
+</TD>
+<TD>
+<a href="./users.phtml?search=$row[username]">$row[username]</a>
+</TD>
+</TR>
+<TR>
+<TD>
+Title:
+</TD>
+<TD>
+<B>$row[title]</B>
+</TD>
+</TR>
+<TR>
+<TD>
+Blurb:
+</TD>
+<TD>
+$row[blurb]
+</TD>
+</TR>
+<TR>
+<TD>
+Web:
+</TD>
+<TD>
+$row[web]
+</TD>
+</TR>
+<TR>
+<TD>
+date:
+</TD>
+<TD>
+$row[date]
+</TD>
+</TR>
+<TR>
+<TD>
+Time:
+</TD>
+<TD>
+$row[time]
+</TD>
+</TR>
+</TABLE>
+EOT;
+
 
 include_once("./bottom.inc");
 
