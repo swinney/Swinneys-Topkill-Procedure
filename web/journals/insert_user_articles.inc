@@ -45,28 +45,24 @@ if (isset($res)) {
 $url = "article.phtml?id=$d->article_id";
 
 
-   //   echo "<h1>Last 25 Entries</h1>";
 
    echo "<P>";
 
      if($page_num == 1){
-            print "<P><b>newer</b> <a href='submit_article.phtml'><strong>write</strong></a>";
+            echo "<P>newer |";
      }
 
 
      if($page_num > 1){
-	     print "<P><a href=\"$PHP_SELF?username=$username&page_num=$page_back\"><b>newer</a></b> <a href='submit_article.phtml'><strong>write</strong></a>";
-
-
-     } 
-
+	     echo "<P><a href=\"$PHP_SELF?username=$username&page_num=$page_back\">newer</a> | ";
+     }
   
      if($page_num < $num_of_pages) { 
-             print " <a href=\"$PHP_SELF?username=$username&page_num=$page_forward\"><b>older</b></a></P>";
+             echo " <a href=\"$PHP_SELF?username=$username&page_num=$page_forward\">older</a></P>";
      } 
 
      if($page_num == $num_of_pages) {
-             print "<b>older</b></P>";
+             echo " older</P>";
      }
 
  echo "</P>";
@@ -97,36 +93,28 @@ echo " | $d->num comments";
    echo "</td></tr></table>\n";
 
 }
-
-
-   //   echo "<h1>Last 25 Entries</h1>";
-
    echo "<P>";
 
      if($page_num == 1){
-            print "<P><b>newer</b> <a href='submit_article.phtml'><strong>write</strong></a>";
+            echo "<P>newer |";
      }
 
 
      if($page_num > 1){
-	     print "<P><a href=\"$PHP_SELF?username=$username&page_num=$page_back\"><b>newer</a></b> <a href='submit_article.phtml'><strong>write</strong></a>";
-
-
-     } 
-
+	     echo "<P><a href=\"$PHP_SELF?username=$username&page_num=$page_back\">newer</a> | ";
+     }
   
      if($page_num < $num_of_pages) { 
-             print " <a href=\"$PHP_SELF?username=$username&page_num=$page_forward\"><b>older</b></a></P>";
+             echo " <a href=\"$PHP_SELF?username=$username&page_num=$page_forward\">older</a></P>";
      } 
 
      if($page_num == $num_of_pages) {
-             print "<b>older</b></P>";
+             echo " older</P>";
      }
 
  echo "</P>";
 
 }
-
 
 ?>
 
