@@ -8,7 +8,7 @@
 Swinney.org provides an outlet of sorts to kindred
 spirits across this land. Those creative souls that feel the
 darkness of jobs, school and oppressive family units bearing
-down on them at all times.<BR>--wb
+down on them at all times.<BR>--wb, <a href="./usercomments.phtml?username=wb">swinney.org's critic</a>
 </I></BLOCKQUOTE>
 
 
@@ -114,9 +114,9 @@ see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. war
 </p>
 
 <p class="subheader"><b>for general assistance with this site, inquiries:</b></p>
-<p>austin swinney<BR>
-austin@swinney.org<BR>
-santa cruz, CA, US</p>
+<P>the swinney.org editorial staff<BR>
+editors@[=NO SPAM=]swinney.org</P>
+
 <p>$Id$</p></td>
 </tr>
 </table>
