@@ -3,6 +3,7 @@
 <?
 
 include "connect.inc";
+include "next_article.inc";
 
 //  $url = "/article.phtml?id=$article_id";
   $article_id=$id;
@@ -12,7 +13,17 @@ include "connect.inc";
  
    echo "<H2>".stripslashes($d->title)."</h2>  ";
    echo "<h4>".stripslashes($d->blurb)."</h4>\n";
-   echo "<P>by <a href='".$d->web."'> ".stripslashes($d->username)."</a><br> $d->date</h4>\n";
+
+// check for URL or MAILTO
+
+   $name = $d->username;
+   $web = $d->web;
+      if ($web == "") {
+         echo "<h4>by $name</h4>\n";
+      } else {
+         echo "<h4>by <a href='".$d->web."'> ".stripslashes($d->username)."</a><br> $d->date</h4>\n";
+      }
+
  
 
 $fp = fopen("pending/$article_id", "r");
@@ -26,3 +37,13 @@ $fp = fopen("pending/$article_id", "r");
 
 
 ?>
+
+
+
+
+
+
+
+
+
+
