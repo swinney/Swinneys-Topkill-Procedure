@@ -56,8 +56,6 @@ while ($d=mysql_fetch_object($res)) {
 <tr>
 <td></td>
 <td>
-one liner <input type="radio" name="type" value="0" CHECKED> or
-<input type="radio" name="type" value="1"> substantive
 </td>
 <td></td>
 </tr>
