@@ -8,6 +8,6 @@
     echo "<font size=6 color=red><b>We are moving to Saturn5.com<br><br>thanks for your patience.</b></font></body></html>";
     exit;
   }
-  $DB = "swinney";
+  $DB = "swindev";
 
 ?>
