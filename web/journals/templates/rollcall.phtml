@@ -32,16 +32,23 @@ function jumplink(url) {
 }
 </script> 
 
-<?
-include "connect.inc";
 
-$res = mysql ("textocal", "SELECT DISTINCT username FROM pending_articles WHERE status='2' OR status='3' ORDER BY username");
+<?
+include "../global.inc";
+
+$res = mysql ("$DB", "SELECT DISTINCT username FROM pending_articles WHERE status='2' ORDER BY username");
+
 
 echo "<form name='linkform'>";
-echo "<select name='../../userpages.phtml?username=' onChange='jumplink(this.options[this.selectedIndex].value)'>";
+
+echo "<select name='link' onChange='jumplink(this.options[this.selectedIndex].value)'>";
+
 echo "<option>- - -</option>";
+
 while ($row = mysql_fetch_object ($res)) {
-  echo "<option value=\"$row->username\">$row->username</option>\n";
+
+  echo "<option value=\"../userpages.phtml?username=$row->username\">$row->username</option>\n";
+
 }
 
 echo "</SELECT>\n";
