@@ -77,8 +77,9 @@ while ($d = mysql_fetch_object($res)) {
 
   /* build the user link
    */
+  if ($user_id!=0) {
   $username = "<a href=\"./info_user.phtml?uid=$user_id\">$username</a>"; 
-
+  }
 
   /* LULU MADNESS
    * the things we do for chicks - J.
@@ -88,7 +89,7 @@ while ($d = mysql_fetch_object($res)) {
     $username = "<span style=\"background-color:pink\">$username";
     $comment = "$comment</span>";
   }
-  if ($to_users[$to_user_id]) {
+  if ($to_users[$to_user_id] && $to_user_id!=0) {
     $username .= " to <a href='./info_user.phtml?uid=". $to_user_id."'>" . $to_users[$to_user_id] ."</A>\n";
   }  
 
