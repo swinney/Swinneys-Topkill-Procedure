@@ -1,4 +1,5 @@
 <?
+#$Id$
 require_once("global.inc");
 
 if (!$username || !$password) {
@@ -30,6 +31,8 @@ if (crypt($password, $user->password) != $user->password) {
 $authenticated_username = $user->username;
 session_register("authenticated_username");
 
-header("Location: " . URLBASE);
+# $back_to is taken from a hidden form field on
+# login.phtml and is derived from $HTTP_REFERER
+header("Location: " . $back_to);
 ?>
 
