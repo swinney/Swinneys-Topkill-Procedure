@@ -20,7 +20,7 @@ in order.
 -->
 
 <table cellpadding="0" cellspacing="0" border="0" width="375">
-<tr>
+tr>
 <td align="right">
 <img src="img/no.gif" alt="" width="1" height="20" border="0"><br>
 <a href="submit_comment.phtml?id=$id" accesskey="s" target="_top" onmouseover="MM11.mouseOver(); window.status='Add a Comment'; return true" onmouseout="MM11.mouseOut(); window.status=' '; return true"><img src="img/addcomment.gif" alt="Add A Comment" width="104" height="23" border="0" name="addcomment1"></a></td></tr>
@@ -63,7 +63,7 @@ if ($limit_chars) {
   $query .= " AND chars > $limit_chars";
 }
 $query .= <<<EOT
-ORDER BY comment_id
+ ORDER BY comment_id
 EOT;
 
 $res = mysql_query ($query);
