@@ -1,0 +1,14 @@
+<?
+// $Id$
+
+/*
+the really cool thing would be if we can get the page name from the url.
+*/
+$page=split('/',$SCRIPT_NAME);
+$page=end($page);
+$page=split('\.',$page);
+$last=$page[0];
+$into_template = $last .".inc";
+$title = "Settings";
+include(INCDIR ."/template.inc");
+?>
