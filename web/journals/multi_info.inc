@@ -12,8 +12,10 @@ if (!$mid) {
 <P><B>$multi[title]</B></P>
 <P><B>edited by $editor</B></P>
 <P><B>$multi[abstract]</B></P>
-
 EOT;
+    $multi_html = $m->get_Multi(0,$mid,"inline");
+    $html .= $multi_html;
+
 }
 
 echo $html;
