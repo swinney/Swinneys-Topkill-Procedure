@@ -40,11 +40,11 @@ EOT;
 
 $article_sub=array(
 		   "Info" => "article_info.phtml",
-		   "Edit" => "edit_article.phtml",
 		   "Preview" => "preview_article.phtml",
-		   "Categoize" => "categorize_article.phtml",
+		   "Edit" => "edit_article.phtml",
 		   "View Images" => "view_images.phtml",
 		   "Add Image" => "submit_image.phtml",
+		   "Categorize" => "categorize_article.phtml",
 		   "Status" => "status.phtml"
 		   );
 
