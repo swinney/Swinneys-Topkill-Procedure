@@ -1,0 +1,48 @@
+<?
+#$Id$
+require_once("../journals/global.inc");
+
+/*
+mysql> describe thoughts;
++------------+---------------+------+-----+-------------+----------------+
+| Field      | Type          | Null | Key | Default     | Extra          |
++------------+---------------+------+-----+-------------+----------------+
+| comment_id | int(11)       |      | PRI | 0           | auto_increment |
+| timestamp  | timestamp(14) | YES  |     | NULL        |                |
+| username   | varchar(20)   | YES  |     | nappy_sucka |                |
+| thought    | text          | YES  |     | NULL        |                |
++------------+---------------+------+-----+-------------+----------------+
+*/
+
+$ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
+
+  if ( $username == "name" ) {
+    echo ("Names don't think, back up and try again.");
+    exit;
+  }
+  if ( $thought == "thought" ) {
+    echo ("To thought, you must think.  Back up and try again.");
+    exit;
+  }
+  if ( $username == "" ) {
+    echo("There are many names for nothing, you just found one.  Back up and try again.");
+    exit;
+  }
+  if ( $thought == "" ) {
+    echo("In nothing, there exists blankness.  Back up and try again.");
+    exit;
+  }
+if (!$authenticated_user_id) {
+  $urlbase = URLBASE;
+  header("Location: $urlbase/journals/login.phtml");
+  exit();
+}
+$res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,$authenticated_user_id,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
+
+  if ( $res == false ) { 
+    echo ("Bollocks!");
+    exit;
+  }
+//  mail("thoughts@swinney.org", "comment: $username",  "$thought"); 
+header("Location: " . URLBASE ."/chat");
+?>
