@@ -31,9 +31,16 @@ $thought=$d->thought;
 
 // echo and strip
 
-echo stripslashes($username);
-echo " .o0O(".stripslashes($thought).")<BR>\n";
+stripslashes($username);
+stripslashes($thought);
 
+$ext = substr($thought,-3);
+
+   if ($ext == "jpg"||$ext == "gif"||$ext == "png") {
+      echo "<img src='$thought' alt='$username'><BR>\n";
+   } else {
+   echo " $username .o0O($thought)<BR>\n";
+   } 
 }
 echo "</P>";
 ?>
