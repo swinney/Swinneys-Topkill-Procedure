@@ -15,9 +15,8 @@ $timestamp=$d->timestamp;
 // echo and strip
 
 $username=stripslashes($username);
-$thought=eregi_replace("bus","dong",stripslashes($thought));
+$thought=eregi_replace("(bus|busse)","dong",stripslashes($thought));
 $timestamp=stripslashes($timestamp);
-
 $ext = substr($thought,-3);
 
 
