@@ -9,7 +9,7 @@
 <p>
 the word 'swinney' can be used to refer to two different things:
 </p><p>
-1. <a href="link to austin's articles">austin swinney</a>, the dashing young libra who created swinney.org
+1. <a href="userpages.phtml?username=austin">austin swinney</a>, the dashing young libra who created swinney.org
 </p><p>
 or
 </p><p>
@@ -19,9 +19,9 @@ entries (usually text, with occasional images).
 </p><p>
 <b>who writes on swinney.org?</b>
 </p><p>
-anyone! <a href="link to submit form">including you</a>, if you want.
+anyone! <a href="submit_article.phtml">including you</a>, if you want.
 </p><p>
-in the past, <a href="link to list of names">these people</a> have
+in the past, <a href="roll_call_all.phtml">these people</a> have
 written on swinney.org. 
 </p><p>
 (something here about austin melbs sf)
@@ -30,7 +30,7 @@ written on swinney.org.
 <b>do i have to sign up or log in or something?</b>
 </p><p>
 no, you don't have to sign up. just write a journal entry <a
-href="link to submit form">here</a>. if you write more than
+href="submit_article.phtml">here</a>. if you write more than
 once, and use the same name every time, it'll be easier for people to
 find what you've written, but it's not a rule or anything.
 </p>
