@@ -8,6 +8,10 @@
 
 			 "SWINNEY NEEDS YOU"!
 
+Wed Sep 26, 2001  4:45 PM (austin)
+- usernames
+   o filter out " " with "_"
+
 Tue Aug 28 17:57:52 PDT 2001 (bcm)
 
 - user registration
