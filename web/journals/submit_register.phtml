@@ -8,11 +8,9 @@ if ($authenticated_username) {
   header("Location: " . $HTTP_REFERER);
 }
 
-// submit_register.phtml
-$inc = "index";
 $title = "Register a New Account";
-$into_template = "submit_register.inc";
-include "template_norollcall.inc";
+$into_template = "./submit_register.inc";
+include("./template_norollcall.inc");
 ?>
 
 

@@ -8,11 +8,9 @@ if ($authenticated_username) {
   header("Location: " . $HTTP_REFERER);
 }
 
-// login.phtml
-$inc = "index";
 $title = "Log In";
 $into_template = "./login.inc";
-include "./template_norollcall.inc";
+include("./template_norollcall.inc");
 ?>
 
 

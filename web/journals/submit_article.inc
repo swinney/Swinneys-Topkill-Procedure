@@ -1,5 +1,14 @@
 <?
 // $Id$
+
+if (error_msg) {
+  session_unregister("error_msg");
+  echo <<<EOT
+<p>
+<b><font color="red">$error_msg</font></b>
+</p>
+EOT;
+}
 ?>
 
 <table width=375 border="0" cellspacing="0" cellpadding="2">
@@ -15,7 +24,7 @@
 <td align="right" nowrap>
 <p>you are: </p></td>
 <td>
-<input type=text name=username size=25 maxlength=50  value="<? if ($authenticated_username) { echo "$authenticated_username"; } ?>">
+<input type=text name=username size=25 maxlength=50  value="<?$authenticated_username?>">
 </td>
 <td>&nbsp;</td>
 </tr>
@@ -120,14 +129,3 @@ echo "<input type='radio' name='category' value='cat$d->category_id'> $d->name <
 </tr>
 </table>
 </form>
-
-
-
-
-
-
-
-
-
-
-

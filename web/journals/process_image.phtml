@@ -1,10 +1,6 @@
 <?
-#$Id$
-include "global.inc";
-# austin swinney to the year 3000, swinney.org
-# save, rename, insert into database, other crap
-# now wer're done with all of that.
-#
+// $Id$
+require_once("global.inc");
 #  HERE ARE THE VARIABLES USED IN THIS PROCESS:
 #
 #   $article_id is the unique number of the article 
@@ -21,39 +17,27 @@ include "global.inc";
 
 
 if (!isset($index)) {
-    $index=1;
-  } else { 
-    $index++;
+  $index = 1;
+} else { 
+  $index++;
+}
+
+if ($submit_image) {
+  if (ereg("\..+$", $userfile_name, $matches)) {
+    $ext = strtolower($matches[0]);
+    $filename = $article_id . "_" . $index . "." . $extension;
+  } else {
+    $filename = $article_id . "_" . $index;
   }
 
-
-  if ($submit_image=="submit") {
-     $temp = substr(strtolower($userfile_name),-3);
-     # gen a file name
-     if ( $temp == "jpg" ) {  // ADD THEM JAYPEGS!
-     $filename = $article_id."_".$index.".jpg";
-     } elseif ( $temp == "gif") {  // ADD THEM JIFFFFFFZ
-     $filename = $article_id."_".$index.".gif";
-     } elseif ( $temp == "png") {  // ADD THEM PEE-EN-JEEEY MAJIGGERS
-     $filename = $article_id."_".$index.".png";
-     } 
-
-# Copy the file to our server.  
-
-$copy=@copy($userfile, "/sky/www/swinney.org/html/journals/images/$filename");
-
+  // Copy the file to our uploads directory
+  $copy=@copy($userfile,
+	      "/sky/www/swinney.org/html/journals/images/$filename");
 }
 
 if ($copy=="TRUE") {
-
-header("Location: submit_image.phtml?index=$index&article_id=$article_id");
-
+  header("Location: submit_image.phtml?index=$index&article_id=$article_id");
 } elseif ($submit_image=="exit") {
-
-header("Location: " . URLBASE);
+  header("Location: " . URLBASE);
 }
 ?>
-
-
-
-

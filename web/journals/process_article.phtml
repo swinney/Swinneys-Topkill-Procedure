@@ -1,77 +1,61 @@
 <?
-#$Id$
-include "global.inc";
-  // Init the date and time
-  $date = date("Y-m-d");
-  $time = time();
+// $Id$
 
-  if ( empty($username)) {
-    echo "This username is not set";
-    exit;
-  }
-/*
-  // Work out what subjects
-  $res = mysql_query ( "SELECT MAX(category_id) FROM categories");
-  $maxid = mysql_result($res, 0, 0);
-  $subject_value = 0;
-  for ( $i = 1 ; $i <= $maxid ; $i++ ) {
-    $str = "cat".$i;
-    if ( $$str == "on" ) {
-      $val = pow(2, $i-1);
-      $subject_value += $val;
-    }
-  }
-*/
-// get the users ip address.  maybe this is uncool, but i think it is a
-// necessary precaution.  like dont i want to know who the person is who
-// tries to send malicious unix commands in to the thoughts database?
+require_once("global.inc");
 
-$ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
+// Init the date and time
+$date = date("Y-m-d");
+$time = time();
+
+if ($username) {
+  $ip_addr = getenv ("REMOTE_ADDR");
 
   // Insert into the database
-  $res = mysql_query("INSERT INTO articles_info
-	 VALUES ( 
-	'NULL', 
-	'$username', 
-        '$web',
-	'$date', 
-	'$time', 
-	'1', 
-	'".addslashes($keywords)."',
-	'".addslashes($title)."',
-	'".addslashes($blurb)."', 
-	'$category',
-	'$image',
-	'$ip_addr'
-	)");
+  $esc_keywords = addslashes($keywords);
+  $esc_title = addslashes($title);
+  $esc_blurb = addslashes($blurb);
 
-  if ( $res == false ) { 
-    echo("Bullocks on one!");
-    exit;
+  $query = <<<EOT
+INSERT INTO articles_info
+    VALUES (NULL, '$username', '$web', '$date', '$time', 1,
+	    '$esc_keywords', '$esc_title', '$esc_blurb',
+	    '$category', '$image', '$ip_addr')
+EOT;
+
+  if (mysql_query($query)) { 
+    $article_id = mysql_insert_id();
+    $esc_content = addslashes($content);
+
+    $query = <<<EOT
+INSERT INTO articles_text
+     VALUES ($article_id, '$esc_content');
+EOT;
+
+    if (mysql_query($query)) {
+      $success_msg = "Article saved.";
+    } else {
+      $error_msg = "Problem saving the article text: " . mysql_error();
+    }
+  } else {
+    $error_msg = "Problem saving the article info: " . mysql_error();
   }
-
-
-
-# Create a file in  /articles_info
-# if you don't have the auto_increment integer, 
-# then mysql_insert_id is not going to work
-  $article_id = mysql_insert_id();
-  $content = addslashes($content);
-  $res = mysql_query("INSERT INTO articles_text VALUES ($article_id,'$content') ");
-
-  if ( $res == false ) { 
-    echo("Bullocks on two!");
-    exit;
-  }
-
-
-if ($images_too=="no") {
-        header("Location: " . URLBASE);
 } else {
-# $images_too probably equals "yes" =-)
-header("Location: submit_image.phtml?article_id=$article_id");
-
+  $error_msg = "You must specify a username.";
 }
+
+if ($error_msg) {
+  session_register("error_msg");
+  include("./submit_article.phtml");
+} else {
+  session_register("success_msg");
+
+  if ($images_too=="no") {
+    $loc = URLBASE;
+  } else {
+    $loc = "submit_image.phtml?article_id=$article_id";
+  }
+
+  header("Location: $loc");
+}
+
 ?>
-
-
