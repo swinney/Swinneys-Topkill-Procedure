@@ -13,11 +13,6 @@ Fri Oct 19, 2001 10:08 AM (swinney)
 - image macro o do thing where %%img%% is recognised by reg_replace()
    and replaced with the image tag.
 
-Thu Oct 11, 2001  1:28 PM (swinney)
-
-- author verification
-   o note if a user is logged in when they post something to add authenticity
-
 Tue Oct  2 16:13:15 EST 2001 (bcm)
 
 - news
@@ -31,8 +26,6 @@ Tue Oct  2 16:13:15 EST 2001 (bcm)
 - structure
    o use a namespace for file names so that multiple php apps with
      "global.inc" do not conflict
-   o figure out how to have site-specific config/defines that aren't
-     stored in cvs
    o reorg - put toplevel *.txt in docs dir outside web dir; move vip
      and admin up one level?
 
@@ -45,10 +38,8 @@ Tue Aug 28 17:57:52 PDT 2001 (bcm)
 
 - user registration
    o url?
-   o require confirmation message?
 
 - user self-management (vip)
-   o edit own articles and comments
    o "since you've been gone..." articles and comments posted since
      last visit
 
@@ -64,13 +55,6 @@ Tue Aug 28 17:57:52 PDT 2001 (bcm)
    o editor (can edit and change status of articles and comments)
    o content types (vanilla/no permission, porny, etc)
 
-- auto fill in username fields on all forms when user is logged in
-
-
-Sat Aug 25, 2001 10:23 AM
-
-- blurbs
-   o default use the article id (article #2345) or echo nothing
 
 Sun Aug 19, 2001  5:31 PM
 
@@ -79,3 +63,5 @@ Sun Aug 19, 2001  5:31 PM
    o work it into the comment admin area too.
    o add a column to the comments (image) and increment 
    o select out image number and display after comment (fig. x.x)
+
+
