@@ -43,7 +43,7 @@ MM13 = new rollover("isaidit","<? echo URLBASE; ?>/journals/img/isaidit.gif", "<
 
 </head>
 
-<body bgcolor="#cccccc" link="#000066" vlink="#330066" alink="#ff0000"
+<body bgcolor="#cccccc" link="#000099" vlink="#330066" alink="#ff0000"
 marginwidth=0 marginheight=0 topmargin=0 leftmargin=0>
 
 <!-- END PHP Dynamically Required File: top.inc -->
