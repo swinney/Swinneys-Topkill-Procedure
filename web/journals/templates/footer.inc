@@ -42,7 +42,9 @@ $noslogan = array( 1 =>
 <td align="center">
 <img src="<? echo URLBASE; ?>/journals/img/no.gif" alt="" width="1" height="30" border="0">
 <?
-include("./journals/insert_stats.inc");
+if (defined("URLBASE")) {
+#include("URLBASE/journals/insert_stats.inc");
+}
 ?>
 </td>
 </tr>
