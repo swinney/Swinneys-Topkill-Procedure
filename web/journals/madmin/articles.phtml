@@ -1,0 +1,34 @@
+<?
+// $Id$
+require_once("../global.inc");
+include_once("./top.inc");
+include_once("./nav.inc");
+?>
+
+<FORM ACTION="<? echo $PHP_SELF; ?>" METHOD=POST>
+<SELECT NAME="show">
+<OPTION <? if ($show==1) echo "SELECTED";?> VALUE=1>pending
+<OPTION <? if ($show==2) echo "SELECTED";?> VALUE=2>active
+<OPTION <? if ($show==3) echo "SELECTED";?> VALUE=3>archived
+<OPTION <? if ($show==4) echo "SELECTED";?> VALUE=4>trashed
+</SELECT>
+<INPUT TYPE="submit" NAME="submit" VALUE="Show">
+</FORM>
+
+<?
+
+if (!isset($show)) $show=1;
+
+$query="SELECT article_id,title,username,date FROM articles_info WHERE status=$show ORDER BY article_id";
+$res=mysql_query($query) or die (error_page($query));
+
+if (mysql_num_rows($res)>0) {
+  while ($d=mysql_fetch_object($res)) {
+    echo "<FONT SIZE='-1'>[$d->date]</FONT> <A HREF=\"article_info.phtml?id=$d->article_id\"><B>$d->title</B></A> by $d->username<BR>";
+  }
+} else {
+  echo "<P>There are currently no articles in this category.</P>";
+}
+include_once("./bottom.inc");
+
+?>
