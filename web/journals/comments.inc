@@ -22,7 +22,7 @@ $query = <<<EOT
    WHERE status=0
 EOT;
 if (count($bozos)) {
-  $query .= " AND username NOT IN $bozo_set ";
+  $query .= " AND user_id NOT IN $bozo_set ";
 }
 if ($insert_since) {
   $query .= " AND timestamp > $insert_since ";
@@ -65,7 +65,7 @@ EOT;
    WHERE status=0
 EOT;
   if (count($bozos)) {
-    $query .= " AND username NOT IN $bozo_set";
+    $query .= " AND user_id NOT IN $bozo_set";
   }
   if ($insert_since) {
     $query .= " AND timestamp > $insert_since";
@@ -168,12 +168,14 @@ EOT;
 EOT;
     $res2 = mysql_query($query);
     $row = mysql_fetch_row($res2);
+    $a_username=stripslashes($row[0]);
+    $a_title=stripslashes($row[1]);
     echo <<<EOT
 <tr>
 <td><a name="$comment_id"></a>
 <b><a href='article.phtml?id=$article_id.txt#$comment_id'>$username</a></b> on
-"<a href="article.phtml?id=$article_id.txt">$row[1]</a>" 
-by <a href='userpages.phtml?username=$row[0]'>$row[0]</a>:<br>
+"<a href="article.phtml?id=$article_id.txt">$a_title</a>" 
+by <a href='userpages.phtml?username=$row[0]'>$a_username</a>:<br>
 
 $comment
 
