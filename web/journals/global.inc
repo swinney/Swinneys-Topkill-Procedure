@@ -41,15 +41,4 @@ function check_web($web,$username) {
   }
 
 }
-
-
 ?>
-
-
-
-
-
-
-
-
-

@@ -17,6 +17,6 @@ pre { color: navy }
 
 <?
   // Include the global.inc file
-  $WWW_ROOT = "/home/1/aswinney/swinney.org/journals/";
-  include "$WWW_ROOT/global.inc";
+  // $WWW_ROOT = "/home/1/aswinney/swinney.org/journals";
+  include "global.inc";
 ?>

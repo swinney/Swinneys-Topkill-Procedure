@@ -20,7 +20,7 @@ $article_id = explode (".", $article_id);
 
 $no_extension = $article_id[0];
 
-$res = mysql ("$DB","SELECT * FROM thoughts ORDER BY timestamp DESC LIMIT 5");
+$res = mysql ("$DB","SELECT * FROM thoughts ORDER BY comment_id DESC LIMIT 5");
 echo "<P>";
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {

@@ -1,5 +1,4 @@
 
-
 <?
 include "journals/templates/top.inc";
 // include global
@@ -12,38 +11,50 @@ include "journals/global.inc";
 // include "journals/banners/rand_banner.inc";
 ?>
 <!-- </TD></TR><TR><TD COLSPAN=2 ALIGN="center"> -->
-<TABLE><TR><TD>
-<p align="center">(<a href="journals/index.phtml">JOURNAL</a> |
-<a href="journals/comments.phtml">COMMENTS</a> |   
-<a href="journals/submit_article.phtml">SUBMIT</a> | 
-<a href="journals/faq.phtml">ANSWERS</A>)</p>
-
+<TABLE width="100%" cellpadding="4"><TR><TD valign="top"><b>
+<p>(
+<a href="journals/index.phtml" accesskey="j">JOURNAL</a> |
+<a href="journals/comments.phtml" accesskey="c">COMMENTS</a> |   
+<a href="journals/submit_article.phtml" accesskey="s">SUBMIT</a> | 
+<a href="journals/faq.phtml" accesskey="f">ANSWERS</A>)</p></b>
+</b>
+</td>
+</tr>
+<tr>
+<td>
 <? 
 // include the thoughts
 include "journals/submit_thought.phtml";
 include "journals/insert_thought.phtml"; 
 ?>
-</TD></TR></TABLE>
+</TD>
+</TR></TABLE></center>
 </TD></TR><TR><TD VALIGN="top">
-<CENTER><TT>5 new</TT></CENTER>
+<CENTER><TT>order</TT></CENTER>
 <?
  include "journals/insert_5articles.inc";
 ?>
-</TD><TD valign="top">
-<CENTER><TT>5 old</TT></CENTER>
+</TD>
+</tr><tr>
+<TD valign="top">
+<CENTER><TT>chaos</TT></CENTER>
 <?
  include "journals/insert_5rand.inc";
 ?>
 
-</TD></TR><TR><TD COLSPAN=2 ALIGN="CENTER">
+</TD></TR><TR><TD COLSPAN=2>
 
 <? include "journals/insert_stats.inc"; ?>
-
+  
 </TD></TR></TABLE>
 </CENTER>
 <?
 include "journals/templates/footer.inc";
 ?>
+
+
+
+
 
 
 

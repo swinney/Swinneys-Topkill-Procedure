@@ -60,15 +60,5 @@ $res = mysql("$DB","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)
 
 
 // mail("theCommentator@swinney.org", "comment: $username on $article_id", "$nature", "$comment"); 
-header("Location: article.phtml?id=$article_id.txt")
+header("Location: article.phtml?id=$article_id.txt");
 ?>
-
-
-
-
-
-
-
-
-
-
