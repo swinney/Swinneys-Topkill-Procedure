@@ -48,31 +48,22 @@ if (isset($res)) {
 
 $url = "article.phtml?id=$d->article_id";
 
+ if($page_num == 1){
+   print "<P>newer |";
+ }
 
 
-   echo "<P>";
+ if($page_num > 1){
+   print "<P><a href=\"$return?&page_num=$page_back\">newer</a> |";
+ } 
 
-     if($page_num == 1){
-            print "<TT><< |";
-     }
+ if($page_num < $num_of_pages) { 
+   print " <a href=\"$return?page_num=$page_forward\">older</a>";
+ } 
 
-
-     if($page_num > 1){
-             print "<TT><a href=\"$return?&page_num=$page_back\"><<</a> |";
-
-
-     } 
-
-  
-     if($page_num < $num_of_pages) { 
-             print " <a href=\"$return?page_num=$page_forward\">>></a></TT>";
-     } 
-
-     if($page_num == $num_of_pages) {
-             print ">></TT>";
-     }
-
- echo "</P>";
+ if($page_num == $num_of_pages) {
+   print "older</P>";
+ }
 
 }
 
@@ -87,11 +78,32 @@ $article_id = $d->article_id;
 
 $res2 = mysql_query ("SELECT username,title FROM articles_info WHERE article_id=$article_id");
 $row = mysql_fetch_row($res2);
-echo "\n<BR>";
-echo "\n<P>$username on \"<a href='article.phtml?id=$article_id.txt#$comment_id'>$row[1]</A>\" by <a href='userpages.phtml?username=$row[0]'>$row[0]</a></P>";
-echo "<P>$comment</P>";
-
+echo "\n<hr>";
+echo <<<EOT
+<P>$username on 
+"<a href='article.phtml?id=$article_id.txt#$comment_id'>$row[1]</A>" 
+by <a href='userpages.phtml?username=$row[0]'>$row[0]</a></P>
+<P>$comment</P>
+EOT;
 }
+
+
+ if($page_num == 1){
+   print "<P>newer |";
+ }
+
+
+ if($page_num > 1){
+   print "<P><a href=\"$return?&page_num=$page_back\">newer</a> |";
+ } 
+
+ if($page_num < $num_of_pages) { 
+   print " <a href=\"$return?page_num=$page_forward\">older</a>";
+ } 
+
+ if($page_num == $num_of_pages) {
+   print "older</P>";
+ }
 ?>
 
 
