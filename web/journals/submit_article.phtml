@@ -1,10 +1,7 @@
-<HTML>
-<HEAD>
-<TITLE>Swinney.org Black Submit Form</TITLE>
-</HEAD>
-
-<BODY BGCOLOR=BLACK TEXT="WHITE">	
-
+<?
+// include the top with the global include 
+include "templates/top.inc";
+?>
 <form action="http://swinney.org/journals/process_article.phtml" method=post>
 <TABLE WIDTH=400 BORDER=0 CELLSPACING=0 CELLPADDING=0>
 
@@ -66,7 +63,7 @@
 <P>What category best describes you?</P>
 
 <?
-  include "connect.inc";
+  
   $res = mysql("$DB", "SELECT * FROM categories ORDER BY name ASC");
 
   while ( $d = mysql_fetch_object($res) ) {
