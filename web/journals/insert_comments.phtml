@@ -89,7 +89,7 @@ while ($d = mysql_fetch_object($res)) {
     $comment = "$comment</span>";
   }
   if ($to_users[$to_user_id]) {
-    $username .= " to " . $to_users["$to_user_id"];
+    $username .= " to <a href='./info_user.phtml?uid=". $to_user_id."'>" . $to_users[$to_user_id] ."</A>\n";
   }  
 
   $html .= <<<EOT
