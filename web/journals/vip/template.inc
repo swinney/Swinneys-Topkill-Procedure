@@ -2,7 +2,7 @@
 require_once("global.inc");
 
 include("../templates/top.inc");
-include("../templates/swinney.req");
+include("vip_nav.inc");
 include("../templates/endleft.inc");
 
 include($into_template);

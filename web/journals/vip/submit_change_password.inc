@@ -1,10 +1,5 @@
-
-<p>
-<b>Hi <? echo $authenticated_username; ?>!</b>
-Your call is very important to us.
-</p>
-
 <?
+#$Id$
 if ($error_msg) {
   echo <<<EOT
 <p>
@@ -21,9 +16,6 @@ if ($success_msg) {
 EOT;
 }
 ?>
-
-<hr>
-
 <p>
 Change your password:
 </p>
