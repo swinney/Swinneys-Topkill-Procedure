@@ -12,25 +12,22 @@ $per_page = 20;
 $page_start = ($page_num-1) * $per_page;
  
 //Do a number query to see how many results match the category...
-
-if (!$id) {
+ if ($uid) {
+  $query="SELECT count(*) as num_articles FROM articles_info WHERE status in (2,3) AND user_id=$uid ORDER BY article_id DESC";
+} elseif ($username) {
   $query="SELECT count(*) as num_articles FROM articles_info WHERE status in (2,3) AND username='". addslashes($username) ."' ORDER BY article_id DESC";
-} else {
-  $query="SELECT count(*) as num_articles FROM articles_info WHERE status in (2,3) AND user_id=$id ORDER BY artcle_id DESC";
 }
-$num_res = mysql_query($query);
-$num_object = MYSQL_FETCH_OBJECT($num_res);
-$num_of_results = $num_object->num_articles;
+$num_of_results = $db->getOne($query);
 
 // lets try this userlist thingy $USERS
 
-if (!$id) {
+if (!$uid) {
 $query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status in (2,3) AND username='". addslashes($username) ."' ORDER BY time DESC limit $page_start,$per_page";
 } else {
-$query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status=(2,3) AND user_id=$id ORDER BY time DESC limit $page_start,$per_page";
+$query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status IN (2,3) AND user_id=$uid ORDER BY time DESC limit $page_start,$per_page";
 }
 
-$res = mysql_query($query);
+$res = $db->query($query);
 
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
@@ -38,7 +35,6 @@ $num_of_pages = $num_of_results/$per_page;
 
 // Find out if the num_of_pages was a decimal.. Can't have 2.1 pages...
 $remainders = $num_of_results%$per_page; 
-
 
 if($remainders != 0){ //If is was a decimal, turn it into an integer and add 1 to it...
        $num_of_pages = intval($num_of_pages) + 1;
@@ -48,7 +44,6 @@ $page_back = $page_num - 1;
 $page_forward = $page_num + 1;
 
 
-//while ($row = mysql_fetch_object($res)) {
 if (isset($res)) {
 
 $url = "article.phtml?id=$d->article_id";
@@ -121,7 +116,7 @@ EOT;
 
 // multiple rows
 
-while ( $individual_row = mysql_fetch_object( $res ) ) {
+while ( $individual_row = $res->fetchRow(DB_FETCHMODE_OBJECT) ) {
 
    $articleno = $individual_row->article_id;
    $title = stripslashes($individual_row->title);

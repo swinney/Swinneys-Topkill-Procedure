@@ -64,8 +64,10 @@ writers:<br>
 
  $minus=time();
  $minus=$minus-7776000;
+#SELECT DISTINCT(username),COUNT(username) AS number FROM articles_info WHERE status=2 GROUP BY username HAVING number>5 ORDER BY username;
+
 $query = <<<EOT
-SELECT DISTINCT(username),COUNT(username) AS number,status,MAX(date) as date FROM articles_info WHERE status=2 
+SELECT DISTINCT(username),COUNT(username) AS number FROM articles_info WHERE status=2 
 EOT;
 
 //
@@ -75,7 +77,7 @@ EOT;
 if ($bozo_set) {
   $query .= " AND user_id NOT IN $bozo_set";
 }
-$query .= " GROUP BY username HAVING date>DATE_ADD(CURRENT_DATE,INTERVAL -6 MONTH) AND number>5 ORDER BY username";
+$query .= " GROUP BY username HAVING number>5 ORDER BY username";
 
 $res = mysql_query($query) or
   die(error_page(mysql_error()));

@@ -26,7 +26,7 @@ if (!$uid | $uid==0) {
 } else {
     $username=get_username($uid);
 
-$query = "SELECT count(articles_info.user_id) FROM articles_info WHERE user_id=$uid";
+$query = "SELECT count(articles_info.user_id) FROM articles_info WHERE user_id=$uid AND status IN (2,3)";
 $num_articles = $db->getOne($query);
 unset($query);
 if (DB::isError($db)) {
