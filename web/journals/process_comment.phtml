@@ -1,23 +1,7 @@
 <?
 #$Id$
 
-# fuck this header bullshit, how bout i just loop this shit in with the other shit.
-
 include "global.inc";
-/*
-+------------+---------------+------+-----+-----------+----------------+
-| Field      | Type          | Null | Key | Default   | Extra          |
-+------------+---------------+------+-----+-----------+----------------+
-| comment_id | int(11)       |      | PRI | NULL      | auto_increment |
-| article_id | int(11)       |      |     | 0         |                |
-| timestamp  | timestamp(12) | YES  |     | NULL      |                |
-| username   | varchar(255)  | YES  |     | anonymous |                |
-| comment    | text          | YES  |     | NULL      |                |
-| nature     | int(4)        | YES  |     | NULL      |                |
-| status     | int(4)        | YES  |     | 0         |                |
-| ip_addr    | text          | YES  |     | NULL      |                |
-+------------+---------------+------+-----+-----------+----------------+
-*/
 
 // get the users ip address.  maybe this is uncool, but i think it is a
 // necessary precaution.  like dont i want to know who the person is who
@@ -58,11 +42,31 @@ $article_id = $article_id[0];
 
 // echo "$username<br>$comment<br>$nature<br>";
 
-$query="INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."','0','$ip_addr')";
+
+$username=stripslashes($username);
+$comment=stripslashes($comment);
+$add_id=stripslashes($add_ip);
+
+$query=<<<EOT
+INSERT INTO comments 
+     VALUES (
+	     NULL,
+	     $article_id,
+	     NULL,
+	     "$username",
+	     "$comment",
+	      $nature,
+	      $type,
+	      $to_user,
+	      0,
+	      "$ip_addr"
+              )
+EOT;
+
 $res = mysql_query($query); 
 
   if ( $res == false ) { 
-    echo ("Bollocks!");
+    echo ("Bollocks!: $query");
     exit;
   }
 
