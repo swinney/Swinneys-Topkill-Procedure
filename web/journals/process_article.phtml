@@ -79,7 +79,6 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
   // Create a file in  /pending_articles
   // if you don't have the auto_increment integer, then mysql_insert_id is not going to work
   $article_id = mysql_insert_id();  
-  # echo "$article_id<br>";
   $filename = "pending/".mysql_insert_id().".txt";
   $fp = fopen($filename, "w");
   fwrite($fp, stripslashes($content) );
@@ -87,7 +86,9 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
   // Now get the images
 
- mail("article@swinney.org", "$title by $username", "$blurb\n $content");
+ strip_tags($blurb);
+ strip_tags($content);
+ mail("article@swinney.org", "$title by $username\n", "$blurb\n $content");
  header("Location:submit_image.phtml?article_id=$article_id" ); 
 
 ?>
