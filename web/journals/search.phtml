@@ -181,8 +181,8 @@ while ($d=mysql_fetch_object($articleres)) {
    # assign values
    $date=$d->date;
    $article_id=$d->article_id;
-   $title=$d->title;
-   $username=$d->username;
+   $title=stripslashes($d->title);
+   $username=stripslashes($d->username);
    # print out record
    
 echo <<<EOT
