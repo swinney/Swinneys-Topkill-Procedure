@@ -1,3 +1,6 @@
+<!--
+$Id$
+-->
 <table cellpadding="0" cellspacing="0" border="0" width="375">
 <tr>
 <td>
@@ -113,11 +116,26 @@ href="mailto:editors@swinney.org">editors@swinney.org</a>.
 see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. wars have changed</a> by one of our resident moms, <a href="userpages.phtml?username=auntie">auntie</a>.
 </p>
 
+<p class="subheader"><B>who brought this wonder to me?</B></P>
+
+<P>austin swinney of <a href="http://swinney.org">swinney.org</a> wrote the initial code and continues to make updates.</P>
+
+<P>brian mosely of <a href="http://www.maz.org">maz.org</a> makes significant code rewrites and contributions.</P>
+
+<P> jim home of <a href="http://thisishomemade.com">thisishomemade.com</a> did the design of "<a href="http://swinney.org/journals/article.phtml?id=1869">Ye Olde Swinney</a>", as well as some code.</P>
+
+<P>steve simitzis of <a href="http://www.steve.org">steve.org</a> owns and operates <a href="http://www.saturn5.com">atari.saturn5.com</a> upon which this website resides.
+
+<P>elly millican of <a href="http://www.elly.org">elly.org</a> rewords this FAQ.</P>
+
+<P>you are welcome to help.</P>
+
+
 <p class="subheader"><b>for general assistance with this site, inquiries:</b></p>
 <P>the swinney.org editorial staff<BR>
-editors@[=NO SPAM=]swinney.org</P>
+editorsNO@SPAMswinney.org</P>
 
-<p>$Id$</p></td>
+</td>
 </tr>
 </table>
 
