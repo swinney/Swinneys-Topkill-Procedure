@@ -45,14 +45,15 @@ $article_id = $article_id[0];
   if (!$user_id) {
     $user_id=0;
   }
+  if (!$user_id) {
+    $user_id="0";
+  }
 
-$username=addslashes($username);
-$comment=addslashes($comment);
-$add_id=addslashes($add_ip);
+$username=addslashes("$username");
+$comment=addslashes("$comment");
+$ip_addr=addslashes("$ip_addr");
 $char=strlen($comment);
-if (!$user_id) {
-  $user_id="0";
-}
+
 $query=<<<EOT
 INSERT INTO comments 
      VALUES (

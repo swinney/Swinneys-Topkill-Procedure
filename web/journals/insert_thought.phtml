@@ -2,22 +2,23 @@
 <!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
 
 <?
-/*
-mysql> describe thoughts;
-+------------+---------------+------+-----+-------------+----------------+
-| Field      | Type          | Null | Key | Default     | Extra          |
-+------------+---------------+------+-----+-------------+----------------+
-| comment_id | int(11)       |      | PRI | 0           | auto_increment |
-| timestamp  | timestamp(14) | YES  |     | NULL        |                |
-| username   | varchar(20)   | YES  |     | nappy_sucka |                |
-| thought    | text          | YES  |     | NULL        |                |
-+------------+---------------+------+-----+-------------+----------------+
-*/
-$article_id = explode (".", $article_id);
-
-$no_extension = $article_id[0];
-
-$res = mysql_query ("SELECT * FROM thoughts ORDER BY comment_id DESC LIMIT 5");
+$query = "SELECT * FROM thoughts ";
+if ($bozo_set) {
+  if ($bozo_set=="()") {
+      $bozo_set=get_bozo_set();
+  }
+  $query .= " WHERE user_id NOT IN $bozo_set ";
+}
+if ($insert_since) {
+  if (!$bozo_set) {
+      $query .= " WHERE";
+  } else {
+      $query .= " AND";
+  }
+  $query .= " timestamp > $insert_since ";
+}
+$query .=" ORDER BY comment_id DESC LIMIT 5";
+$res = mysql_query ($query) or die($query);
 
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {

@@ -68,24 +68,39 @@ EOT;
 
   }
 
-
-  if ($text) {
-    $text = stripslashes($text);
-  }
-
   $title = stripslashes($d->title);
   $blurb = stripslashes($d->blurb);
   $category= $d->category; 
   $username = stripslashes($d->username);
   $usernamenourl= urlencode($username);
+  $image=$d->image;
+  if ($text) {
+    $text = stripslashes($text);
+    if ($image>0) {
+      require_once("Madmin/Image.php");
+      $Image = new Image();
+      $id = explode(".",$id);
+      $id = $id[0];
+      $img_array = $Image->get_img($image,$id);
+      $text = $Image->show_img($img_array,$text);
+    }
+  }
+
+
+  include_once("Madmin/WebAddress.php");
+  $webAddress = new WebAddress();
+  $web=$webAddress->checkWeb($d->web);
 
   if ($d->web) {
     $username = <<<EOT
-<a href="$d->web">$d->username</a>
+<a href="$web">$d->username</a>
 EOT;
-  }
 
-$names=get_cat_names($category);
+
+  }
+  if ($category) {
+      $names=get_cat_names($category);
+  }
   echo <<<EOT
 <table cellpadding="0" cellspacing="0" border="0" width="375">
 <tr>
@@ -157,5 +172,4 @@ $text</td>
 </table>
 
 EOT;
-
 ?>

@@ -38,8 +38,10 @@ $article_id = $article_id[0];
     echo("In nothing, there exists blankness.  Back up and try again.");
     exit;
   }
-
-$res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
+if (!$user_id) {
+  $user_id=0;
+}
+$res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,$user_id,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
 
   if ( $res == false ) { 
     echo ("Bollocks!");

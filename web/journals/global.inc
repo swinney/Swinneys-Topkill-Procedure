@@ -8,6 +8,7 @@
  * long time. dot his before anything else so that if something dies,
  * we don't get errors about sending headers.
  */
+
 session_start();
 session_set_cookie_params(time()+9999999);
 
@@ -213,23 +214,24 @@ function bin($pos,$dec){
 # get_cat_names() get the cat names
 
 function get_cat_names($category) {
-  $query="SELECT name FROM categories WHERE level1&$category";
-  $res=mysql_query($query) or die(error_page("function: ". $query));
-  $num=mysql_num_rows($res);
-  $i=0;
-  while ($d=mysql_fetch_object($res)) {
-    $names=$names . $d->name;
-    $i++;
-    if ($i>0 && $i<$num) {
-      $names=$names . " / ";
-    }
-  }
-  if ($names=="") {
-    $names="unsigned";
-  }
-     return $names;
+  if ($category) {
+      $query="SELECT name FROM categories WHERE level1&$category";
+      $res=mysql_query($query) or die(error_page("function: ". $query));
+      $num=mysql_num_rows($res);
+      $i=0;
+      while ($d=mysql_fetch_object($res)) {
+          $names=$names . $d->name;
+          $i++;
+          if ($i>0 && $i<$num) {
+              $names=$names . " / ";
+          }
+      }
+      if ($names=="") {
+          $names="none";
+      }
+      return $names;
+   }
 }
-
 /////////////////////////////////////////
 // GET_IMG() - retireve the image names
 /////////////////////////////////////////
@@ -288,7 +290,16 @@ function get_username($user_id) {
   $username=mysql_result($res,0,0);
   return $username;
 }
-
+function get_user_id($username) {
+  $query="SELECT user_id FROM user WHERE username='$username'";
+  $res=mysql_query($query);
+  if (mysql_num_rows($res)>0) {
+    $user_id=mysql_result($res,0,0);
+  } else {
+    $user_id=0;
+  }
+  return $user_id;
+}
 ////////////////////////////
 // check authorization
 ///////////////////////////
@@ -330,7 +341,7 @@ EOT;
 // Apply the bozo filter
 //
   if (count($bozos)) {
-    $query .= " AND username NOT IN $bozo_set";
+    $query .= " AND user_id NOT IN $bozo_set";
   }
   $query .= " GROUP BY username";
 
@@ -358,34 +369,6 @@ EOT;
   return $rollcall;
 }
 
-//////////////////////////////////////////
-// get_article() -- retrieve the article info
-// this has to coincide with the use of the list() function
-// if the values as they are returned and their order in list()
-// do not align, there will be smoke.
-// austin, Tue Feb  5, 2002  1:35 PM
-
-function get_article($id,$db) {
-
-$query = <<<EOT
-   SELECT articles_info.user_id,
-          articles_info.username,
-          articles_info.web,
-          articles_info.date,
-          articles_info.status,
-          articles_info.title,
-          articles_info.blurb,
-          articles_info.category,
-          articles_info.image,
-          articles_text.text 
-     FROM articles_info,articles_text
-    WHERE articles_info.article_id=$id
-      AND articles_info.article_id=articles_text.article_id
-EOT;
-
-$row=$db->getRow($query); 
-return $row;
-}  // end function get_article
 
 //////////////////////////////////////
 // get_comments($id,$db) - 
@@ -407,7 +390,7 @@ function get_comments($id,$db) {
 EOT;
 
   if (count($bozos)) {
-    $query .= " AND username NOT IN $bozo_set";
+    $query .= " AND user_id NOT IN $bozo_set";
   }
   if ($insert_since) {
     $query .= " AND timestamp > $insert_since";
@@ -451,5 +434,37 @@ EOT;
   }
   return $table->toHTML();
 } // end function get_comments()
+
+/*
+ * get cat none () - display link to categorize
+ */
+
+function get_cat_none() {
+    global $id;
+    $url=URLBASE;
+    $names=<<<EOT
+&raquo; <a href="$url/journals/submit_category.phtml?id=$id">categorize this</a>
+EOT;
+    return $names;
+}
+
+function get_bozo_set() {
+    global $authenticated_user_id;
+    session_register("bozo_set");
+    $query = "SELECT bozo_id FROM user_bozo WHERE user_id=$authenticated_user_id";
+    $res = mysql_query($query) or die($query);
+    while ($d=mysql_fetch_object($res)) {
+        if (!$bozo_set) {
+            $bozo_set = "($d->bozo_id";
+        } else {
+            $bozo_set .= ",$d->bozo_id";
+        }
+    }
+    if ($bozo_set) {
+        $bozo_set .= ")";
+    }
+    return $bozo_set;
+}
+
 
 ?>

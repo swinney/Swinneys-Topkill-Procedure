@@ -5,7 +5,10 @@
 $error_msg=<<<EOT
 <P><B>Please log in first:</B></P>
 EOT;
-
+if (!$back_to) {
+  session_register("back_to");
+  $back_to="$HTTP_REFERER";
+}
 ?>
 
 <!-- begin login form-->

@@ -4,22 +4,43 @@
 # process them articles
 #
 require_once("global.inc");
-#
-# register session var for $bin used in category 
-# combination.
-#
+session_register("error_msg");
+
+if (!$title) {
+  $title="This bitch left no title.";
+}
+
+if (!$web) {
+  $web=$db->getOne("SELECT email FROM user WHERE user_id=$user_id");
+  if (DB::isError($web)) {
+    $error_msg .= "<P>We have no email on file for you.</P>";
+    $web="anon". $user_id ."@swinney.org";
+  }
+}
+
+if (!$username) {
+  $username="anonymous";
+}
+
+/*
+ * register session var for $bin used in category 
+ * combination.
+ */
+
 session_register("bin");
 $bin=0;
 
-#
-# Init the date and time
-#
+/*
+ * Init the date and time
+ */
+
 $date = date("Y-m-d");
 $time = time();
 
-#
-# Work out what subjects
-#
+/*
+ * work out what category for the database
+ */
+
 if (isset($cat)) {
     foreach ($cat as $one => $two) {
        if (!isset($bin)) {
@@ -28,15 +49,15 @@ if (isset($cat)) {
            $bin=$bin|$two;
        }
     }
-#
-# set bin to category for db
-#
+    /*
+     * set bin to category for db
+     */
     $category=$bin;
 } else {
     $category=0;
-}
+} // end loop
 
-if ($username) {
+if ($submit) {
   $ip_addr = getenv ("REMOTE_ADDR");
 
   // Insert into the database
@@ -60,54 +81,115 @@ INSERT INTO articles_info
      image='$image',
      ip_addr='$ip_addr'
 EOT;
+  $res=$db->query($query);
+  if (DB::isError($res)) {
+    // get the portable error string
+    $error_msg .= $res->getMessage();
+    header("Location: $HTTP_REFERER");
+  } else {
+    $success_msg .= "<P>Articles info saved.</P>";
+  }
 
-  if (mysql_query($query)) { 
-    $article_id = mysql_insert_id();
+  $ins_article_id = mysql_insert_id();
 
-    //
-    //  HERE WE GO WITH NEW STUFF
-    //
-    // if we have a userfile for this form, 
-    // then let us process it.
-    //
-        if (isset($userfile) && $userfile!="none" && isset($article_id)) {
-      //
-      // open the temp file read only
-      $fd = fopen($userfile,"r");
-      //
-      // assemble the buffer in chunks
-      while (!feof($fd)) {
-	//
-	// stack it together
-	$buffer=$buffer . fgets($fd,4069);
-      }
-      //
-      // close the file.
-      fclose($fd);
-      //
-      // add slashes before putting into the database.
-      // if you dont do this on these html file that
-      // contain every possible bonker, 
-      // the insert WILL bomb.
-      $buffer=addslashes($buffer);
-      $query="INSERT INTO articles_text SET article_id='$article_id', text='$buffer'";
-    } elseif (isset($content)) {
+  /* check for that ins_article_id */
+  if (!$ins_article_id) {
+    $error_msg .= "<P>Failure to gain an ins_article_id.</P>";
+    header("Location: $HTTP_REFERER");
+    exit();
+  }
+
+
+  /*
+   * FIRST: lets get the article text from the form
+   * because that is the most usual format for it.
+   */
+
+  if ($content) {
     $esc_content = addslashes($content);
-    $query = <<<EOT
-INSERT INTO articles_text
-     VALUES ($article_id, '$esc_content');
-EOT;
+    unset($content);
+  }
+
+
+  /* 
+   * Get the article text from the file submit
+   * into a buffer and insert into database.
+   */
+
+
+  if ($userfile && $userfile!="none") {
+    unset($esc_content);
+    //
+    // open the temp file read only
+    $fd = fopen($userfile,"r");
+    //
+    // assemble the buffer in chunks
+    while (!feof($fd)) {
+      //
+      // stack it together
+	$buffer=$buffer . fgets($fd,4069);
     }
-    if (mysql_query($query)) {
-      $success_msg = "Article saved.";
+    //
+    // close the file.
+    fclose($fd);
+    // check that there is no esc_content
+    if ($esc_content) {
+      unset($esc_content);
+    }
+    //
+    // add slashes before putting into the database.
+    // if you dont do this on these html file that
+    // contain every possible bonker, 
+    // the insert WILL bomb.
+    $esc_content=addslashes($buffer);
+    unset($buffer);
+    if (!$esc_content) {
+      $error_msg .= "<P>Did you try to upload from file?  Your file buffer was empty.</P>";
+      header("Location: $HTTP_REFERER");
+      exit();
+    }
+  } 
+  if (!$esc_content) {
+    $error_msg .= "<P>we have neither content nor a userfile for this submit.</P>";
+    header("Location: $HTTP_REFERER");
+    exit();
+  }
+
+  /* 
+   * Now then, assuming we have some $esc_content to post,
+   * let us role with it.
+   */
+
+  if ($ins_article_id) {
+    if (!$esc_content) {
+      $error_msg .= "<P>there has been an error in the processing of your submission.  please upload over now, or contact bugs@swinney.org</P>";
+      header("Location: $HTTP_REFERER");
+      exit();
+    }
+    $query_text = <<<EOT
+INSERT INTO articles_text
+     VALUES ($ins_article_id, '$esc_content');
+EOT;
+  } else {
+    $error_msg .= "<P>id was not available at time of query</P>";
+    header("Location: $HTTP_REFERER");
+    exit();
+  }
+
+  if ($query_text) {
+  $res=$db->query($query_text);
+    if (DB::isError($res)) {
+      // get the portable error string
+      $error_msg .= $res->getMessage();
+      header("Location: $HTTP_REFERER");
     } else {
-      $error_msg = "Problem saving the article text: " . mysql_error();
+      $success_msg = "<P>Article's text saved.</P>";
     }
   } else {
-    $error_msg = "Problem saving the article info: " . mysql_error();
+      $error_msg = "Problem saving the article text: " . mysql_error();
   }
 } else {
-  $error_msg = "You must specify a username.";
+  $error_msg = "<P>Submit value not specified.</P>";
 }
 
 if ($error_msg) {
@@ -115,16 +197,14 @@ if ($error_msg) {
   include("./submit_article.phtml");
 } else {
   session_register("success_msg");
-
   if ($images_too=="no") {
     $loc = URLBASE;
   } else {
-    $loc = "submit_image.phtml?article_id=$article_id";
+    $loc = "submit_image.phtml?article_id=$ins_article_id";
   }
-
-    header("Location: $loc");
+header("Location: $loc");
 }
 #
-# kill registered sessions
+# kill registered session
 session_unregister("bin");
 ?>

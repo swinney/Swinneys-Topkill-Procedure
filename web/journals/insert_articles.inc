@@ -12,7 +12,7 @@ SELECT count(article_id) AS num_articles
  WHERE status=2 
 EOT;
 if (count($bozos)) {
-  $query .= " AND username NOT IN $bozo_set";
+  $query .= " AND user_id NOT IN $bozo_set";
 }
 if ($insert_since) {
   $query .= " AND time > $insert_since";
@@ -120,8 +120,8 @@ EOT;
     FROM articles_info
    WHERE status=2 
 EOT;
-  if (count($bozos)) {
-    $query .= " AND username NOT IN $bozo_set";
+  if ($bozo_set) {
+    $query .= " AND user_id NOT IN $bozo_set";
   }
   if ($insert_since) {
     $query .= " AND time > $insert_since ";
@@ -151,8 +151,8 @@ EOT;
    WHERE article_id=$article->article_id
      AND status=0
 EOT;
-    if (count($bozos)) {
-      $subquery .= " AND username NOT IN $bozo_set";
+    if ($bozo_set) {
+      $subquery .= " AND user_id NOT IN $bozo_set";
     }
 
     $subres = mysql_query($subquery) or

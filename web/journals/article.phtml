@@ -1,65 +1,32 @@
-<?php
-###################################
-# $Id$
-# bring the articles
-require_once ("../../php4/pear/HTML/IT.php");
-require_once ("./global.inc");
+<? 
+#$Id$
+
+require_once("./global.inc");
 //
 // take care of the id
 $chunks = explode(".", $id);
-$id = $chunks[0];
+$article_id = $chunks[0];
 
-$page_title = "Articles by All";
+$row = $db->getRow("SELECT username,title,status FROM articles_info WHERE article_id=$article_id");
+$username=stripslashes($row[0]);
+$title=stripslashes($row[1]);
+$status=$row[2];
+//
+// if they dont have an article id, then
+// they should not be here, or their status is 4 (deleted)
+if ($status==4) {
+  header("Location: ./index.phtml?no_aricle_id");
+  exit();
+}
+if (isset($title))
+$title = "$title by $username";
+$into_template="insert_article.inc";
+// do you have comments?
+$into_template2="insert_comments.phtml";
+# is rollcall.inc displayed?
+# 0 for norollcall.inc; 1 for rollcall.inc.
+$rollcall=1;
 
-$article_row=get_article($id,$db);
-list( // of $article_row
-     $user_id,
-     $username,
-     $web,
-     $date,
-     $status,
-     $title,
-     $blurb,
-     $category,
-     $image,
-     $text
-     ) = $article_row;
-
-$tpl = new IntegratedTemplate("./templates");
-  $tpl->loadTemplatefile("article.html", true, true);
-
-     if (SITE_NAME)
-     $tpl->setVariable("site_name", SITE_NAME);
-     if ($page_title)
-     $tpl->setVariable("page_title", $page_title);
-     if ($rollcall=get_rollcall())
-     $tpl->setVariable("rollcall", $rollcall);
-     //
-     // now these come from the sql
-     if ($user_id)
-     $tpl->setVariable("user_id", $user_id);
-     if ($username)
-     $tpl->setVariable("username",$username);
-     if ($web)
-     $tpl->setVariable("web", $web);
-     if ($date)
-     $tpl->setVariable("date", $date);
-     if ($status)
-     $tpl->setVariable("status", $status);
-     if ($title)
-     $tpl->setVariable("title", $title);
-     if ($blurb)
-     $tpl->setVariable("blurb", $blurb);
-     if ($category)
-     $tpl->setVariable("category", $category);
-     // TODO: image parsing
-     // 
-     if ($text)
-     $tpl->setVariable("text", $text);
-     if ($comments=get_comments($id,$db)) 
-     $tpl->setVariable("comments", $comments);
-
-$tpl->parseCurrentBlock();
-$tpl->show();
+include_once("./templates/template.inc");
 
 ?>
