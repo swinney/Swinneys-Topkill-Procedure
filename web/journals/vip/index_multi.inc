@@ -28,11 +28,10 @@ if ($submit) {
 <?
 $query =<<<EOT
 SELECT multi_info.multi_id,
-       multi_info.title,
-       count(multi_articles.article_id) as assoc 
-  FROM multi_info,multi_articles
- WHERE multi_info.multi_id=multi_articles.multi_id
-GROUP BY multi_id
+       multi_info.title
+  FROM multi_info
+ WHERE user_id=$user_id
+ORDER BY title
 EOT;
 // sweetness.
 
@@ -41,7 +40,7 @@ if (DB::isError($res)) {
   die($res->getMessage());
 }
 while ($row = $res->fetchRow()) {
-  $html .= "\n<A HREF='submit_multi.phtml?multi_id=$row[0]'>$row[1]</A> ($row[2])<BR>";
+  $html .= "\n<b>&raquo;</b> <A HREF='submit_multi.phtml?multi_id=$row[0]'>$row[1]</A><BR>";
 }
 
 echo $html;

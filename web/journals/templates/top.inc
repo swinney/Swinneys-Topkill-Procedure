@@ -19,10 +19,9 @@
 <meta http-equiv="expires" content="0">
 <meta name="keywords" content=" austin swinney ;">
 
-<link rel="stylesheet" type="text/css" href="<? echo URLBASE; ?>/journals/main.css"> 
+<link rel="stylesheet" type="text/css" href="<? echo CSS_URL; ?>"> 
 
 <script type="text/javascript" language="JavaScript" src="<? echo URLBASE; ?>/journals/rollover.js"></script>
-
 <script type="text/javascript" language="JavaScript">
 //<!--
 MM1 = new rollover("ithoughtit","<? echo URLBASE; ?>/journals/img/ithoughtit.gif", "<? echo URLBASE; ?>/journals/img/ithoughtit-over.gif", "ithoughtit"); 

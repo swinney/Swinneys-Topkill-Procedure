@@ -9,5 +9,5 @@ require_once("./global.inc");
 $title = "Php & Binary for Categorical Systems";
 $rollcall = "0";
 $into_template = "bin.inc";
-include "template.inc";
+include("./templates/template.inc");
 ?>
