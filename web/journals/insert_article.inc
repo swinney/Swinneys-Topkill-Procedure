@@ -46,7 +46,7 @@ EOT;
   $res = mysql_query($query) or
     die(error_page(mysql_error()));
   if ($row = mysql_fetch_row($res)) {
-    $previous_article_id = $row[0];
+    $older_article_id = $row[0];
   }
 
   // retrieve the id of the author's next article
@@ -64,32 +64,31 @@ EOT;
   $res = mysql_query($query) or
     die(error_page(mysql_error()));
   if ($row = mysql_fetch_row($res)) {
-    $next_article_id = $row[0];
+    $newer_article_id = $row[0];
   }
 
   // generate the paginator
 
   echo <<<EOT
 <p>
-<tt>
 EOT;
 
-  if ($previous_article_id) {
+  if ($newer_article_id) {
     echo <<<EOT
-<a href="article.phtml?id=$previous_article_id.txt">&lt;&lt;</a>
+<a href="article.phtml?id=$newer_article_id.txt">newer</a> 
 EOT;
   } else {
-    echo "&lt;&lt;";
+    echo " newer";
   }
 
   echo " | ";
 
-  if ($next_article_id) {
+  if ($older_article_id) {
     echo <<<EOT
-<a href="article.phtml?id=$next_article_id.txt">&gt;&gt;</a>
+<a href="article.phtml?id=$older_article_id.txt"> older</a>
 EOT;
   } else {
-    echo "&gt;&gt;";
+    echo " older";
   }
 
   echo <<<EOT
