@@ -1,6 +1,9 @@
 <?
 #$Id$
-
+if (!$username && $uid) {
+  $username = $db->getOne("SELECT username FROM user WHERE user_id=$uid");
+  $url_username = urlencode($username);
+}
 if(!$page_num || $page_num < 1) { //No Page Number? Set it to Page 1 then...
         $page_num = 1;
 }
@@ -61,7 +64,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><b>Articles</b> | <a href="usercomments.phtml?username=$username">Comments</a>
+<span class="subheader"><b>Articles</b> | <a href="usercomments.phtml?username=$url_username">Comments</a>
 
 EOT;
 
