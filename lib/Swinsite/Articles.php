@@ -138,7 +138,7 @@ EOT;
      *  take article_id
      *  hit database to increment existing number.
      */
-    function AddHit($aid) {
+    function AddHit($db,$aid) {
       $query = "update articles_info set num_hits=num_hits+1 
                 where article_id=$aid";
       $res=$db->query($query);
