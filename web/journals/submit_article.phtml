@@ -64,11 +64,35 @@ include "templates/top.inc";
 
 <?
   
-  $res = mysql("$DB", "SELECT * FROM categories ORDER BY name ASC");
+$res = mysql("$DB", "SELECT * FROM categories ORDER BY name ASC");
+$index=0;
 
-  while ( $d = mysql_fetch_object($res) ) {
-    echo "<input type='checkbox' name='cat$d->category_id'> $d->name <br>";
-  }
+
+
+
+echo "<TABLE><TR>";
+
+while ( $d = mysql_fetch_object($res) ) 
+
+{
+
+	$index++;
+	$remainder = $index % 3;
+
+	echo "<TD><input type='checkbox' name='cat$d->category_id'> $d->name </TD>";
+
+	if($remainder==0)
+
+	{
+
+		echo "</TR><TR>";
+
+	}
+
+
+}
+
+echo "</TR></TABLE>";
 
 ?>
 
