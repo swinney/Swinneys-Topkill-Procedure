@@ -53,13 +53,20 @@ $Id$
 */
 $res = mysql ("$DB", "SELECT DISTINCT username, count(username) AS number FROM pending_articles GROUP BY username");
 
-while ($row = mysql_fetch_object ($res)) {
+while ($row = mysql_fetch_row ($res)) {
+/*
+##########################################
+# this cannot be called $username
+# without interfearing with the url's
+# $username.  so it will be called $user.
+# austin, Thu Jul 12, 2001  1:40 PM
+*/
 
-$username=$row->username;
-$number=$row->number;
+$name=$row[0];
+$number=$row[1];
 
   if ($number > 5) {
-  echo "<a href='userpages.phtml?username=$username'>$username($number)</a><br>\n";
+  echo "<a href='userpages.phtml?username=$name'>$name($number)</a><br>\n";
   }
 }
 
