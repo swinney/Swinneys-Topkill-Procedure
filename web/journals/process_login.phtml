@@ -1,6 +1,7 @@
 <?
-#$Id$
-require_once("global.inc");
+// $Id$
+
+require_once("./global.inc");
 
 if ($username && $password) {
   // pull user info from the database
@@ -39,7 +40,7 @@ if ($error_msg) {
   exit;
 }
 
-// save the username in the session so other pages can access it later
+// save some info in the session so other pages can access it later
 // in the session
 $authenticated_username = $user->username;
 session_register("authenticated_username");

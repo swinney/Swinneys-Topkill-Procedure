@@ -1,6 +1,5 @@
 <?
-#$Id$
-require_once("global.inc");
+// $Id$
 ?>
 
 <!-- begin registration form-->
@@ -15,11 +14,9 @@ if ($error_msg) {
   echo <<<EOT
 <span class="header"><b>$error_msg</b></span>
 EOT;
-    }
-else
-    {
-    echo '<span class="header"><b>'.$title.':</b></span>';
-    }
+} else {
+  echo '<span class="header"><b>', $title, ':</b></span>';
+}
 ?></td>
 </tr>
 
@@ -30,7 +27,7 @@ else
 <p>you are:</p></td>
 
 <td>
-<input type="text" name="username" size="25" maxlength="20"></td>
+<input type="text" name="username" value="<?=$username?>" size="25" maxlength="20"></td>
 </tr>
 
 <tr>
@@ -54,7 +51,7 @@ else
 <p>email address:</p></td>
 
 <td>
-<p><input type="text" name="email" size="25" maxlength="40"></p></td>
+<p><input type="text" name="email" value="<?=$email?>" size="25" maxlength="40"></p></td>
 </tr>
 
 
