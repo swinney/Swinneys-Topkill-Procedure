@@ -1,6 +1,10 @@
-<!--
-$Id$
--->
+<?
+// $Id$
+
+require_once("./global.inc");
+
+?>
+
 <form action="process_comment.phtml" method=post enctype="multipart/form-data">
 <input type="hidden" name="article_id" value="<? echo "$article_id"?>">
 
@@ -16,7 +20,7 @@ $Id$
 <tr>
 <td align="right"><p>you are:</p></td>
 <td>
- <input type="text" name="username" size="25" maxlength="30" value="<? if ($authenticated_username) { echo "$authenticated_username"; } ?>">
+ <input type="text" name="username" size="25" maxlength="30" value="<?=$authenticated_username?>">
 </td>
 
 <td>
@@ -64,9 +68,3 @@ $Id$
 </tr>
 </table>
 </form>
-
-
-
-
-
-

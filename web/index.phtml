@@ -1,9 +1,16 @@
 <?
-#$Id$
-include "journals/global.inc";
-include "journals/insert_stats.inc";
+// -*- Mode: PHP; indent-tabs-mode: nil; -*-
+// $Id$
+require_once("./journals/global.inc");
+
+include("./journals/insert_stats.inc");
 $title = "this is it.";
-include "journals/templates/top.inc";
+include("./journals/templates/top.inc");
+
+if ($success_msg) {
+  session_unregister("success_msg");
+  // don't bother printing the success message
+}
 ?>
 
 <table width="100%" cellpadding="20" cellspacing="0" border="0">
@@ -13,7 +20,7 @@ include "journals/templates/top.inc";
 
 <? 
 // include i thought it
-include "journals/submit_thought.phtml";
+include(./"journals/submit_thought.phtml");
 ?>
 
 <tr>
