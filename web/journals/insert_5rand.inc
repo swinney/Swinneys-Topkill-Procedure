@@ -25,12 +25,12 @@ while ($d = mysql_fetch_object($res)) {
     $names=get_cat_names($d->category);
     $username = stripslashes($d->username);
     $url_username=urlencode(stripslashes($d->username));
-
+    $title=stripslashes($d->title);
   echo <<<EOT
 <p>
 <a href="journals/userpages.phtml?username=$url_username">$username</a> wrote
 <a href="journals/article.phtml?id=$d->article_id.txt">
-<strong>$d->title</strong></a>
+<strong>$title</strong></a>
 <BR>
 <font size=1>$names</FONT>
 <BR>
