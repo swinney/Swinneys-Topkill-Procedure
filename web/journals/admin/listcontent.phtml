@@ -2,19 +2,24 @@
 #$Id$
 # include the templates/top.inc
 include "../templates/top.inc";
+include "admin_nav.inc";
+echo "front: $front";
 
-?>
 
-<CENTER>
-<TT><a href='../../index.phtml'>Swinney.org</a> Admin Area</TT></h3>
-<P>
-<a href='index.phtml'>firebird</a> | 
-<a href='listcontent.phtml'>articles</a> | 
-<a href='admin_comments.phtml'>comments</a>
-</P>
-</CENTER>
+	if ($status==2 && $front=="yes") {
+	echo "id:$article_id<BR>username: $username";
+	$query = "UPDATE articles_user SET most_recent=$article_id, total_submitted=total_submitted+1 WHERE username='$username'";
+	$res = mysql_query($query) or die("\n<P>update failed</P>");
+#	echo (mysql_affected_rows()?"success":"failure"); 
+	$affected=mysql_affected_rows(); 
+	} 
 
-<?
+	if ($affected=="0"||$affected=="-1") { # UPDATE was invalid, do INSERT
+	$query = "INSERT INTO articles_user (user_id,username,most_recent,total_submitted) VALUES ('','$username',$article_id,1)";
+	$front_res = mysql_query($query) or die ("\n<P>insert failed</P>");
+#echo "<P>hell hole</P>";
+	}
+
 
 // update the articles
 
@@ -22,37 +27,45 @@ include "../templates/top.inc";
 
     $res = mysql_query ("UPDATE articles_text SET text='$update' WHERE article_id=$article_id");
 
-    if ( $subby == "Save and Exit" ) unset($article_id);
 
-    // Update the status of the article
-    //  if status is greater than or equal to 1 and greater than 
-    //  or equal to 4 than update it in the database
+
+    # Update the status of the article
+    #  if status is greater than or equal to 1 and greater than 
+    #  or equal to 4 than update it in the database
     if ( $status >= 1 && $status <= 4 ) {
 
-      $res = mysql_query("UPDATE articles_info 
+
+                $res = mysql_query("UPDATE articles_info 
 		SET web='$web', status='$status', title='$title', blurb='$blurb' 
 		WHERE article_id='$article_id'");
 
-      if ( $res == false ) {
-        error("Could not update pending_articles");
-        exit;
-      }
+
 # i created an articles_user table for keeping
-# record of the most rescent post by a person
+# record of the most recent post by a person
 # this will eliminate the problem of green posting
 # furiously throughout the day.
 
-		$query="UPDATE articles_user SET most_rescent=$article_id, total_submitted=total_submitted+1 WHERE username='$username'";
+
+/*
+		
+		$query="UPDATE articles_user SET most_recent=$article_id, total_submitted=total_submitted+1 WHERE username='$username'";
 		$res = @mysql_query($query);
 		if ($res == false) {
 		# res one failed, go res two
 		# this is a new username to swinney.org
 
-		$query = "INSERT INTO articles_user ('username','most_rescent') VALUES ('$username','$article_id')";
+		$query = "INSERT INTO articles_user ('username','most_recent') VALUES ('$username','$article_id')";
 		$res = @mysql_query($query);
 		}
+*/
 	}
+
+    if ( $subby == "Save and Exit" ) { 
+    unset($article_id); 
+    @header("Location: listcontent.phtml");
+    }
 }
+
 
 
 //
@@ -84,21 +97,22 @@ if ( isset($article_id) ) {
 
 // select the article list
 
-	$res = mysql_query("SELECT keywords, title, blurb, status, image, web 
+	$res = mysql_query("SELECT username,keywords, title, blurb, status, image, web 
 		FROM articles_info 
 		WHERE article_id='$article_id'");
 	$d=mysql_fetch_object($res);
+    $username = $d->username;
     $keywords = $d->keywords;
     $title = $d->title;
     $blurb = $d->blurb;
     $status = $d->status;
-    $images = $d->images;
+    $images = $d->image;
     $web = $d->web;
     $keyarray = explode(',', $keywords);
 
 
 // This is where the editing begins
-    echo "<form action='listcontent.phtml' method='post'>";
+    echo "<form action='listcontent.phtml?username=$username' method='post'>";
     echo "<ul>";
     $count = 0;
     for ( $i = 0 ; ; $i++ ) {
@@ -115,41 +129,40 @@ if ( isset($article_id) ) {
 
 
 
-// path to working directory
+# path to working directory
    $imagepath = "http://swinney.org/journals/images/";
 
     for ( $i = 1; $i <= $images ; $i++ ) {
       $noext = $article_id."_".$i;
 
       if (file_exists ( "/sky/www/swinney.org/html/journals/images/".$noext.".jpg")) {
-// find out if the basename exists as a jpeg
+# find out if the basename exists as a jpeg
         $imgfile = "$imagepath$noext.jpg";
 
-        echo "<h3>$imgfile<br>";
-        echo "<tt>&lt;img src='$imgfile' height='150' align='left'&gt;</tt></h3><br>";
-        echo "<img src='$imgfile' height='150'><br>";
-      }
+       }
       elseif ( file_exists ("/sky/www/swinney.org/html/journals/images/".$noext.".gif")) {
-// no, so we'll see if it exists as a gif
+# no, so we'll see if it exists as a gif
         $imgfile = "$imagepath$noext.gif";
 
-        echo "<h3>$imgfile<br>";
-        echo "<tt>&lt;img src='$imgfile' height='150' align='left'&gt;</tt></h3><br>";
-        echo "<img src='$imgfile' height='150'><br>";
-      }
+       }
       elseif ( file_exists ("/sky/www/swinney.org/html/journals/images/".$noext.".png")) {
-// no, so we'll see if it exists as a png
+# no, so we'll see if it exists as a png
         $imgfile = "$imagepath$noext.png";
 
-        echo "<h3>$imgfile<br>";
-        echo "<tt>&lt;img src='$imgfile' height='150' align='left'&gt;</tt></h3><br>";
-        echo "<img src='$imgfile' height='150'><br>";
-      }
-      else {
-// holy shit!  it's neither!
-        echo "shit! $i<br>";
+ 
+      } else {
+
+	# holy shit!  it's neither!
+        echo "shit, this is not recognised: $i<br>";
         echo "$imgfile<BR>";   
+
       }
+
+	# they all need this
+        echo "<P>$imgfile</P>";
+        echo "<P>&lt;img src='$imgfile' height='150' align='left'&gt;</P>";
+        echo "<P><a href=\"$imgfile\"><img src='$imgfile' height='150'></a></P>";
+
     }         
 
 
@@ -157,6 +170,7 @@ if ( isset($article_id) ) {
 // show article stuff
 //
 
+echo "<P><B>$username</B></P>";
 
 if ($web != "") 
 
@@ -206,7 +220,7 @@ if ( isset($article_id) ) {
     echo "<input type='hidden' name='type' value='resubmit'>\n";
     echo "<input type='hidden' name='article_id' value='$article_id'>\n";
     echo "<table border=0 width=400><tr><td>$text</td></tr></table>\n<br>\n<br>\n";
-    echo "<textarea name=update cols=80 rows=20 wrap=virtual>$text</textarea>\n<br>\n";
+    echo "<textarea name=update cols=60 rows=20 wrap=virtual>$text</textarea>\n<br>\n";
 
 } 
 
@@ -214,7 +228,7 @@ if ( isset($article_id) ) {
 //gonna f*ck with my status now?!
 
 
-    echo "<b>Status : </b> <select name='status'>";
+    echo "<P><b>Status : </b> <select name='status'>";
     if ( $status == 1 ) {
       echo "<option value='1' selected>Pending";
     } else if ( $status == 2 ) {
@@ -229,8 +243,9 @@ if ( isset($article_id) ) {
     echo "<option value='2'>Active\n";
     echo "<option value='3'>Archived\n";
     echo "<option value='4'>Trash\n";
-
-    echo "</select>\n";
+    echo "\n</select>\n";
+    echo "\nfront? yes<INPUT name='front' type='radio' value='yes' CHECKED>";
+    echo "\nno<INPUT name='front' type='radio' value='no'></P>";
 
     echo "<p>";
     echo "<input name='subby' type='submit' value='Save and Reload'>\n";
@@ -294,6 +309,9 @@ if ( isset($article_id) ) {
     echo "</table>\n";
 
 ?>
+
+
+
 
 
 
