@@ -141,7 +141,7 @@ EOT;
 
     // generate the summary for the article
 
-    $num_comments = $comments->num_comments || 0;
+    $num_comments = $comments->num_comments;
     if ($num_comments == 1) {
       $num_comments .= " comment";
     } else {
