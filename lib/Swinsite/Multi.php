@@ -75,7 +75,7 @@ EOT;
 	         */
 	        $html= <<<EOT
 <P><B><a href='./multi_info.phtml?mid=$multi_id'>$multi_title</a></B>\n
-<BR>edited by <a href="./userpages.phtml?username=$multi_username">$multi_username</A></P>\n
+<BR>edited by <a href="./info_user.phtml?uid=$d->editor_id">$multi_username</A></P>\n
 EOT;
             }
             /*
