@@ -21,7 +21,7 @@ if ($submit) {
 
 <FORM NAME="add_multi" METHOD="POST" ACTION="<?=$PHP_SELF?>">
 <INPUT TYPE=TEXT NAME="mtitle" SIZE=40>
-<INPUT TYPE=SUBMIT NAME=submit VALUE="Add Multi">
+<INPUT TYPE=SUBMIT NAME=submit VALUE="Create New Series">
 </FORM>
 
 
