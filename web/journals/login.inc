@@ -10,12 +10,12 @@ if ($login_error_msg) {
 EOT;
 }
 
-
+$back_to = $HTTP_REFERER;
+session_register("back_to");
 
 ?>
 <TABLE><TR><TD>
 <form action="process_login.phtml" method="POST">
-<INPUT TYPE=HIDDEN NAME=back_to VALUE="<? echo $HTTP_REFERER;?>">
 <P>username:</P>
 </TD><TD>
 <input type="text" name="username" size="10" maxlength="20"

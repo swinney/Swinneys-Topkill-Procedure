@@ -31,8 +31,9 @@ if (crypt($password, $user->password) != $user->password) {
 $authenticated_username = $user->username;
 session_register("authenticated_username");
 
-# $back_to is taken from a hidden form field on
-# login.phtml and is derived from $HTTP_REFERER
+// $back_to is the location where the user originally clicked the "log
+// in" link
+session_unregister("back_to");
 header("Location: " . $back_to);
 ?>
 
