@@ -16,10 +16,6 @@ if (PEAR::isError($bozos)) {
 
 ?>
 
-<pre>
-bozo_set: <? var_dump($bozo_set) ?>
-</pre>
-
 <table cellpadding="2" cellspacing="0" border="0" width="375">
 <tr>
 <td>
