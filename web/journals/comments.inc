@@ -17,11 +17,11 @@ $page_start = ($page_num-1) * $per_page;
  
 //Do a number query to see how many results match the category...
 $query = <<<EOT
-  SELECT count(*) AS num_articles
+  SELECT count(comment_id) AS num_articles
     FROM comments
    WHERE status=0
 EOT;
-if (count($bozos)) {
+if ($bozo_set) {
   $query .= " AND user_id NOT IN $bozo_set ";
 }
 if ($insert_since) {
@@ -35,12 +35,8 @@ $res = mysql_query($query) or
   die(error_page(mysql_error()));
 $row = mysql_fetch_row($res);
 
-if (!$row) {
-  echo <<<EOT
-<span class="subheader"><b>No comments have been made.</b></span>
+if ($row) {
 
-EOT;
-} else {
   $num_of_results = $row[0];
 
   // Find out how many pages there are going to be
@@ -64,7 +60,7 @@ EOT;
     FROM comments
    WHERE status=0
 EOT;
-  if (count($bozos)) {
+  if ($bozo_set) {
     $query .= " AND user_id NOT IN $bozo_set";
   }
   if ($insert_since) {
