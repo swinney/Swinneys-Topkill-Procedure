@@ -21,7 +21,7 @@ $article_id = explode (".", $article_id);
 
 $no_extension = $article_id[0];
 
-$res = mysql ("swinney","SELECT * FROM comments WHERE article_id=$no_extension ORDER BY comment_id");
+$res = mysql ("swinney","SELECT * FROM comments WHERE article_id=$no_extension AND status=0 ORDER BY comment_id");
 
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {
@@ -37,5 +37,7 @@ echo "<a name=\"$comment_id\">".stripslashes($username).":  ".stripslashes($comm
 }
 
 ?>
+
+
 
 
