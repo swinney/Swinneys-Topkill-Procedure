@@ -33,28 +33,37 @@
 
 <img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
 
-recent writers:<br>
+shelved as:<br>
 
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 <?
 $query="SELECT category FROM articles_info WHERE article_id=$article_id";
+$res=mysql_query($query) or die (error_page($query));
+$article_bin=mysql_result($res,0,0);
+$query=<<<EOT
+SELECT level1 as cat_bin,name,level1&$article_bin as sexy 
+FROM categories 
+WHERE name<>'' 
+ORDER BY name ASC
+EOT;
+
 $res=mysql_query($query);
-$that_cat=mysql_result($res,0,0);
-$res = mysql_query("SELECT * FROM categories ORDER BY name ASC");
-
-# for the next loop, index
 $i=0;
-
 while ($d=mysql_fetch_object($res)) {
-  $this_cat=$d->level1;
-  $meh = $that_cat & $this_cat;
-  if ($this_cat==$meh) {
-    echo "$d->name<input type='checkbox' name='cat[$i]' value='$this_cat' checked><br>\n";
-  } else {
-    echo "$d->name<input type='checkbox' name='cat[$i]' value='$this_cat'><br>\n";
-  }
+    $cat_bin=$d->cat_bin;
+    $name=$d->name;
+    $sexy=$d->sexy;
+    $base="\n$name<INPUT TYPE='checkbox' NAME='cat[$i]' VALUE='$cat_bin' ";
+    if ($sexy!=0) {
+        $html = $html . $base . " CHECKED><BR>\n"; // oh you are so SEXY!!!
+    } else {
+        $html = $html . $base . "><BR>\n"; // oh you are NOT so sexy!!!
+    }
     $i++;
-} # child loop
+}
+echo $html;
+
+
 
 ?>
 <img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
