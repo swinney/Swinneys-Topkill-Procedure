@@ -47,6 +47,7 @@ if ($username) {
   $query = <<<EOT
 INSERT INTO articles_info
     SET
+     user_id='$user_id',
      username='$username',
      web='$web',
      date='$date',
