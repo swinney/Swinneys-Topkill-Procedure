@@ -17,13 +17,15 @@ if (isset($authenticated_username)) {
            LIMIT 1";
   $res=mysql_query($query) or die(error_page($query));
   if ($res) {
-    $web=mysql_result($res,0,0);
-    $temp_title=mysql_result($res,0,1);
-    $blurb=mysql_result($res,0,2);
-    $keywords=mysql_result($res,0,3);
-    $category=mysql_result($res,0,4);
-    $text=mysql_result($res,0,5);
-    $temp_aid=mysql_result($res,0,6);
+    $web          =stripslashes(mysql_result($res,0,0));
+    $temp_title   =stripslashes(mysql_result($res,0,1));
+    $blurb        =stripslashes(mysql_result($res,0,2));
+    $keywords     =stripslashes(mysql_result($res,0,3));
+    $category     =             mysql_result($res,0,4);
+    $text         =stripslashes(mysql_result($res,0,5));
+    $temp_aid     =             mysql_result($res,0,6);
+    // register this temp_aid to keep it from messing up the usual
+    // var article_id.
     session_register("temp_aid");
   }   
 } else {
