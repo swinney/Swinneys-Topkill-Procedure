@@ -18,7 +18,7 @@ EOT;
 $res = mysql_query($query) or
   die(error_page(mysql_error()));
 
-if ($d = mysql_fetch_object( $res)) {
+if ($d = mysql_fetch_object($res)) {
   // retrieve the article text
   $query = <<<EOT
   SELECT text

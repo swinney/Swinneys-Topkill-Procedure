@@ -1,6 +1,6 @@
 <?
 // $Id$
-require_once("global.inc");
+require_once("./global.inc");
 
 // doesn't make sense to display the login page for users who are
 // already logged in
@@ -8,9 +8,9 @@ if ($authenticated_username) {
   header("Location: " . $HTTP_REFERER);
 }
 
-include "templates/top.inc";
-include "login.inc";
-include "templates/footer.inc";
+include "./templates/top.inc";
+include "./login.inc";
+include "./templates/footer.inc";
 ?>
 
 
