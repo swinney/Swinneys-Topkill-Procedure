@@ -44,7 +44,8 @@ $article_sub=array(
 		   "Preview" => "preview_article.phtml",
 		   "Categoize" => "categorize_article.phtml",
 		   "View Images" => "view_images.phtml",
-		   "Add Image" => "add_image.phtml"
+		   "Add Image" => "submit_image.phtml",
+		   "Status" => "status.phtml"
 		   );
 
 if (in_array("$last", $article_sub)) {
