@@ -36,28 +36,13 @@ Tue Aug 28 17:57:52 PDT 2001 (bcm)
 
 Sat Aug 25, 2001 10:23 AM
 
-if there is no blurb, then put in article #2345 or just dont echo
-anything.  right now it echos <P></P> i think which creates an
-annoying blank line.
-
+- blurbs
+   o default use the article id (article #2345) or echo nothing
 
 Sun Aug 19, 2001  5:31 PM
 
-add image submit to the comments area, work it into the comment admin area too.
-    add a column to the comments table that is image and use the incrmenting scheme
-    will have to auto detect the image and dispay it after any comment with the words figure x.x
-
-
-
-Thu Aug  9, 2001 10:35 PM
-
-porny.swinney.org or to say it better subdomain.swinney.org
-
-this needs to some how use the same code that is already around?  wb
-wants this.  i want to see it too.  i just dont know how to go about doing it.  perhaps a shit load of if statements like:
-
-if (isset(SUB)) {
-   $res = mysql("SELECT * FROM tablename_SUB");
-} else {
-   $res = mysql("SELECT * FROM tablename");
-} # er something like that
+- comments images
+   o add image submit to the comments area
+   o work it into the comment admin area too.
+   o add a column to the comments (image) and increment 
+   o select out image number and display after comment (fig. x.x)
