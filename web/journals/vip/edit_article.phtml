@@ -16,14 +16,16 @@ if (isset($authenticated_username)) {
         ORDER BY articles_info.article_id DESC
            LIMIT 1";
   $res=mysql_query($query) or die(error_page($query));
-  $web=mysql_result($res,0,0);
-  $temp_title=mysql_result($res,0,1);
-  $blurb=mysql_result($res,0,2);
-  $keywords=mysql_result($res,0,3);
-  $category=mysql_result($res,0,4);
-  $text=mysql_result($res,0,5);
-  $temp_aid=mysql_result($res,0,6);
-  session_register("temp_aid");   
+  if ($res=="TRUE") {
+    $web=mysql_result($res,0,0);
+    $temp_title=mysql_result($res,0,1);
+    $blurb=mysql_result($res,0,2);
+    $keywords=mysql_result($res,0,3);
+    $category=mysql_result($res,0,4);
+    $text=mysql_result($res,0,5);
+    $temp_aid=mysql_result($res,0,6);
+    session_register("temp_aid");
+  }   
 } else {
   error_page("username unset");
 }
