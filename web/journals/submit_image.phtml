@@ -1,52 +1,76 @@
 <?
-include "global.inc";
-include "templates/top.inc";
+// $Id$
+
+require_once("./global.inc");
+require_once("./templates/top.inc");
 
 // have an incrementing number in the filename
 
-  if (! isset($index))
-    $index = 0;
+if (! isset($index)) {
+  $index = 0;
+}
 
-  if ($index <= 15) {
-    if ($index == 0) 
-      echo "<P>If you have any images to upload for this article, select them here, otherwise click continue.</P>\n";
+if ($index <= 0) {
+  echo <<<EOT
+<P>
+If you have any images to upload for this article, select them here,
+otherwise click <a href="index.phtml">continue</a>.
+</P>
 
-    elseif ($index >= 1 )
-      echo "<P>You have uploaded <b>$index</b> images for this article<br>\n"
-           ."If you have any <b>more</b> images to upload for this article,"
-	   ." select them here.</P>\n"
-	   ."<P>Otherwise click <B>exit</B>.</P>\n";
+EOT;
+} else if ($index < 5) {
+  echo <<<EOT
+<P>
+You have uploaded <b>$index</b> images for this article<br>
+If you have any <b>more</b> images to upload for this article,
+select them here.
+</P>
+<P>
+Otherwise click <B>exit</B>.
+</P>
 
-$res = mysql_query ("UPDATE articles_info SET image='$index' WHERE article_id='$article_id'");
+EOT;
 
-    if ( $res = false) 
-      echo "<P><b>Oops!</b> - Could not update database</P>";
-  } elseif ($index >= 5) {
-    echo "<CENTER><h1>You have bagged your limit</h1>\n";
-    echo "<a href='index.phtml'><img border='no' src='../art/homepages/car8.gif'></a></CENTER>\n";
-    exit;
+  $query = <<<EOT
+UPDATE articles_info
+   SET image='$index'
+ WHERE article_id='$article_id'
+EOT;
+
+  if (! mysql_query($query)) {
+    $error_msg = "Problem saving image: " . mysql_error();
+    echo <<<EOT
+<p>
+<b><font color="red">$error_msg</font></b>
+</p>
+
+EOT;
   }
-?>
+}
 
-
+if ($index < 5) {
+  echo <<<EOT
 <br>
 
-<form action='process_image.phtml' method='post' enctype='multipart/form-data'>
-<P>file: <input type='file' name='userfile'></P>
-<input type='hidden' name='article_id' value='<? echo $article_id ?>'>
-<input type='hidden' name='index' value='<? echo $index ?>'><br>
-<input type='submit' name=submit_image value='submit'>
-<input type='submit' name=submit_image value='exit'>
+<form action="process_image.phtml" method="POST" type="multipart/form-data">
+<P>file: <input type="file" name="userfile"></P>
+<input type="hidden" name="article_id" value="$article_id">
+<input type="hidden" name="index" value="$index"><br>
+<input type="submit" name="submit_image" value="submit">
+<input type="submit" name="exit" value="exit">
 </form>
-<P>
-<a href='index.phtml'>Continue</a>
-</P>
 </FONT>
-<?
-include "templates/footer.inc";
+
+EOT;
+} else {
+  echo <<<EOT
+<p>
+You may not upload any more images for this article.<br>
+<a href="./index.phtml">Continue</a>
+</p>
+
+EOT;
+}
+
+include("./templates/footer.inc");
 ?>
-
-
-
-
-

@@ -24,7 +24,7 @@ EOT;
 <td align="right" nowrap>
 <p>you are: </p></td>
 <td>
-<input type=text name=username size=25 maxlength=50  value="<?$authenticated_username?>">
+<input type=text name=username size=25 maxlength=50  value="<?=$authenticated_username?>">
 </td>
 <td>&nbsp;</td>
 </tr>

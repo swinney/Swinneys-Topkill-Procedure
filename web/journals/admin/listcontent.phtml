@@ -55,7 +55,7 @@ if ($affected=="0"||$affected=="-1") { # UPDATE was invalid, do INSERT
 
 
                 $res = mysql_query("UPDATE articles_info 
-		SET web='$web', status='$status', title='$title', blurb='$blurb' 
+		SET web='$web', status='$status', title='$article_title', blurb='$blurb' 
 		WHERE article_id='$article_id'");
 
     }
@@ -112,7 +112,7 @@ if ( isset($article_id) ) {
 	$d=mysql_fetch_object($res);
     $username = $d->username;
     $keywords = $d->keywords;
-    $title = $d->title;
+    $article_title = $d->title;
     $blurb = $d->blurb;
     $status = $d->status;
     $images = $d->image;
@@ -136,44 +136,30 @@ if ( isset($article_id) ) {
 // show images if they exist
 //
 
+   $imagepath = URLBASE . "/journals/images/";
+   $filepath = DIRBASE . "/journals/images/";
 
-
-# path to working directory
-   $imagepath = "http://swinney.org/journals/images/";
-
-    for ( $i = 1; $i <= $images ; $i++ ) {
+    for ($i = 1; $i <= $images ; $i++) {
       $noext = $article_id."_".$i;
 
-      if (file_exists ( "/sky/www/swinney.org/html/journals/images/".$noext.".jpg")) {
-# find out if the basename exists as a jpeg
+      if (file_exists("$filepath/$noext.jpg")) {
         $imgfile = "$imagepath$noext.jpg";
 
-       }
-      elseif ( file_exists ("/sky/www/swinney.org/html/journals/images/".$noext.".gif")) {
-# no, so we'll see if it exists as a gif
+       } else if (file_exists("$filepath/$noext.gif")) {
         $imgfile = "$imagepath$noext.gif";
 
-       }
-      elseif ( file_exists ("/sky/www/swinney.org/html/journals/images/".$noext.".png")) {
-# no, so we'll see if it exists as a png
+       } else if (file_exists("$filepath/$noext.png")) {
         $imgfile = "$imagepath$noext.png";
+       } else {
+        echo "shit, this is not recognised: $filepath/$noext.*<BR>";   
+       }
 
- 
-      } else {
-
-	# holy shit!  it's neither!
-        echo "shit, this is not recognised: $i<br>";
-        echo "$imgfile<BR>";   
-
-      }
-
-	# they all need this
-        echo "<P>$imgfile</P>";
-        echo "<P>&lt;img src='$imgfile' height='150' align='left'&gt;</P>";
-        echo "<P><a href=\"$imgfile\"><img src='$imgfile' height='150'></a></P>";
-
+      echo <<<EOT
+<P>$imgfile</P>
+<P>&lt;img src="$imgfile" height="150" align="left"&gt;</P>
+<P><a href="$imgfile"><img src="$imgfile" height="150"></a></P>
+EOT;
     }         
-
 
 //
 // show article stuff
@@ -200,8 +186,8 @@ if ($web != "")
 
     echo "<h2>web: <a href=\"$web\">$web</a></h2>";
     echo "<textarea name=web cols=60 rows=2>$web</textarea>";
-    echo "<h2>Title: ".stripslashes($title)."</h2>";
-    echo "<textarea name=title cols=60 rows=2>".stripslashes($title)."</textarea>";
+    echo "<h2>Title: ".stripslashes($article_title)."</h2>";
+    echo "<textarea name=article_title cols=60 rows=2>".stripslashes($article_title)."</textarea>";
     echo "<h3>Blurb: ".stripslashes($blurb)."</h3>";
     echo "<textarea name=blurb cols=60 rows=3>".stripslashes($blurb)."</textarea>";
 

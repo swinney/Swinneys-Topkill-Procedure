@@ -1,20 +1,6 @@
 <?
 // $Id$
 require_once("global.inc");
-#  HERE ARE THE VARIABLES USED IN THIS PROCESS:
-#
-#   $article_id is the unique number of the article 
-#	submitted and saved in the folder ARTICLES
-#   $index is the incremented number of the image 
-#	submitted, plus one for every submit
-#   $filename is the processed name of the submitted 
-#	image composed of $article_id and $index
-#   $userfile is PHP's file name for any file submitted 
-#	by form
-#   $userfile_name is PHP's designation for the 
-#	original name of the file, prior to $userfile rename
-#
-
 
 if (!isset($index)) {
   $index = 1;
@@ -23,21 +9,24 @@ if (!isset($index)) {
 }
 
 if ($submit_image) {
-  if (ereg("\..+$", $userfile_name, $matches)) {
-    $ext = strtolower($matches[0]);
-    $filename = $article_id . "_" . $index . "." . $extension;
+  if (ereg("\.(.+$)", $userfile_name, $matches)) {
+    $ext = strtolower($matches[1]);
+    $filename = $article_id . "_" . $index . "." . $ext;
   } else {
     $filename = $article_id . "_" . $index;
   }
 
   // Copy the file to our uploads directory
-  $copy=@copy($userfile,
-	      "/sky/www/swinney.org/html/journals/images/$filename");
-}
+  if (move_uploaded_file($userfile,
+                        DIRBASE . "/journals/images/$filename")) {
+    $success_msg = "Image saved.";
+  } else {
+    $error_msg = "Error saving image.";
+  }
 
-if ($copy=="TRUE") {
-  header("Location: submit_image.phtml?index=$index&article_id=$article_id");
-} elseif ($submit_image=="exit") {
+  include("./submit_image.phtml");
+} else {
   header("Location: " . URLBASE);
 }
+
 ?>
