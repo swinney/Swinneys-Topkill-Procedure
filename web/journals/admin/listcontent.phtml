@@ -136,30 +136,32 @@ if ( isset($article_id) ) {
 // show images if they exist
 //
 
-   $imagepath = URLBASE . "/journals/images/";
-   $filepath = DIRBASE . "/journals/images/";
+   $imagepath = URLBASE . "/journals/images";
+   $filepath = DIRBASE . "/journals/images";
 
     for ($i = 1; $i <= $images ; $i++) {
       $noext = $article_id."_".$i;
 
       if (file_exists("$filepath/$noext.jpg")) {
-        $imgfile = "$imagepath$noext.jpg";
+        $imgfile = "$imagepath/$noext.jpg";
 
        } else if (file_exists("$filepath/$noext.gif")) {
-        $imgfile = "$imagepath$noext.gif";
+        $imgfile = "$imagepath/$noext.gif";
 
        } else if (file_exists("$filepath/$noext.png")) {
-        $imgfile = "$imagepath$noext.png";
+        $imgfile = "$imagepath/$noext.png";
        } else {
-        echo "shit, this is not recognised: $filepath/$noext.*<BR>";   
+        echo "unrecognized file upload: $filepath/$noext.*<BR>";   
        }
 
-      echo <<<EOT
+      if ($imgfile) {
+	echo <<<EOT
 <P>$imgfile</P>
 <P>&lt;img src="$imgfile" height="150" align="left"&gt;</P>
 <P><a href="$imgfile"><img src="$imgfile" height="150"></a></P>
 EOT;
-    }         
+      }
+    }
 
 //
 // show article stuff
