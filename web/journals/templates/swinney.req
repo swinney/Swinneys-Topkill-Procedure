@@ -17,10 +17,10 @@
 </TR>
 <TR BGCOLOR="#DED3D3" ALIGN="left" VALIGN="top">
 <TD><FONT SIZE="2" FACE="Verdana, Arial, Helvetica, sans-serif">
- <A HREF="../index.phtml">Home</A><BR>
- <A HREF="index.phtml">latest articles</A><BR>
- <A HREF="comments.phtml">latest comments</A><BR>
- <A HREF="admin/index.phtml">Admin</A><BR>
+ <A HREF="../index.phtml">home</A><BR>
+ <A HREF="index.phtml">articles</A><BR>
+ <A HREF="comments.phtml">comments</A><BR>
+ <A HREF="admin/index.phtml">admin</A><BR>
 </TD>
 </TR>
 </TABLE>

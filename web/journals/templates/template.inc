@@ -1,6 +1,7 @@
 <? 
    include "../templates/top.req";
    include "../templates/swinney.req";
+//   include "user_login.inc";
    include "../templates/rollcall.inc";
    include "../templates/endleft.inc";
    include "$into_template";

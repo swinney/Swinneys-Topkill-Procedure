@@ -52,7 +52,7 @@ $article_id = $article_id[0];
 
 // echo "$username<br>$comment<br>$nature<br>";
 
-$res = mysql("swinney","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."',NULL,'$ip_addr')"); 
+$res = mysql("swinney","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."','0','$ip_addr')"); 
 
   if ( $res == false ) { 
     echo ("Bollocks!");
