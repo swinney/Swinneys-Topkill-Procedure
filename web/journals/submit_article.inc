@@ -1,8 +1,5 @@
 <?
 // $Id$
-if ($text) {
-$text=stripslashes($text);
-}
 ?>
 
 <table width=375 border="0" cellspacing="0" cellpadding="2">
@@ -11,6 +8,9 @@ $text=stripslashes($text);
 
 <p class="header"><b><? echo $title ?></b>
 <?
+//
+// temp_aid is set if user just came from the VIP area
+//
 if ($temp_aid) {
   echo <<<EOT
   (<a href="../article.phtml?id=$temp_aid" target="new">preview</a>)</P>
@@ -25,7 +25,6 @@ if (error_msg) {
 EOT;
 }
 ?>
-
 </p></td>
 </tr>
 
