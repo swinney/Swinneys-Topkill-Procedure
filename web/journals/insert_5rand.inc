@@ -11,7 +11,7 @@ SELECT article_id,username,title,date,web,category
    WHERE status=2
 EOT;
 if (count($bozos)) {
-  $query .= " AND username NOT IN $bozo_set ";
+  $query .= " AND user_id NOT IN $bozo_set ";
 }
 $query .= <<<EOT
  ORDER BY RAND()
@@ -23,11 +23,12 @@ $res = mysql_query($query);
 // multiple rows, limit 10 latest
 while ($d = mysql_fetch_object($res)) {
     $names=get_cat_names($d->category);
-    $username = $d->username;
+    $username = stripslashes($d->username);
+    $url_username=urlencode(stripslashes($d->username));
 
   echo <<<EOT
 <p>
-<a href="journals/userpages.phtml?username=$username">$username</a> wrote
+<a href="journals/userpages.phtml?username=$url_username">$username</a> wrote
 <a href="journals/article.phtml?id=$d->article_id.txt">
 <strong>$d->title</strong></a>
 <BR>
