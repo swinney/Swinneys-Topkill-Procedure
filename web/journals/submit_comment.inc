@@ -37,17 +37,7 @@ EOT;
 $query="SELECT distinct(username), user_id FROM comments WHERE article_id=$article_id AND username NOT LIKE '%to%' ORDER BY username";
 $res=mysql_query($query);
 while ($d=mysql_fetch_object($res)) {
-  // try to get the user id 
-  // if we dont have it in the comments db already
-  if (!$d->user_id) {
-    $query="SELECT user_id FROM user WHERE username='$d->username'";
-    $res=@mysql_query($query);
-    if (mysql_num_rows($res)==1) {
-      // gnarly dude.
-      $user_id=mysql_result($res,0);
-    }
-  }
-  if ($d->user_id||$user_id) echo "<option value='$d->user_id'>$d->username\n";
+  if ($d->user_id) echo "<option value='$d->user_id'>$d->username\n";
 }
 ?>
 </SELECT>
