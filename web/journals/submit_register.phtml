@@ -7,10 +7,11 @@ include("templates/top.inc");
 
 <div align="center">
 <?
-if ($login_error_msg) {
+if ($error_msg) {
+  session_unregister("error_msg");
   echo <<<EOT
 <p>
-<b><font color="red">$login_error_msg</font></b>
+<b><font color="red">$error_msg</font></b>
 </p>
 EOT;
 } else {

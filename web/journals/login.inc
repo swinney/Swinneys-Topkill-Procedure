@@ -2,16 +2,23 @@
 
 <div align="center">
 <?
-if ($login_error_msg) {
+if (error_msg) {
+  session_unregister("error_msg");
   echo <<<EOT
 <p>
-<b><font color="red">$login_error_msg</font></b>
+<b><font color="red">$error_msg</font></b>
 </p>
 EOT;
 }
 
-$back_to = $HTTP_REFERER;
-session_register("back_to");
+// the first time the page is visited, save the location where the
+// "log in" link was clicked so we can redirect back to it upon
+// successful authentication
+if (! session_is_registered("back_to")) {
+  $back_to = $HTTP_REFERER;
+  echo "registering back_to as $back_to<br>";
+  session_register("back_to");
+}
 
 ?>
 <TABLE><TR><TD>

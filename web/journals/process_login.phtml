@@ -2,27 +2,40 @@
 #$Id$
 require_once("global.inc");
 
-if (!$username || !$password) {
-  $login_error_msg = "You must specify both a username and a password.";
-  include("login.phtml");
-  exit;
+if ($username && $password) {
+  // pull user info from the database
+  $query = <<<EOT
+SELECT username, password
+  FROM user
+ WHERE username='$username'
+EOT;
+
+  $res = mysql_query($query)or
+    die(error_page(mysql_error()));
+  $user = mysql_fetch_object($res);
+
+  // make sure the user exists
+  if ($user) {
+    // verify the submitted credentials
+    if (crypt($password, $user->password) == $user->password) {
+    } else {
+      $error_msg = "Password mismatch";
+      $error_redirect = "login.phtml";
+    }
+  } else {
+    // username does not exist in the database
+    $error_msg =
+      "Sorry, $username but you are going to have to register that.";
+    $error_redirect = "submit_register.phtml?username=$username";
+  }
+} else {
+  $error_msg = "You must specify both a username and a password.";
+  $error_redirect = "login.phtml";
 }
 
-$res = mysql_query("SELECT username,password FROM user WHERE username='$username'") or
-die(error_page(mysql_error()));
-
-$user = mysql_fetch_object($res);
-if (!$user) {
-  // username does not exist in the database
-  $login_error_msg =
-    "Sorry, $username but you are going to have to register that.";
-  header("Location: submit_register.phtml?username=$username");
-  exit;
-}
-
-if (crypt($password, $user->password) != $user->password) {
-  $login_error_msg = "Password mismatch";
-  include("login.phtml");
+if ($error_msg) {
+  session_register("error_msg");
+  header("Location: $error_redirect");
   exit;
 }
 
