@@ -116,7 +116,7 @@ EOT;
   // retrieve the article data
 
   $query = <<<EOT
-     SELECT article_id, username, title, blurb, date
+    SELECT article_id, username, title, blurb, date, num_comments
     FROM articles_info
    WHERE status=2 
 EOT;
@@ -145,23 +145,10 @@ EOT;
   while ($article = mysql_fetch_object($res)) {
     // retrieve the number of comments for the article
 
-    $subquery = <<<EOT
-  SELECT count(*) AS num_comments
-    FROM comments
-   WHERE article_id=$article->article_id
-     AND status=0
-EOT;
-    if ($bozo_set) {
-      $subquery .= " AND user_id NOT IN $bozo_set";
-    }
-
-    $subres = mysql_query($subquery) or
-      die(error_page(mysql_error()));
-    $comments = mysql_fetch_object($subres);
+    $num_comments = $article->num_comments;
 
     // generate the summary for the article
 
-    $num_comments = $comments->num_comments;
     if ($num_comments == 1) {
       $num_comments .= " comment";
     } else {
