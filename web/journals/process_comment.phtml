@@ -14,8 +14,6 @@ $article_id = explode (".", $article_id);
 
 $article_id = $article_id[0];
 
-// echo "$article_id";
-
   if ( $username == "" ) {
       $error_msg = "No one's a nobody on Swinney.org.  Enter your name.";
       session_register("error_msg");
@@ -48,9 +46,9 @@ $article_id = $article_id[0];
     $user_id=0;
   }
 
-$username=stripslashes($username);
-$comment=stripslashes($comment);
-$add_id=stripslashes($add_ip);
+$username=addslashes($username);
+$comment=addslashes($comment);
+$add_id=addslashes($add_ip);
 $char=strlen($comment);
 if (!$user_id) {
   $user_id="0";
