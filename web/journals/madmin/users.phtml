@@ -1,0 +1,154 @@
+
+<div align="center">
+
+<?
+
+if ($search) {
+  // the search form was submitted. find all matching usernames
+
+  $query = <<<EOT
+  SELECT username
+    FROM user
+   WHERE username like '%$search%'
+ORDER BY username
+EOT;
+
+  $res = mysql_query($query) or
+    die(error_page(mysql_error()));
+  $num_users = mysql_num_rows($res);
+
+  if ($num_users > 1) {
+    // present a drop down box so a user can be selected
+
+    echo <<<EOT
+<form method="GET" action="users.phtml">
+<p>
+<select name="username">
+
+EOT;
+
+    while ($u = mysql_fetch_object($res)) {
+      echo <<<EOT
+<option> $u->username
+
+EOT;
+    }
+
+    echo <<<EOT
+</select>
+
+<input type="submit" value="pick a user">
+</p>
+</form>
+
+<hr>
+
+EOT;
+
+  } else if ($num_users == 1) {
+    // there was only one match, so drop right into the modification
+    // form for that user
+
+    $u = mysql_fetch_object($res);
+    $username = $u->username;
+  } else {
+    // no hits
+
+    echo <<<EOT
+<p>
+No matches. Try again.
+</p>
+
+<hr>
+
+EOT;
+  }
+}
+
+if ($username) {
+  // either a user was selected from the user menu, or a search
+  // resulted in only one hit
+
+  $query = <<<EOT
+SELECT *
+  FROM user
+ WHERE username='$username'
+EOT;
+
+  $res = mysql_query($query) or
+    die(error_page(mysql_error()));
+
+  $u = mysql_fetch_object($res) or
+    die(error_page(mysql_error()));
+
+  echo <<<EOT
+<form method="POST" action="process_modify_user.phtml">
+<table>
+<tr>
+<td align="right" valign="middle">
+username:
+</td>
+<td align="left" valign="middle">
+<input type="text" name="username" size="20" maxlength="20"
+ value="$u->username">
+</td>
+</tr>
+<tr>
+<td align="right" valign="middle">
+email:
+</td>
+<td align="left" valign="middle">
+<input type="text" name="email" size="20" maxlength="20"
+ value="$u->email">
+</td>
+</tr>
+<tr>
+<td align="right" valign="middle">
+password:
+</td>
+<td align="left" valign="middle">
+<input type="password" name="password1" size="20" maxlength="20">
+</td>
+</tr>
+<tr>
+<td align="right" valign="middle">
+password (again):
+</td>
+<td align="left" valign="middle">
+<input type="password" name="password2" size="20" maxlength="20">
+</td>
+</tr>
+<tr>
+<td align="right" valign="middle">
+ip address:
+</td>
+<td align="left" valign="middle">
+$u->ip_addr
+</td>
+</tr>
+<tr>
+<td align="right" valign="middle">
+&nbsp;
+</td>
+<td align="left" valign="middle">
+<input type="submit" value="modify user">
+</td>
+</tr>
+</table>
+</form>
+
+<hr>
+
+EOT;
+}
+
+?>
+
+<form method="GET" action="users.phtml">
+<p>
+<input type="text" name="search" size="20" maxlength="20">
+<input type="submit" value="find a user">
+</p>
+</form>
+
+</div>
