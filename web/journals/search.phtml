@@ -3,6 +3,7 @@
 # searching for stuff on the internet reminds me of justin hall
 # create table search_words (word_id int(11) primary key not null auto_increment, word varchar(25) not null, num_rows int(5) NOT NULL DEFAULT 0, num_times int(4) NOT NULL DEFAULT 0); 
 $title="Justin Hall's Quest For Links";
+include "global.inc";
 include "templates/top.inc";
 include "templates/line_nav.inc";
 echo "\n<CENTER>";
@@ -34,6 +35,7 @@ while ($d=mysql_fetch_object($res)) {
 	   . "\n by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
 }
 echo "\n</OL>";
+
 echo "<h2>and from the comments</h2>\n";
 echo "\n<OL>";
 $query = "select comments.comment_id,comments.article_id,comments.username,articles_info.title from comments, articles_info where comments.article_id=articles_info.article_id AND comment like '%". addslashes($search_this) ."%' order by article_id";
