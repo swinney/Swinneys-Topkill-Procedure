@@ -16,12 +16,6 @@ mysql> describe thoughts;
 
 $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
-$article_id = explode (".", $article_id);
-
-$article_id = $article_id[0];
-
-// echo "$article_id";
-
   if ( $username == "name" ) {
     echo ("Names don't think, back up and try again.");
     exit;
@@ -38,10 +32,12 @@ $article_id = $article_id[0];
     echo("In nothing, there exists blankness.  Back up and try again.");
     exit;
   }
-if (!$user_id) {
-  $user_id=0;
+if (!$authenticated_user_id) {
+  $urlbase = URLBASE;
+  header("Location: $urlbase/journals/login.phtml");
+  exit();
 }
-$res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,$user_id,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
+$res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,$authenticated_user_id,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
 
   if ( $res == false ) { 
     echo ("Bollocks!");
