@@ -1,5 +1,6 @@
-
 <?
+#$Id$
+require_once("global.inc");
 
 if(!$page_num || $page_num < 1) { //No Page Number? Set it to Page 1 then...
         $page_num = 1;
@@ -68,11 +69,12 @@ $url = "article.phtml?id=$d->article_id";
      }
 
  echo "</P>";
+   echo "<table width=200 border=0 cellspacing=0 cellpadding=3><tr><td>\n";
+   echo "<font size='2'>\n";
 // multiple rows
 while ( $individual_row = mysql_fetch_object( $res ) ) {
 
-   echo "<table border=0 cellspacing=0 cellpadding=3><tr><td>\n";
-   echo "<font size='2'>\n";
+
    echo "<P><a href=\"$url$individual_row->article_id.txt\">\n";
    echo "<B>$individual_row->title</a></B> by\n";
 
@@ -92,9 +94,10 @@ $d =  mysql_fetch_object($res2);
 
 echo " | $d->num comments</P>";
 
-   echo "</td></tr></table>\n";
+
 
 }
+   echo "</td></tr></table>\n";
 }
 
 

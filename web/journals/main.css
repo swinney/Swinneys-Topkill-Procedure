@@ -1,12 +1,25 @@
 body {
-background: #DDDDDD;
+background: pink;
+color: black;
+font-family: Times New Roman,Times;
+font-size: 10pt;
 }
 
 p {  
 font-family: Times New Roman,Times; 
-font-size: 10pt
-} 
+font-size: 10pt;
+color: black;
+A:link, A:visited {
+color: red;
+}
+
+H1,H2,H3,H4 {
+color: black;
+}
 
 pre { 
 color: navy 
 } 
+
+
+
