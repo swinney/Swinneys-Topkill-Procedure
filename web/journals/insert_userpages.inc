@@ -19,7 +19,7 @@ while ( $individual_row = mysql_fetch_object( $res1 ) ) {
 
    echo "<table border=0 cellspacing=0 cellpadding=3><tr><td>"; 
 
-   echo "<font face='arial' size='2'><a href=\"$url$individual_row->article_id.txt\"><B>$individual_row->title</a></B> by <a href='$individual_row->web' target='new'>$individual_row->username</a><br> ";
+   echo "<font face='arial' size='2'><a href=\"$url$individual_row->article_id\"><B>$individual_row->title</a></B> by <a href='$individual_row->web' target='new'>$individual_row->username</a><br> ";
    echo "$individual_row->blurb</font><br>";
    echo "<font face=\"arial\" size='1'>$individual_row->date "; 
 
