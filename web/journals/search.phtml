@@ -1,11 +1,12 @@
 <?
 # $Id$
 # searching for stuff on the internet reminds me of justin hall
+# create table search_words (word_id int(11) primary key not null auto_increment, word varchar(25) not null, num_rows int(5) NOT NULL DEFAULT 0, num_times int(4) NOT NULL DEFAULT 0); 
 $title="Justin Hall's Quest For Links";
 include "templates/top.inc";
 conn();
 echo "\n<P>swinney.org beta search engine</P>"; 
-echo "\n<FORM ACTION=\"$PHPSELF\" METHOD=\"POST\">";
+echo "\n<FORM ACTION=\"search.phtml\" METHOD=\"POST\">";
 echo "\n<INPUT TYPE=\"text\" NAME=\"search_this\">";
 echo "\n<INPUT TYPE=\"submit\" NAME=\"search\" VALUE=\"search\">";
 echo "\n</FORM>";
@@ -30,8 +31,8 @@ echo "\n</OL>";
 
 $query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1 WHERE word='$search_this'";
 $res = mysql_query($query);
-
-if ($res=="FALSE") { # UPDATE was invalid, do INSERT
+$affected = mysql_affected_rows();
+if ($affected==0) { # UPDATE was invalid, do INSERT
 	echo "<P>well, there is a first time for everything.</P>";
 	$query = "INSERT INTO search_words (word_id,word,num_rows,num_times) VALUES ('','$search_this','$num','1')";
 	$res = mysql_query($query) or die ("<P>invalid query</P>");
