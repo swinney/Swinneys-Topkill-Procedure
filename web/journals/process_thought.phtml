@@ -45,5 +45,5 @@ $res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,'".addslashes($user
     exit;
   }
 //  mail("thoughts@swinney.org", "comment: $username",  "$thought"); 
-header("Location: ../index.phtml");
+header("Location: " . URLBASE);
 ?>

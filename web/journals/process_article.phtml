@@ -66,8 +66,7 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
 
 if ($images_too=="no") {
-	header("Location: ../index.phtml");
-
+        header("Location: " . URLBASE);
 } else {
 # $images_too probably equals "yes" =-)
 header("Location: submit_image.phtml?article_id=$article_id");

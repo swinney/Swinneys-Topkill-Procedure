@@ -50,8 +50,7 @@ header("Location: submit_image.phtml?index=$index&article_id=$article_id");
 
 } elseif ($submit_image=="exit") {
 
-header("Location: ../index.phtml");
-
+header("Location: " . URLBASE);
 }
 ?>
 

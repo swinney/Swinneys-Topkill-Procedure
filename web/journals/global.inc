@@ -1,50 +1,27 @@
 <?
 
-
 #########################################################
 # $Id$
 # global.inc
 # global vars for use in the site
 # functions for use in the site
 
-
+define("URLBASE", "/~bcm/swinney/");
+define("CSS_URL", URLBASE . "journals/main.css");
 define("DB_HOST", "localhost");
 define("DB_USER", "swinney");
 define("DB_PASSWD", "mang");
 define("DB_NAME", "swinney");
 
 
-#########################################################
-# mangage the cookie system
-# syntax for php ccookie is:
-# setcookie(name, value, expiration, path, domain, security);
-# note: expiration is in seconds, domain must start with period. 
-#
-# we are calling the cookie "id" and assigning it the 
-# value $randval . This particular cookie will expire 
-# in four hours (the current time plus 14,400 seconds). 
-# The cookie is valid for any page below the document 
-# root on the domain swinney.org.
-
-# fire the session up or keep it going if it is already on fire
-# session_start();
-#  session_destroy();
-# step one, assing a random value user id
-#if (!isset($id)) {
-#	srand((double)microtime()*1000000);
-#	$randval = rand();
-#	# assign the user a random value cookie
-#	setcookie("id",$randval,time()+14400,"/",".swinney.org",0);
-#} 
-
-# step two, validate the user
-# cookie named valid_user, yes, four hours, / , swinney.org
-#setcookie("valid_user","yes",time()+14400,"/",".swinney.org",0);
-
-
-# to delete the cookie just dont set the username
-#setcookie("","",time()+14400,"/",".swinney.org",0);
-
+/*
+ * initialize the session
+ * 
+ * XXX: make the session cookie persist until the user clicks logout
+ * (and therefore causes a session_destroy().
+ */
+session_cache_limiter('nocache');
+session_start();
 
 /*
  * connect to the database. if unsuccessful, display an error message.
@@ -78,8 +55,14 @@ die(error_page(mysql_error()));
  */
 
 function error_page($msg) {
-  include("journals/templates/top.inc");
+  $css_url = CSS_URL;
   $html = <<<EOT
+<html>
+<head>
+<title>swinney.org: error!</title>
+<link rel="stylesheet" type="text/css" href="$css_url">
+</head>
+</body>
 <p>
 <b><font color="red">BIG RED FLAG!</font></b>
 </p>

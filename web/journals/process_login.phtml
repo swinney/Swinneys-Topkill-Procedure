@@ -1,22 +1,44 @@
 <?
-include "global.inc";
+require_once("global.inc");
 
-echo "$username\n";
-echo "$password\n";
-
-$res = mysql_query ( "SELECT username,password FROM users WHERE username='$username' AND password='$password'");
-
-if (!$res) {
-echo "Sorry, $username but you are going to have to register that.";
+if (!$username || !$password) {
+  $login_error_msg = "You must specify both a username and a password.";
+  include("login.phtml");
+  exit;
 }
 
-//user_set_tokens($username_in);
-setcookie('username',$username,(time()+2592000),'/','',0);
+$res = mysql_query("SELECT user_name,password FROM user WHERE user_name='$username'") or
+die(error_page(mysql_error()));
 
+$user = mysql_fetch_object($res);
+if (!$user) {
+  // username does not exist in the database
+  $login_error_msg =
+    "Sorry, $username but you are going to have to register that.";
+  $username = '';
+  include("login.phtml");
+  exit;
+}
 
+if (crypt($password, $user->password) != $user->password) {
+  $login_error_msg = "Password mismatch";
+  include("login.phtml");
+  exit;
+}
 
-//header("Location:$HTTP_REFERER");
+// save the username in the session so other pages can access it later
+// in the session
+$authenticated_username = $user->user_name;
+session_register("authenticated_username");
+
+header("Location: " . URLBASE);
 ?>
+
+
+
+
+
+
 
 
 

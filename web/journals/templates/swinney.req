@@ -1,8 +1,5 @@
 <!-- BEGIN PHP Dynamically Required Page : swinney.req  -->
 
-
-
-
 <TABLE WIDTH="600" BORDER="0" CELLSPACING="0" CELLPADDING="0" align=center>
 <TR>
 <TD>
@@ -16,6 +13,17 @@
 <TR ALIGN="left" VALIGN="top">
 <TD>
  <A HREF="../index.phtml">swinney.org</A><BR>
+<?
+if ($authenticated_username) {
+  echo <<<EOT
+<a href="process_logout.phtml" accesskey="j">LOG OUT</a> |
+EOT;
+} else {
+  echo <<<EOT
+<a href="login.phtml" accesskey="j">LOG IN</a> |
+EOT;
+}
+?>
  <A HREF="index.phtml">articles</A><BR>
  <A HREF="comments.phtml">comments</A><BR>
  <A HREF="admin/index.phtml">admin</A><BR>
@@ -23,7 +31,5 @@
 </TR>
 </TABLE>
 <BR>
-
-
 
 <!-- END PHP Dynamically Required Page: swinney.req -->
