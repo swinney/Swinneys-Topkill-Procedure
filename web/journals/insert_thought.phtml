@@ -5,7 +5,7 @@
 
 <?
 
-// include "connect.inc";
+// include "connect.phtml";
 
 /*
 mysql> describe thoughts;
@@ -22,7 +22,7 @@ $article_id = explode (".", $article_id);
 
 $no_extension = $article_id[0];
 
-$res = mysql ("swinney","SELECT * FROM thoughts ORDER BY timestamp DESC LIMIT 3");
+$res = mysql ("swinney","SELECT * FROM thoughts ORDER BY timestamp DESC LIMIT 5");
 
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {
