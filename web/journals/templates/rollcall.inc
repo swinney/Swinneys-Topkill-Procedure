@@ -60,7 +60,7 @@ recent writers:<br>
 # long. hm, that didn't seem to change anything.  does this code even
 # work? - J. 020010921
 #
-# no, it isnt on right now.  it pisses people off. 
+# i fixed it and turned it back on :)
 # - austin Fri Sep 28, 2001 10:49 AM
 #
  $minus=time();
@@ -68,7 +68,7 @@ recent writers:<br>
 $query = <<<EOT
 SELECT DISTINCT username, count(username) AS number, status, time
   FROM articles_info
- WHERE status=2 AND time>$minus
+ WHERE status=2
 EOT;
 if (count($bozos)) {
   $query .= " AND username NOT IN $bozo_set";
