@@ -62,13 +62,41 @@ EOT;
 
   if (mysql_query($query)) { 
     $article_id = mysql_insert_id();
-    $esc_content = addslashes($content);
 
+    //
+    //  HERE WE GO WITH NEW STUFF
+    //
+    // if we have a userfile for this form, 
+    // then let us process it.
+    //
+        if (isset($userfile) && $userfile!="none" && isset($article_id)) {
+      //
+      // open the temp file read only
+      $fd = fopen($userfile,"r");
+      //
+      // assemble the buffer in chunks
+      while (!feof($fd)) {
+	//
+	// stack it together
+	$buffer=$buffer . fgets($fd,4069);
+      }
+      //
+      // close the file.
+      fclose($fd);
+      //
+      // add slashes before putting into the database.
+      // if you dont do this on these html file that
+      // contain every possible bonker, 
+      // the insert WILL bomb.
+      $buffer=addslashes($buffer);
+      $query="INSERT INTO articles_text SET article_id='$article_id', text='$buffer'";
+    } elseif (isset($content)) {
+    $esc_content = addslashes($content);
     $query = <<<EOT
 INSERT INTO articles_text
      VALUES ($article_id, '$esc_content');
 EOT;
-
+    }
     if (mysql_query($query)) {
       $success_msg = "Article saved.";
     } else {
@@ -93,7 +121,7 @@ if ($error_msg) {
     $loc = "submit_image.phtml?article_id=$article_id";
   }
 
-  header("Location: $loc");
+    header("Location: $loc");
 }
 #
 # kill registered sessions
