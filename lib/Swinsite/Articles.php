@@ -121,9 +121,14 @@ EOT;
    WHERE article_id $flag $a_article_id
     AND user_id=$a_user_id
      AND status=2
-ORDER BY article_id DESC
-   LIMIT 1
+ORDER BY article_id 
 EOT;
+      if ($flag=="<") {
+	$query .= " DESC ";
+      } elseif ($flag==">") {
+	$query .= " ASC ";
+      }
+      $query .= " LIMIT 1";
 
       $id = $db->getOne($query);
       if (DB::isError($id)) {
