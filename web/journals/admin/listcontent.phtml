@@ -1,8 +1,18 @@
 <?
-  include "header.inc";
-  include "../connect.inc";
-  
+// include the templates/top.inc
+include "../templates/top.inc";
+?>
 
+<CENTER>
+<TT><a href='../../index.phtml'>Swinney.org</a> Admin Area</TT></h3>
+<P>
+<a href='index.phtml'>firebird</a> | 
+<a href='listcontent.phtml'>articles</a> | 
+<a href='admin_comments.phtml'>comments</a>
+</P>
+</CENTER>
+
+<?
 
 /*
 This is where we fopen an article, fwrite() it and fclose() it.
@@ -15,10 +25,7 @@ it right.
 
   if ( $type == "resubmit" ) {
 
-    $filename = "../pending/$article_id.txt";
-    $fp = fopen($filename, "w");
-    fwrite($fp, stripslashes($content));
-    fclose($fp);
+    $res = mysql ("$DB","UPDATE articles SET text='$update' WHERE article_id=$article_id");
 
     if ( $subby == "Save and Exit" ) unset($article_id);
 
@@ -167,20 +174,20 @@ if (substr($web,0,7) !='http://' && substr($web,0,7) !='mailto:') {
 
 
 // Look up the article
-    $filename = "/sky/www/swinney.org/html/journals/pending/$article_id.txt";
-    $fp = fopen($filename, "r");
-    $str = fread($fp, filesize($filename));
-    fclose($fp);
 
+$res = mysql("$DB","SELECT text FROM articles WHERE article_id='$article_id'");
+
+$row = mysql_fetch_row($res);
+$text = $row[0];
+
+if ( isset($article_id) ) {
 
     echo "<input type='hidden' name='type' value='resubmit'>";
     echo "<input type='hidden' name='article_id' value='$article_id'>";
-    echo "<table border=0 width=400><tr><td>$str</td></tr></table><br><br>";
-    echo "<textarea name=content cols=80 rows=20 wrap=virtual>$str</textarea><br>";
+    echo "<table border=0 width=400><tr><td>$text</td></tr></table><br><br>";
+    echo "<textarea name=update cols=80 rows=20 wrap=virtual>$text</textarea><br>";
 
-
-
-
+} 
 
 
 //gonna f*ck with my status now?!
@@ -272,3 +279,12 @@ if (substr($web,0,7) !='http://' && substr($web,0,7) !='mailto:') {
     echo "</table>\n";
 
 ?>
+
+
+
+
+
+
+
+
+
