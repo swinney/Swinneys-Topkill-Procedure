@@ -1,23 +1,21 @@
 <!-- BEGIN PHP Dynamically Required Page : swinney.req  -->
+
+
+
+
+<TABLE WIDTH="600" BORDER="0" CELLSPACING="0" CELLPADDING="0" align=center>
+<TR>
+<TD>
+<TABLE WIDTH="600" CELLSPACING="0" CELLPADDING="10" BORDER="0" valign=top>
 <tr>
 <td valign=top>
-<TABLE WIDTH="100%" BORDER="1" BORDERCOLOR="#333333" CELLPADDING="0" CELLSPACING="0">
-<TR BGCOLOR="#454650" ALIGN="left" VALIGN="top">
-<TD valign="top"><FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2"><B><FONT COLOR="#333333">swinney&gt;org</B>
-</FONT><BR>
- 
-<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="2" WIDTH="100%" BORDERCOLOR="#333333" valign=top>
-<TR BGCOLOR="#999999">
+<TABLE BORDER=0 WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
+<TR ALIGN="left" VALIGN="top">
+<TD valign="top">
+<TABLE BORDER=0 CELLSPACING="0" CELLPADDING="2" WIDTH="100%" valign=top>
+<TR ALIGN="left" VALIGN="top">
 <TD>
-<DIV ALIGN="center">
-<FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-<B>
-<FONT COLOR="#333333">swinney<FONT FACE="Arial, Helvetica, sans-serif">&gt;</FONT>org</FONT></B></FONT></DIV>
-</TD>
-</TR>
-<TR BGCOLOR="#DED3D3" ALIGN="left" VALIGN="top">
-<TD><FONT SIZE="2" FACE="Verdana, Arial, Helvetica, sans-serif">
- <A HREF="../index.phtml">home</A><BR>
+ <A HREF="../index.phtml">swinney.org</A><BR>
  <A HREF="index.phtml">articles</A><BR>
  <A HREF="comments.phtml">comments</A><BR>
  <A HREF="admin/index.phtml">admin</A><BR>
@@ -25,3 +23,7 @@
 </TR>
 </TABLE>
 <BR>
+
+
+
+<!-- END PHP Dynamically Required Page: swinney.req -->
