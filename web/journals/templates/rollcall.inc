@@ -34,8 +34,8 @@ $Id$
 </TR>
 <TR ALIGN="left" VALIGN="top">
 <TD>
-<DIV ALIGN="left">
-<P><FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2">
+
+<P>
 
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 
@@ -51,7 +51,16 @@ $Id$
 # getting the distinct.  i dont think. -OMS
 # Thu Jul 12, 2001 10:36 AM
 */
-$res = mysql ("$DB", "SELECT DISTINCT username, count(username) AS number FROM pending_articles GROUP BY username");
+
+# this is for limiting the return to only those
+# that have posted in the last three months 
+# where 3 months= 60 sec * 60 min * 24 hrs * 30 day * 3 mon
+# aka    7776000= 60     * 60     * 24     * 30     * 3
+
+$minus=time();
+$minus=$minus-7776000;
+
+$res = mysql_query ("SELECT DISTINCT username, count(username) AS number FROM articles_info WHERE time<$minus GROUP BY username");
 
 while ($row = mysql_fetch_row ($res)) {
 /*
@@ -73,7 +82,6 @@ $number=$row[1];
 
 ?>
 
-</FONT>
 </P>
 </TD>
 </TR>
