@@ -150,7 +150,7 @@ EOT;
 	    $title=stripslashes($d->title);
 	    $html .= <<<EOT
 <P>
-<a href="journals/article.phtml?id=$aid">
+<a href="./article.phtml?id=$aid">
 <b>$title</b></a>
 <br>
 <font size=1>$names</FONT>
