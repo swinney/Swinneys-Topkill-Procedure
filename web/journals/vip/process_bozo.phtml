@@ -1,0 +1,84 @@
+<?
+
+require_once("global.inc");
+
+if ($add) {
+  // make sure the submitted username isn't already in the bozo list
+  if (! in_array($username, $bozos)) {
+    // make sure the submitted username refers to an existing user
+    $query = <<<EOT
+SELECT user_id
+  FROM user
+ WHERE username='$username'
+EOT;
+    $res = mysql_query($query) or
+      die(error_page(mysql_error()));
+
+    if (mysql_num_rows($res)) {
+      // add the username to the bozo table
+      $query = "INSERT INTO user_bozo VALUES ($user_id, '$username')";
+      $res = mysql_query($query) or
+	die(error_page(mysql_error()));
+
+      // ad the username to the session cache
+      array_push($bozos, $username);
+      session_register("bozos");
+
+      $success_msg = "$username added to bozo list.";
+    } else {
+      $error_msg = "That username doesn't exist. Try again.";
+    }
+  } else {
+    $error_msg = "That username is already in your bozo list.";
+  }
+} else if ($remove) {
+  // maintain a list of usernames that have been successfully removed
+  $removed = array();
+
+  foreach ($username as $u) {
+    if (in_array($u, $bozos)) {
+      // remove the username from the bozo table
+      $query = <<<EOT
+DELETE FROM user_bozo
+      WHERE user_id=$user_id
+        AND bozo='$u'
+EOT;
+      $res = mysql_query($query) or
+	die(error_page(mysql_error()));
+
+      // remove the username from the session cache
+      // php >= 4.0.5 would let us do
+      //   array_splice($bozos, array_search($u, $bozos), 1);
+
+      for ($i = 0; $i < count($bozos); $i++) { 
+	if ($bozos[$i] == $u)
+	  break;
+      }
+
+      if ($i == 0) {
+	array_shift($bozos);
+      } else if ($i) {
+	array_splice($bozos, $i, 1);
+      }
+
+      array_push($removed, $u);
+    } else {
+      // if the username is not in the bozo list, ignore and move on
+    }
+  }
+
+  $success_msg = implode(', ', $removed) . ' removed from bozo list.';
+}
+
+if ($error_msg) {
+  session_register("error_msg");
+}
+
+if ($success_msg) {
+  session_register("success_msg");
+}
+
+header("Location: submit_bozo.phtml");
+
+?>
+

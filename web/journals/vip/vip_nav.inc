@@ -27,7 +27,8 @@ if ($authenticated_username) {
 $url = array (
    "entries.phtml"			=> "entries",
    "vip_edit_comments.phtml"		=> "comments",
-   "submit_change_password.phtml"	=> "passwd"
+   "submit_change_password.phtml"	=> "passwd",
+   "submit_bozo.phtml"                  => "bozo",
 );
 
 foreach ($url as $path => $ref) {
