@@ -1,28 +1,37 @@
 <?
+#$Id$
 // insert banner
- include "header.inc";
+ include "templates/top.inc";
  echo "<CENTER>";
  include "banners/ghetto.inc";
- echo "</CENTER>";
+
+$res = mysql_query ("SELECT DISTINCT username, count(username) AS number FROM articles_info GROUP BY username");
+
+  echo "<TABLE><TR>";
+
+  // initialize index at zero for modulo
+  $index = 0;
+
+
+
+while ($d = mysql_fetch_object($res)) {
+  echo "<TD><a href='userpages.phtml?username=$d->username'>$d->username($d->number)</a></TD>\n";
+
+  // increment the index for modulo
+  $index++;
+  $remainder = $index % 5;
+
+  if ($remainder==0) {
+  echo "</TR><TR>\n";  
+  }
+
+}
+
+
+echo "</TR></TABLE>";
+
+include "templates/footer.inc";
 ?>
-
-<CENTER>
-
-<? 
- include "roll_call_all.inc";
-?>
-
-
-<P><FONT color=white><TT>
-swinney.org<BR><BR>
-(austin || san francisco || melbs)
-</TT></FONT></P>
-</CENTER>
-</body>
-
-</HTML>
-
-
 
 
 
