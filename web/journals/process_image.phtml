@@ -1,0 +1,84 @@
+<?
+
+// austin swinney to the year 3000, swinney.org
+
+// save, rename, insert into database, other crap
+
+// now wer're done with all of that.
+
+
+
+
+#
+#  HERE ARE THE VARIABLES USED IN THIS PROCESS:
+#
+#   $article_id is the unique number of the article submitted and saved in the folder ARTICLES
+#   $index is the incremented number of the image submitted, plus one for every submit
+#   $filename is the processed name of the submitted image composed of $article_id and $index 
+#   $userfile is PHP's file name for any file submitted by form
+#   $userfile_name is PHP's designation for the original name of the file, prior to $userfile rename
+#
+
+
+  if (!isset($index)) {
+    $index=1;
+  } else { 
+    $index++;
+  }
+
+
+  if ($userfile) {
+     $temp = substr(strtolower($userfile_name),-3);
+     # gen a file name
+     if ( $temp == "jpg" ) {  // ADD THEM JAYPEGS!
+     $filename = $article_id."_".$index.".jpg";
+     } elseif ( $temp == "gif") {  // ADD THEM JIFFFFFFZ
+     $filename = $article_id."_".$index.".gif";
+     } elseif ( $temp == "png") {  // ADD THEM PEE-EN-JEEEY MAJIGGERS
+     $filename = $article_id."_".$index.".png";
+     } else {
+
+     # echo "filename: $filename <br> <a href = '$HTTP_REFERER'>Back or submit another</a><br>";
+     }  # end if
+        # Copy the file to our server.  
+   if (copy($userfile, "/sky/www/swinney.org/html/journals/images/$filename")) {
+#       echo ("<B>File sucessfully copied: $filename</B>");
+   } else {
+       echo ("<B>Error: failed to copy file: $filename</b>");
+   }
+}
+
+
+
+
+ header("Location:submit_image.phtml?index=$index&article_id=$article_id");
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

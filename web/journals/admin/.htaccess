@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Swinney.org Admin Area"
+AuthUserFile /sky/www/swinney.org/.admin_pass
+require valid-user

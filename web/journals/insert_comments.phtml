@@ -1,0 +1,41 @@
+
+
+<!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
+
+
+<?
+
+/*
++------------+---------------+------+-----+-----------+----------------+
+| Field      | Type          | Null | Key | Default   | Extra          |
++------------+---------------+------+-----+-----------+----------------+
+| comment_id | int(11)       |      | PRI | 0         | auto_increment |
+| article_id | int(11)       |      |     | 0         |                |
+| timestamp  | timestamp(12) | YES  |     | NULL      |                |
+| username   | varchar(20)   | YES  |     | anonymous |                |
+| comment    | text          | YES  |     | NULL      |                |
+| nature     | int(4)        | YES  |     | NULL      |                |
++------------+---------------+------+-----+-----------+----------------+
+*/
+$article_id = explode (".", $article_id);
+
+$no_extension = $article_id[0];
+
+$res = mysql ("swinney","SELECT * FROM comments WHERE article_id=$no_extension ORDER BY comment_id");
+
+// multiple rows 
+while ( $d = mysql_fetch_object( $res ) ) {
+
+// move it to strip slashes
+$username=$d->username;
+$comment=$d->comment;
+$comment_id=$d->comment_id;
+// echo and strip
+echo "<hr border=0>";
+echo "<a name=\"$comment_id\">".stripslashes($username).":  ".stripslashes($comment)."\n";
+
+}
+
+?>
+
+

@@ -1,0 +1,36 @@
+
+
+<!-- BEGIN PHP Dynamic Processing File: submit_action.phtml -->
+
+<?php
+
+echo ($FileName);
+
+mysql_connect ("sql.dreamhost.com", "aswinney", "XXXXXXXX");
+
+mysql_select_db (textocal);
+
+mysql_query (
+	"INSERT INTO swinicle (
+		FileName,
+		Name,
+		Email,
+		Title,
+		Keywords)
+	VALUES (
+		'$FileName',
+		'$Name',
+		'$Email',
+		'$Title',
+		'$Keywords')
+	");
+
+
+
+
+?>
+
+<!-- END PHP Dynamic Processing File: submit_action.phtml -->
+
+
+

@@ -1,0 +1,83 @@
+<?
+include "header.inc";
+
+/* ---------------------------------------------------------------------------
+   edit_comments.phtml // this is for editing comments // austin swinney, 2001
+
+  related tables:
+
+  mysql> desc comments
+      -> ;
+  +------------+---------------+------+-----+-----------+ 
+  | Field      | Type          | Null | Key | Default   |
+  +------------+---------------+------+-----+-----------+
+  | comment_id | int(11)       |      | PRI | 0         | auto_increment |
+  | article_id | int(11)       |      |     | 0         |
+  | timestamp  | timestamp(12) | YES  |     | NULL      |
+  | username   | varchar(255)  | YES  |     | anonymous |
+  | comment    | text          | YES  |     | NULL      |
+  | nature     | int(4)        | YES  |     | NULL      |
+  | status     | int(4)        | YES  |     | 0         |
+  +------------+---------------+------+-----+-----------+
+  7 rows in set (0.00 sec)
+
+  ---------------------------------------------------------------------------*/
+
+include "../connect.inc";
+
+$res = mysql("$DB", 
+             "SELECT 
+             comment_id,
+             article_id,
+             username,
+             comment,
+             nature,
+             timestamp
+             FROM comments 
+             WHERE comment_id=$comment_id");
+
+
+
+$comment_id = mysql_result($res,0,0);
+$article_id = mysql_result($res,0,1);
+$username   = mysql_result($res,0,2);
+$comment    = mysql_result($res,0,3);
+$nature     = mysql_result($res,0,4);
+$timestamp  = mysql_result($res,0,5);
+   echo "<CENTER>";
+   echo "<FORM METHOD='post' ACTION='process_edit_comments.phtml'>\n";
+   echo "<input type='hidden' name='article_id' value='$article_id'>\n";
+   echo "<input type='hidden' name='comment_id' value='$comment_id'>\n";
+   echo "<input type='hidden' name='timestamp' value=$timestamp>\n";
+   echo "<input type='hidden' name='previous' value='$previous'>\n";
+   echo "<TABLE WIDTH=600 border=0>\n";
+   echo "<TR WIDTH=150><TD valign='top'><TABLE align='top'>\n";
+   echo "<TR><TD>comment id: $comment_id</TD></TR>\n";
+   echo "<TR><TD>article id: $article_id</TD></TR>\n";
+   echo "<TR><TD>username: $username</TD></TR>\n";
+   echo "<TR><TD>nature: $nature</TD></TR>\n";
+   echo "<TR><TD>timestamp: $timestamp</TD></TR>\n";
+   echo "</TABLE></TD><TD>\n";
+   echo "<TEXTAREA TYPE=text NAME=comment COLS=50 ROWS=20>".stripslashes($comment)."</TEXTAREA>\n";
+   echo "</TD></TR></TABLE>\n";
+   echo "<INPUT TYPE=SUBMIT></FORM></TABLE>\n";
+   echo "<!-- previous: $previous -->\n";
+?>
+
+</CENTER>
+</BODY>
+</HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

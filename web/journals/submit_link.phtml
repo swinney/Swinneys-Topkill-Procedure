@@ -1,0 +1,113 @@
+<!--
++-----------+---------------+------+-----+---------+----------------+
+| Field     | Type          | Null | Key | Default | Extra          |
++-----------+---------------+------+-----+---------+----------------+
+| link_id   | int(11)       |      | PRI | 0       | auto_increment |
+| username  | varchar(20)   | YES  |     | NULL    |                |
+| timestamp | timestamp(12) | YES  |     | NULL    |                |
+| status    | tinyint(4)    | YES  |     | NULL    |                |
+| title     | varchar(50)   | YES  |     | NULL    |                |
+| url       | varchar(255)  | YES  |     | NULL    |                |
+| blurb     | varchar(255)  | YES  |     | NULL    |                |
+| category  | int(20)       | YES  |     | NULL    |                |
++-----------+---------------+------+-----+---------+----------------+
+-->
+
+
+<form action="process_link.phtml" method=post>
+<TABLE WIDTH=400 BORDER=0 CELLSPACING=0 CELLPADDING=0>
+
+
+
+<TR>
+<TD>Name</TD>
+<TD ALIGN="right">
+<INPUT TYPE=TEXT NAME=username SIZE=30 maxlength=50>
+</TD>
+</TR>
+
+<TR>
+<TD>Your Website or email</TD>
+<TD ALIGN="right">
+<INPUT TYPE=TEXT NAME=web SIZE=30 maxlength=50>
+</TD>
+</TR>
+
+
+<TR>
+<TD>Link to submit</TD>
+<TD ALIGN="right">
+<INPUT TYPE=TEXT NAME=url SIZE=30 maxlength=50>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<P>Title</P>
+</TD>
+<TD ALIGN="right">
+<INPUT TYPE=text NAME=title SIZE=30 maxlength=50>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<P>Blurb</P>
+</TD>
+<TD ALIGN="right">
+<INPUT TYPE=text NAME=blurb SIZE=30 maxlength=255>
+</TD>
+</TR>
+
+</TABLE>
+
+
+<P>What category best describes the link?</P>
+
+<?
+  include "admin/connect.inc";
+  $res = mysql("", "SELECT * FROM categories_links ORDER BY name ASC");
+
+  while ( $d = mysql_fetch_object($res) ) {
+    echo "<input type='radio' name=category value='cat$d->category_id'> $d->name <br>";
+  }
+
+?>
+
+<INPUT TYPE="SUBMIT">   <INPUT TYPE="RESET">
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,67 @@
+<?
+include "journals/connect.inc"; 
+?>
+<html>
+<head>
+<title>saturn5 - SWINNEY>ORG</title>
+<style>
+<!--
+P {color: white; font-family: arial; font-size= 11px; letter-spacing: 3px}
+ul {font-family: arial; font-size= 10px; letter-spacing: 3px}
+
+-->
+</style>
+</Head>
+
+<body bgcolor="#000000" LINK="FFFFFF" vlink="CC99CC">
+
+<?
+// insert banner
+include "banners/ghetto.inc";
+?>
+
+<CENTER>
+<table border=0 width=600><tr><td valign=top align=left width=50>
+</td><td valign=top align=left>
+
+
+<? 
+// include the thoughts
+include "journals/submit_thought.phtml";
+include "journals/insert_thought.phtml"; 
+
+?>
+
+</td></tr></table>
+</CENTER>
+
+<table align='center' border=0><tr><td colspan=2>
+<center>
+<p><font face='arial' size='4' color="CCCCCC">Please read <a href="journals/index.phtml">the journal</a>  
+or <a href="journals/submit_article.phtml">write in it</a> (and upload images too), but don't do nothing.</p>
+</font>
+</center>
+<?
+include "journals/insert_5articles.inc";
+?>
+
+</td>
+</tr>
+
+</table>
+
+
+
+<CENTER>
+<FONT color=white><TT>
+swinney.org<BR><BR>
+(austin || san francisco || melbs)
+</TT></FONT>
+</CENTER>
+</body>
+
+</HTML>
+
+
+
+

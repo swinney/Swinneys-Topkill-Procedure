@@ -1,0 +1,29 @@
+<!-- BEGIN PHP Dynamically Required Page : swinney.req  -->
+<tr>
+<td valign=top>
+<TABLE WIDTH="100%" BORDER="1" BORDERCOLOR="#333333" CELLPADDING="0" CELLSPACING="0">
+<TR BGCOLOR="#454650" ALIGN="left" VALIGN="top">
+<TD valign="top"><FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2"><B><FONT COLOR="#333333">swinney&gt;org</B>
+</FONT><BR>
+ 
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="2" WIDTH="100%" BORDERCOLOR="#333333" valign=top>
+<TR BGCOLOR="#999999">
+<TD>
+<DIV ALIGN="center">
+<FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2">
+<B>
+<FONT COLOR="#333333">swinney<FONT FACE="Arial, Helvetica, sans-serif">&gt;</FONT>org</FONT></B></FONT></DIV>
+</TD>
+</TR>
+<TR BGCOLOR="#DED3D3" ALIGN="left" VALIGN="top">
+<TD><FONT SIZE="2" FACE="Verdana, Arial, Helvetica, sans-serif">
+ <A HREF="http://swinney.org">Home</A><BR>
+ <A HREF="http://www.swinney.org/journals/index.phtml">Journals</A><BR>
+ <A HREF="http://www.swinney.org/journalx/index.phtml">J.Archive</A><BR>
+ <A HREF="http://www.swinney.org/journals/admin/index.phtml">Admin</A><BR>
+ <A HREF="http://www.swinney.org/links.html">Links</A><BR>
+ <A HREF="http://www.swinney.org/resume/index.html">Resume</A><br>
+</TD>
+</TR>
+</TABLE>
+<BR>

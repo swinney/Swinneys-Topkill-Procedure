@@ -1,0 +1,67 @@
+<?
+
+include "connect.inc";
+
+
+/*
++------------+---------------+------+-----+-----------+----------------+
+| Field      | Type          | Null | Key | Default   | Extra          |
++------------+---------------+------+-----+-----------+----------------+
+| comment_id | int(11)       |      | PRI | NULL      | auto_increment |
+| article_id | int(11)       |      |     | 0         |                |
+| timestamp  | timestamp(12) | YES  |     | NULL      |                |
+| username   | varchar(20)   | YES  |     | anonymous |                |
+| comment    | text          | YES  |     | NULL      |                |
++------------+---------------+------+-----+-----------+----------------+
+*/
+
+$article_id = explode (".", $article_id);
+
+$article_id = $article_id[0];
+
+// echo "$article_id";
+
+  if ( $username == "" ) {
+    echo("You are not allowed to be a nobody on Swinney.org.  Please back up and try entering your name.");
+    exit;
+  }
+
+  if ( $username == "name" ) {
+     echo("Names are nice, but you should get your own.  Please back up and try again.");
+     exit;
+  }
+
+  if ( $comment == "" ) {
+     echo("Commenting on this site is not like some other cultures.  Less is not more.  Please back up and try again.");
+     exit;
+  }
+
+  if ( $comment == "comment" ) {
+     echo("Please speak louder, I can't here you.  Back up and try again.");
+     exit;
+  }
+
+// echo "$username<br>$comment<br>$nature<br>";
+
+$res = mysql("swinney","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."',NULL)"); 
+
+  if ( $res == false ) { 
+    echo ("Bollocks!");
+    exit;
+  }
+
+
+
+// mail("theCommentator@swinney.org", "comment: $username on $article_id", "$nature", "$comment"); 
+header("Location: http://swinney.org/journals/article.phtml?id=$article_id.txt")
+?>
+
+
+
+
+
+
+
+
+
+

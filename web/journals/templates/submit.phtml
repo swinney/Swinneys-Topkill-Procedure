@@ -1,0 +1,116 @@
+
+
+
+
+<!-- BEGIN PHP Dynamically Required File: submit.phtml -->
+
+<!-- Code Chunk for the Timestamp FileName -->
+
+<?php
+
+$Today = date("YmdHis");
+ 
+$FileName = $Today;
+
+echo "<P>Date/Time generated FileName:</TD><TD ALIGN=\"RIGHT\"> $FileName</TD>";
+
+?>
+
+<!-- END  Chunk for the Timestamp FileName -->
+
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+
+<CAPTION ALIGN=bottom>Journal Entry Form</CAPTION>
+
+<FORM METHOD=post ACTION="submit_action.phtml">
+
+<TR>
+
+<TD ALIGN="left">
+
+<P>Your Name</P>
+
+</TD>
+
+<TD ALIGN="right">
+
+<INPUT TYPE=text NAME=Name SIZE=40>
+
+</TD>
+
+</TR>
+
+<TR>
+
+<TD>Email</TD>
+
+<TD ALIGN="right">
+
+<INPUT TYPE=text NAME=Email SIZE=40>
+
+</TD>
+
+</TR>
+
+<TR>
+
+<TD ALIGN="left">
+
+<P>Title</P>
+
+</TD>
+
+<TD ALIGN="right">
+
+<INPUT TYPE=text NAME=Title SIZE=40>
+
+</TD>
+
+</TR>
+
+<TR>
+
+<TD ALIGN="left">
+
+<P>Keywords
+
+</TD>
+
+<TD ALIGN="right">
+
+<INPUT TYPE=text NAME=Keywords SIZE=40>
+
+</TD>
+
+</TR>
+
+<TR>
+
+<TD COLSPAN=2>
+
+<TEXTAREA TYPE=text  NAME=Entry COLS=50 ROWS=20></TEXTAREA>
+
+</TD>
+
+</TR>
+
+<TR>
+
+<TD COLSPAN=2>
+
+
+<INPUT TYPE=submit VALUE="Submit Entry">
+
+</TD>
+
+</TR>
+
+</TABLE>
+
+
+</FORM>
+
+
+
+

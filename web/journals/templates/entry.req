@@ -1,0 +1,15 @@
+<?php
+
+$today = date("YmdHis");
+ 
+echo "Journal entry file name: $today";
+
+
+
+$filename = $today;
+
+echo "<br>Converted is $filename";
+
+
+
+?>

@@ -1,0 +1,32 @@
+<?
+
+include "../connect.inc";
+/*
+echo "article id: $article_id<BR>";
+echo "comment id: $comment_id<BR>";
+echo "comment   : $comment<BR>";
+echo "$DB<BR>";
+*/
+
+$res = mysql("$DB", "UPDATE comments SET comment='$comment', timestamp=$timestamp WHERE comment_id=$comment_id");
+
+  if ($res == false) {
+     echo "update failed for:";
+  }
+
+if ($previous=0) {
+   $location="admin_comments.phtml";
+}
+
+if ($previous=1) {
+   $location="admin_comments_article.phtml?article_id=$article_id";
+}
+
+
+header("Location: $location");
+
+?>
+
+
+
+

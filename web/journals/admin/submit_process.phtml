@@ -1,0 +1,62 @@
+<?
+  include "header.inc";
+
+  // Init the date and time
+  $date = date("Y-m-d");
+  $time = time();
+
+  if ( $username == "" ) {
+    error("This username is not set");
+    exit;
+  }
+ 
+  // Work out what subjects
+  $res = mysql("textocal", "SELECT MAX(category_id) FROM categories");
+  $maxid = mysql_result($res, 0, 0);
+  $subject_value = 0;
+  for ( $i = 1 ; $i <= $maxid ; $i++ ) {
+    $str = "cat".$i;
+    if ( $$str == "on" ) {
+      $val = pow(2, $i-1);
+      $subject_value += $val;
+    }
+  }
+
+  // Insert into the database
+  $res = mysql("textocal", "INSERT INTO pending_articles VALUES ( 'NULL', '$username', '$date', '$time', '1', '".addslashes($keywords)."','".addslashes($title)."','".addslashes($blurb)."', '$subject_value')");
+
+  if ( $res == false ) { 
+    error("Bullocks!");
+    exit;
+  }
+
+  // Create a file in  /pending
+  // if you don't have the auto_increment integer, then mysql_insert_id is not going to work
+  $filename = "../pending/".mysql_insert_id().".txt";
+  $fp = fopen($filename, "w");
+  fwrite($fp, stripslashes($content) );
+  fclose($fp);
+
+
+  echo ("<P>$username submitted the following:</P>");
+  echo ("the date is $date<br>");
+  echo ("the time is $time<br>");
+  echo ("the status is $status<br>");
+  echo ("the category is $category<br>");
+
+
+
+//  if ( isset ( $username ) ) {
+//   header ("Location: http://swinney.org/journals/index.phtml");
+//  }
+
+?>
+
+
+
+
+
+
+
+
+
