@@ -7,10 +7,10 @@
 <td nowrap colspan="3">
 
 <p class="header"><b><? echo $title ?></b><FONT="GREEN"><? 
-if ($user_id) { 
-  echo ': <FONT COLOR="GREEN">You are logged in, and can edit your article later.</FONT>';
+if ($authenticated_user_id) { 
+  echo ': <FONT COLOR="GREEN">You are logged in.</FONT>';
 } else {
-  echo ': <FONT COLOR="RED">Warning, users not logged in cannot edit after posting</FONT>';
+  echo ': <FONT COLOR="RED">Warning, you are NOT logged in.</FONT>';
 }
 //
 // temp_aid is set if user just came from the VIP area
@@ -21,11 +21,11 @@ if ($temp_aid) {
 EOT;
 }
 
-if (error_msg) {
+if ($error_msg) {
   session_unregister("error_msg");
   echo <<<EOT
 <br>
-<b><span class="error">$error_msg</span></b>
+<b><span class="error">ERROR MESSAGE:<BR>$error_msg</span></b>
 EOT;
 }
 ?>
@@ -105,7 +105,7 @@ EOT;
 <p>upload a text file: </P>
 </td>
 <td>
-<INPUT TYPE="file" NAME="userfile" ACCEPT="filetype/html" SIZE=25 MAXLENTH=150>
+<INPUT TYPE="file" NAME="userfile" ACCEPT="filetype/html" SIZE=25 MAXLENTH=250>
 </td>
 </tr>
 <tr>
@@ -184,7 +184,7 @@ if ($last=="edit_article.phtml") {
 }
 ?>
 
-<input type=submit value="<?=$subval?>">
+<input type=submit NAME="submit" value="<?=$subval?>">
 </td>
 </tr>
 </table>
