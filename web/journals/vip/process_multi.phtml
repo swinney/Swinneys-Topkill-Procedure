@@ -1,0 +1,31 @@
+<?php
+// -*- Mode: PHP; indent-tabs-mode: nil; =*-
+/////////////////////////////////////////////////////////////////
+// $Id$
+require("../global.inc");
+
+if ($submit=="Add") {
+  $query=<<<EOT
+INSERT INTO multi_articles 
+        SET multi_id=$multi_id, 
+            article_id=$add_id
+EOT;
+
+  $res = $db->query($query);
+  if (DB::isError($res)) {
+    die($res->getMessage());
+  }
+}
+
+
+
+if ($submit=="Remove") {
+  $query="DELETE FROM multi_articles WHERE article_id=$del_id";
+  $res = $db->query($query);
+  if (DB::isError($res)) {
+    die($res->getMessage());
+  }
+}
+
+header("Location: $HTTP_REFERER");
+?>
