@@ -64,7 +64,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><b>Articles</b> | <a href="usercomments.phtml?username=$url_username">Comments</a>
+<span class="subheader"><b>Articles</b> | <a href="usercomments.phtml?uid=$uid">Comments</a>
 
 EOT;
 
