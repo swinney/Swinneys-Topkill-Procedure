@@ -16,7 +16,7 @@ if (isset($authenticated_username)) {
         ORDER BY articles_info.article_id DESC
            LIMIT 1";
   $res=mysql_query($query) or die(error_page($query));
-  if ($res=="TRUE") {
+  if ($res) {
     $web=mysql_result($res,0,0);
     $temp_title=mysql_result($res,0,1);
     $blurb=mysql_result($res,0,2);
