@@ -86,14 +86,14 @@ while ($row = mysql_fetch_row ($res)) {
 # $username.  so it will be called $user.
 # austin, Thu Jul 12, 2001  1:40 PM
 */
-
 $name=$row[0];
+$urlname=str_replace(" ","%20",$row[0]);
 $number=$row[1];
 $status=$row[2];
 $time=$row[3];
 
   if ($number >= 5) {
-  echo "<a href='userpages.phtml?username=$name'>$name</a> ($number)<br>\n";
+  echo "<a href='userpages.phtml?username=$urlname'>$name</a> ($number)<br>\n";
   }
 }
 
