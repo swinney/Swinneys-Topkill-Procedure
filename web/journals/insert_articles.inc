@@ -85,8 +85,8 @@ while ( $individual_row = mysql_fetch_object( $res ) ) {
       } else {
          echo "<a href='$individual_row->web' target='new'>$individual_row->username</a><br> \n";
       }
-   echo "$individual_row->blurb</font><br>";
-   echo "<font size='1'>$individual_row->date ";
+   echo "$individual_row->blurb<br>";
+   echo "<font size='1'>$individual_row->date </FONT>";
 
 $res2 = mysql_query ( "SELECT count(*) as num FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
 
