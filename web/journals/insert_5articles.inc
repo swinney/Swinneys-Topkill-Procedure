@@ -1,9 +1,9 @@
-<!-- insert_articles.inc -->
+<!--
+$Id$
+-->
 <?
 
-// 
-
-$res = mysql( "$DB", "SELECT article_id,username,web,date,title,blurb FROM pending_articles WHERE status='2' ORDER BY time DESC limit 10" );
+$res = mysql_query("SELECT article_id,username,web,date,title,blurb FROM articles_info WHERE status='2' ORDER BY time DESC limit 10" );
 
 // multiple rows, limit 10 latest
 while ( $d = mysql_fetch_object( $res ) ) {
