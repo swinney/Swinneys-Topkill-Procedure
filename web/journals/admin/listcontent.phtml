@@ -87,7 +87,14 @@ if ( isset($article_id) ) {
 
 // select the article list
 
-	$res = mysql_query("SELECT username,keywords, title, blurb, status, image, web 
+	$res = mysql_query("
+		SELECT  username,
+			keywords, 
+			title, 
+			blurb, 
+			status, 
+			image, 
+			web 
 		FROM articles_info 
 		WHERE article_id='$article_id'");
 	$d=mysql_fetch_object($res);
@@ -171,23 +178,12 @@ if ($web != "")
 	{
 
 
-		if (strstr($web,'@')) 
-
-		{ 
-			$web = "mailto:$web"; 
-
-		} 
-
-			else 
-
-		{ 
-
-			$web = "http://$web"; 
-
+		if (strstr($web,'@')) { 
+		   $web = "mailto:$web"; 
+		} else	{ 
+		   $web = "http://$web"; 
 		}
-
 	}
-
 }
 
     echo "<h2>web: <a href=\"$web\">$web</a></h2>";
@@ -203,7 +199,7 @@ if ($web != "")
 $res = mysql_query("SELECT text FROM articles_text WHERE article_id='$article_id'");
 
 $row = mysql_fetch_row($res);
-$text = $row[0];
+$text = stripslashes($row[0]);
 
 if ( isset($article_id) ) {
 
