@@ -19,7 +19,7 @@
 
 
 
-$res = mysql ("$DB", "SELECT DISTINCT username FROM pending_articles WHERE status='2' OR status='3' ORDER BY username");
+$res = mysql_query ( "SELECT DISTINCT username FROM articles_info WHERE status='2' OR status='3' ORDER BY username");
 
 
 
@@ -31,7 +31,7 @@ $res = mysql ("$DB", "SELECT DISTINCT username FROM pending_articles WHERE statu
 
   
 while ($row = mysql_fetch_object ($res)) {
-  $res2 = mysql ("$DB", "SELECT count(*) FROM pending_articles WHERE username='$row->username'");
+  $res2 = mysql_query ( "SELECT count(*) FROM articles_info WHERE username='$row->username'");
   $count = mysql_fetch_row($res2); 
 
 

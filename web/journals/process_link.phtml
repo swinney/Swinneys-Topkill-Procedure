@@ -33,7 +33,7 @@ echo   "database: $DB<BR>
 
 // Insert into the database
 
-$res = mysql("$DB", "INSERT INTO links SET 
+$res = mysql_query ( "INSERT INTO links SET 
 username='$username',
 status=0,
 title='$title',

@@ -64,7 +64,7 @@ include "templates/top.inc";
 
 <?
   
-$res = mysql("$DB", "SELECT * FROM categories ORDER BY name ASC");
+$res = mysql_query ( "SELECT * FROM categories ORDER BY name ASC");
 $index=0;
 
 

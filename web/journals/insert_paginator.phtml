@@ -21,11 +21,11 @@ $page_start = ($page_num-1) * $per_page;
 
  
 //Do a number query to see how many results match the category...
-$num_res = mysql ("$DB", "SELECT count(*) as num_articles FROM $table WHERE status='0' ORDER BY timestamp DESC");
+$num_res = mysql_query ( "SELECT count(*) as num_articles FROM $table WHERE status='0' ORDER BY timestamp DESC");
 $num_object = MYSQL_FETCH_OBJECT($num_res);
 $num_of_results = $num_object->num_articles;
 
-$res = mysql ("$DB", "SELECT username,comment_id,comment,article_id FROM $table WHERE status='0' ORDER BY timestamp DESC limit $page_start,$per_page");
+$res = mysql_query ( "SELECT username,comment_id,comment,article_id FROM $table WHERE status='0' ORDER BY timestamp DESC limit $page_start,$per_page");
 
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed

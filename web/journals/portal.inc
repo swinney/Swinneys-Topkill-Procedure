@@ -14,16 +14,16 @@ $per_page = 20;
 //Set the page start variable...
 $page_start = ($page_num-1) * $per_page;
 
-$res0 = mysql ("$DB","SELECT allow FROM portal where username='weeb'");
+$res0 = mysql_query ("SELECT allow FROM portal where username='weeb'");
 $d = mysql_fetch_object($res0);
 $allow = $d->allow;
 
 //Do a number query to see how many results match the category...
-$num_res = mysql ("$DB", "SELECT count(*) as num_articles FROM pending_articles WHERE status='2' AND username in ($allow) ORDER BY time DESC");
+$num_res = mysql_query ( "SELECT count(*) as num_articles FROM articles_info WHERE status='2' AND username in ($allow) ORDER BY time DESC");
 $num_object = MYSQL_FETCH_OBJECT($num_res);
 $num_of_results = $num_object->num_articles;
 
-$res = mysql ("$DB", "SELECT * FROM pending_articles WHERE status='2' AND username in ($allow) ORDER BY time DESC limit $page_start,$per_page");
+$res = mysql_query ( "SELECT * FROM articles_info WHERE status='2' AND username in ($allow) ORDER BY time DESC limit $page_start,$per_page");
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
 $num_of_pages = $num_of_results/$per_page; 
@@ -66,7 +66,7 @@ while ( $individual_row = mysql_fetch_object( $res ) ) {
    echo "$individual_row->blurb</font><br>";
    echo "<font face=\"arial\" size='1'>$individual_row->date ";
 
-$res2 = mysql("$DB", "SELECT count(*) as num FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
+$res2 = mysql_query ( "SELECT count(*) as num FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
 
 $d =  mysql_fetch_object($res2);
 

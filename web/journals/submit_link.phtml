@@ -58,7 +58,7 @@
 
 <?
   include "global.inc";
-  $res = mysql("$DB", "SELECT * FROM categories_links ORDER BY name ASC");
+  $res = mysql_query ( "SELECT * FROM categories_links ORDER BY name ASC");
 
   while ( $d = mysql_fetch_object($res) ) {
     echo "<input type='radio' name=category value='$d->category_id'> $d->name <br>\n";

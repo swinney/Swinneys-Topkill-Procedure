@@ -3,7 +3,7 @@
 
 
 
-$res1 = mysql( "", "SELECT distinct web, username FROM pending_articles WHERE status='2' ORDER BY username" );
+$res1 = mysql( "", "SELECT distinct web, username FROM articles_info WHERE status='2' ORDER BY username" );
 
 
 

@@ -6,7 +6,7 @@
 
 //  $url = "/article.phtml?id=$article_id";
   $article_id=$id;
-  $res = mysql( "", "SELECT * FROM pending_articles WHERE article_id='$article_id'");
+  $res = mysql( "", "SELECT * FROM articles_info WHERE article_id='$article_id'");
   $d = mysql_fetch_object( $res);
  
  

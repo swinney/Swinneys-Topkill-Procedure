@@ -3,7 +3,7 @@
 
 
 
-$result_set = mysql( "", "SELECT * FROM pending_articles WHERE status='3' ORDER BY date DESC" );
+$result_set = mysql( "", "SELECT * FROM articles_info WHERE status='3' ORDER BY date DESC" );
 
 $url = "article.phtml?id=$d->article_id";
 

@@ -4,7 +4,7 @@ include "global.inc";
 echo "$username\n";
 echo "$password\n";
 
-$res = mysql("$DB", "SELECT username,password FROM users WHERE username='$username' AND password='$password'");
+$res = mysql_query ( "SELECT username,password FROM users WHERE username='$username' AND password='$password'");
 
 if (!$res) {
 echo "Sorry, $username but you are going to have to register that.";

@@ -23,7 +23,7 @@
     elseif ($index >= 1 )
       echo "You have uploaded <b>$index</b> images for this article<br>\nIf you have any <b>more</b> images to upload for this article, select them here, otherwise click continue.\n";
 
-    $res = mysql ("swinney", "UPDATE pending_articles SET image='$index' WHERE article_id='$article_id'");
+    $res = mysql ("swinney", "UPDATE articles_info SET image='$index' WHERE article_id='$article_id'");
 
     if ( $res = false) 
       echo "<b>Oops!</b> - Could not update database";

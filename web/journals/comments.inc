@@ -13,7 +13,7 @@ $username = $d->username;
 $comment = $d->comment;
 $article_id = $d->article_id;
 
-$res2 = mysql("$DB", "SELECT username,title FROM pending_articles WHERE article_id=$article_id");
+$res2 = mysql_query ( "SELECT username,title FROM articles_info WHERE article_id=$article_id");
 $row = mysql_fetch_row($res2);
 
 echo "<TABLE border=1 cellspacing=0 cellpading=0 width='100%'>";

@@ -5,7 +5,7 @@
 <?
 
 
-$result_set = mysql( "lifestyle", "SELECT * FROM pending_articles" );
+$result_set = mysql( "lifestyle", "SELECT * FROM articles_info" );
 
 
 // multiple rows 

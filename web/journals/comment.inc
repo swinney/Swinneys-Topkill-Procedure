@@ -8,9 +8,9 @@ echo "<TABLE border=0 cellspacing=0 cellpading=0>";
 $previous=0;
 echo "<!-- previous: $previous -->\n";
 
-// $res = mysql("$DB", "select * from comments order by article_id DESC limit 20");
+// $res = mysql_query ( "select * from comments order by article_id DESC limit 20");
 
-$res = mysql("$DB", "select * from comments order by comment_id DESC limit 20");
+$res = mysql_query ( "select * from comments order by comment_id DESC limit 20");
 
 while ( $d = mysql_fetch_object ($res) ) {
 $comment_id = $d->comment_id;
@@ -18,7 +18,7 @@ $username = $d->username;
 $comment = $d->comment;
 $article_id = $d->article_id;
 
-$res2 = mysql("$DB", "SELECT username,title FROM pending_articles WHERE article_id=$article_id");
+$res2 = mysql_query ( "SELECT username,title FROM articles_info WHERE article_id=$article_id");
 $row = mysql_fetch_row($res2);
 
 echo "<TR><TD valign='top' colspan=3>\n";
