@@ -6,45 +6,8 @@ require_once("./global.inc");
 $title = "Roll Call (Complete List)";
 include_once(INCDIR ."/top.inc");
 include_once(INCDIR ."/swinney.req");
-?>
-
-<br>
-
-<center>
-<table>
-<tr>
-<td colspan="5">
-<img src="<? echo URLBASE ?>/journals/img/rollcall.gif" alt="Roll Call" width="65" height="13" border="0"> <span class="text">a complete list</span></td>
-</tr>
-<tr>
-<td colspan="5">
-<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="3" border="0"></td>
-</tr>
-<tr>
-
-<?
-$res = mysql_query ("SELECT DISTINCT username, count(username) AS number FROM articles_info GROUP BY username");
-
-
-  // initialize index at zero for modulo
-  $index = 0;
-
-while ($d = mysql_fetch_object($res)) {
-  echo "<td><a href='userpages.phtml?username=$d->username'>$d->username</a> ($d->number)</td>\n";
-
-  // increment the index for modulo
-  $index++;
-  $remainder = $index % 5;
-
-  if ($remainder==0) {
-  echo "</tr>\r<tr>\n";  
-  }
-
-}
-
-echo "\r</tr>\r</table>\r</center>";
-
-include "templates/footer.inc";
+include_once("./roll_call_all.inc");
+include_once("./templates/footer.inc");
 ?>
 
 
