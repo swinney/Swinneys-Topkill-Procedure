@@ -61,6 +61,7 @@ $res = mysql_query($query)or
 while ($bozo = mysql_fetch_array($res)) {
   array_push($bozos, $bozo[0]);
 }
+natcasesort($bozos);
 session_register("bozos");
 
 // bozo array as a set suitable for use in a sql NOT IN string
