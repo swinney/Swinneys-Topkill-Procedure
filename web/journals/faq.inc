@@ -80,31 +80,6 @@ href="mailto:editors@swinney.org">editors@swinney.org</a>.</P>
 
 <P>see <a href="article.phtml?id=1223.txt">energy monsers, or how the F.O.L.K. wars have changed</a> by one of our resident moms, <a href="userpages.phtml?username=auntie">auntie</a>.
 
-<h3>what are the "access keys" for swinney.org and why are they here?</h3>
-
-<P>Swinney.org is moving toward full compliance with <a
-href="http://www.section508.gov/">Federal Information Technology
-Accessibility Initiative</a>, Section 508 of the Rehabilitation Act
-Amendments of 1998.  the goal is to achieve the <a href="http://www.w3.org:80/">Conformance Level "A"</a> as layed out by the <a href="http://w3.org">World Wide Web Consortium</a>, (W3C).  there is a <a href="http://www.w3.org/TR/WAI-WEBCONTENT/full-checklist.html">checklist of points</a> to this end.</P>
-
-<P>now more specifically about the "access keys" on swinney.org:</P>
-
-<P>Windows Platform press the ALT key plus the access key/character
-(where character is the designated hot key). Then press 'Return' on
-your keyboard.</P>
-
-<P>Macintosh Platform press the CMD key plus the character (where
-character is the designated hot key). Then press 'Return' on your
-keyboard.</P>
-<PRE>
-Accesskey = h		<B>h</B>ome index
-Accesskey = j		<b>j</b>ournal index
-Accesskey = c		<b>c</b>omments index
-Accesskey = s		<b>s</b>ubmit comment
-Accesskey = e		submit journal <b>e</b>ntry
-Accesskey = f		<b>f</B>aq index - answers
-Accesskey = a 		<b>a</b>dmin area
-</PRE>
 <h3>for general assistance with this site, inqueries:</B></P>
 <P>austin swinney<BR>
 austin@swinney.org<BR>
