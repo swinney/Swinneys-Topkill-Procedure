@@ -1,12 +1,12 @@
 <? 
 require_once("../global.inc");
 
-include("../templates/top.inc");
+include(INCDIR ."/top.inc");
 include "../templates/swinney.req";
-include("../templates/norollcall.inc");
+include(INCDIR ."/norollcall.inc");
 
 include($into_template);
 
-include("../templates/bottom.req");
-include("../templates/footer.inc");
+include(INCDIR ."/bottom.req");
+include(INCDIR ."/footer.inc");
 ?>

@@ -1,15 +1,14 @@
 <? 
 #  $Id$
 
-require_once("global.inc");
-include "templates/top.inc";
-include "templates/swinney.req";
+include (INCDIR ."/top.inc");
+include (INCDIR ."/swinney.req");
 if ($rollcall==1) {
-  include "templates/rollcall.inc";
+  include (INCDIR ."/rollcall.inc");
 } else {
-  include "templates/norollcall.inc";
+  include (INCDIR ."/norollcall.inc");
 }
-include "templates/endleft.inc";
+include (INCDIR ."/endleft.inc");
 
 include "$into_template";
 
@@ -42,8 +41,8 @@ EOT;
   }
 }
 
-include "templates/bottom.req";
-include "templates/footer.inc";
+include (INCDIR ."/bottom.req");
+include (INCDIR ."/footer.inc");
 ?>
 
 

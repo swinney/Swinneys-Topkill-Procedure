@@ -43,7 +43,7 @@ $noslogan = array( 1 =>
 <img src="<? echo URLBASE; ?>/journals/img/no.gif" alt="" width="1" height="30" border="0">
 <?
 if (defined("URLBASE")) {
-#include("URLBASE/journals/insert_stats.inc");
+#include_once("URLBASE/journals/insert_stats.inc");
 }
 ?>
 </td>

@@ -1,8 +1,8 @@
 <? 
 // $Id$
-include("../global.inc");
-include("../templates/top.inc");
-include("admin_nav.inc");
+require_once("../global.inc");
+include_once(INCDIR ."/top.inc");
+include_once(INCDIR ."/admin_nav.inc");
 ?>
 
 <TABLE border=1 cellspacing=0 cellpading=0>
@@ -31,5 +31,5 @@ echo "<TD valign='top'>$username</TD><TD>".stripslashes($comment)."</TD></TR>";
 
 }
 echo "</TABLE>";
-include "../templates/footer.inc";
+include_once(INCDIR ."/footer.inc");
 ?>

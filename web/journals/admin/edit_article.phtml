@@ -32,11 +32,11 @@ if (isset($article_id)) {
 # header shit, this thing is FUCKED
 # i wouldnt wish this on my enemies
 #
-include("../templates/top.inc");
-include("../templates/swinney.req");
+include(INCDIR ."/top.inc");
+include(INCDIR ."/swinney.req");
 echo "<form action='listcontent.phtml' method='post'>";
 include("cat_call.inc");
-include("../templates/endleft.inc");
+include(INCDIR ."/endleft.inc");
 echo <<<EOT
 <center>
 <p class="subheader">
@@ -160,8 +160,8 @@ if ( isset($article_id) ) {
     echo "<input name='subby' type='submit' value='Save and Exit'>\n";
     echo "<br><br>\n";
     echo "</form>\n";
-include_once ("../templates/bottom.req");
-include_once ("../templates/footer.inc");
+include_once (INCDIR ."/bottom.req");
+include_once (INCDIR ."/footer.inc");
     exit;
   }
 

@@ -2,7 +2,7 @@
 // $Id$
 
 require_once("./global.inc");
-include("./templates/top.inc");
+include(INCDIR ."/top.inc");
 
 if ($error_msg) {
   echo <<<EOT
@@ -65,5 +65,5 @@ You may not upload any more images for this article.<br>
 EOT;
 }
 
-include("./templates/footer.inc");
+include(INCDIR ."/footer.inc");
 ?>

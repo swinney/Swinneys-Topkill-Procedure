@@ -1,20 +1,18 @@
 <? 
 // $Id$
 
-require_once("./global.inc");
+include_once(INCDIR ."/top.inc");
+include_once(INCDIR ."/swinney.req");
+include_once(INCDIR ."/norollcall.inc");
 
-include("./templates/top.inc");
-include("./templates/swinney.req");
-include("./templates/norollcall.inc");
-
-include($into_template);
+include_once($into_template);
 
 if (isset($into_template2)) {
-  include($into_template2);
+  include_once($into_template2);
 }
 
-include("./templates/bottom.req");
-include("./templates/footer.inc");
+include_once(INCDIR ."/bottom.req");
+include_once(INCDIR ."/footer.inc");
 ?>
 
 

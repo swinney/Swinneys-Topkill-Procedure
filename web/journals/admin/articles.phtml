@@ -2,10 +2,10 @@
 ///////////////////////////////////////////
 // $Id$
 require_once("../global.inc");
-include("../templates/top.inc");
-include("../templates/swinney.req");
-include("../templates/norollcall.inc");
-include("../templates/endleft.inc");
+include(INCDIR ."/top.inc");
+include(INCDIR ."/swinney.req");
+include(INCDIR ."/norollcall.inc");
+include(INCDIR ."/endleft.inc");
 
 echo <<<EOT
 <center>
@@ -54,8 +54,8 @@ EOT;
 
  }
     echo "</table>\n";
-include_once ("../templates/bottom.req");
-include_once ("../templates/footer.inc");
+include_once (INCDIR ."/bottom.req");
+include_once (INCDIR ."/footer.inc");
 ?>
 
 

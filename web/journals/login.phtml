@@ -5,13 +5,13 @@ require_once("./global.inc");
 // doesn't make sense to display the login page for users who are
 // already logged in
 if ($authenticated_username) {
-  header("Location: " . $HTTP_REFERER);
+  $error_msg="<a href='$back_to'>You are already logged in!</a>";
 }
 
 $title = "Log In";
 
 $into_template = "./login.inc";
-include("./templates/template_norollcall.inc");
+include(INCDIR ."/template_norollcall.inc");
 ?>
 
 

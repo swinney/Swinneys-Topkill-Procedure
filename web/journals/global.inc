@@ -19,9 +19,7 @@ session_set_cookie_params(time()+9999999);
 
 $thisdir = dirname(realpath(__FILE__));
 if (file_exists("$thisdir/local_conf.php")) {
-    use_lib($thisdir);
-    use_lib("/sky/users/swinney/htdocs/dev/php4/pear");
-    include_once('local_conf.php');
+    include_once($thisdir ."/local_conf.php");
 }
 
 /*
@@ -144,7 +142,6 @@ function error_page($msg) {
 <html>
 <head>
 <title>swinney.org: error!</title>
-<link rel="stylesheet" type="text/css" href="$css_url">
 </head>
 </body>
 <p>
@@ -282,13 +279,11 @@ function get_username($user_id) {
 
 if (preg_match("/(vip|submit|admin)/i","$SCRIPT_NAME") && !$user_id) {
   session_register("back_to");
-  $back_to= $SCRIPT_NAME;
-  if ($article_id) {
-    $back_to .= "?article_id=$article_id";
-  }
-  $url=URLBASE;
-  //echo $back_to;
-  header("Location: $url/journals/login.phtml");
+  //  parse_url($PHP_SELF);
+  $back_to="http://". $HTTP_HOST . $SCRIPT_NAME ."?". $QUERY_STRING;
+  $url=URLBASE ."/journals/login.phtml";
+#  echo $back_to ."<BR>".$url;
+  header("Location: $url");
   exit();
 }
 
