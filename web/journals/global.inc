@@ -23,9 +23,8 @@ define("DB_NAME", "swinney");
  * XXX: make the session cookie persist until the user clicks logout
  * (and therefore causes a session_destroy().
  */
-session_set_cookie_params(time()+9999999 , dirname($SCRIPT_NAME), $URLBASE);
-session_cache_limiter('nocache');
 session_start();
+session_set_cookie_params(time()+9999999);
 
 /*
  * connect to the database. if unsuccessful, display an error message.
@@ -202,7 +201,7 @@ function get_username($user_id) {
 
 if (preg_match("/(vip|submit|admin)/i","$SCRIPT_NAME") && !$user_id) {
   session_register("back_to");
-  $back_to="http://swinney.org". $PHP_SELF;
+  $back_to= $SCRIPT_NAME;
   $url=URLBASE;
   header("Location: $url/journals/login.phtml");
   exit();
