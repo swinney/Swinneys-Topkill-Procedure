@@ -118,12 +118,11 @@ EOT;
 $res = mysql_query("SELECT * FROM categories ORDER BY name ASC");
 
 # for the next loop, index
-$index=1;
+$i=0;
 
 while ($d=mysql_fetch_object($res)) {
-
-echo "<input type='radio' name='category' value='cat$d->category_id'> $d->name <br>";
-
+    echo "<input type='checkbox' name='cat[$i]' value='$d->level1'> $d->name <br>\n";
+    $i++;
 } # child loop
 
 ?>
