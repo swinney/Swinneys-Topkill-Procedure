@@ -1,9 +1,8 @@
-
-
-<!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
-
-
-<P align='center'><a href='submit_comment.phtml?article_id=<? echo "$article_id" ?>' accesskey="s">comment</a></P>
+<!-- 
+$Id$
+here is where we voice our ideas.  raise you hands and i'll call on you in order. 
+-->
+<P align='center'><a href='submit_comment.phtml?article_id=<? echo "$article_id"; ?>' accesskey="s">comment</a></P>
 
 <?
 /*
@@ -18,40 +17,51 @@
 | nature     | int(4)        | YES  |     | NULL      |                |
 +------------+---------------+------+-----+-----------+----------------+
 */
+
 $article_id = explode (".", $article_id);
 
 $no_extension = $article_id[0];
 
-$res = mysql ("$DB","SELECT username,comment_id,comment FROM comments WHERE article_id=$no_extension AND status=0 ORDER BY comment_id");
+$query="SELECT username,comment_id,comment FROM comments WHERE article_id=$no_extension AND status=0 ORDER BY comment_id";
+$res = mysql_query ($query);
+$num=mysql_num_rows($res);
 
 // multiple rows 
-while ( $d = mysql_fetch_object( $res ) ) {
 
-// move it to strip slashes
-$username=$d->username;
-$comment=$d->comment;
-$comment_id=$d->comment_id;
+while ( $d = mysql_fetch_object( $res ) ) 
+
+{
+
+	// move it to strip slashes
+	$username=$d->username;
+	$comment=$d->comment;
+	$comment_id=$d->comment_id;
 
 
-// LULU MADNESS
-if ($username=="lulu") {
-$username="<span style=\"background-color:pink\">$username"; 
-$comment="$comment</span>";
+	// LULU MADNESS
+	if ($username=="lulu") 
+
+	{
+		$username="<span style=\"background-color:pink\">$username"; 
+		$comment="$comment</span>";
+	}
+
+	// echo and strip
+
+	echo "<hr border=0>";
+	echo "<a name=\"$comment_id\">".stripslashes($username).":  ".stripslashes($comment)."\n";
+
 }
 
-// echo and strip
+if ($num>=5)
 
-echo "<hr border=0>";
-echo "<a name=\"$comment_id\">".stripslashes($username).":  ".stripslashes($comment)."\n";
+{
+	echo "<BR><P align='center'>";
+	echo "<a href=\"submit_comment.phtml?article_id=$no_extension\" accesskey=\"s\">comment</a></P>";
 
 }
 
 ?>
-<BR>
-<P align='center'><a href='submit_comment.phtml?article_id=<? echo "$article_id" ?>' accesskey="s">comment</a></P>
-
-
-
 
 
 
