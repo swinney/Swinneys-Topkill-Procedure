@@ -166,7 +166,7 @@ function use_lib($dir) {
  * ix, Wed Aug 22 11:02:20 PDT 2001
  */
 
-function error_page($e) {
+function error_page($msg, $e) {
     $css_url = CSS_URL;
     $html = <<<EOT
 <html>
@@ -183,15 +183,19 @@ email Austin</a> and tell him.
 </p>
 EOT;
 
-    if ($e) {
-	if (PEAR::isError($e)) {
-	    $e = $e->message . " [" . $e->userinfo . "]";
-	}
+    if (PEAR::isError($msg)) {
+	$msg .= $msg->message . ": [" . $msg->userinfo . "]";
+    }
 
+    if (PEAR::isError($e)) {
+	$msg .= $e->message . ": [" . $e->userinfo . "]";
+    }
+
+    if ($msg) {
 	$html .= <<<EOT
 <p>
 <b>Error:</b>
-<em>$e</em>
+<em>$msg</em>
 </p>
 EOT;
     }
