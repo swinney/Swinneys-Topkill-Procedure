@@ -1,45 +1,39 @@
-<!--
-$Id$
-#####################################
+<?
+#####################################################
+#$Id$
+#####################################################
 # top.inc - super hyper dynamic
 # include file for all of swinney.org
 # change this and change the world.
 # Austin Swinney, of course.
 # Thu Jul  5, 2001  7:54 AM
-#####################################
--->
+#####################################################
 
-<?
-// connect to the database
-include "/sky/users/swinney/htdocs/dev/swinney.org/journals/global.inc";
+include "/sky/www/swinney.org/html/dev/journals/global.inc";
 conn();
 ?>
 
+
+
 <HTML>
 <HEAD>
-<TITLE>swinney.org</TITLE>
+<TITLE><? echo TITLE. ": $title"; ?></TITLE>
+<META NAME="ROBOTS" CONTENT="NOINDEX,NOFOLLOW">
 <META NAME="keywords" CONTENT=" Austin Swinney ;">
 <META HTTP-EQUIV="Expires" CONTENT="0">
-<STYLE TYPE="text/css">
-<!--
+<?
+# style sheet for BCM
+if (defined("WWW_ROOT"))
 
-body { bgcolor:"CCCCCC"; marginwidth:0; marginheight:0; leftmargin:0; topmargin:0 }
-p {  font-family: Times New Roman, Times, serif; font-size: 10pt} 
-pre { color: navy } 
-real { position: absolute; top: 0em; right: 0em; }
+{
 
--->
+	echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . WWW_ROOT . "/main.css\">";
 
-</STYLE>
+}
+
+?> 
 </HEAD>
 <BODY>
 
+ 
 <!-- END PHP Dynamically Required File: top.inc -->
-
-
-
-
-
-
-
-
