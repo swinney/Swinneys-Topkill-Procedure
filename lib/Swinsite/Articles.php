@@ -61,6 +61,7 @@ EOT;
 
 
     function get_articles($num) {
+      global $id;
        $query = <<<EOT
 	 SELECT articles_info.article_id,
 	 articles_info.username,
