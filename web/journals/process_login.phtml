@@ -5,7 +5,7 @@ require_once("global.inc");
 if ($username && $password) {
   // pull user info from the database
   $query = <<<EOT
-SELECT username, password
+SELECT user_id, username, password
   FROM user
  WHERE username='$username'
 EOT;
@@ -43,6 +43,26 @@ if ($error_msg) {
 // in the session
 $authenticated_username = $user->username;
 session_register("authenticated_username");
+
+$user_id = $user->user_id;
+session_register("user_id");
+
+// cache some other commonly used information
+$query = <<<EOT
+SELECT bozo
+  FROM user_bozo
+ WHERE user_id='$user_id'
+EOT;
+
+$bozos = array();
+
+$res = mysql_query($query)or
+  die(error_page(mysql_error()));
+while ($bozo = mysql_fetch_array($res)) {
+  array_push($bozos, $bozo[0]);
+}
+
+session_register("bozos");
 
 // $back_to is the location where the user originally clicked the "log
 // in" link
