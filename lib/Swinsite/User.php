@@ -1,5 +1,7 @@
 <?php   // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 
+require_once("Swinsite/Bozos.php");
+require_once("Swinsite/DBPeer/UserPeer.php");
 require_once("Swinsite/Persistent/Object.php");
 
 class Swinsite_User extends Swinsite_Persistent_Object {
@@ -57,7 +59,6 @@ class Swinsite_User extends Swinsite_Persistent_Object {
 
     // public methods
 
-    /* - XXX: implement Swinsite_Bozos
     function bozos() {
         if (! $this->bozos) {
             $tmp = new Swinsite_Bozos($this->id());
@@ -70,11 +71,16 @@ class Swinsite_User extends Swinsite_Persistent_Object {
 
         return $this->bozos;
     }
-    */
+
+    // private methods
+
+    function peer() {
+        if (! $this->peer) {
+            $this->peer = new Swinsite_DBPeer_UserPeer();
+        }
+
+        return $this->peer;
+    }
 }
 
 ?>
-
-
-
-
