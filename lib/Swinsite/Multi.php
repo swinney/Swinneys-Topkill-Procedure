@@ -2,6 +2,33 @@
 require_once("global.inc");
 
 class Multi {
+    function get_nav($multi_id) {
+return <<<EOT
+<P>
+<A HREF="./index_multi.phtml">Index</a> |
+<A HREF="./info_multi.phtml?multi_id=$multi_id">View Info</A> |
+<A HREF="./submit_title.phtml?multi_id=$multi_id">Edit Title</A> | 
+<A HREF="./submit_abstract.phtml?multi_id=$multi_id">Edit Abstract</A> |
+<A HREF="./submit_multi.phtml?multi_id=$multi_id">Add Articles</a>
+</P>
+EOT;
+    }
+
+    function get_abstract($mid) {
+        $query = "SELECT abstract FROM multi_info WHERE multi_id=$mid";
+        $res = mysql_query($query);
+        $abstract = stripslashes(mysql_result($res,0));
+        return $abstract;
+    } 
+
+    function get_multi_fm_id ($mid) {
+        $query .= <<<EOT
+  SELECT multi_info.user_id,multi_info.title,multi_info.abstract FROM multi_info WHERE multi_info.multi_id=$mid
+EOT;
+        $res=mysql_query($query);
+        $row=mysql_fetch_array($res);
+        return $row;
+    }
 
     function is_multi($id) {
         $query =<<<EOT
@@ -10,7 +37,7 @@ SELECT count(multi_articles.article_id) as num
  WHERE article_id=$id
 EOT;
         $res=mysql_query($query);
-        $num=mysql_result($res,0);
+        $num=@mysql_result($res,0);
         return $num;
     }
 
@@ -45,14 +72,19 @@ EOT;
             /*
              * NOW start getting the articles in the multi
 	     */
-	    if ($d->article_id!=$id) {
-	        $html .= "<P><A HREF=\"./article.phtml?id=$d->article_id\"><B>$d->title</B></A> ";
+	    if ($d->article_id) {
+	      $html .= "<P>";
+	        if ($d->article_id==$id) {
+		    $html .= "<SUP>(Currently Viewing)</SUP><BR>";
+	        }
+
+	        $html .= "<A HREF=\"./article.phtml?id=$d->article_id\"><B>$d->title</B></A> ";
 	        if ($d->blurb) {
 	            $html .="<BR>$d->blurb ";
 	        }
-	        $html .="by $d->multi_username</P>\n";
-	    } else {
-	        $html .="<P>Currently Viewing!</P>";
+	        $html .="by $d->multi_username\n";
+                $html .="</P>";
+
 	    }
 	}
         echo <<<EOT
