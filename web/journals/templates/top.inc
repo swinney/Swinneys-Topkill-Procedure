@@ -22,9 +22,9 @@ $auth_these=array(
 
 $yes = array_intersect($url,$auth_these);
 
-if($yes && !$authenticated_username) {
+if($yes && !$authenticated_username || !$authenticated_user_id) {
   $thisurl=urlencode($thisurl);
-  is_auth("$authenticated_username","$thisurl");
+  is_auth("$authenticated_username",$authenticated_user_id,"$thisurl");
   exit();
 }
 ?>

@@ -329,8 +329,15 @@ function get_user_id($username) {
 // check authorization
 ///////////////////////////
 
-function is_auth($authenticated_username, $thisurl) {
+function is_auth($authenticated_username, $authenticated_user_id, $thisurl) {
   if (!$authenticated_username) {
+    header("Location: " . URLBASE . "/journals/login.phtml?back_to=$thisurl");
+    exit; 
+  }
+  if (!$authenticated_user_id) {
+    if ($authenticated_username) {
+      unset($authenticated_username);
+    }
     header("Location: " . URLBASE . "/journals/login.phtml?back_to=$thisurl");
     exit; 
   }
