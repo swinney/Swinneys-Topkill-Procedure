@@ -4,6 +4,13 @@
 <p class="header"><b>Frequently Asked Questions</b></p>
 <p class="subheader"><b>what is swinney?</b></p>
 
+<BLOCKQUOTE><i>
+Swinney.org provides an outlet of sorts to kindred
+spirits across this land. Those creative souls that feel the
+darkness of jobs, school and oppressive family units bearing
+down on them at all times.<BR>--wb
+</I></BLOCKQUOTE>
+
 
 <p>
 the word 'swinney' can be used to refer to three different things:
@@ -36,7 +43,6 @@ anyone! <a href="submit_article.phtml">including you</a>, if you want.
 in the past, <a href="roll_call_all.phtml">these people</a> have
 written on swinney.org. 
 </p>
-
 
 <p class="subheader"><b>do i have to sign up or log in or something?</b></p>
 <p>
@@ -111,7 +117,7 @@ see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. war
 <p>austin swinney<BR>
 austin@swinney.org<BR>
 santa cruz, CA, US</p>
-<p>Fri Jul 13, 2001 12:22 PM</p></td>
+<p>$Id$</p></td>
 </tr>
 </table>
 
