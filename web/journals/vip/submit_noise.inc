@@ -6,7 +6,7 @@
 if (!$authenticated_user_id) {
   $error_msg .= "<P>you dont have an authenticated_user_id.</P>";
 } else {
-    if ($set_limit_chars) {
+    if ($SUBMIT) {
       $limit_chars = $set_limit_chars;
       $query = <<<EOT
            UPDATE user_settings 
@@ -19,7 +19,7 @@ EOT;
       }
     }
 }
-
+#unset($limit_chars);
 function get_limit_chars() {
   global $db;
   global $authenticated_user_id;
@@ -27,33 +27,23 @@ function get_limit_chars() {
   if (!$authenticated_user_id) {
     $error_msg .= "<P>you dont have an authenticated_user_id.</P>";
   } else {
-    $query = <<<EOT
-             SELECT user_id,
-                    noise_filter 
-               FROM user_settings 
-              WHERE user_id=$authenticated_user_id
-EOT;
-
+    $query = "SELECT * FROM user_settings WHERE user_id=$authenticated_user_id";
     $row = $db->getRow($query);
-    $num = $db->affectedRows($row);
-    echo $res .":$num :". $query;
-    if ($num==0) {
-      $query = "INSERT INTO user_settings (user_id,noise_filter) VALUES ($authenticated_user_id,$set_limit_chars)";
-      echo $query;
+    if (!$authenticated_user_id==$row[0]) {
+      $query = "INSERT INTO user_settings (user_id,noise_filter) VALUES ($authenticated_user_id,0)";
       $res=$db->query($query);
       if (DB::isError($res)) {
 	die($res->getMessages());
       }
-      $limit_chars=$set_limit_chars;
+      $row[1]=0;
     }
     unset($row);
   }    
-  return $limit_chars;
+  return $row[1];
 }
 
 $html .=<<<EOT
 <P><B>$title</B></P>
-<P><B>this is beta.  <a href="mailto:bugs@swinney.org">bugs@swinney.org</A> if you have problems, get an error, or feel kind of dirty after using it.</B></P>
 <P>The noise filter is for <B>comments</B>: ridding your swinney 
 experience of those pesky one liner, or those 
 pesky two sentencers, or gosh darn it, those 
@@ -77,7 +67,7 @@ $html_form .= <<<EOT
 EOT;
 
 $set_val = array (
-		  "0"=>"i'm still in love with you, come back!",
+		  "0"=>"i love you, you bastard",
 		  "100"=>"omit needless words",
 		  "200"=>"i am picky, but i commune with the people",
 		  "300"=>"this is the average comment",
