@@ -17,12 +17,13 @@ if (count($bozos)) {
 if ($insert_since) {
   $query .= " AND time > $insert_since";
 }
-$query .= " ORDER BY time DESC";
+$query .= " ORDER BY article_id DESC";
 
-$res = mysql_query($query) or
-  die(error_page(mysql_error()));
-
-$article_info = mysql_fetch_object($res);
+$res = $db->query($query);
+if (DB::isError($res)) {
+  die($res->getMessage($query));
+}
+$article_info = $res->fetchRow(DB_FETCHMODE_OBJECT);
 $num_articles = $article_info ? $article_info->num_articles : 0;
 
 if ($num_articles) {
@@ -127,13 +128,13 @@ EOT;
     $query .= " AND time > $insert_since ";
   }
   $query .= <<<EOT
-ORDER BY time DESC
+ORDER BY article_id DESC
    LIMIT $page_start,$per_page
 EOT;
-
-  $res = mysql_query ($query) or
-    die(error_page(mysql_error()));
-
+  $res = $db->query($query);
+  if (DB::isError($res)) {
+    die($res->getMessage($query));
+  }
   // generate the article listing table
 
   echo <<<EOT
@@ -142,7 +143,7 @@ EOT;
 <td>
 EOT;
 
-  while ($article = mysql_fetch_object($res)) {
+  while ($article = $res->fetchRow(DB_FETCHMODE_OBJECT)) {
     // retrieve the number of comments for the article
 
     $num_comments = $article->num_comments;
