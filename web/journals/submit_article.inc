@@ -6,7 +6,7 @@
 <tr>
 <td nowrap colspan="3">
 
-<p class="header"><b><? echo $title ?></b><? 
+<p class="header"><b><? echo $title ?>:  <FONT COLOR=RED>be safe, have a backup!</B></b><? 
 
 //
 // temp_aid is set if user just came from the VIP area
