@@ -3,6 +3,7 @@
 
 <?
 if ($error_msg) {
+  session_unregister("error_msg");
   echo <<<EOT
 <p>
 <b><font color="red">$error_msg</font></b>
@@ -11,6 +12,7 @@ EOT;
 }
 
 if ($success_msg) {
+  session_unregister("success_msg");
   echo <<<EOT
 <p>
 <b><font color="green">$success_msg</font></b>

@@ -54,6 +54,7 @@ if ($mods && !$error_msg) {
     die(error_page(mysql_error()));
 
   $success_msg = "The user has been updated.";
+  session_register("success_msg");
 
   // change to the new username so the included page can render itself
   // appropriately
@@ -62,5 +63,9 @@ if ($mods && !$error_msg) {
   $error_msg = "You didn't change anything.";
 }
 
-include("users.phtml");
+if ($error_msg) {
+  session_register("error_msg");
+}
+
+header("Location: ./users.phtml?username=$username");
 ?>
