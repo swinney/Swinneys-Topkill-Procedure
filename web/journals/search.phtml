@@ -6,15 +6,16 @@ $title="Justin Hall's Quest For Links";
 require_once("global.inc");
 include "templates/top.inc";
 include "templates/line_nav.inc";
-echo "\n<CENTER>";
-echo "\n<P>swinney.org beta search engine</P>"; 
-echo "\n<FORM ACTION=\"search.phtml\" METHOD=\"POST\">";
-echo "\n<INPUT TYPE=\"text\" NAME=\"search_this\">";
-echo "\n<INPUT TYPE=\"submit\" NAME=\"search\" VALUE=\"search\">";
-echo "\n</FORM>";
-echo "\n<P>(full string search of text body and comments for exactly what you type)</P>";
-echo "\n</CENTER>";
-
+echo <<<EOT
+<CENTER>
+<P>swinney.org beta search engine</P>
+<FORM ACTION="search.phtml" METHOD="POST">
+<INPUT TYPE="text" NAME="search_this">
+<INPUT TYPE="submit" NAME="search" VALUE="search">
+</FORM>
+<P>(full string search of text body and comments for exactly what you type)</P>
+</CENTER>
+EOT;
 # get that IP Address
 $ip_addr = getenv ("REMOTE_ADDR"); 
 
@@ -22,8 +23,21 @@ if (isset($search_this)) {
 
 # echo search string only if it exists
 echo "\n<P>looking for <B>$search_this</B></P>";
-
-$query = "SELECT articles_info.title,articles_text.article_id,articles_info.username FROM articles_info,articles_text WHERE articles_info.article_id=articles_text.article_id AND articles_info.status=2 AND articles_text.text like '%". addslashes($search_this) ."%' LIMIT 300";
+$search_this =  addslashes($search_this);
+$query =<<<EOT
+  SELECT articles_info.date,
+         articles_info.title,
+         articles_text.article_id,
+         articles_info.username 
+    FROM articles_info,
+         articles_text 
+   WHERE articles_info.article_id=articles_text.article_id 
+     AND articles_info.status=2 
+     AND articles_text.text 
+    LIKE '%$search_this%' 
+ORDER BY articles_text.article_id 
+DESC LIMIT 300
+EOT;
 
 # query articles_text.text for string and match 
 # article_text.article_id with articles_info.article_id 
@@ -49,12 +63,13 @@ echo "\n<OL>";
 
 # start the return loop on $res
 while ($d=mysql_fetch_object($res)) {
-	# assign values
-	$article_id=$d->article_id;
-	$title=$d->title;
-	$username=$d->username;
-	# print out record
-	echo "\n<LI><P><a href=\"article.phtml?id=$article_id\">$title</a>"
+   # assign values
+   $date=$d->date;
+   $article_id=$d->article_id;
+   $title=$d->title;
+   $username=$d->username;
+   # print out record
+   echo "\n<LI><P>[$date] <a href=\"article.phtml?id=$article_id\">$title</a>"
 	   . "\n by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
 
 } # close the $res loop
@@ -66,7 +81,17 @@ echo "\n</OL>";
 echo "\n</BLOCKQUOTE>";
 
 
-$query = "select comments.comment_id,comments.article_id,comments.username,articles_info.title from comments, articles_info where comments.article_id=articles_info.article_id AND comment like '%". addslashes($search_this) ."%' order by article_id";
+$query = <<<EOT
+  SELECT comments.comment_id,
+  comments.article_id,
+  comments.username,
+  articles_info.title, 
+  articles_info.date
+  FROM comments, articles_info 
+  WHERE comments.article_id=articles_info.article_id 
+  AND comment LIKE '%$search_this%' 
+  ORDER BY article_id DESC
+EOT;
 
 # query comments.comment for $search_this and 
 # get articles_info.title based on comments.article_id 
@@ -87,21 +112,22 @@ echo "\n<OL>";
 
 #loop through the records from $res
 while ($d=mysql_fetch_object($res)) {
-        $article_id=$d->article_id;
-	$comment_id=$d->comment_id;
-        $title=$d->title;
-        $username=$d->username;
+  $article_id=$d->article_id;
+  $comment_id=$d->comment_id;
+  $title=$d->title;
+  $date=$d->date;
+  $username=$d->username;
 
 
 	# this loop first determines if the first record has been printed
 	# if so, then format text with "... sez ", if not then just format
 	# with "sez" because it is picking up the idea from scratch
-	if ($title==$last) {
-		echo "... sez <a href=\"article.phtml?id=$article_id#$comment_id\">$username</a>";
-	} else {
-	# there was no first record so ...
-        echo "\n<LI><P><a href=\"article.phtml?id=$article_id\">$title</a><BR>";
-	echo "\n sez <a href=\"article.phtml?id=$article_id#$comment_id\">$username</a>";
+  if ($title==$last) {
+    echo "... sez <a href=\"article.phtml?id=$article_id#$comment_id\">$username</a>";
+  } else {
+# there was no first record so ...
+    echo "\n<LI><P>[$date] <a href=\"article.phtml?id=$article_id\">$title</a><BR>";
+    echo "\n sez <a href=\"article.phtml?id=$article_id#$comment_id\">$username</a>";
 
 	}
 	# loop has gone through once, there was the last title,
@@ -161,8 +187,5 @@ if ($affected==0) { # UPDATE was invalid, do INSERT
 unset($search_this);
 include "templates/footer.inc";
 ?>
-
-
-
 
 
