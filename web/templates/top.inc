@@ -1,8 +1,18 @@
-<!-- END PHP Dynamically Required File: top.inc -->
+<!--
+$Id$
+#####################################
+# top.inc - super hyper dynamic
+# include file for all of swinney.org
+# change this and change the world.
+# Austin Swinney, of course.
+# Thu Jul  5, 2001  7:54 AM
+#####################################
+-->
 
 <?
 // connect to the database
-include "global.inc";
+include "/sky/users/swinney/htdocs/dev/swinney.org/journals/global.inc";
+conn();
 ?>
 
 <HTML>
@@ -12,18 +22,28 @@ include "global.inc";
 <META HTTP-EQUIV="Expires" CONTENT="0">
 <STYLE TYPE="text/css">
 <!--
-p {  font-family: Arial, Helvetica, sans-serif; font-size: 10pt} 
 /* so I don't have to fuck with font tags */
-pre { color: navy } 
+p {  font-family: Times New Roman, Times, serif; font-size: 10pt} 
 /* predefined colr name */
+pre { color: navy } 
+
+real {
+position: absolute;
+top: 0em;
+right: 0em;
+}
+
 -->
 </STYLE>
 </HEAD>
-<BODY>
-
-
+<BODY bgcolor="CCCCCC" marginwidth=0 marginheight=0 leftmargin=0 topmargin=0>
 
 <!-- END PHP Dynamically Required File: top.inc -->
+
+
+
+
+
 
 
 
