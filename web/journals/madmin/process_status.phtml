@@ -1,0 +1,11 @@
+<?
+///////////////////////////////////////////////////
+// $Id$
+
+if ($submit=="update") {
+  include_once("../global.inc");
+  $query="UPDATE articles_info SET status=$status WHERE article_id=$id";
+  $res=mysql_query($query) or die(error_page($query));
+}
+header("Location: $HTTP_REFERER");
+?>

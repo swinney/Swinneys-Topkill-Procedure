@@ -1,0 +1,48 @@
+<?
+##############################################
+# $Id$
+require_once("../global.inc");
+
+if (isset($submit_image)) {
+  $ext=substr("$userfile_name",-3);
+  if ($ext == "peg") {
+    $ext = "jpg";
+  }
+// dont name them zero, if there arnet any yet.
+$aindex=$aindex+1;
+$filename = $id . "_" . $aindex . "." . $ext;
+// Copy the file to our uploads directory
+// $copy=@copy($userfile, DIRBASE . IMGBASE . "/$filename");
+$copy=@copy($userfile, "/sky/www/swinney.org/html/journals/images/test_$filename");
+
+}
+if ($copy=="TRUE") {
+$query = <<<EOT
+UPDATE articles_info
+   SET image=image+1
+ WHERE article_id='$id'
+EOT;
+
+  if (mysql_query($query)) {
+  // suppress success message.
+  } else {
+  // XXX: partially committed transaction! how to handle?
+  $error_msg = "Error updating database: " . mysql_error();
+  }
+} else {
+  $error_msg = "Error saving image $userfile to ". DIRBASE . IMGBASE .".";
+          // roll back the index since the file wasn't moved
+}
+
+if ($submit_image=="submit") {
+  header("Location: $HTTP_REFERER");
+} elseif ($submit_image=="exit") {
+  header("Location: ./article_info.phtml?id=$id");
+}
+
+?>
+
+
+
+
+
