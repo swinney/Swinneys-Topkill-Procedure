@@ -4,8 +4,8 @@ require_once("../global.inc");
 
 // these variables are propagated via hidden fields so we always know
 // what the original values were
-if (!$username && !$email) {
-  die(error_page("No username or email specified"));
+if (!$username && !$email && !$confidence) {
+  die(error_page("No username or email or confidence specified"));
 }
 
 // username and email are mandatory columns
@@ -22,6 +22,14 @@ if ($new_username && $new_email) {
       $mods .= ", email ='$new_email'";
     } else {
       $mods = "email ='$new_email'";
+    }
+  }
+
+  if ($new_confidence && $new_confidence != $confidence) {
+    if ($mods) {
+      $mods .= ", confidence = '$new_confidence'";
+    } else {
+      $mods = "confidence = '$new_confidence'";
     }
   }
 
