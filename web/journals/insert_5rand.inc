@@ -5,23 +5,16 @@
 // generate a set of 10 random ids just to hedge our bets, since we
 // could may be filtering a lot of bozos and some articles may no
 // longer be public
-$rand = array();
-for ($i=0; $i<10; $i++) {
-  array_push($rand, dice(1, 1000));
-}
-$rand_set = '(' . implode(', ', $rand) . ')';
-
 $query = <<<EOT
   SELECT article_id,username,title,date,web
     FROM articles_info
    WHERE status=2
-     AND article_id IN $rand_set
 EOT;
 if (count($bozos)) {
   $query .= " AND username NOT IN $bozo_set ";
 }
 $query .= <<<EOT
-ORDER BY time
+ ORDER BY RAND()
    LIMIT 5
 EOT;
 
