@@ -51,7 +51,8 @@ EOT;
              multi_articles.article_id, 
              articles_info.title,
              articles_info.blurb,
-             articles_info.username as multi_username
+	  articles_info.username as multi_username,
+             articles_info.user_id as multi_user_id
         FROM multi_info,
              multi_articles,
              articles_info 
@@ -62,13 +63,18 @@ EOT;
 EOT;
         $res = mysql_query($query);
         while ($d=mysql_fetch_object($res)) {
+	  $multi_title = stripslashes($d->multi_title);
+	  $multi_username = stripslashes($d->multi_username);
+          $title    = stripslashes($d->title);
+	  $blurb    = stripslashes($d->blurb);
+          $multi_user_id = $d->multi_user_id;
 	    if (!$html) {
                 $multi_username=get_username($d->editor_id);
 	        /* 
 	         * FIRST start by getting the title of the multi
 	         */
 	        $html= <<<EOT
-<P><B><a href='./multi_info.phtml?mid=$d->multi_id'>$d->multi_title</a></B>\n
+<P><B><a href='./multi_info.phtml?mid=$multi_id'>$multi_title</a></B>\n
 <BR>edited by <a href="./userpages.phtml?username=$multi_username">$multi_username</A></P>\n
 EOT;
             }
@@ -81,11 +87,11 @@ EOT;
 		    $html .= "<SUP>(Currently Viewing)</SUP><BR>";
 	        }
 
-	        $html .= "<A HREF=\"./article.phtml?id=$d->article_id\"><B>$d->title</B></A> ";
+	        $html .= "<A HREF=\"./article.phtml?id=$d->article_id\"><B>$title</B></A> ";
 	        if ($d->blurb) {
-	            $html .="<BR>$d->blurb ";
+	            $html .="<BR>$blurb ";
 	        }
-	        $html .="<BR>by $d->multi_username\n";
+	        $html .="<BR>by <a href='info_user.phtml?uid=$multi_user_id'>$multi_username</A>\n";
                 $html .="</P>";
 
 	    }
