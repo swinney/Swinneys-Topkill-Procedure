@@ -116,7 +116,6 @@ EOT;
 
 
     function getUserTitles($uid,$order,$limit) {
-      global $id;
        $query = <<<EOT
 	 SELECT articles_info.article_id,
 	 articles_info.title,
@@ -134,10 +133,8 @@ EOT;
 	}
 	$query .= " LIMIT $limit";
 	$res = mysql_query($query);
-
 	while ($d = mysql_fetch_object($res)) {
 	    $aid=$d->article_id;
-            $uid=$d->user_id;
 	    // display title
 	    if ($category=$d->category) {
 	    $names=get_cat_names($category);
