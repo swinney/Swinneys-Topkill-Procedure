@@ -1,0 +1,134 @@
+<?
+###################################################
+# $Id$
+# process them articles
+#
+require_once("global.inc");
+#
+# register session var for $bin used in category 
+# combination.
+#
+session_register("bin");
+$bin=0;
+
+#
+# Init the date and time
+#
+$date = date("Y-m-d");
+$time = time();
+
+#
+# Work out what subjects
+#
+if (isset($cat)) {
+    foreach ($cat as $one => $two) {
+       if (!isset($bin)) {
+           $bin=$two;
+       } else {
+           $bin=$bin|$two;
+       }
+    }
+#
+# set bin to category for db
+#
+    $category=$bin;
+} else {
+    $category=0;
+}
+
+if ($username) {
+  $ip_addr = getenv ("REMOTE_ADDR");
+
+  // Insert into the database
+  $esc_keywords = addslashes($keywords);
+  $esc_title = addslashes($title);
+  $esc_blurb = addslashes($blurb);
+
+  $query = <<<EOT
+ UPDATE articles_info
+    SET
+     username='$username',
+     web='$web',
+     date='$date',
+     time='$time',
+     status=1,
+     keywords='$esc_keywords',
+     title='$esc_title',
+     blurb='$esc_blurb',
+     category=$category,
+     ip_addr='$ip_addr'
+    WHERE
+     article_id=$temp_aid
+EOT;
+
+  if (mysql_query($query) or die($query)) { 
+    //
+    //  HERE WE GO WITH NEW STUFF
+    //
+    // if we have a userfile for this form, 
+    // then let us process it.
+    //
+        if (isset($userfile) && $userfile!="none" && isset($temp_aid)) {
+      //
+      // open the temp file read only
+      $fd = fopen($userfile,"r");
+      //
+      // assemble the buffer in chunks
+      while (!feof($fd)) {
+	//
+	// stack it together
+	$buffer=$buffer . fgets($fd,4069);
+      }
+      //
+      // close the file.
+      fclose($fd);
+      //
+      // add slashes before putting into the database.
+      // if you dont do this on these html file that
+      // contain every possible bonker, 
+      // the insert WILL bomb.
+      $buffer=addslashes($buffer);
+      $query=<<<EOT
+        UPDATE articles_text 
+           SET text='$buffer'
+         WHERE article_id=$temp_aid
+EOT;
+    } elseif (isset($content)) {
+    $esc_content = addslashes($content);
+    $query =<<<EOT
+        UPDATE articles_text
+           SET text='$esc_content'
+         WHERE article_id=$temp_aid
+EOT;
+    }
+    if (mysql_query($query) or die ($query)) {
+      $success_msg = "Article saved.";
+    } else {
+      $error_msg = "Problem saving the article text: " . mysql_error();
+    }
+  } else {
+    $error_msg = "Problem saving the article info: " . mysql_error();
+  }
+} else {
+  $error_msg = "You must specify a username.";
+}
+
+if ($error_msg) {
+  session_register("error_msg");
+  include("../submit_article.inc");
+} else {
+  session_register("success_msg");
+
+  if ($images_too=="no") {
+    $loc = $HTTP_REFERER;
+  } else {
+    $loc = "submit_image.phtml?article_id=$temp_aid";
+  }
+
+    header("Location: $loc");
+}
+#
+# kill registered sessions
+session_unregister("temp_aid");
+session_unregister("bin");
+?>
