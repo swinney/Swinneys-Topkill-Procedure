@@ -27,20 +27,31 @@ blank form	-->	process		-->	preview
 
 ##################################################
 ##################################################
-## This IS THE BEGINING OF STAGE TWO, PROCESSING
-## THE ARTICLE.  ROCK ON OALKAND.  ROCK ON SANTA
-## CRUZ.  PRETZELS, THEY ARE GOOD.
+## 
+## PROCESSING THE ARTICLE
+##
 
 if ($page=="exit") {
 header("Location: ../index.phtml");
 
 }
 
+# SUBMIT or EDIT either way you get the FORMS
 
-if (!isset($page)||$page=="submit"||$page=="edit") {
+if (!isset($page)||$page=="submit") {
 
 
-if (isset($article_id)) {
+############################################################
+############################################################
+## get the existing article information determined by
+## whether or not ARTICLE_ID has already been set thus far
+## this will work because we are only editing article
+## JUST SUBMITTED, not existing ones.  
+##
+## the article_id WILL BE SET!
+##
+
+if ($page=="edit") {
 
 	echo "<P ALIGN=CENTER><TT>article_id: $article_id</TT></P>";
 
@@ -77,12 +88,16 @@ $text		= $d->text;
 
 # Here we submit or resubmit the form, depending on the value of page
 if (!isset($article)) {
+
 echo "<FORM METHOD=\"POST\" ACTION=\"submit_article.phtml\">\n";
+
 } else {
+
 echo "<FORM METHOD=\"POST\" ACTION=\"submit_article.phtml\?article_id=$article_id\">\n";
+
 }
+
 echo "<TABLE WIDTH=400 BORDER=0 CELLSPACING=0 CELLPADDING=0>\n";
-echo "<TR><TD COLSPAN=2>page: $page</TD></TR>\n";
 echo "<TR>\n";
 echo "<TD>Name</TD>\n";
 echo "<TD ALIGN=\"right\">\n";
@@ -237,10 +252,10 @@ while ($d=mysql_fetch_object($res)) {
 
 		echo "\n</TR><TR>";
 
-	}
+	} # grand child loop
 
 
-}
+} # child loop
 
 echo "\n</TR></TABLE>";
 
@@ -248,7 +263,7 @@ echo "\n<input name='page' type='submit' value='process'>";
 echo "\n<input name='page' type='submit' value='preview'>";
 echo "\n</form>";
 
-}
+} # end mother loop
 
 
 ##################################################
@@ -276,8 +291,6 @@ $username="anonymous";
 $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
   // Insert into the database
-
-
 
 
   $res = mysql_query("INSERT INTO articles_info
@@ -317,6 +330,8 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
     exit;
   }
 
+  
+
 # for preview go to the preview page that gets the values 
 # just inserted into the database and updates them, this
 # way we dont lose anything at any point in the process
@@ -331,7 +346,7 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
 if ($page=="preview") {
 	$page="preprocess";
-	header("Location: submit_article.phtml");
+	header("Location: submit_article.phtml?page=preprocess&article_id=$article_id");
 
 # but if they just want to submit and to the homepage, let them
 } elseif ($page=="process") {
@@ -410,7 +425,6 @@ header("Location: ../index.phtml");
 if ($page=="preprocess") {
 
 #fetch the article submitted
-if (isset($article_id)) {
 
 $res = mysql_query("
 	SELECT 	articles_info.username,
@@ -445,13 +459,12 @@ echo "<H4>web: 		$web</H4>";
 echo "<H5>text:</H5><P>$text</P>";
 
 echo "<INPUT NAME='article_id' TYPE='hidden' VALUE=$article_id>\n";
-echo "<INPUT NAME='page' TYPE='submit' VALUE='resubmit'>\n";
+echo "<INPUT NAME='page' TYPE='submit' VALUE='edit'>\n";
 echo "<INPUT NAME='page' TYPE='submit' VALUE='exit'>\n";
 echo "</FORM>";
 
 $all_ready_been_processed_fool=1;
 
-}
 
 }
 
