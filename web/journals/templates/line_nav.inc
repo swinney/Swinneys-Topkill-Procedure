@@ -3,19 +3,25 @@
 # mo simplified navigation at the top
 ?>
 <p align="center">(
-<a href="<? URLBASE ?>" accesskey="h">HOME</A> |
+<a href="../index.phtml" accesskey="h">SWINNEY.O</A>
 <?
 if ($authenticated_username) {
   echo <<<EOT
-<a href="process_logout.phtml" accesskey="l">LOG OUT</a> | 
+| <a href="process_logout.phtml" accesskey="l">LOG OUT</a> 
 EOT;
 } else {
   echo <<<EOT
-<a href="login.phtml" accesskey="l">LOG IN</a> | 
+| <a href="login.phtml" accesskey="l">LOG IN</a>   
 EOT;
 }
+
+$url = array (
+   "index.phtml"	=> "JOURNALS",
+   "comments.phtml"	=> "COMMENTS"
+);
+
+foreach ($url as $path => $ref) {
+   echo "| <A HREF=\"$path\">$ref</A> ";  
+}
+echo " )<BR>";
 ?>
-<a href="index.phtml" accesskey="j">JOURNAL</a> |
-<a href="comments.phtml" accesskey="c">COMMENTS</a> |
-<a href="submit_article.phtml" accesskey="s">SUBMIT</a> |
-<a href="faq.phtml" accesskey="f">ANSWERS</A>)</p></b>

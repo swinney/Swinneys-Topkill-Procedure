@@ -1,14 +1,6 @@
-<!--
-$Id$
-##################################
-# if only you knew the comments that
-# were in the php code.  you would
-# fear.  fear. lucky you i have morals
-# i wont just let them show up in the
-# html where my mother might read them.
-# -OMS
--->
-<?/*
+<?
+#$Id$
+
 ###################################
 # rollcall.inc - who is out there?
 # this is the most major shit script
@@ -19,7 +11,8 @@ $Id$
 # i do this all for the bitches.  word up 
 # in two thousand.  -OMS 
 # Thu Jul 12, 2001 10:13 AM
-*/?>
+
+?>
 
 <!-- BEGIN PHP Dynamically Required File: rollcall.inc -->
 
@@ -60,7 +53,7 @@ $Id$
 $minus=time();
 $minus=$minus-7776000;
 
-$res = mysql_query ("SELECT DISTINCT username, count(username) AS number FROM articles_info WHERE time<$minus GROUP BY username");
+$res = mysql_query ("SELECT DISTINCT username, count(username) AS number, status, time FROM articles_info WHERE status=2 GROUP BY username");
 
 while ($row = mysql_fetch_row ($res)) {
 /*
@@ -73,8 +66,10 @@ while ($row = mysql_fetch_row ($res)) {
 
 $name=$row[0];
 $number=$row[1];
+$status=$row[2];
+$time=$row[3];
 
-  if ($number > 5) {
+  if ($number >= 5) {
   echo "<a href='userpages.phtml?username=$name'>$name($number)</a><br>\n";
   }
 }
