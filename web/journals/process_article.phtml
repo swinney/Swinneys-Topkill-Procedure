@@ -10,14 +10,6 @@ if (!$title) {
   $title="This bitch left no title.";
 }
 
-if (!$web) {
-  $web=$db->getOne("SELECT email FROM user WHERE user_id=$user_id");
-  if (DB::isError($web)) {
-    $error_msg .= "<P>We have no email on file for you.</P>";
-    $web="anon". $user_id ."@swinney.org";
-  }
-}
-
 if (!$username) {
   $username="anonymous";
 }
@@ -70,7 +62,6 @@ INSERT INTO articles_info
     SET
      user_id='$user_id',
      username='$username',
-     web='$web',
      date='$date',
      time='$time',
      status=1,
