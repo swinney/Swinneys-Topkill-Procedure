@@ -20,7 +20,10 @@ $num_of_results = $num_object->num_articles;
 
 // lets try this userlist thingy $USERS
 
-$res = mysql_query ( "SELECT article_id,title,blurb,date,username FROM articles_info WHERE status='2' AND username='". addslashes($username) ."' ORDER BY time DESC limit $page_start,$per_page");
+
+$res = mysql_query ( "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status='2' AND username='". addslashes($username) ."' ORDER BY time DESC limit $page_start,$per_page");
+
+
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
 $num_of_pages = $num_of_results/$per_page; 
@@ -113,11 +116,11 @@ EOT;
 while ( $individual_row = mysql_fetch_object( $res ) ) {
 
    $articleno = $individual_row->article_id;
-
+   $title = stripslashes($individual_row->title);
 
 echo <<<EOT
 <p><a href="article.phtml?id=$articleno.txt">
-<b>$individual_row->title</b></a><br>
+<b>$title</b></a><br>
 
 EOT;
 
@@ -131,12 +134,8 @@ $blurb
 <span class="small">$individual_row->date
 EOT;
 
-$res2 = mysql_query ( "SELECT count(*) as num FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
-
-$d =  mysql_fetch_object($res2);
-
 echo <<<EOT
- | $d->num comments</span>
+ | $individual_row->num_comments comments</span>
 </p>
 EOT;
 }
