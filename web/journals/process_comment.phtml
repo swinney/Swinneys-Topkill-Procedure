@@ -1,6 +1,10 @@
 <?
-include "global.inc";
+#$Id$
 
+# fuck this header bullshit, how bout i just loop this shit in with the other shit.
+
+include "global.inc";
+conn();
 /*
 +------------+---------------+------+-----+-----------+----------------+
 | Field      | Type          | Null | Key | Default   | Extra          |
@@ -20,7 +24,8 @@ include "global.inc";
 // necessary precaution.  like dont i want to know who the person is who
 // tries to send malicious unix commands in to the thoughts database?
 
-$ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
+// get the ip number of the user
+$ip_addr = getenv ("REMOTE_ADDR"); 
 
 $article_id = explode (".", $article_id);
 
@@ -50,7 +55,8 @@ $article_id = $article_id[0];
 
 // echo "$username<br>$comment<br>$nature<br>";
 
-$res = mysql("$DB","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."','0','$ip_addr')"); 
+$query="INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."','0','$ip_addr')";
+$res = mysql_query($query); 
 
   if ( $res == false ) { 
     echo ("Bollocks!");
@@ -60,5 +66,16 @@ $res = mysql("$DB","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)
 
 
 // mail("theCommentator@swinney.org", "comment: $username on $article_id", "$nature", "$comment"); 
-header("Location: article.phtml?id=$article_id.txt");
+header ("Location: article.phtml?id=$article_id.txt");
+
 ?>
+
+
+
+
+
+
+
+
+
+
