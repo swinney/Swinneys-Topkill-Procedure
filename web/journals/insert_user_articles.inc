@@ -121,7 +121,7 @@ echo <<<EOT
 
 EOT;
 
-    $blurb = $individual_row->blurb;
+    $blurb = stripslashes($individual_row->blurb);
     if ($blurb) {
       $blurb .= "<br>\n";
       }
