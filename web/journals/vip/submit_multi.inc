@@ -32,7 +32,7 @@ if (DB::isError($res)) {
 while ($row = $res->fetchRow()) {
   $html .= <<<EOT
 <INPUT TYPE=CHECKBOX NAME="del_id" VALUE=$row[0]>
-<A HREF='page.phtml?article_id=$row[0]'>$row[1]</A><BR>
+<A HREF='../article.phtml?id=$row[0]'>$row[1]</A><BR>
 
 EOT;
 
