@@ -3,9 +3,6 @@
 
 #first do pagination
 
-// what table are you paginating?
-$table="comments";
-
 //No Page Number? Set it to Page 1 then
 if(!$page_num || $page_num < 1) { 
         $page_num = 1;
@@ -17,27 +14,24 @@ $per_page = 30;
 //Set the page start variable...
 $page_start = ($page_num-1) * $per_page;
 
-
+$username=stripslashes($db->getOne("SELECT username FROM user WHERE user_id=$uid"));
  
 //Do a number query to see how many results match the category...
-$num_res = mysql_query ( "SELECT count(*) as num_articles FROM $table WHERE status='0' AND username = '$username' ORDER BY timestamp DESC");
-$num_object = MYSQL_FETCH_OBJECT($num_res);
-$num_of_results = $num_object->num_articles;
+$query="SELECT count(*) as num_articles FROM comments WHERE status='0' AND user_id=$uid ORDER BY timestamp DESC";
+$num_articles = $db->getOne($query);
 
+$query2="SELECT username,comment_id,comment,article_id FROM comments WHERE status='0' AND user_id=$uid ORDER BY timestamp DESC limit $page_start,$per_page";
 
-$query2="SELECT username,comment_id,comment,article_id FROM $table WHERE status='0' AND username = '$username' ORDER BY timestamp DESC limit $page_start,$per_page";
-
-$query = "select comments.comment_id,comments.comment,comments.article_id,comments.username,articles_info.title,articles_info.username,comments.user_id from comments, articles_info where comments.article_id=articles_info.article_id AND comments.username = '". addslashes($username) ."' order by comment_id DESC limit $page_start,$per_page";
-
+$query = "select comments.comment_id,comments.comment,comments.article_id,comments.username,articles_info.title,articles_info.username,comments.user_id from comments, articles_info where comments.article_id=articles_info.article_id AND comments.user_id = $uid order by comment_id DESC limit $page_start,$per_page";
 
 $res2 = mysql_query ($query);
 
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
-$num_of_pages = $num_of_results/$per_page; 
+$num_of_pages = $num_articles/$per_page; 
 
 // Find out if the num_of_pages was a decimal.. Can't have 2.1 pages...
-$remainders = $num_of_results%$per_page; 
+$remainders = $num_articles%$per_page; 
 
 
 if($remainders != 0){ //If is was a decimal, turn it into an integer and add 1 to it...
@@ -65,7 +59,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><a href="userpages.phtml?username=$username">Articles</a> | <b>Comments</b>
+<span class="subheader"><a href="userpages.phtml?uid=$uid">Articles</a> | <b>Comments</b>
 EOT;
 
 if ($page_num < $num_of_pages or $page_num > 1) {
@@ -83,7 +77,7 @@ EOT;
 
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="$PHP_SELF?username=$username&page_num=$page_forward">&laquo; earlier comments</a>
+<a href="$PHP_SELF?uid=$uid&page_num=$page_forward">&laquo; earlier comments</a>
 
 EOT;
   }  
@@ -94,7 +88,7 @@ EOT;
   
   if ($page_num > 1){
     echo <<<EOT
-<a href="$PHP_SELF?username=$username&page_num=$page_back">later comments &raquo;</a>
+<a href="$PHP_SELF?uid=$uid&page_num=$page_back">later comments &raquo;</a>
 EOT;
   }
   
