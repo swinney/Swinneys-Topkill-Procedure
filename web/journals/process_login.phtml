@@ -7,7 +7,7 @@ if (!$username || !$password) {
   exit;
 }
 
-$res = mysql_query("SELECT user_name,password FROM user WHERE user_name='$username'") or
+$res = mysql_query("SELECT username,password FROM user WHERE username='$username'") or
 die(error_page(mysql_error()));
 
 $user = mysql_fetch_object($res);
@@ -15,8 +15,7 @@ if (!$user) {
   // username does not exist in the database
   $login_error_msg =
     "Sorry, $username but you are going to have to register that.";
-  $username = '';
-  include("login.phtml");
+  header("Location: submit_register.phtml?username=$username");
   exit;
 }
 
@@ -28,8 +27,9 @@ if (crypt($password, $user->password) != $user->password) {
 
 // save the username in the session so other pages can access it later
 // in the session
-$authenticated_username = $user->user_name;
+$authenticated_username = $user->username;
 session_register("authenticated_username");
 
 header("Location: " . URLBASE);
 ?>
+
