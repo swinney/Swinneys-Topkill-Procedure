@@ -22,21 +22,17 @@ conn();
 <META HTTP-EQUIV="Expires" CONTENT="0">
 <STYLE TYPE="text/css">
 <!--
-/* so I don't have to fuck with font tags */
-p {  font-family: Times New Roman, Times, serif; font-size: 10pt} 
-/* predefined colr name */
-pre { color: navy } 
 
-real {
-position: absolute;
-top: 0em;
-right: 0em;
-}
+body { bgcolor:"CCCCCC"; marginwidth:0; marginheight:0; leftmargin:0; topmargin:0 }
+p {  font-family: Times New Roman, Times, serif; font-size: 10pt} 
+pre { color: navy } 
+real { position: absolute; top: 0em; right: 0em; }
 
 -->
+
 </STYLE>
 </HEAD>
-<BODY bgcolor="CCCCCC" marginwidth=0 marginheight=0 leftmargin=0 topmargin=0>
+<BODY>
 
 <!-- END PHP Dynamically Required File: top.inc -->
 
