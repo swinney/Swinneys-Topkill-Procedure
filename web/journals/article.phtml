@@ -33,12 +33,12 @@ $articletitle = stripslashes($d->title);
 $usernamenourl = stripslashes($d->username);
 
 $title = "$articletitle, by $usernamenourl";
-
 $into_template="insert_article.inc";
-
 // do you have comments?
 $into_template2="insert_comments.phtml";
-
+# is rollcall.inc displayed?
+# 0 for norollcall.inc; 1 for rollcall.inc.
+$rollcall=1;
 include "template.inc";
 
 }
