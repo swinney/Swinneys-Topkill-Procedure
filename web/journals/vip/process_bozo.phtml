@@ -1,32 +1,114 @@
-<?
-// -*- Mode: PHP; indent-tabs-mode: nil; -*-
-// $Id$
-
+<?   /* -*- Mode: PHP; indent-tabs-mode: nil; -*- */
 require_once("./global.inc");
+require_once("Swinsite/User.php");
+
+$user = new Swinsite_User($authenticated_user_id);
+$rv = $user->restore();
+if (PEAR::isError($rv)) {
+    die(error_page($rv));
+}
+
+$bozoSet = $user->bozos();
+$bozos = $bozoSet->getAll();
+if (PEAR::isError($bozos)) {
+    die(error_page($bozos));
+}
+
+/* make a lookup table keyed on user_id so we can easily find bozos
+   later */
+$bozo_table = array();
+foreach ($bozos as $bozo) {
+    $bozo_table[$bozo->id()] = $bozo;
+}
 
 if ($remove) {
-  // maintain a list of usernames that have been successfully removed
-  foreach ($username as $u) {
-    if (!$del) {
-      $del = "$u";
-    } else {
-      $del .= ",$u";
-  }
+    /* maintain a list of usernames that have been successfully
+       removed */
+    $removed = array();
 
-      $query = <<<EOT
-DELETE FROM user_bozo
-      WHERE user_id=$authenticated_user_id
-        AND bozo_id in ($del)
-EOT;
-      $res = mysql_query($query) or
-        die(error_page(mysql_error()));
-      // remove the username from the session cache
+    foreach ($bozo_ids as $id) {
+        $to_remove = $bozo_table[$id];
+        if ($to_remove) {
+            $rv = $bozoSet->remove($to_remove);
+            if (PEAR::isError($rv)) {
+                die(error_page("can't remove bozo [$id]", $rv));
+            }
 
-  }
-  $bozo_set=get_bozo_set();
+            array_push($removed, $to_remove->username());
+        }
+    }
+
+    /* rebuild the cached bozo set */
+    $cur_bozos = array();
+    foreach ($bozoSet->getAll() as $bozo) {
+        array_push($cur_bozos, $bozo->id());
+    }
+    $bozo_set = "(" . implode(",", $cur_bozos) . ")";
+    session_register("bozo_set");
+
+    $success_msg = "Removed " . (implode(", ", $removed)) . ".";
+}
+else {
+    /* don't check "if ($add)" since they may have just hit enter, in
+       which case the button parameter won't be set */
+
+    if ($bozo_username) {
+        /* see if the submitted username is already in the list. be
+           case insensitive, since the bozo database table is that
+           way. */
+        foreach ($bozos as $b) {
+            if (strtolower($b->username()) == strtolower($bozo_username)) {
+                $found = 1;
+                break;
+            }
+        }
+
+        if (! $found) {
+            /* add the bozo */
+            $new_bozo = new Swinsite_User();
+            $new_bozo->username($bozo_username);
+            $rv = $new_bozo->restore();
+            if (PEAR::isError($rv)) {
+                die(error_page("can't restore user [$username]", $rv));
+            }
+
+            if ($rv != PERSISTENT_ERROR_NOT_FOUND) {
+                $rv = $bozoSet->add($new_bozo);
+                if (PEAR::isError($rv)) {
+                    die(error_page("can't add bozo [$username]", $rv));
+                }
+
+                /* rebuild the cached bozo set */
+                $cur_bozos = array();
+                foreach ($bozoSet->getAll() as $bozo) {
+                    array_push($cur_bozos, $bozo->id());
+                }
+                $bozo_set = "(" . implode(",", $cur_bozos) . ")";
+                session_register("bozo_set");
+
+                $success_msg = "Added $bozo_username.";
+            }
+            else {
+                $error_msg = "That user does not exist.";
+            }
+        }
+        else {
+            $error_msg = "That username is already in your bozo list.";
+        }
+    }
+    else {
+        $error_msg = "You didn't specify a username. Try again.";
+    }
+}
+
+if ($error_msg) {
+    session_register("error_msg");
+}
+
+if ($success_msg) {
+    session_register("success_msg");
 }
 
 header("Location: $HTTP_REFERER");
 
 ?>
-
