@@ -1,4 +1,6 @@
 <?
+// -*- Mode: PHP; indent-tabs-mode: nil; -*-
+// $Id$
 
 require_once("global.inc");
 
@@ -8,7 +10,7 @@ if ($add) {
     // add the username to the bozo table
     $query = "INSERT INTO user_bozo VALUES ($user_id, '$username')";
     $res = mysql_query($query) or
-	  die(error_page(mysql_error()));
+          die(error_page(mysql_error()));
 
     // ad the username to the session cache
     array_push($bozos, $username);
@@ -19,7 +21,7 @@ if ($add) {
     // also set at login time!
     $b = array();
     foreach ($bozos as $x) {
-	  array_push($b, "'$x'");
+          array_push($b, "'$x'");
     }
     $bozo_set = '(' . implode(", ", $b) . ')';
     session_register("bozo_set");
@@ -41,22 +43,16 @@ DELETE FROM user_bozo
         AND bozo='$u'
 EOT;
       $res = mysql_query($query) or
-	die(error_page(mysql_error()));
+        die(error_page(mysql_error()));
 
       // remove the username from the session cache
-      // php >= 4.0.5 would let us do
-      //   array_splice($bozos, array_search($u, $bozos), 1);
-
+      $new_bozos = array();
       for ($i = 0; $i < count($bozos); $i++) { 
-	if ($bozos[$i] == $u)
-	  break;
+        if ($bozos[$i] && $bozos[$i] != $u) {
+	  array_push($new_bozos, $bozos[$i]);
+	}
       }
-
-      if ($i == 0) {
-	array_shift($bozos);
-      } else if ($i) {
-	array_splice($bozos, $i, 1);
-      }
+      $bozos = $new_bozos;
 
       array_push($removed, $u);
     } else {
