@@ -1,14 +1,12 @@
 <?
 #$Id$
 include "../global.inc";
-/*
-echo "article id: $article_id<BR>";
-echo "comment id: $comment_id<BR>";
-echo "comment   : $comment<BR>";
-echo "$DB<BR>";
-*/
 
-$res = mysql_query("UPDATE comments SET comment='$comment', timestamp=$timestamp WHERE comment_id=$comment_id");
+$res = mysql_query("UPDATE comments 
+                    SET comment='$comment', 
+                        timestamp=$timestamp, 
+                        status=$status
+                    WHERE comment_id=$comment_id");
 
   if ($res == false) {
      echo "update failed for:";
