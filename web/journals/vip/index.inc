@@ -12,6 +12,14 @@ if ($error_msg) {
 </p>
 EOT;
 }
+
+if ($success_msg) {
+  echo <<<EOT
+<p>
+<b><font color="green">$success_msg</font></b>
+</p>
+EOT;
+}
 ?>
 
 <hr>
@@ -25,18 +33,26 @@ Change your password:
 <table>
 <tr>
 <td align="right" valign="middle">
-<p>password:</p>
+<p>old password:</p>
 </td>
 <td align="left" valign="middle">
-<input type="password" name="password1" size="10" maxlength="20">
+<input type="password" name="old_password" size="10" maxlength="20">
 </td>
 </tr>
 <tr>
 <td align="right" valign="middle">
-<p>confirm:</p>
+<p>new password:</p>
 </td>
 <td align="left" valign="middle">
-<input type="password" name="password2" size="10" maxlength="20">
+<input type="password" name="new_password1" size="10" maxlength="20">
+</td>
+</tr>
+<tr>
+<td align="right" valign="middle">
+<p>new password (again):</p>
+</td>
+<td align="left" valign="middle">
+<input type="password" name="new_password2" size="10" maxlength="20">
 </td>
 </tr>
 <tr>
