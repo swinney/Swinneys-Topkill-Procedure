@@ -116,7 +116,7 @@ EOT;
   // retrieve the article data
 
   $query = <<<EOT
-  SELECT *
+     SELECT article_id, username, title, blurb, date
     FROM articles_info
    WHERE status=2 
 EOT;
