@@ -80,7 +80,7 @@ EOT;
   $url = "article.phtml?id=$d->article_id";
   
 // let's cut a nice little page header into here - J. 
-  /** TODO: make this nav crap a function in global.inc
+//** TODO: make this nav crap a function in global.inc
 echo <<<EOT
 
 <table cellpadding="0" cellspacing="0" border="0">
