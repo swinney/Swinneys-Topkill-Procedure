@@ -3,16 +3,35 @@
 
 // 
 
-$res = mysql( "$DB", "SELECT * FROM pending_articles WHERE status='2' ORDER BY time DESC limit 5" );
+$res = mysql( "$DB", "SELECT article_id,username,web,date,title,blurb FROM pending_articles WHERE status='2' ORDER BY time DESC limit 10" );
 
-// multiple rows, limit 5 latest
-while ( $individual_row = mysql_fetch_object( $res ) ) {
+// multiple rows, limit 10 latest
+while ( $d = mysql_fetch_object( $res ) ) {
+
+$article_id=$d->article_id;
+$username=$d->username;
+$web=$d->web;
+$date=$d->date;
+$title=$d->title;
+$blurb=$d->blurb;
+
+
+
+if ($web != "") {
+	$username="<a href='".$web."'> ".stripslashes($username)."</a>";
+}
+
+
 
 $url = "journals/article.phtml?id=";
-   echo "<a href='$individual_row->web'>$individual_row->username</a> writes ";
-   echo "<a href=\"$url$individual_row->article_id.txt\"><B>$individual_row->title</a></B><BR><BR>\n";
+
+   echo "<P>$username writes ";
+   echo "<a href=\"$url$article_id.txt\"><B>$title</a></B></P>\n";
 
 }
+
+
+
 
 
 ?>
