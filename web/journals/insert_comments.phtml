@@ -28,11 +28,17 @@ in order.
 EOT;
 
 $query = <<<EOT
-  SELECT comment_id,user_id,username,comment,nature,to_user_id
+  SELECT comments.comment_id,
+         comments.user_id,
+         comments.username,
+         comments.comment,
+         comments.nature,
+         comments.to_user_id
     FROM comments
-   WHERE article_id=$id
+   WHERE article_id=$id 
      AND status=0 
 EOT;
+echo "<!-- \n$query\n-->";
 /*
  * bozo filter is set at login time and contains user_id's to 
  * avoid.
@@ -61,16 +67,18 @@ ORDER BY comment_id
 EOT;
 
 $res = mysql_query ($query);
-
+$to_users=array();
 while ($d = mysql_fetch_object($res)) {
   $username = stripslashes($d->username);
   $comment = stripslashes($d->comment);
   $user_id = $d->user_id;
-
+  $to_user_id = $d->to_user_id;
+  $to_users["$user_id"]=$username;
 
   /* build the user link
    */
   $username = "<a href=\"./info_user.phtml?uid=$user_id\">$username</a>"; 
+
 
   /* LULU MADNESS
    * the things we do for chicks - J.
@@ -80,6 +88,9 @@ while ($d = mysql_fetch_object($res)) {
     $username = "<span style=\"background-color:pink\">$username";
     $comment = "$comment</span>";
   }
+  if ($to_users[$to_user_id]) {
+    $username .= " to " . $to_users["$to_user_id"];
+  }  
 
   $html .= <<<EOT
 
@@ -100,7 +111,7 @@ while ($d = mysql_fetch_object($res)) {
 
 <tr>
 <td>
-<b>$username:</b> $comment
+<b>$username :</b> $comment
 </td>
 </tr>
 
@@ -131,14 +142,14 @@ if (mysql_num_rows($res) >= 5) {
 
 <tr>
 <td align="right">
-<a href="submit_comment.phtml?id=$basename" accesskey="s" target="_top" onmouseover="MM12.mouseOver(); window.status='Add a Comment'; return true" onmouseout="MM12.mouseOut(); window.status=' '; return true"><img src="img/addcomment.gif" alt="Add A Comment" width="104" height="23" border="0" name="addcomment2"></a></td>
+<a href="submit_comment.phtml?id=$id" accesskey="s" target="_top" onmouseover="MM12.mouseOver(); window.status='Add a Comment'; return true" onmouseout="MM12.mouseOut(); window.status=' '; return true"><img src="img/addcomment.gif" alt="Add A Comment" width="104" height="23" border="0" name="addcomment2"></a></td>
 </tr>
+</TABLE>
 EOT;
 }
 echo $first;
 echo $html;
 echo $last;
-echo "</TABLE>";
 ?>
 
 
