@@ -3,6 +3,9 @@
 ////////////////////////////////////////////////////////
 // $Id$
 
+require_once("DB.php");
+require_once("HTML/Table.php");
+
 /*
  * initialize the session. make the session cookie persist for a long,
  * long time. dot his before anything else so that if something dies,
@@ -57,6 +60,10 @@ if (!defined("DIRBASE")) {
     define("DIRBASE", "/sky/www/swinney.org/html");
 }
 
+if (!defined("INCDIR")) {
+    define("INCDIR", "/sky/www/swinney.org/html/journals/templates");
+}
+
 if (!defined("IMGBASE")) {
     define("IMGBASE", "/sky/www/swinney.org/html/dev/journals/images");
 }
@@ -96,11 +103,17 @@ if (defined("LIBDIR")) {
 }
 
 /*
+ * poor man's object directory: set up a global array in which we can
+ * store named resources
+ */
+$SWINSITE = array();
+
+/*
  * connect to the database. if unsuccessful, display an error message.
  * no reason to make this a function, since nobody would ever have a
  * need to call it!
  */
-require_once('DB.php');
+
 $dsn = array(
              'phptype' => "mysql",
              'hostspec' => DB_HOST,
@@ -111,10 +124,14 @@ $dsn = array(
 
 
 $db = DB::connect($dsn, true);
-
-if (PEAR::isError($db)) {
+if (DB::isError($db)) {
     die (error_page("can't connect to the database: " . $db->getMessage()));
 }
+
+/*
+ * cache the database handle in the object directory
+ */
+$SWINSITE['db_connection'] = $db;
 
 ##########################################################
 #################  FUNCTION LIST #########################
@@ -149,9 +166,9 @@ function use_lib($dir) {
  * ix, Wed Aug 22 11:02:20 PDT 2001
  */
 
-function error_page($msg) {
-  $css_url = CSS_URL;
-  $html = <<<EOT
+function error_page($e) {
+    $css_url = CSS_URL;
+    $html = <<<EOT
 <html>
 <head>
 <title>swinney.org: error!</title>
@@ -166,22 +183,26 @@ email Austin</a> and tell him.
 </p>
 EOT;
 
-  if ($msg) {
-    $html .= <<<EOT
+    if ($e) {
+	if (PEAR::isError($e)) {
+	    $e = $e->message . " [" . $e->userinfo . "]";
+	}
+
+	$html .= <<<EOT
 <p>
 <b>Error:</b>
-<em>$msg</em>
+<em>$e</em>
 </p>
 EOT;
-  }
+    }
 
-  $html .= <<<EOT
+    $html .= <<<EOT
 
 </body>
 </html>
 EOT;
 
-  return $html;
+    return $html;
 }
 
 ###################################
@@ -381,7 +402,6 @@ EOT;
 //////////////////////////////////////
 
 function get_comments($id,$db) {
-  require_once ("/sky/users/swinney/htdocs/dev/php4/pear/HTML/Table.php");
   $query = <<<EOT
   SELECT username,comment_id,comment
     FROM comments
