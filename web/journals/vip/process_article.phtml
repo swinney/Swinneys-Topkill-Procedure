@@ -51,7 +51,6 @@ if ($username) {
      web='$web',
      date='$date',
      time='$time',
-     status=1,
      keywords='$esc_keywords',
      title='$esc_title',
      blurb='$esc_blurb',
@@ -122,7 +121,7 @@ if ($error_msg) {
   if ($images_too=="no") {
     $loc = $HTTP_REFERER;
   } else {
-    $loc = "submit_image.phtml?article_id=$temp_aid";
+    $loc = "../submit_image.phtml?article_id=$temp_aid";
   }
 
     header("Location: $loc");
