@@ -39,11 +39,14 @@ find what you've written, but it's not a rule or anything.
 <b>what should i write?</b>
 </p><p>
 anything you want! entries have consisted of anything from bad haiku
-to someone's irc chat logs to harrowing tales of near death. no pressure.
+to someone's irc chat logs to harrowing tales of near death. 
 </p><p>
 carefully constructed texts and thoughtful rambles are always
 appreciated. you know, <i>writing</i>.
-
+</p><p>
+this isn't a BBS and this isn't a mailing list. posts that make us
+feel like this is a BBS or a mailing list might not make it through
+our not-so-rigourous editorial process.
 
 <p>
 <b>who will read what i write?</b>
