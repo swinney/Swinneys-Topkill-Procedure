@@ -87,7 +87,7 @@ write so everyone can see them.
 sometimes the person activating decides what you wrote didn't
 have enough content or was a mistaken submission. sometimes we are just lazy and
 didn't go and activate the article yet. rarely, but sometimes,
-whatever you wrote just gets vetoed for nebulous editorial purposes.  .
+whatever you wrote just gets vetoed for nebulous editorial purposes.
 </p>
 
 
