@@ -46,6 +46,7 @@ $article_id = $article_id[0];
 $username=stripslashes($username);
 $comment=stripslashes($comment);
 $add_id=stripslashes($add_ip);
+$char=strlen($comment);
 if (!$user_id) {
   $user_id="0";
 }
@@ -59,7 +60,7 @@ INSERT INTO comments
 	     "$username",
 	     "$comment",
 	      $nature,
-	      $type,
+	      $char,
 	      $to_user,
 	      0,
 	      "$ip_addr"
