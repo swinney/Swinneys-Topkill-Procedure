@@ -99,6 +99,8 @@ didn't go and activate the article yet. rarely, but sometimes,
 whatever you wrote just gets vetoed for nebulous editorial purposes.
 </p>
 
+<p class="subheader"><b>i posted something on swinney.org, and now somebody else wants to publish it?</b></p>
+<p>nice! uncle swinney is proud of his kiddies.  kindly get swinney.org a reference and send an autographed copy when it is published to: <i>uncle swinney, 4604 dawn ln., soquel CA 95073</i>.</P>
 
 <p class="subheader"><b>how come i commented on something and it was there, but then disappeared?</b></p>
 
@@ -133,7 +135,7 @@ see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. war
 
 <p class="subheader"><b>for general assistance with this site, inquiries:</b></p>
 <P>the swinney.org editorial staff<BR>
-editorsNO@SPAMswinney.org</P>
+editors[=NO @ SPAM=]swinney.org</P>
 
 </td>
 </tr>
