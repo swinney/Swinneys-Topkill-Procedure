@@ -1,40 +1,61 @@
+<?php
+// $Id$
+
+$html .=<<<EOT
 <!-- BEGIN PHP Dynamically Required File: roll_call_all.inc -->
 
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 
 <!-- <*austin*> i am a fucking phat php coder and the dude ox at surfmetro can eat my spunk  -->
+EOT;
 
-<?
-$res = mysql_query ( "SELECT DISTINCT username FROM articles_info WHERE status='2' OR status='3' ORDER BY username");
+$query = <<<EOT
+  SELECT DISTINCT(username) as username,
+         COUNT(username) count 
+    FROM articles_info 
+   WHERE status IN (2,3) 
+     AND username<>"" 
+     AND username=username 
+GROUP BY username 
+ORDER BY username
+EOT;
 
-  echo "<TABLE><TR>";
+$res = mysql_query ($query);
+
+  $html .= "<TABLE ALIGN=CENTER><TR>";
 
   // initialize index at zero for modulo
   $index = 0;
 
-while ($row = mysql_fetch_object ($res)) {
-  $res2 = mysql_query ( "SELECT count(*) FROM articles_info WHERE username='$row->username'");
-  $count = mysql_fetch_row($res2); 
-
-
+while ($d = mysql_fetch_object ($res)) {
+  $url_username=urlencode($d->username);
   // increment the index for modulo
   $index++;
   $remainder = $index % 5;
 
-  echo "<TD><a href='userpages.phtml?username=$row->username'>$row->username($count[0])</a></TD>\n";
+  $html .=<<<EOT
+<TD>
+<a href='userpages.phtml?username=$url_username'>$d->username</a>
+    ($d->count)
+</TD>\n
+EOT;
 
 
   if ($remainder==0) {
-  echo "</TR><TR>\n";  
+  $html .= "</TR><TR>\n";  
   }
 
 }
 
-echo "</TR></TABLE>";
+$html .= "</TR></TABLE>
+<!-- END PHP Dynamically Required File: roll_call_all.inc -->
+";
 
+
+echo $html;
 ?>
 
-<!-- END PHP Dynamically Required File: roll_call_all.inc -->
+
 
 
 
