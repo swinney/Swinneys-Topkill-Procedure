@@ -1,0 +1,18 @@
+<?
+#########################################################
+# $Id$
+# process the username inserting it
+# into the database allong with the 
+# password and ip_addr (in case we get
+# yahoos submitting multiple usernames.
+
+require_once("global.inc");
+
+$query = "select username from where username='$username'";
+$res = mysql_query($query);
+$rows = myql_num_rows($res);
+
+if ($rows == 1 ) {
+
+
+
