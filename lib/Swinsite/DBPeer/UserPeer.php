@@ -100,16 +100,12 @@ EOT;
 
     function get_last_insert_id_sql() {
         return <<<EOT
-  SELECT id
+  SELECT user_id
     FROM user
-ORDER BY id DESC
+ORDER BY user_id DESC
    LIMIT 1
 EOT;
     }
 }
 
 ?>
-
-
-
-
