@@ -32,11 +32,15 @@ $thought=$d->thought;
 $username=stripslashes($username);
 $thought=stripslashes($thought);
 
-$ext = substr($thought,-5, 3);
+$ext = substr($thought,-3);
 
 if ($ext == "jpg"||$ext == "gif"||$ext == "png") {
 
-echo "<tr>\n<td>&nbsp;</td>\n<td>&nbsp;</td>\n<td align=\"center\" class=\"thoughts\">$thought($username)</td>\n<tr>\n";
+echo <<<EOT
+<tr>\n
+<td colspan=3 align="center" class="thoughts"><IMG SRC="$thought" ALT="$username"></td>\n
+<tr>
+EOT;
 
 } else {
 
