@@ -76,7 +76,7 @@ EOT;
 //
 // Apply the bozo filter
 //
-if (count($bozos)) {
+if ($bozo_set) {
   $query .= " AND username NOT IN $bozo_set";
 }
 $query .= " GROUP BY username";

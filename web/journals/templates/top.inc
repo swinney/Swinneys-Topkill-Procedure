@@ -27,14 +27,39 @@ if($yes && !$authenticated_username) {
   is_auth("$authenticated_username","$thisurl");
   exit();
 }
-
-
-
 ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- you madame of the internet,  -->
+<!-- you gigolo  of the world,    -->
+<!-- don't forget to breath.      -->
+<!-- EVERYTHING {c} Swinney.org   -->
+<!-- s.o is a technical product of
+         (in order of appearance):
+
+Austin Swinney
+"I want a ..."
+programmer   
+
+Elly Millican
+"i can't believe more people don't do this"
+early adopter
+
+Steve Simizis
+Hint: double soy mocha with a shot of vanilla
+atari system administrator
+
+Brian Mosely
+"Eat a dong."
+programmer/atari database administrator
+
+James Home
+"I learned it from you!"
+artist in residence
+-->
 
 <html>
 <head>
-<title>swinney.org: <? echo "$title" ?></title>
+<title>swinney.org: <? echo "$title"; ?></title>
 
 <meta http-equiv="expires" content="0">
 <meta name="keywords" content=" austin swinney ;">

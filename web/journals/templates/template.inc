@@ -17,6 +17,7 @@ if (isset($into_template2)) {
 }
 
 
+if (basename($PHP_SELF)=="article.phtml") {
 /*
  * this is the multi display.
  */
@@ -29,6 +30,7 @@ if ($num>0) {
    * $multi is html returned.
    */
   echo $multi;
+}
 }
 include (INCDIR ."/bottom.req");
 include (INCDIR ."/footer.inc");
