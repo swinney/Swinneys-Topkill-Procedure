@@ -5,7 +5,7 @@ require_once("../journals/global.inc");
 
 include_once("./top.inc");
 
-$query="SELECT * FROM shorts ORDER BY article_id LIMIT 1";
+$query="SELECT * FROM shorts ORDER BY article_id DESC LIMIT 1";
 
 $res=mysql_query($query) or die (error_page($query));
 
