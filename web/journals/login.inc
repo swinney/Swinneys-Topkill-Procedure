@@ -10,7 +10,9 @@ if (! session_is_registered("back_to")) {
   } else {
     $back_to = $HTTP_REFERER;
   }
-  session_register("back_to");
+  // if this is needed it will have to go in global or top somewhere
+  // because this file is an include below top.inc which has output.
+  //  session_register("back_to");
 }
 ?>
 
@@ -27,7 +29,7 @@ if ($error_msg) {
 <span class="header"><b>$error_msg</b></span>
 EOT;
 } else {
-  echo '<span class="header"><b>', $title, ':</b></span>';
+  echo '<span class="header"><b>', $title, ': </b></span>';
 }
 ?></td>
 </tr>
