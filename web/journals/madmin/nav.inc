@@ -3,6 +3,7 @@
 
 $page=split('/',$SCRIPT_NAME);
 $last=end($page);
+$username=get_username($user_id);
 
 $url = array(
              "index.phtml" => "Home",
@@ -41,7 +42,7 @@ EOT;
 $article_sub=array(
 		   "Info" => "article_info.phtml",
 		   "Preview" => "preview_article.phtml",
-		   "Edit" => "edit_article.phtml",
+		   "Edit" => "submit_articles_text.phtml",
 		   "View Images" => "view_images.phtml",
 		   "Add Image" => "submit_image.phtml",
 		   "Categorize" => "categorize_article.phtml",
