@@ -3,7 +3,7 @@
 $articles = mysql_fetch_row ( mysql_query ( "SELECT count(article_id) FROM articles_info" ) );
 $comments = mysql_fetch_row ( mysql_query ( "SELECT count(comment_id) FROM comments" ) );
 $thoughts = mysql_fetch_row ( mysql_query ( "SELECT count(comment_id) FROM thoughts" ) );
-$pending = mysql_fetch_row ( mysql_query ( "SELECT count(status) FROM articles_info where status=0") );
+$pending = mysql_fetch_row ( mysql_query ( "SELECT count(status) FROM articles_info where status=1") );
 
 echo "<!--\n";
 echo "WORLD DOMINATION PROGRESS-O-METER\n";
