@@ -42,7 +42,7 @@ $article_id = $article_id[0];
 
 // echo "$username<br>$comment<br>$nature<br>";
 
-$res = mysql("$DB","INSERT INTO thoughts VALUES (NULL, NULL,'".addslashes($username)."','".addslashes($thought)."','$ip_addr')"); 
+$res = mysql("$DB","INSERT INTO thoughts VALUES (NULL, NULL,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
 
   if ( $res == false ) { 
     echo ("Bollocks!");
