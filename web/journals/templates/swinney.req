@@ -12,22 +12,24 @@
 <TABLE BORDER=0 CELLSPACING="0" CELLPADDING="2" WIDTH="100%" valign=top>
 <TR ALIGN="left" VALIGN="top">
 <TD>
- <A HREF="../index.phtml">swinney.org</A><BR>
+ <A HREF="<? echo URLBASE ?>/index.phtml">swinney.org</A><BR>
 <?
 if ($authenticated_username) {
-  echo <<<EOT
-<a href="process_logout.phtml">log out</a><br>
-EOT;
+  echo ' <A HREF="'.URLBASE.'/journals/vip/index.phtml">VIP</A><BR>'."\n";
 } else {
-  echo <<<EOT
-<a href="login.phtml">log in</a><br>
-EOT;
+  echo ' <A HREF="'.URLBASE.'/journals/login.phtml">log in</A><BR>'."\n";
 }
 ?>
- <A HREF="index.phtml">articles</A><BR>
- <A HREF="comments.phtml">comments</A><BR>
- <A HREF="search.phtml">search</A><BR>
- <A HREF="admin/index.phtml">admin</A><BR>
+ <A HREF="<? echo URLBASE ?>/journals/index.phtml">articles</A><BR>
+ <A HREF="<? echo URLBASE ?>/journals/comments.phtml">comments</A><BR>
+ <A HREF="<? echo URLBASE ?>/journals/search.phtml">search</A><BR>
+ <A HREF="<? echo URLBASE ?>/journals/admin/index.phtml">admin</A><BR>
+<?
+if ($authenticated_username) {
+  echo ' <A HREF="'.URLBASE.'/journals/process_logout.phtml">log out</A><BR>';
+  echo "\n";
+}
+?>
 </TD>
 </TR>
 </TABLE>
