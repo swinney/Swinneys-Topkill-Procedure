@@ -13,10 +13,12 @@ if ($login_error_msg) {
 <b><font color="red">$login_error_msg</font></b>
 </p>
 EOT;
+} else {
+   echo "<P>please register your username.</P>";
 }
 ?>
 
-<P>please register your username.</P>
+
 <TABLE>
 <TR>
 	<TD ALIGN="left">
@@ -41,7 +43,7 @@ EOT;
 
 	<TD ALIGN="left">
 
-	<input type="password" name="password" size="10" maxlength="20">
+	<input type="password" name="password1" size="10" maxlength="20">
 
 	</TD>
 
@@ -56,7 +58,7 @@ EOT;
 
 	<TD ALIGN="right">
 
-	<input type="password" name="password" size="10" maxlength="20">
+	<input type="password" name="password2" size="10" maxlength="20">
 
 	</TD>
 
@@ -72,7 +74,7 @@ EOT;
 
 	<TD ALIGN="right">
 
-	<input type="text" name="email" size="10" maxlength="40">
+	<input type="text" name="email" value="<? echo $email; ?>" size="10" maxlength="40">
 
 	</TD>
 
