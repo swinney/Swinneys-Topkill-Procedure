@@ -7,7 +7,7 @@ if ($submit_image) {
     if (is_uploaded_file($userfile)) {
       if (ereg("^image/(.+)$", $userfile_type, $matches)) {
         $ext = strtolower($matches[1]);
-        if ($ext == "jpeg") {
+        if ($ext == "pjpeg") {
           $ext = "jpg";
         }
 
@@ -20,7 +20,7 @@ if ($submit_image) {
         $filename = $article_id . "_" . $index . "." . $ext;
 
         // Copy the file to our uploads directory
-        $destination = DIRBASE . "/journals/images/$filename";
+        $destination = IMGBASE . "/$filename";
         if (move_uploaded_file($userfile, $destination)) {
           $query = <<<EOT
 UPDATE articles_info
@@ -52,5 +52,4 @@ EOT;
 } else {
   header("Location: " . URLBASE);
 }
-
-?>
+?> 
