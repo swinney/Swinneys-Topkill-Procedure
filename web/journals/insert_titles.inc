@@ -21,11 +21,35 @@ if ($web != "") {
 	$username="<a href='".$web."'> ".stripslashes($username)."</a>";
 }
 
+	$writes = array( 1 => 
+			'writes',
+			'pens',
+			'scribes',
+			'whips out',
+			'jots',
+			'notes',
+			'scrawls',
+			'scribbles',
+			'drafts',
+			'whips off',
+			'makes another swinney with',
+			'clarifies',
+			'shares',
+			'steals the narrative with',
+			'makes a statement with',
+			'howles',
+			'enunciates with',
+			'with forked tongue speaks',
+			'defines the <I>rules of engagement</I> IN'
+			);
+
+	$word=count($writes);
+	$num=dice(1,$word);
 
 
 $url = "journals/article.phtml?id=";
 
-   echo "<P>$username writes ";
+   echo "<P>$username $writes[$num] ";
    echo "<a href=\"$url$article_id.txt\"><B>$title</a></B></P>\n";
 
 }
