@@ -28,11 +28,11 @@ if ($insert_since) {
   $query .= " AND timestamp > $insert_since ";
 }
 $query .= <<<EOT
-ORDER BY timestamp DESC
+ ORDER BY timestamp DESC
 EOT;
 
 $res = mysql_query($query) or
-  die(error_page(mysql_error()));
+  die(error_page(mysql_error(). " with query: $query"));
 $row = mysql_fetch_row($res);
 
 if (!$row) {
@@ -73,7 +73,7 @@ EOT;
     $query .= " AND timestamp > $insert_since";
   }
   $query .= <<<EOT
-ORDER BY timestamp DESC limit $page_start,$per_page
+ ORDER BY timestamp DESC limit $page_start,$per_page
 EOT;
   $res = mysql_query($query) or
     die(error_page(mysql_error()));
