@@ -8,8 +8,12 @@
 # functions for use in the site
 
 
-define("WWW_ROOT", "http://swinney.org/dev/journals");
-define("TITLE", "swinney.org");
+define("WWW_ROOT", "http://localhost/~bcm/swinney/journals");
+define("TITLE", "~bcm | swinney.org");
+define("DB_HOST", "localhost");
+define("DB_USER", "swinney");
+define("DB_PASSWD", "mang");
+define("DB_NAME", "swinney");
 
 
 #########################################################
@@ -41,7 +45,21 @@ define("TITLE", "swinney.org");
 
 
 # to delete the cookie just dont set the username
- setcookie("","",time()+14400,"/",".swinney.org",0);
+#setcookie("","",time()+14400,"/",".swinney.org",0);
+
+
+/*
+ * connect to the database. if unsuccessful, display an error message.
+ * no reason to make this a function, since nobody would ever have a
+ * need to call it!
+ */
+
+$conn = @mysql_connect(DB_HOST, DB_USER, DB_PASSWD) or
+die(error_page("Connection failed for user '" . DB_USER .
+	       "' to database server '" . DB_HOST . "'"));
+
+@mysql_select_db(DB_NAME) or
+die(error_page(mysql_error()));
 
 ##########################################################
 #################  FUNCTION LIST #########################
@@ -54,32 +72,42 @@ define("TITLE", "swinney.org");
 # austin
 ##########################################################
 
-###################################
-# conn() - database connection,
-# returns error if db is down.
-# austin, Mon Jul 23, 2001  9:50 PM
+/*
+ * error_page($msg) - This generates an HTML error page (including
+ * head and body tags) displaying the specified error message. The
+ * result is useful as an argument for die().
+ * ix, Wed Aug 22 11:02:20 PDT 2001
+ */
 
-Function conn()
+function error_page($msg) {
+  include("journals/templates/top.inc");
+  $html = <<<EOT
+<p>
+<b><font color="red">BIG RED FLAG!</font></b>
+</p>
+<p>
+Something is broken. You should <a href="mailto:austin@swinney.org">
+email Austin</a> and tell him.
+</p>
+EOT;
 
-{       
-        
-        $conn=@mysql_connect("localhost", "swinney", "XXXXXXXX");
-        @mysql_select_db("swindev");
- 
-        if ( $conn == false)
+  if ($msg) {
+    $html .= <<<EOT
+<p>
+<b>Error:</b>
+<em>$msg</em>
+</p>
+EOT;
+  }
 
-        {       
-                
-                echo "<font size=6 color=red><b>We are moving to Saturn5.com<br>";
-                echo "<br>thanks for your patience.</b></font></body></html>";
-                exit;
+  $html .= <<<EOT
 
-        }
+</body>
+</html>
+EOT;
 
-
+  return $html;
 }
-
-
 
 ###################################
 # dice() - This generates a

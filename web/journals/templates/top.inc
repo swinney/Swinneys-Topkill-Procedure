@@ -9,12 +9,6 @@ $Id$
 #####################################
 -->
 
-<?
-// connect to the database
-include "journals/global.inc";
-conn();
-?>
-
 <HTML>
 <HEAD>
 <TITLE>swinney.org</TITLE>

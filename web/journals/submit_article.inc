@@ -1,6 +1,7 @@
 <PRE>$Id$</PRE>
 <?
 // include the top with the global include 
+include "global.inc";
 include "templates/top.inc";
 
 echo "<form action=\"submit_article.phtml?page=1\" method=post>";

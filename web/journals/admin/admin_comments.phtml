@@ -1,5 +1,6 @@
 <? 
 #$Id$
+include "../global.inc";
 include "../templates/top.inc";
 include "admin_nav.inc";
 ?>
@@ -28,7 +29,7 @@ $comment = $d->comment;
 $article_id = $d->article_id;
 
 echo "<TR><TD valign='top'>\n";
-echo "<a href='http://swinney.org/journals/article.phtml?id=$article_id.txt#$comment_id'>($article_id) $comment_id</a></TD>\n";
+echo "<a href='../article.phtml?id=$article_id.txt#$comment_id'>($article_id) $comment_id</a></TD>\n";
 echo "<TD valign='top'><a href='edit_comments.phtml?comment_id=$comment_id&previous=$previous'>=>edit<=</a></TD>";
 echo "<TD valign='top'>$username</TD><TD>".stripslashes($comment)."</TD></TR>";
 
