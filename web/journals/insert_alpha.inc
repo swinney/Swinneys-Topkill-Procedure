@@ -3,7 +3,7 @@
 
 $alpha=array(1 => "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z");
 
-
+if (!$i) $i=1;
 if ($i) {
   $query=<<<EOT
      SELECT article_id, title FROM articles_info WHERE status=2 AND title REGEXP '^([0-9]{1,4}[/-]{0,1}[0-9]{0,4} +){0,1}($alpha[$i])+' ORDER BY title ASC
