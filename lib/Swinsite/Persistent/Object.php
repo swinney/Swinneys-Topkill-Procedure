@@ -1,7 +1,6 @@
 <?php   // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 
 require_once("PEAR.php");
-require_once("Swinsite/DBPeer/UserPeer.php");
 require_once("Swinsite/Persistent/Globals.php");
 
 class Swinsite_Persistent_Object extends PEAR {
@@ -34,14 +33,6 @@ class Swinsite_Persistent_Object extends PEAR {
             $this->isDirty = 1;
         }
         return $this->id;
-    }
-
-    function peer() {
-        if (! $this->peer) {
-            $this->peer = new Swinsite_DBPeer_UserPeer();
-        }
-
-        return $this->peer;
     }
 
     // persistence methods
