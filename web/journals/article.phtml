@@ -10,6 +10,7 @@ $article_id = $chunks[0];
 
 include_once("Swinsite/Articles.php");
 $a = new Articles();
+$a->AddHit($article_id);
 $row = $a->getArticle($article_id,$db);
 
 $a_article_id = $row['article_id'];

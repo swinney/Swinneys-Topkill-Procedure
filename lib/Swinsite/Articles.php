@@ -131,5 +131,19 @@ EOT;
       }
       return $id;
     }
+
+
+    /**
+     *  function to increment the hit count on an article_id
+     *  take article_id
+     *  hit database to increment existing number.
+     */
+    function AddHit($aid) {
+      $query = "update articles_info set num_hits=num_hits+1 
+                where article_id=$aid";
+      $res=@mysql_query($query) or die(error_page("failed to update num_hits ".
+                                                mysql_error() . 
+                                                " on ". $query));
+    }
 }
 ?>
