@@ -56,19 +56,22 @@
 # that have posted in the last three months 
 # where 3 months= 60 sec * 60 min * 24 hrs * 30 day * 3 mon
 # aka    7776000= 60     * 60     * 24     * 30     * 3
-
+#
 # wow, all math and shit.  I'm impressed, Austin!  now I will enter
 # a smaller random number, because that list is still too fucking 
 # long. hm, that didn't seem to change anything.  does this code even
 # work? - J. 020010921
-
-$minus=time();
-$minus=$minus-45343211;
-
+#
+# no, it isnt on right now.  it pisses people off. 
+# - austin Fri Sep 28, 2001 10:49 AM
+#
+echo "<B>Recent Writers</B><BR>";
+ $minus=time();
+ $minus=$minus-7776000;
 $query = <<<EOT
 SELECT DISTINCT username, count(username) AS number, status, time
   FROM articles_info
- WHERE status=2
+ WHERE status=2 AND time>$minus
 EOT;
 if (count($bozos)) {
   $query .= " AND username NOT IN $bozo_set";
