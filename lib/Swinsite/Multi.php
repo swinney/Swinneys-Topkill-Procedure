@@ -43,8 +43,7 @@ EOT;
         $num[1]=@mysql_result($res,0,1);
         return $num;
     }
-
-    function get_multi($id,$multi_id) {
+    function get_multi($id,$multi_id,$location) {
         $query =<<<EOT
       SELECT multi_info.user_id as editor_id,
              multi_info.title as multi_title,
@@ -68,7 +67,7 @@ EOT;
           $title    = stripslashes($d->title);
 	  $blurb    = stripslashes($d->blurb);
           $multi_user_id = $d->multi_user_id;
-	    if (!$html) {
+	    if (!$html && $location=="right") {
                 $editor_username=get_username($d->editor_id);
 	        /* 
 	         * FIRST start by getting the title of the multi
@@ -96,7 +95,9 @@ EOT;
 
 	    }
 	}
-        echo <<<EOT
+
+	if ($location=="right") {
+        return <<<EOT
 <!-- Right Margin Matter Box -->
 </TD>
 <td width="33">
@@ -106,12 +107,10 @@ EOT;
 $html
 </TD>
 EOT;
+	} elseif ($location=="inline") {
+	  return $html;
+
+	}
     }
 }
-
 ?>
-
-
-
-
-
