@@ -33,12 +33,13 @@ function get_limit_chars() {
 }
 
 $html .=<<<EOT
-<P>The noise filter is for ridding your swinney 
+<P><B>$title</B></P>
+<P>The noise filter is for <B>comments</B>: ridding your swinney 
 experience of those pesky one liner, or those 
 pesky two sentencers, or gosh darn it, those 
 people who post only three paragraphs!  the nerve.  
 </P><P>
-You dont want to see posts with <B>more characters than</B>:
+You <B>do not</B> want to see posts with <B>less characters than</B>:
 </P>
 EOT;
 
@@ -56,13 +57,14 @@ $html_form .= <<<EOT
 EOT;
 
 $set_val = array (
-		  "100"=>"i hate these",
-		  "200"=>"picky, but i commune with the people",
+		  "100"=>"omit needless words",
+		  "200"=>"i am picky, but i commune with the people",
 		  "300"=>"this is the average comment",
 		  "400"=>"i am a princess",
-		  "500"=>"i believe in free speach used wisely",
+		  "500"=>"i believe in free speech used wisely",
 		  "1000"=>"this better be important",
-		  "2000"=>"leave me alone",
+		  "2000"=>"i love words",
+		  "3000"=>"long live the bard!",
 		  "1000000"=>"it will be a cold day in hell when i mix with you people",
 		  );
 
