@@ -16,7 +16,6 @@ EOT;
 // successful authentication
 if (! session_is_registered("back_to")) {
   $back_to = $HTTP_REFERER;
-  echo "registering back_to as $back_to<br>";
   session_register("back_to");
 }
 
