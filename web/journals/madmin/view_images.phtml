@@ -1,11 +1,30 @@
 <?
+//////////////////////////////////////////////
 // $Id$
+
 require_once("../global.inc");
 include_once("./top.inc");
 include_once("./nav.inc");
 
-echo "<P><I>Coming Soon</I> ...</P>";
+$img_name=get_img($id);
+
+echo "<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=5><TR>";
+for ($i=0;isset($img_name[$i]);$i++) {
+    if ($i%5==0) {
+        echo "</TR>\n\n\n<!-- NEW ROW -->\n\n\n<TR>";
+    }
+    $n=$i+1;
+    echo <<<EOT
+<TD VALIGN="TOP">
+<P>%%img$n%%</P>
+<HR>
+<a border=0 href='../img/$img_name[$i]'>
+<img src='../img/$img_name[$i]' width='100' hieght='100'>
+</a>
+</TD>
+EOT;
+}
+    echo "</TR></TABLE>";
 
 include_once("./bottom.inc");
-
 ?>
