@@ -271,15 +271,6 @@ function get_username($user_id) {
   return $username;
 }
 
-/////////////////////////////////////////
-// SPACED_OUT()
-/////////////////////////////////////////
-function spaced_out ($text) {
-  $spaced_out=ereg_replace(" ","%20",$text);
-  return $text;
-}
- 
-
 ////////////////////////////
 // check authorization
 ///////////////////////////
