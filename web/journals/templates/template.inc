@@ -1,3 +1,6 @@
+<!--
+$Id$
+-->
 <? 
 
    include "templates/top.inc";
@@ -13,7 +16,6 @@ if (isset($into_template2)) {
 
 }
 
-   include "templates/image.req";
    include "templates/bottom.req";
    include "templates/footer.inc";
 ?>
