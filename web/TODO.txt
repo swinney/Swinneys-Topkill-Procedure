@@ -8,6 +8,11 @@
 
 			 "SWINNEY NEEDS YOU"!
 
+Fri Oct 19, 2001 10:08 AM (swinney)
+
+- image macro o do thing where %%img%% is recognised by reg_replace()
+   and replaced with the image tag.
+
 Thu Oct 11, 2001  1:28 PM (swinney)
 
 - author verification
