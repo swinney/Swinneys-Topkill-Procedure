@@ -143,6 +143,29 @@ $SWINSITE['db_connection'] = $db;
 # notice.
 # austin
 ##########################################################
+////////////////////////////////////
+// PRETTY_STATUS($int) display pretty 
+////////////////////////////////////
+function pretty_status($int) {
+    switch ($int) {
+        case 0 :
+            $int = "<FONT COLOR='#CCCCCC'>unset</FONT>";
+            break;  
+        case 1 :
+            $int = "<FONT COLOR='black'>pending</FONT>";
+            break;  
+        case 2 :
+            $int = "<FONT COLOR='black'>actived</FONT>";
+            break;  
+        case 3 :
+            $int = "<FONT COLOR='black'>archived</FONT>";
+            break;  
+        case 4 :
+            $int = "<FONT COLOR='black'>trashed</FONT>";
+            break;  
+    }
+    return $int;
+}
 
 /*
  * use_lib($dir) - add $dir to the system include_path
@@ -498,6 +521,5 @@ function get_bozo_set() {
     return $bozo_set;
     }
 }
-
 
 ?>
