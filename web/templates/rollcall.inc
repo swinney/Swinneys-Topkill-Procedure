@@ -1,5 +1,14 @@
 <!--
 $Id$
+##################################
+# if only you knew the comments that
+# were in the php code.  you would
+# fear.  fear. lucky you i have morals
+# i wont just let them show up in the
+# html where my mother might read them.
+# -OMS
+-->
+<?/*
 ###################################
 # rollcall.inc - who is out there?
 # this is the most major shit script
@@ -10,7 +19,7 @@ $Id$
 # i do this all for the bitches.  word up 
 # in two thousand.  -OMS 
 # Thu Jul 12, 2001 10:13 AM
--->
+*/?>
 
 <!-- BEGIN PHP Dynamically Required File: rollcall.inc -->
 
@@ -50,7 +59,7 @@ $username=$row->username;
 $number=$row->number;
 
   if ($number > 5) {
-  echo "<a href='userpages.phtml?username=$username'>$username($number)</a><br>";
+  echo "<a href='userpages.phtml?username=$username'>$username($number)</a><br>\n";
   }
 }
 
