@@ -145,7 +145,7 @@ while ($d=mysql_fetch_object($res2)) {
 <tr>
 <td><a name="$comment_id"></a>
 <a href="info_user.phtml?uid=$d->user_id">$username</a> on
-"<b><a href="article.phtml#$comment_id?id=$article_id">$title</a></b>" 
+"<b><a href="article.phtml?id=$article_id#$comment_id">$title</a></b>" 
 by <a href='userpages.phtml?username=$articlewriter'>$articlewriter</a>:<br>
 $comment</td>
 </tr>
