@@ -53,7 +53,18 @@
 $minus=time();
 $minus=$minus-7776000;
 
-$res = mysql_query ("SELECT DISTINCT username, count(username) AS number, status, time FROM articles_info WHERE status=2 GROUP BY username");
+$query = <<<EOT
+SELECT DISTINCT username, count(username) AS number, status, time
+  FROM articles_info
+ WHERE status=2
+EOT;
+if (count($bozos)) {
+  $query .= " AND username NOT IN $bozo_set";
+}
+$query .= " GROUP BY username";
+
+$res = mysql_query($query) or
+  die(error_page(mysql_error()));
 
 while ($row = mysql_fetch_row ($res)) {
 /*
