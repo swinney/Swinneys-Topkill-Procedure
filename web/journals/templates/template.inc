@@ -18,13 +18,15 @@ if (isset($into_template2)) {
 }
 
 if (basename($PHP_SELF)=="article.phtml") {
-  $query = "SELECT article_id,title,blurb FROM articles_info WHERE user_id=124";
-  $res = $db->query($query);
-  while ($row = $res->fetchRow()) {
-    $blurb=":<BR> ". $row[2];
-    $html .= "<P><A HREF=\"./article.phtml?id=$row[0]\"><B>$row[1]</B></A>$blurb</P>\n";
-  }
-
+  if ($author_id) {
+    //  $query = "SELECT article_id,title,blurb FROM articles_info WHERE user_id=124";
+    $query = "SELECT multi_info.multi_id,multi_info.title FROM multi_info WHERE user_id=$author_id";
+    $res = $db->query($query);
+    while ($row = $res->fetchRow()) {
+      $blurb=":<BR> ". $row[2];
+      $html .= "<P><A HREF=\"./index_multi.phtml?id=$row[0]\"><B>$row[1]</B></A>$blurb</P>\n";
+    }
+  
 
 echo <<<EOT
 <!-- Right Margin Matter Box -->
@@ -37,8 +39,8 @@ echo <<<EOT
 $html
 </TD>
 EOT;
+  }
 }
-
 
 include "templates/bottom.req";
 include "templates/footer.inc";

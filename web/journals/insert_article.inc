@@ -36,7 +36,7 @@ EOT;
   SELECT article_id
     FROM articles_info
    WHERE article_id < $article_id
-     AND username='$d->username'
+     AND user_id='$d->user_id'
      AND status=2
 ORDER BY article_id DESC
    LIMIT 1
@@ -77,10 +77,11 @@ EOT;
   $blurb = stripslashes($d->blurb);
   $category= $d->category; 
   $username = stripslashes($d->username);
-  $username = $usernamenourl;
+  $usernamenourl= urlencode($username);
+
   if ($d->web) {
     $username = <<<EOT
-<a href="$d->web">$username</a>
+<a href="$d->web">$d->username</a>
 EOT;
   }
 
@@ -89,7 +90,7 @@ $names=get_cat_names($category);
 <table cellpadding="0" cellspacing="0" border="0" width="375">
 <tr>
 <td colspan="2">
-<div class="header"><b>$articletitle</b></div>
+<div class="header"><b>$title</b></div>
  
 <div class="text">
 <b>$blurb</b></div></td>
@@ -119,7 +120,8 @@ $names=get_cat_names($category);
 EOT;
 
   if ($older_article_id or $newer_article_id) {
-  echo "<b><a href=\"userpages.phtml?username=$usernamenourl\">more from this writer</a>:</b><br>";
+    $nospace=spaced_out($usernamenourl);
+  echo "<b><a href=\"userpages.phtml?username=$nospace\">more from this writer</a>:</b><br>";
   }
 
   if ($older_article_id) {

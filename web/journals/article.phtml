@@ -2,46 +2,24 @@
 #$Id$
 
 require_once("./global.inc");
-
+//
+// take care of the id
 $chunks = explode(".", $id);
 $article_id = $chunks[0];
 
-if (!$article_id) {
+$row = $db->getRow("SELECT username,title,status FROM articles_info WHERE article_id=$article_id");
+$username=$row[0];
+$title=$row[1];
+$status=$row[2];
+//
+// if they dont have an article id, then
+// they should not be here, or their status is 4 (deleted)
+if ($status==4) {
   header("Location: ./index.phtml?no_aricle_id");
   exit();
 }
-
-
-$query = <<<EOT
-  SELECT *
-    FROM articles_info
-   WHERE article_id=$article_id
-EOT;
-
-$res = mysql_query($query) or
-  die(error_page(mysql_error()));
-
-if ($d = mysql_fetch_object( $res)) {
-  if ($d->status>3) {
-  header("Location: ./index.phtml?bi=$d->status");
-  exit();
-}
-  // retrieve the article text
-  $query = <<<EOT
-  SELECT text
-    FROM articles_text
-   WHERE article_id=$article_id
-EOT;
-
-  $res = mysql_query($query) or
-    die(error_page(mysql_error()));
-
-  $text = mysql_result($res, 0);
-
-$articletitle = stripslashes($d->title);
-$usernamenourl = stripslashes($d->username);
-
-$title = "$articletitle, by $usernamenourl";
+if (isset($title))
+$title = "$title by $username";
 $into_template="insert_article.inc";
 // do you have comments?
 $into_template2="insert_comments.phtml";
@@ -50,5 +28,4 @@ $into_template2="insert_comments.phtml";
 $rollcall=1;
 include "template.inc";
 
-}
 ?>
