@@ -11,7 +11,7 @@ $Id$
 
 <?
 // connect to the database
-include "/sky/users/swinney/htdocs/dev/swinney.org/journals/global.inc";
+include "journals/global.inc";
 conn();
 ?>
 
