@@ -119,7 +119,7 @@ document.write('<a href="javascript:document.searchform.submit()" target="_top" 
 <?
 require_once("Swinsite/Articles.php");
 $a = new Articles();
-$articles = $a->get_articles(10);
+$articles = $a->get_articles(10,0);
 echo $articles;
 
 ?>
@@ -133,7 +133,8 @@ echo $articles;
 <td valign="top" colspan="2">
 
 <?
-include_once("journals/insert_5rand.inc");
+$articles = $a->get_articles(10,1);
+echo $articles;
 ?>
 
 </td>
