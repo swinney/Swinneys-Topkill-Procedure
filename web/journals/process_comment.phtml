@@ -10,10 +10,19 @@ include "connect.inc";
 | comment_id | int(11)       |      | PRI | NULL      | auto_increment |
 | article_id | int(11)       |      |     | 0         |                |
 | timestamp  | timestamp(12) | YES  |     | NULL      |                |
-| username   | varchar(20)   | YES  |     | anonymous |                |
+| username   | varchar(255)  | YES  |     | anonymous |                |
 | comment    | text          | YES  |     | NULL      |                |
+| nature     | int(4)        | YES  |     | NULL      |                |
+| status     | int(4)        | YES  |     | 0         |                |
+| ip_addr    | text          | YES  |     | NULL      |                |
 +------------+---------------+------+-----+-----------+----------------+
 */
+
+// get the users ip address.  maybe this is uncool, but i think it is a
+// necessary precaution.  like dont i want to know who the person is who
+// tries to send malicious unix commands in to the thoughts database?
+
+$ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
 $article_id = explode (".", $article_id);
 
@@ -43,7 +52,7 @@ $article_id = $article_id[0];
 
 // echo "$username<br>$comment<br>$nature<br>";
 
-$res = mysql("swinney","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."',NULL)"); 
+$res = mysql("swinney","INSERT INTO comments VALUES (NULL,'".addslashes($article_id)."',NULL,'".addslashes($username)."','".addslashes($comment)."','".addslashes($nature)."',NULL,'$ip_addr')"); 
 
   if ( $res == false ) { 
     echo ("Bollocks!");

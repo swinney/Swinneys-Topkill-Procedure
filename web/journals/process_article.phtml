@@ -6,7 +6,7 @@
   $time = time();
 
   if ( $username == "" ) {
-    error("This username is not set");
+    echo("This username is not set");
     exit;
   }
    // snafu saves the day with this one:
@@ -28,10 +28,8 @@
 17:43:45 chrissnafu: oh, fucking aim.
 17:43:53 chrissnafu: nevermind
 17:43:56 robotec9: get on irc
-
-
-
 */
+
 
 
 
@@ -50,6 +48,11 @@
     }
   }
 
+// get the users ip address.  maybe this is uncool, but i think it is a
+// necessary precaution.  like dont i want to know who the person is who
+// tries to send malicious unix commands in to the thoughts database?
+
+$ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
   // Insert into the database
   $res = mysql	 ("swinney", "INSERT INTO pending_articles
@@ -64,7 +67,8 @@
 	'".addslashes($title)."',
 	'".addslashes($blurb)."', 
 	'$category',
-	'$image'
+	'$image',
+	'$ip_addr'
 	)");
 
   if ( $res == false ) { 
@@ -82,10 +86,6 @@
   fclose($fp);
 
   // Now get the images
-
-
-
-# include "submit_image.phtml";
 
  mail("article@swinney.org", "$title by $username", "$blurb\n $content");
  header("Location:submit_image.phtml?article_id=$article_id" ); 
