@@ -56,11 +56,18 @@ if ($submit) {
   $esc_keywords = addslashes($keywords);
   $esc_title = addslashes($title);
   $esc_blurb = addslashes($blurb);
+  if (!$authenticated_user_id) {
+    if ($authenticated_username) {
+    $authenticated_user_id=get_user_id($authenticated_username);
+    } else {
+      $authenticated_user_id=205;
+    }
+  }
 
   $query = <<<EOT
 INSERT INTO articles_info
     SET
-     user_id='$user_id',
+     user_id='$authenticated_user_id',
      username='$username',
      date='$date',
      time='$time',
