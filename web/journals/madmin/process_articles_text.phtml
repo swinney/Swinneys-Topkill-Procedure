@@ -1,0 +1,100 @@
+<?
+############################################
+# $Id$
+# process the text submit
+require_once ("../global.inc");
+//
+// update the article in the database if that is what they want
+//
+if ($submit=="update") {
+    //
+    // memorize what we have so far in the database.
+    //
+    if (isset($title)) {
+        if (isset($article_id)) {
+            $query1="UPDATE articles_info SET title='$title' WHERE article_id=$id";
+            $res=mysql_query($query1) or die (error_page("$query1"));
+        } else {
+            $query1="INSERT INTO articles_info SET title='$title'";
+            $res=mysql_query($query1) or die (error_page("$query1"));
+            #
+            # if everything went as planned then we should have an $article_id
+            if (mysql_affected_rows()>0) $article_id=mysql_insert_id();
+        }
+
+    } else {
+    	error_page("title was not set");
+    }
+    $slashtext=addslashes($text);
+    if (isset($article_id)) {
+        $query2="UPDATE articles_text SET text='$slashtext' WHERE article_id=$article_id";
+        $res=mysql_query($query2) or die (error_page("$query2"));
+    } else {
+        error_page ("text was not set");
+    }
+    if (isset($article_id)) {
+        $query2="INSERT INTO articles_text SET article_id=$article_id, text='$slashtext'";
+        $res=mysql_query($query2);// or die (error_page("q2: $query2")); 
+                                  // this is erroring out on the or die statement.  why? 
+    } else {
+        error_page ("text was not set");
+    }
+// send them to thier new article_info page
+   header("Location: ./article_info.phtml?article_id=$article_id");
+}
+//
+// if they just want to preview it then show them what it looks like
+// in their browser.
+//
+if ($submit=="preview") {
+  if (isset($article_id)) {
+    //
+    // memorize what we have so far in the database.
+    //
+    if (isset($title)) {
+        $query="UPDATE articles_info SET title='$title' WHERE article_id=$article_id";
+        $res=mysql_query($query) or die (error_page("$query"));
+    } else you_sorry("Title was not set.");
+
+    if (isset($text)) {
+        $query="UPDATE articles_text SET text='$text' WHERE article_id=$article_id";
+        $res=mysql_query($query) or die (error_page("$query2"));
+    } else you_sorry("There was no text set.");
+ 
+  } else { // THERE IS NO AID SET SO INSERT
+    if (isset($title)) {
+    $query="INSERT INTO articles_info SET title='$title'";
+    $res=mysql_query($query) or die (error_page("$query"));
+    if (mysql_affected_rows()>0) $article_id=mysql_insert_id(); 
+    }
+    if (isset($text)) {
+    $query="INSERT INTO articles_text SET article_id=$article_id, text='$text'";
+    $res=mysql_query($query) or die (error_page("$query"));
+    } else you_sorry("There is no text set.");
+  }
+  header("Location: preview_articles.phtml");
+}
+
+// 
+// if they decided to edit the article then
+// bring in the form for submitting article text
+// it takes care of all the necessities.
+// because the title/text are submitted to the db
+// at every turn, we are utilizing it as a sort
+// of memory.
+//
+if ($submit=="edit") {    
+header ("Location: ./submit_articles_text.phtml");
+}
+//
+// if they want to delete an article, let it go
+//
+
+if ($submit=="done") {
+    header("Location: article_info.phtml?id=$article_id");
+}
+?>
+
+
+
+
