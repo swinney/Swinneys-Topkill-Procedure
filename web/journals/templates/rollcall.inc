@@ -65,9 +65,11 @@ writers:<br>
  $minus=time();
  $minus=$minus-7776000;
 #SELECT DISTINCT(username),COUNT(username) AS number FROM articles_info WHERE status=2 GROUP BY username HAVING number>5 ORDER BY username;
+#SELECT DISTINCT(username),COUNT(username) AS number FROM articles_info WHERE status=2 
+#SELECT user.username,user.user_id,COUNT(articles_info.user_id) as num FROM user,articles_info WHERE user.user_id=articles_info.user_id AND user.user_id NOT IN (295,56,177) GROUP BY user.user_id HAVING num>5 ORDER BY user.username;
 
 $query = <<<EOT
-SELECT DISTINCT(username),COUNT(username) AS number FROM articles_info WHERE status=2 
+SELECT user.username,COUNT(articles_info.user_id) as num,user.user_id FROM user,articles_info WHERE user.user_id=articles_info.user_id AND status IN (2,3)
 EOT;
 
 //
@@ -75,14 +77,16 @@ EOT;
 //
 
 if ($bozo_set) {
-  $query .= " AND user_id NOT IN $bozo_set";
+  $query .= " AND user.user_id NOT IN $bozo_set";
 }
-$query .= " GROUP BY username HAVING number>5 ORDER BY username";
+$query .= " GROUP BY user.user_id HAVING num>5 ORDER BY user.username";
 
-$res = mysql_query($query) or
-  die(error_page(mysql_error()));
+$res = $db->query($query);
+if (DB::isError($res)) {
+    die($res->getMessage());
+}
 
-while ($row = mysql_fetch_row ($res)) {
+while ($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 
 ##########################################
 # this cannot be called $username
@@ -90,13 +94,7 @@ while ($row = mysql_fetch_row ($res)) {
 # $username.  so it will be called $user.
 # austin, Thu Jul 12, 2001  1:40 PM
 
-$name=$row[0];
-$urlname=urlencode($row[0]);
-$number=$row[1];
-$status=$row[2];
-$time=$row[3];
-
-  $html_rollcall .= "<a href='userpages.phtml?username=$urlname'>$name</a> ($number)<br>\n";
+  $html_rollcall .= "<a href='info_user.phtml?uid=$row[user_id]'>".stripslashes($row[username])."</a> ($row[num])<br>\n";
 }
 
 echo $html_rollcall;
