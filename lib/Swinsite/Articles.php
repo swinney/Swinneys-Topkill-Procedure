@@ -12,7 +12,7 @@ class Articles {
     // do not align, there will be smoke.
     // austin, Tue Feb  5, 2002  1:35 PM
 
-    function get_article($id,$db) {
+    function getArticle($id,$db) {
 
         $query = <<<EOT
    SELECT articles_info.user_id,
@@ -43,6 +43,7 @@ EOT;
         $text       = $row[9]; $text      =stripslashes($text);
         unset($row);
         $row        = array(
+			    "article_id"=>$id,
 			    "user_id"=>$user_id,
 			    "username"=>$username,
 			    "web"=>$web,
@@ -112,4 +113,23 @@ EOT;
 	}
 	return $html;
     }
+
+    function otherArticleId($a_article_id,$a_user_id,$flag,$db) {
+      $query = <<<EOT
+  SELECT article_id
+    FROM articles_info
+   WHERE article_id $flag $a_article_id
+    AND user_id=$a_user_id
+     AND status=2
+ORDER BY article_id DESC
+   LIMIT 1
+EOT;
+
+      $id = $db->getOne($query);
+      if (DB::isError($db)) {
+	die($db->getMessage());
+      }
+      return $id;
+    }
+}
 ?>
