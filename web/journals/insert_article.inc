@@ -1,53 +1,122 @@
-<!--
-$Id$
--->
 <?
+// -*- Mode: PHP; indent-tabs-mode: nil; -*-
+// $Id$
 
+require_once("global.inc");
 
-include "next_article.inc";
+$chunks = explode(".", $id);
+$article_id = $chunks[0];
 
-  $article_id=$id;
-  $res = mysql_query("SELECT * FROM articles_info WHERE article_id='$article_id'");
-  $d = mysql_fetch_object( $res);
-  
- 
-   echo "<H2>".stripslashes($d->title)."</h2>  ";
-   echo "<h4>".stripslashes($d->blurb)."</h4>\n";
+// retrieve the article info
 
-// check for URL or MAILTO
+$query = <<<EOT
+  SELECT *
+    FROM articles_info
+   WHERE article_id=$article_id
+EOT;
 
-   $name = $d->username;
-   $web = $d->web;
-      if ($web == "") {
-         echo "<h4>by $name</h4>\n";
-      } else {
-         echo "<h4>by <a href='".$d->web."'> ".stripslashes($d->username)."</a><br> $d->date</h4>\n";
-      }
+$res = mysql_query($query) or
+  die(error_page(mysql_error()));
 
- 
-// open that file up
+if ($d = mysql_fetch_object( $res)) {
+  // retrieve the article text
+  $query = <<<EOT
+  SELECT text
+    FROM articles_text
+   WHERE article_id=$article_id
+EOT;
 
-$text = explode(".",$article_id);
+  $res = mysql_query($query) or
+    die(error_page(mysql_error()));
 
-$res = mysql_query ("SELECT text FROM articles_text WHERE article_id=$text[0]");
+  $text = mysql_result($res, 0);
 
-# fetch the item
-$r = mysql_result($res,0);
+  // retrieve the id of the author's previous article
 
-# remove all slashes added to protect the database
-$text=stripslashes($r);
+  $query = <<<EOT
+  SELECT article_id
+    FROM articles_info
+   WHERE article_id < $article_id
+     AND username='$d->username'
+     AND status=2
+ORDER BY article_id DESC
+   LIMIT 1
+EOT;
 
-# put the article on the web page
-echo "$text<BR>";
+  $res = mysql_query($query) or
+    die(error_page(mysql_error()));
+
+  $previous_article_id = mysql_result($res, 0);
+
+  // retrieve the id of the author's next article
+
+  $query = <<<EOT
+  SELECT article_id
+    FROM articles_info
+   WHERE article_id > $article_id
+     AND username='$d->username'
+     AND status=2
+ORDER BY article_id ASC
+   LIMIT 1
+EOT;
+
+  $res = mysql_query($query) or
+    die(error_page(mysql_error()));
+
+  $next_article_id = mysql_result($res, 0);
+
+  // generate the paginator
+
+  echo <<<EOT
+<p>
+<tt>
+EOT;
+
+  if ($previous_article_id) {
+    echo <<<EOT
+<a href="article.phtml?id=$previous_article_id.txt">&lt;&lt;</a>
+EOT;
+  } else {
+    echo "&lt;&lt;";
+  }
+
+  echo " | ";
+
+  if ($next_article_id) {
+    echo <<<EOT
+<a href="article.phtml?id=$next_article_id.txt">&gt;&gt;</a>
+EOT;
+  } else {
+    echo "&gt;&gt;";
+  }
+
+  echo <<<EOT
+</tt>
+</p>
+EOT;
+
+  // generate the article display
+  if ($text) {
+    $text = stripslashes($text);
+  }
+
+  $title = stripslashes($d->title);
+  $blurb = stripslashes($d->blurb);
+
+  $username = stripslashes($d->username);
+  if ($d->web) {
+    $username = <<<EOT
+<a href="$d->web" target="_new">$username</a>
+EOT;
+  }
+
+  echo <<<EOT
+<h2>$title</h2>
+<h4>$blurb</h4>
+<h4>by $username<br>
+$d->date</h4>
+$text
+EOT;
+}
 
 ?>
-
-
-
-
-
-
-
-
-
-

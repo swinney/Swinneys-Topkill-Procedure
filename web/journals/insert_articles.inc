@@ -1,19 +1,11 @@
 <?
-#$Id$
+// -*- Mode: PHP; indent-tabs-mode: nil; -*-
+// $Id$
+
 require_once("global.inc");
 
-if(!$page_num || $page_num < 1) { //No Page Number? Set it to Page 1 then...
-        $page_num = 1;
-}
-
-//How many pages per page will be displayed...
-$per_page = 20;
-
-//Set the page start variable...
-$page_start = ($page_num-1) * $per_page;
- 
-//Do a number query to see how many results match the category...
-
+// count the number of articles so we can calculate the number of
+// pages to use
 $query = <<<EOT
 SELECT count(*) AS num_articles
   FROM articles_info
@@ -26,116 +18,163 @@ if ($insert_since) {
   $query .= " AND time > $insert_since";
 }
 $query .= " ORDER BY time DESC";
-$num_res = mysql_query($query);
-$num_object = MYSQL_FETCH_OBJECT($num_res);
-$num_of_results = $num_object->num_articles;
 
-// lets try this userlist thingy $USERS
+$res = mysql_query($query) or
+  die(error_page(mysql_error()));
 
-$query = <<<EOT
+$article_info = mysql_fetch_object($res);
+$num_articles = $article_info ? $article_info->num_articles : 0;
+
+if ($num_articles) {
+
+  // default to page 1
+  if (!$page_num || $page_num < 1) {
+    $page_num = 1;
+  }
+
+  // how many articles to display per page
+  $per_page = 20;
+
+  // index of the first article on the page
+  $page_start = ($page_num-1) * $per_page;
+ 
+  // total number of pages
+  $num_of_pages = $num_articles/$per_page; 
+ 
+  // if the number of pages is a fraction, round it up
+  $remainders = $num_articles%$per_page; 
+  if ($remainders != 0){
+    $num_of_pages = intval($num_of_pages) + 1;
+  }
+
+  // previous page number
+  $page_back = $page_num - 1;
+
+  // next page number
+  $page_forward = $page_num + 1;
+
+  // generate the paginator "<< i want to write >>" thinger
+
+  echo "<p>\n";
+
+  if ($page_num == 1){
+    echo <<<EOT
+<p>
+&lt;&lt; <a href="submit_article.phtml">I want to write</a>
+
+EOT;
+  }
+
+  if ($page_num > 1){
+    echo <<<EOT
+<p>
+<a href="index.phtml?select=$select&page_num=$page_back">&lt;&lt;</a>
+<a href="submit_article.phtml">I want to write</a>;
+
+EOT;
+  } 
+  
+  if ($page_num < $num_of_pages) { 
+    echo <<<EOT
+<a href="index.phtml?select=$select&page_num=$page_forward">&gt;&gt;</a>
+</p>
+
+EOT;
+  }
+
+  if ($page_num == $num_of_pages) {
+    echo <<<EOT
+&gt;&gt;
+</p>
+
+EOT;
+  }
+
+  echo "</p>\n";
+
+  // retrieve the article data
+
+  $query = <<<EOT
   SELECT *
     FROM articles_info
    WHERE status=2 
 EOT;
-if (count($bozos)) {
-  $query .= " AND username NOT IN $bozo_set";
-}
-if ($insert_since) {
-  $query .= " AND time > $insert_since ";
-}
-$query .= <<<EOT
+  if (count($bozos)) {
+    $query .= " AND username NOT IN $bozo_set";
+  }
+  if ($insert_since) {
+    $query .= " AND time > $insert_since ";
+  }
+  $query .= <<<EOT
 ORDER BY time DESC
    LIMIT $page_start,$per_page
 EOT;
-$res = mysql_query ($query);
 
-// Find out how many pages there are going to be
-// number of results returned divided by the number per page displayed
-$num_of_pages = $num_of_results/$per_page; 
+  $res = mysql_query ($query) or
+    die(error_page(mysql_error()));
 
-// Find out if the num_of_pages was a decimal.. Can't have 2.1 pages...
-$remainders = $num_of_results%$per_page; 
+  // generate the article listing table
 
+  echo <<<EOT
+<table width="200" border="0" cellspacing="0" cellpadding="3">
+<tr>
+<td>
+<font size="2">
+EOT;
 
-if($remainders != 0){ //If is was a decimal, turn it into an integer and add 1 to it...
-       $num_of_pages = intval($num_of_pages) + 1;
+  while ($article = mysql_fetch_object($res)) {
+    // retrieve the number of comments for the article
+
+    $subquery = <<<EOT
+  SELECT count(*) AS num_comments
+    FROM comments
+   WHERE article_id=$article->article_id
+     AND status=0
+EOT;
+    if (count($bozos)) {
+      $subquery .= " AND username NOT IN $bozo_set";
+    }
+
+    $subres = mysql_query($subquery) or
+      die(error_page(mysql_error()));
+    $comments = mysql_fetch_object($subres);
+
+    // generate the summary for the article
+
+    $num_comments = $comments->num_comments || 0;
+    if ($num_comments == 1) {
+      $num_comments .= " comment";
+    } else {
+      $num_comments .= " comments";
+    }
+
+    $username = $article->username;
+    if ($article->web) {
+      $username = <<<EOT
+<a href="$article->web" target="_new">$username</a>
+EOT;
+    }
+
+    $blurb = $article->blurb;
+    if ($blurb) {
+      $blurb .= "<br>\n";
+    }
+
+    echo <<<EOT
+<p>
+<a href="article.phtml?id=$article->article_id.txt">
+<strong>$article->title</strong></a> by $username<br>
+$blurb
+<font size="1">$article->date</font> | $num_comments
+</p>
+EOT;
+  }
+
+  echo <<<EOT
+</td>
+</tr>
+</table>
+EOT;
 }
-
-$page_back = $page_num - 1;
-$page_forward = $page_num + 1;
-
-
-//while ($row = mysql_fetch_object($res)) {
-if (isset($res)) {
-
-$url = "article.phtml?id=$d->article_id";
-
-
-   echo "<P>";
-
-     if($page_num == 1){
-            print "<P><< <a href='submit_article.phtml'>I want to write</a>";
-     }
-
-
-     if($page_num > 1){
-	     print "<P><a href=\"index.phtml?select=$select&page_num=$page_back\"><<</a> <a href='submit_article.phtml'>I want to write</a>";
-
-
-     } 
-
-  
-     if($page_num < $num_of_pages) { 
-             print " <a href=\"index.phtml?select=$select&page_num=$page_forward\">>></a></P>";
-     } 
-
-     if($page_num == $num_of_pages) {
-             print ">></P>";
-     }
-
- echo "</P>";
-   echo "<table width=200 border=0 cellspacing=0 cellpadding=3><tr><td>\n";
-   echo "<font size='2'>\n";
-// multiple rows
-while ( $individual_row = mysql_fetch_object( $res ) ) {
-
-
-   echo "<P><a href=\"$url$individual_row->article_id.txt\">\n";
-   echo "<B>$individual_row->title</a></B> by\n";
-
-   $name = $individual_row->username;
-   $web = $individual_row->web;
-      if ($web == "") {
-         echo "$name<BR>\n";
-      } else {
-         echo "<a href='$individual_row->web' target='new'>$individual_row->username</a><br> \n";
-      }
-   echo "$individual_row->blurb<br>";
-   echo "<font size='1'>$individual_row->date </FONT>";
-
-$res2 = mysql_query ( "SELECT count(*) as num FROM comments WHERE article_id='$individual_row->article_id' AND status=0");
-
-$d =  mysql_fetch_object($res2);
-
-echo " | $d->num comments</P>";
-
-
-
-}
-   echo "</td></tr></table>\n";
-}
-
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,57 +1,53 @@
-<!-- 
-$Id$
--->
 <?
+// -*- Mode: PHP; indent-tabs-mode: nil; -*-
+// $Id$
 
-// random?
+// generate a set of 10 random ids just to hedge our bets, since we
+// could may be filtering a lot of bozos and some articles may no
+// longer be public
+$rand = array();
+for ($i=0; $i<10; $i++) {
+  array_push($rand, dice(1, 1000));
+}
+$rand_set = '(' . implode(', ', $rand) . ')';
 
-$rand1 = dice( 1 , 1000 );
-$rand2 = dice( 1 , 1000 );
-$rand3 = dice( 1 , 1000 );
-$rand4 = dice( 1 , 1000 );
-$rand5 = dice( 1 , 1000 );
+$query = <<<EOT
+  SELECT article_id,username,title,date,web
+    FROM articles_info
+   WHERE status=2
+     AND article_id IN $rand_set
+EOT;
+if (count($bozos)) {
+  $query .= " AND username NOT IN $bozo_set ";
+}
+$query .= <<<EOT
+ORDER BY time
+   LIMIT 5
+EOT;
 
-$res = mysql_query("SELECT article_id,username,title,date,web FROM articles_info WHERE status='2' AND article_id=$rand1 OR article_id=$rand2 OR article_id=$rand3 OR article_id=$rand4 OR article_id=$rand5 ORDER BY time limit 5" );
+$res = mysql_query($query);
 
 // multiple rows, limit 10 latest
-while ( $d = mysql_fetch_object( $res ) ) {
+while ($d = mysql_fetch_object($res)) {
+  if ($d->web) {
+    $stripped = stripslashes($d->username);
+    $username = <<<EOT
+<a href="$d->web">$stripped</a>
+EOT;
+  } else {
+    $username = $d->username;
+  }
 
-$article_id=$d->article_id;
-$username=$d->username;
-$web=$d->web;
-$date=$d->date;
-$title=$d->title;
-$blurb=$d->blurb;
+  echo <<<EOT
+<p>
+$username wrote
+<a href="journals/article.phtml?id=$d->article_id.txt">
+<strong>$d->title</strong>
+</a>
+</p>
 
-
-
-if ($web != "") {
-	$username="<a href='".$web."'> ".stripslashes($username)."</a>";
+EOT;
 }
-
-
-
-$url = "journals/article.phtml?id=";
-
-   echo "<P>$username wrote ";
-   echo "<a href=\"$url$article_id.txt\"><B>$title</a></B></P>\n";
-
-}
-
-
-/*
-// multiple rows, limit 5 latest
-
-
-while ( $individual_row = mysql_fetch_object( $res ) ) {
-
-$url = "journals/article.phtml?id=";
-   echo "<a href='$individual_row->web'>$individual_row->username</a> wrote ";
-   echo "<a href=\"$url$individual_row->article_id.txt\"><B>$individual_row->title</a></B><BR><BR>\n";
-
-}
-
-*/
 
 ?>
 
