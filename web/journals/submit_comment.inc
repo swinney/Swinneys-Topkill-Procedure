@@ -8,13 +8,22 @@ require_once("./global.inc");
 <form action="process_comment.phtml" method=post enctype="multipart/form-data">
 <input type="hidden" name="article_id" value="<? echo "$article_id"?>">
 
-
-
 <table width="375" border="0" cellspacing="0" cellpadding="2">
 <tr>
 <td colspan="3">
-<span class="header"><b><? echo "$title"; ?></b></span>
-</td>
+<p class="header"><b><? echo $title ?></b>
+
+<?
+if (error_msg) {
+  session_unregister("error_msg");
+  echo <<<EOT
+<br>
+<b><span class="error">$error_msg</span></b>
+EOT;
+}
+?>
+
+</p></td>
 </tr>
 
 <tr>

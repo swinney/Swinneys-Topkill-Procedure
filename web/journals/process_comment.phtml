@@ -33,23 +33,27 @@ $article_id = $article_id[0];
 // echo "$article_id";
 
   if ( $username == "" ) {
-    echo("You are not allowed to be a nobody on Swinney.org.  Please back up and try entering your name.");
-    exit;
+      $error_msg = "No one's a nobody on Swinney.org.  Enter your name.";
+      session_register("error_msg");
+      include("./submit_comment.phtml");
   }
 
   if ( $username == "name" ) {
-     echo("Names are nice, but you should get your own.  Please back up and try again.");
-     exit;
+      $error_msg = "Names are nice, but you should get your own.";
+      session_register("error_msg");
+      include("./submit_comment.phtml");
   }
 
   if ( $comment == "" ) {
-     echo("Commenting on this site is not like some other cultures.  Less is not more.  Please back up and try again.");
-     exit;
+      $error_msg = "Please speak louder, I can't hear you.";
+      session_register("error_msg");
+      include("./submit_comment.phtml");
   }
 
   if ( $comment == "comment" ) {
-     echo("Please speak louder, I can't here you.  Back up and try again.");
-     exit;
+      $error_msg = "Commenting on this site is not like some other cultures.  Less is not more.";
+      session_register("error_msg");
+      include("./submit_comment.phtml");
   }
 
 // echo "$username<br>$comment<br>$nature<br>";
@@ -61,8 +65,6 @@ $res = mysql_query($query);
     echo ("Bollocks!");
     exit;
   }
-
-
 
 // mail("theCommentator@swinney.org", "comment: $username on $article_id", "$nature", "$comment"); 
 header ("Location: article.phtml?id=$article_id.txt");

@@ -1,20 +1,23 @@
 <?
 // $Id$
-
-if (error_msg) {
-  session_unregister("error_msg");
-  echo <<<EOT
-<p>
-<b><font color="red">$error_msg</font></b>
-</p>
-EOT;
-}
 ?>
 
 <table width=375 border="0" cellspacing="0" cellpadding="2">
 <tr>
 <td nowrap colspan="3">
-<p class="header"><b><? echo $title ?></b></p></td>
+<p class="header"><b><? echo $title ?></b>
+
+<?
+if (error_msg) {
+  session_unregister("error_msg");
+  echo <<<EOT
+<br>
+<b><span class="error">$error_msg</span></b>
+EOT;
+}
+?>
+
+</p></td>
 </tr>
 
 
