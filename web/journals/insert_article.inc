@@ -8,22 +8,6 @@ $article_id = $chunks[0];
 
 // retrieve the article info
 
-include_once("Swinsite/Articles.php");
-$a = new Articles();
-$row = $a->getArticle($article_id,$db);
-
-$a_article_id = $row['article_id'];
-$a_user_id    = $row['user_id']; 
-$a_username   = $row['username'];
-$a_web        = $row['web'];
-$a_date       = $row['date'];
-$a_status     = $row['status'];
-$a_title      = $row['title'];
-$a_blurb      = $row['blurb'];
-$a_category   = $row['category'];
-$a_image      = $row['image'];
-$a_text       = $row['text'];
-unset($row);
 if ($a_user_id) {
   // retrieve the id of the author's previous article
   $query = <<<EOT
