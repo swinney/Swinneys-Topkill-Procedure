@@ -5,15 +5,13 @@ require_once("./global.inc");
 // doesn't make sense to display the login page for users who are
 // already logged in
 if ($authenticated_username) {
-  $error_msg=<<<EOT
+  $error_msg .=<<<EOT
 ERROR: Your authenticated username: $authenticated_username<BR>
 seems to be set already.  <a href="mailto:bugs@swinney.org">bugs@swinney.org</a>.
 <BR><BR>
 EOT;
 }
-
 $title = "Log In";
-
 $into_template = "./login.inc";
 include(INCDIR ."/template_norollcall.inc");
 ?>

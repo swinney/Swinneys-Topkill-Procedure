@@ -2,7 +2,7 @@
 // the first time the page is visited, save the location where the
 // "log in" link was clicked so we can redirect back to it upon
 // successful authentication
-$error_msg=<<<EOT
+$error_msg.=<<<EOT
 <P><B>Please log in first:</B></P>
 EOT;
 if (!$back_to) {
@@ -10,14 +10,12 @@ if (!$back_to) {
   $back_to="$HTTP_REFERER";
 }
 ?>
-
 <!-- begin login form-->
 <form action="process_login.phtml" method="POST">
 <input type=hidden name=back_to value="<?=urldecode($back_to);?>">
 <table cellpadding="2" cellspacing="0" border="0">
 <tr>
 <td colspan="2">
-
 <?
 if ($back_to) {
   session_unregister("error_msg");

@@ -21,12 +21,14 @@ $auth_these=array(
 		  );
 
 $yes = array_intersect($url,$auth_these);
+$num_intersect = count($yes);
 
-if($yes && !$authenticated_username || !$authenticated_user_id) {
+if($num_intersect>0) {
   $thisurl=urlencode($thisurl);
   is_auth("$authenticated_username",$authenticated_user_id,"$thisurl");
-  exit();
+  // should not need to exit, is_auth will exit if necessary.
 }
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <!-- you madame of the internet,  -->

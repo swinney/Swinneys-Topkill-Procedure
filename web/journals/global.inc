@@ -353,27 +353,23 @@ function get_user_id($username) {
 ///////////////////////////
 
 function is_auth($authenticated_username, $authenticated_user_id, $thisurl) {
-  if (!$authenticated_username) {
-    header("Location: " . URLBASE . "/journals/login.phtml?back_to=$thisurl");
+  if ($authenticated_username && $authenticated_user_id) {
+    return OK;
+    exit;
+  }
+  if (!$authenticated_username && $authenticated_user_id) {
+    unset($authenticated_user_id);
     exit; 
   }
-  if (!$authenticated_user_id) {
-    if ($authenticated_username) {
-      unset($authenticated_username);
-    }
-    header("Location: " . URLBASE . "/journals/login.phtml?back_to=$thisurl");
+  if (!$authenticated_user_id && $authenticated_username) {
+    unset($authenticated_username);
     exit; 
   }
+  if (!$authenticated_user_id && !$authenticated_username) {
+    header("Location: " . URLBASE . "/journals/login.phtml?back_to=$thisurl");
+    exit;
+  }
 }
-
-/*
-if (preg_match("/(vip|admin)/i","$SCRIPT_NAME") && !$user_id) {
-
-  $url=URLBASE ."/journals/login.phtml";
-  header("Location: $url");
-  exit();
-}
-*/
 
 ///////////////////////////
 // get_rollcall() - 
