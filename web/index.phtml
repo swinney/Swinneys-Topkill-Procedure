@@ -6,24 +6,28 @@ include "journals/templates/top.inc";
 <CENTER>
 <TABLE CELLSPACING=0 CELLPADDING=5><TR><TD COLSPAN=2 ALIGN="CENTER">
 
-<TABLE width="100%" cellpadding="4"><TR><TD valign="top"><b>
-<p>(
-<a href="journals/index.phtml" accesskey="j">JOURNAL</a> |
+<TABLE width="100%" cellpadding="4"><TR><TD valign="top">
+<p>
+<b>(
 <?
 if ($authenticated_username) {
-  echo <<<EOT
-<a href="journals/process_logout.phtml" accesskey="l">LOG OUT</a> | 
-EOT;
 } else {
-  echo <<<EOT
-<a href="journals/login.phtml" accesskey="l">LOG IN</a> | 
-EOT;
+  echo '<a href="journals/login.phtml" accesskey="l">LOG IN</a> | ';
 }
 ?>
-<a href="journals/comments.phtml" accesskey="c">COMMENTS</a> |   
+<a href="journals/index.phtml" accesskey="j">JOURNAL</a> | 
+<a href="journals/comments.phtml" accesskey="c">COMMENTS</a> | 
 <a href="journals/submit_article.phtml" accesskey="s">SUBMIT</a> | 
-<a href="journals/faq.phtml" accesskey="f">ANSWERS</A>)</p></b>
-</b>
+<a href="journals/faq.phtml" accesskey="f">ANSWERS</A>
+<?
+if ($authenticated_username) {
+  echo ' | ';
+  echo '<a href="journals/vip/index.phtml" accesskey="v">VIP</a> | ';
+  echo '<a href="journals/process_logout.phtml" accesskey="l">LOG OUT</a> ';
+}
+?>
+)</b>
+</p>
 </td>
 </tr>
 <tr>
