@@ -75,7 +75,7 @@ EOT;
 
   $title = stripslashes($d->title);
   $blurb = stripslashes($d->blurb);
-
+  $category= $d->category; 
   $username = stripslashes($d->username);
   $username = $usernamenourl;
   if ($d->web) {
@@ -84,6 +84,7 @@ EOT;
 EOT;
   }
 
+$names=get_cat_names($category);
   echo <<<EOT
 <table cellpadding="0" cellspacing="0" border="0" width="375">
 <tr>
@@ -93,7 +94,11 @@ EOT;
 <div class="text">
 <b>$blurb</b></div></td>
 </tr>
-
+<tr>
+<td>
+<P><FONT SIZE=1>$names</font></P>
+</td>
+</tr>
 <tr>
 <td colspan="2">
 &nbsp;</td>
