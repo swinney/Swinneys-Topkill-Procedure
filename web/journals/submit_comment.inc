@@ -64,11 +64,24 @@ one liner <input type="radio" name="type" value="0" CHECKED> or
 <tr>
 <td colspan="2">
 <p>comment:<br>
-<textarea type=text name=comment cols=50 rows=20 wrap=virtual></textarea>
+<textarea type=text name=comment cols=40 rows=20 wrap=virtual></textarea>
 </p></td>
 
-<td valign="top">
-<p>&nbsp;<br>please enclose your paragraphs in <tt>&lt;p&gt;...&lt;/p&gt;</tt> tags.  if you don't know what that means, then don't worry about it.</p></td>
+<td valign="top" NOWRAP>
+<BR><BR>
+<p>
+<?
+
+  $res = mysql_query ( "select * from nature order by nature_id asc");
+
+  while ( $d = mysql_fetch_object($res) ) {
+    echo "<input type='radio' name='nature' value='$d->nature_id'> $d->nature <br>";
+  }
+
+?>
+<input type="submit" value="i said it">
+</p></td>
+</td>
 </tr>
 
 <tr>
@@ -81,19 +94,13 @@ one liner <input type="radio" name="type" value="0" CHECKED> or
 
 <!-- begin submit article categories -->
 
-<p>what category best describes you?</p>
 </td>
-<td><p>
-<?
+<td>
+<p>please enclose your paragraphs in <tt>&lt;p&gt;...&lt;/p&gt;</tt> tags.  if you don't know what that means, then don't worry about it.</p>
+</td>
+<td valign="top">
 
-  $res = mysql_query ( "select * from nature order by nature_id asc");
-
-  while ( $d = mysql_fetch_object($res) ) {
-    echo "<input type='radio' name='nature' value='$d->nature_id'> $d->nature <br>";
-  }
-
-?></p></td>
-<td valign="top"><input type="submit" value="i said it"></td>
+</td>
 </tr>
 </table>
 </form>
