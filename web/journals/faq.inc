@@ -16,8 +16,8 @@ the word 'swinney' can be used to refer to three different things:
 <br>
 <br>
 
-<LI>swinney.org, the website where people (humans) write journal
-entries (usually text, with occasional images), or;
+<LI>swinney.org, the website where people (humans) write articles
+ (usually text, with occasional images), or;
 
 <br>
 <br>
@@ -40,8 +40,8 @@ written on swinney.org.
 
 <p class="subheader"><b>do i have to sign up or log in or something?</b></p>
 <p>
-no, you don't have to sign up. just write a journal entry <a
-href="submit_article.phtml">here</a>. if you write more than
+no, you don't have to sign up. just <a
+href="submit_article.phtml">submit an article here</a>. if you write more than
 once, and use the same name every time, it will be easier for people to
 find what you've written, but it's not a rule or anything.
 </p>
@@ -50,7 +50,7 @@ find what you've written, but it's not a rule or anything.
 <p class="subheader"><b>what should i write?</b></p>
 
 <p> 
-anything you want! entries have consisted of anything from bad
+anything you want! articles have consisted of anything from bad
 haiku to someone's irc chat logs to harrowing tales of near death.
 </p>
 
@@ -60,7 +60,7 @@ appreciated. you know, <i>writing</i>.
 </p>
 
 <p> 
-this isn't a BBS and this isn't a mailing list. posts that make us
+this isn't a BBS and this isn't a mailing list. articles that make us
 feel like this is a BBS or a mailing list might not make it through
 our not-so-rigorous editorial process.  Cyantist has a good article
 about this: <a

@@ -64,7 +64,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><b>Entries</b> | <a href="comments.phtml">Comments</a>
+<span class="subheader"><b>Articles</b> | <a href="comments.phtml">Comments</a>
 
 EOT;
 
@@ -84,7 +84,7 @@ EOT;
 
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_forward">&laquo; earlier entries</a>
+<a href="index.phtml?select=$select&page_num=$page_forward">&laquo; earlier articles</a>
 
 EOT;
   }  
@@ -95,7 +95,7 @@ EOT;
   
   if ($page_num > 1){
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_back">later entries &raquo;</a>
+<a href="index.phtml?select=$select&page_num=$page_back">later articles &raquo;</a>
 EOT;
   }
   
@@ -199,7 +199,7 @@ EOT;
 
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_forward">&laquo; earlier entries</a>
+<a href="index.phtml?select=$select&page_num=$page_forward">&laquo; earlier articles</a>
 
 EOT;
   }  
@@ -210,7 +210,7 @@ EOT;
   
    if ($page_num > 1){
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_back">later entries &raquo;</a>
+<a href="index.phtml?select=$select&page_num=$page_back">later articles &raquo;</a>
 
 EOT;
   }

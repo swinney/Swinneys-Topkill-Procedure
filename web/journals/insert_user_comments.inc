@@ -65,7 +65,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><a href="userpages.phtml?username=$username">Entries</a> | <b>Comments</b>
+<span class="subheader"><a href="userpages.phtml?username=$username">Articles</a> | <b>Comments</b>
 EOT;
 
 if ($page_num < $num_of_pages or $page_num > 1) {

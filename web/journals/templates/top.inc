@@ -26,7 +26,7 @@
 <script type="text/javascript" language="JavaScript">
 //<!--
 MM1 = new rollover("ithoughtit","<? echo URLBASE; ?>/journals/img/ithoughtit.gif", "<? echo URLBASE; ?>/journals/img/ithoughtit-over.gif", "ithoughtit"); 
-MM2 = new rollover("entries","<? echo URLBASE; ?>/journals/img/entries.gif", "<? echo URLBASE; ?>/journals/img/entries-over.gif", "entries"); 
+MM2 = new rollover("articles","<? echo URLBASE; ?>/journals/img/articles.gif", "<? echo URLBASE; ?>/journals/img/articles-over.gif", "articles"); 
 MM3 = new rollover("comments","<? echo URLBASE; ?>/journals/img/comments.gif", "<? echo URLBASE; ?>/journals/img/comments-over.gif", "comments"); 
 MM4 = new rollover("faq","<? echo URLBASE; ?>/journals/img/faq.gif", "<? echo URLBASE; ?>/journals/img/faq-over.gif", "faq"); 
 MM5 = new rollover("submit","<? echo URLBASE; ?>/journals/img/submit.gif", "<? echo URLBASE; ?>/journals/img/submit-over.gif", "submit"); 

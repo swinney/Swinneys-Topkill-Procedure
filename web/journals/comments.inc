@@ -91,7 +91,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><a href="index.phtml">Entries</a> | <b>Comments</b>
+<span class="subheader"><a href="index.phtml">Articles</a> | <b>Comments</b>
 EOT;
 
 if ($page_num < $num_of_pages or $page_num > 1) {
