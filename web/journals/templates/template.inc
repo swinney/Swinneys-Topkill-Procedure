@@ -1,5 +1,6 @@
 <? 
 #  $Id$
+
 require_once("global.inc");
 include "templates/top.inc";
 include "templates/swinney.req";
