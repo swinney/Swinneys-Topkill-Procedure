@@ -10,6 +10,26 @@
 # with no small amount of inspiration
 # from Gavin Cruickshank.
 #####################################
+session_unregister("back_to");
+$url = split('/',$SCRIPT_NAME);
+$auth_these=array(
+		  "submit_comment.phtml",
+		  "submit_article.phtml",
+		  "vip",
+		  "madmin",
+		  "admin",
+		  );
+
+$yes = array_intersect($url,$auth_these);
+
+if($yes && !$authenticated_username) {
+  $thisurl=urlencode($thisurl);
+  is_auth("$authenticated_username","$thisurl");
+  exit();
+}
+
+
+
 ?>
 
 <html>

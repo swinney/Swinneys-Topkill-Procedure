@@ -22,6 +22,18 @@ if (file_exists("$thisdir/local_conf.php")) {
     include_once($thisdir ."/local_conf.php");
 }
 
+$thisurl = "http://". $HTTP_HOST . $SCRIPT_NAME;
+if ($QUERY_STRING) {
+    $thisurl .= "?". $QUERY_STRING;
+}
+
+/*
+ * migrating from article_id to id
+ */
+if ($article_id) {
+  $id=$article_id;
+}
+
 /*
  * set default configuration values.
  *
@@ -235,6 +247,10 @@ $res=mysql_query($query) or die (error_page($query));
         $noext = $id."_".$i;
         if (file_exists(IMGBASE ."/$noext.jpg")) {
             $imgfile = "$noext.jpg";
+        } else if (file_exists(IMGBASE ."/$noext.jpeg")) {
+            $imgfile = "$noext.jpeg";
+        } else if (file_exists(IMGBASE ."/$noext.pjpeg")) {
+            $imgfile = "$noext.pjpeg";
         } else if (file_exists(IMGBASE ."/$noext.gif")) {
             $imgfile = "$noext.gif";
         } else if (file_exists(IMGBASE ."/$noext.png")) {
@@ -277,15 +293,21 @@ function get_username($user_id) {
 // check authorization
 ///////////////////////////
 
-if (preg_match("/(vip|submit|admin)/i","$SCRIPT_NAME") && !$user_id) {
-  session_register("back_to");
-  //  parse_url($PHP_SELF);
-  $back_to="http://". $HTTP_HOST . $SCRIPT_NAME ."?". $QUERY_STRING;
+function is_auth($authenticated_username, $thisurl) {
+  if (!$authenticated_username) {
+    header("Location: " . URLBASE . "/journals/login.phtml?back_to=$thisurl");
+    exit; 
+  }
+}
+
+/*
+if (preg_match("/(vip|admin)/i","$SCRIPT_NAME") && !$user_id) {
+
   $url=URLBASE ."/journals/login.phtml";
-#  echo $back_to ."<BR>".$url;
   header("Location: $url");
   exit();
 }
+*/
 
 ///////////////////////////
 // get_rollcall() - 

@@ -49,7 +49,7 @@ written on swinney.org.
 
 <p class="subheader"><b>do i have to sign up or log in or something?</b></p>
 <p>
-no, you don't have to sign up. just <a
+yes, you do have to sign up, but then you can just <a
 href="submit_article.phtml">submit an article here</a>. if you write more than
 once, and use the same name every time, it will be easier for people to
 find what you've written, but it's not a rule or anything.

@@ -75,8 +75,6 @@ session_register("bozo_set");
 
 // $back_to is the location where the user originally clicked the "log
 // in" link
-session_unregister("back_to");
-header("Location: ". $back_to);
-//echo $back_to;
+header("Location: $back_to");
 ?>
 

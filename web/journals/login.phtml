@@ -5,7 +5,11 @@ require_once("./global.inc");
 // doesn't make sense to display the login page for users who are
 // already logged in
 if ($authenticated_username) {
-  $error_msg="<a href='$back_to'>You are already logged in!</a>";
+  $error_msg=<<<EOT
+ERROR: Your authenticated username: $authenticated_username<BR>
+seems to be set already.  <a href="mailto:bugs@swinney.org">bugs@swinney.org</a>.
+<BR><BR>
+EOT;
 }
 
 $title = "Log In";

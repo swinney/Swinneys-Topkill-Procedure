@@ -2,22 +2,14 @@
 // the first time the page is visited, save the location where the
 // "log in" link was clicked so we can redirect back to it upon
 // successful authentication
-if (! session_is_registered("back_to")) {
-  // that is, unless the registration page is the referer, cos it also
-  // redirects back to the referer
-  if (eregi("/journals/submit_register.phtml$", $HTTP_REFERER)) {
+if (!$back_to) {
     $back_to = URLBASE;
-  } else {
-    $back_to = $HTTP_REFERER;
-  }
-  // if this is needed it will have to go in global or top somewhere
-  // because this file is an include below top.inc which has output.
-  //  session_register("back_to");
 }
 ?>
 
 <!-- begin login form-->
 <form action="process_login.phtml" method="POST">
+<input type=hidden name=back_to value="<?=urldecode($back_to);?>">
 <table cellpadding="2" cellspacing="0" border="0">
 <tr>
 <td colspan="2">
@@ -55,7 +47,18 @@ EOT;
 <td>&nbsp;</td>
 
 <td>
-<input type="submit" value="that's me"></td>
+<input type="submit" value="that's me"></td></tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<?php 
+if ($back_to) {
+  echo "<TD><P><B>You arrived from:</B></TD>"; 
+  echo "<TD><a href='$back_to'>$back_to</a></P></TD>";
+}
+?>
 </tr>
 </table>
 </form>

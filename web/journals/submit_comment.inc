@@ -3,10 +3,11 @@
 
 require_once("./global.inc");
 
+
 ?>
 
 <form action="process_comment.phtml" method=post enctype="multipart/form-data">
-<input type="hidden" name="article_id" value="<? echo "$article_id"?>">
+<input type="hidden" name="article_id" value="<? echo "$id"?>">
 
 <table width="375" border="0" cellspacing="0" cellpadding="2">
 <tr>
@@ -34,7 +35,7 @@ EOT;
 <SELECT NAME="to_user">
 <option value="0">all
 <?
-$query="SELECT distinct(username), user_id FROM comments WHERE article_id=$article_id AND username NOT LIKE '%to%' ORDER BY username";
+$query="SELECT distinct(username), user_id FROM comments WHERE article_id=$id AND username NOT LIKE '%to%' ORDER BY username";
 $res=mysql_query($query);
 while ($d=mysql_fetch_object($res)) {
   if ($d->user_id) echo "<option value='$d->user_id'>$d->username\n";

@@ -40,8 +40,13 @@ $article_id = $article_id[0];
       include("./submit_comment.phtml");
   }
 
-// echo "$username<br>$comment<br>$nature<br>";
+  if (!$nature) {
+    $nature=0;
+  }
 
+  if (!$user_id) {
+    $user_id=0;
+  }
 
 $username=stripslashes($username);
 $comment=stripslashes($comment);

@@ -2,12 +2,11 @@
 ###################################
 # $Id$
 # bring the articles
-require_once("./global.inc");
-
 $title = "Articles by All";
 $into_template = "insert_articles.inc";
 # is rollcall.inc displayed?
 # 0 for norollcall.inc; 1 for rollcall.inc.
 $rollcall=1;
-include(INCDIR ."/template.inc");
+require_once("./global.inc");
+include_once(INCDIR ."/template.inc");
 ?>
