@@ -14,14 +14,14 @@ $row = mysql_num_rows($res);
 
 if ($row == 1 ) {
    $rand=dice(1,99);
-   $username=$username ."_dork$rand";
-   $login_error_msg = "that username is taken, can i suggest $username";
+   $username=$username ."_likes_ham$rand";
+   $error_msg = "Username taken. Swinney suggests:";
    include("submit_register.phtml");
    exit;
 }
 
-if ("$password1" != "$password2") {
-   $login_error_msg = "your passwords do not match.";
+if ("$password" != "$password2") {
+   $error_msg = "Those passwords don't match.  Try again:";
    include("submit_register.phtml");
    exit;
 }

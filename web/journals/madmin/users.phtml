@@ -1,4 +1,14 @@
 
+<center>
+<p class="subheader">
+<a href='index.phtml'>firebird</a> | 
+<a href='listcontent.phtml'>entries</a> | 
+<a href='admin_comments.phtml'>comments</a> | 
+<b>users</b>
+</p>
+</center>
+
+
 <div align="center">
 
 <?
@@ -61,8 +71,10 @@ EOT;
 </p>
 </form>
 
-<hr>
+<pre>
 
+
+</pre>
 EOT;
 
   } else if ($num_users == 1) {
@@ -79,7 +91,6 @@ EOT;
 No matches. Try again.
 </p>
 
-<hr>
 
 EOT;
   }
@@ -110,7 +121,7 @@ EOT;
 username:
 </td>
 <td align="left" valign="middle">
-<input type="text" name="new_username" size="20" maxlength="20"
+<input type="text" name="new_username" size="30" maxlength="50"
  value="$u->username">
 </td>
 </tr>
@@ -119,7 +130,7 @@ username:
 email:
 </td>
 <td align="left" valign="middle">
-<input type="text" name="new_email" size="20" maxlength="20"
+<input type="text" name="new_email" size="30" maxlength="50"
  value="$u->email">
 </td>
 </tr>
@@ -128,7 +139,7 @@ email:
 password:
 </td>
 <td align="left" valign="middle">
-<input type="password" name="new_password1" size="20" maxlength="20">
+<input type="password" name="new_password1" size="30" maxlength="50">
 </td>
 </tr>
 <tr>
@@ -136,7 +147,7 @@ password:
 password (again):
 </td>
 <td align="left" valign="middle">
-<input type="password" name="new_password2" size="20" maxlength="20">
+<input type="password" name="new_password2" size="30" maxlength="50">
 </td>
 </tr>
 <tr>
@@ -158,7 +169,10 @@ $u->ip_addr
 </table>
 </form>
 
-<hr>
+<pre>
+
+
+</pre>
 
 EOT;
   } else {
@@ -179,7 +193,7 @@ EOT;
 
 <form method="GET" action="users.phtml">
 <p>
-<input type="text" name="search" size="20" maxlength="20">
+<input type="text" name="search" size="30" maxlength="50">
 <input type="submit" value="find a user">
 </p>
 </form>

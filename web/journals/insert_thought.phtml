@@ -1,7 +1,5 @@
 
-
 <!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
-
 
 <?
 
@@ -21,7 +19,7 @@ $article_id = explode (".", $article_id);
 $no_extension = $article_id[0];
 
 $res = mysql_query ("SELECT * FROM thoughts ORDER BY comment_id DESC LIMIT 5");
-echo "<P>";
+
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {
 
@@ -31,18 +29,20 @@ $thought=$d->thought;
 
 // echo and strip
 
-stripslashes($username);
-stripslashes($thought);
+$username=stripslashes($username);
+$thought=stripslashes($thought);
 
-$ext = substr($thought,-3);
+$ext = substr($thought,-5, 3);
 
-   if ($ext == "jpg"||$ext == "gif"||$ext == "png") {
-      echo "<img src='$thought' alt='$username'><BR>\n";
-   } else {
-   echo " $username .o0O($thought)<BR>\n";
-   } 
+if ($ext == "jpg"||$ext == "gif"||$ext == "png") {
+
+echo "<tr>\n<td>&nbsp;</td>\n<td>&nbsp;</td>\n<td align=\"center\" class=\"thoughts\">$thought($username)</td>\n<tr>\n";
+
+} else {
+
+echo "<tr>\n<td align=\"right\" valign=\"top\" class=\"thoughts\" nowrap>\n$username</td>\n\n<td valign=\"top\" class=\"thoughts\" nowrap>\n&nbsp;.o0O</td>\n\n<td valign=\"top\" class=\"thoughts\">\n($thought)</td>\n</tr>\n\n";
+   }
 }
-echo "</P>";
 ?>
 
 

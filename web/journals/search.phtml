@@ -2,28 +2,26 @@
 # $Id$
 # searching for stuff on the internet reminds me of justin hall
 # create table search_words (word_id int(11) primary key not null auto_increment, word varchar(25) not null, num_rows int(5) NOT NULL DEFAULT 0, num_times int(4) NOT NULL DEFAULT 0); 
-$title="Justin Hall's Quest For Links";
+$title="Search Results for $find";
 require_once("global.inc");
 include "templates/top.inc";
-include "templates/line_nav.inc";
-echo <<<EOT
-<CENTER>
-<P>swinney.org beta search engine</P>
-<FORM ACTION="search.phtml" METHOD="POST">
-<INPUT TYPE="text" NAME="search_this">
-<INPUT TYPE="submit" NAME="search" VALUE="search">
-</FORM>
-<P>(full string search of text body and comments for exactly what you type)</P>
-</CENTER>
-EOT;
+include "templates/swinney.req";
+include "templates/norollcall.inc";
+
 # get that IP Address
 $ip_addr = getenv ("REMOTE_ADDR"); 
 
-if (isset($search_this)) {
+echo <<<EOT
+<table cellpadding="2" cellspacing="0" border="0" width="375">
+EOT;
 
-# echo search string only if it exists
-echo "\n<P>looking for <B>$search_this</B></P>";
-$search_this =  addslashes($search_this);
+
+if ($find) {
+
+# query articles_text.text for string and match 
+# article_text.article_id with articles_info.article_id 
+# to get the title and author username and stuff. 
+$find =  addslashes($find);
 $query =<<<EOT
   SELECT articles_info.date,
          articles_info.title,
@@ -34,54 +32,19 @@ $query =<<<EOT
    WHERE articles_info.article_id=articles_text.article_id 
      AND articles_info.status=2 
      AND articles_text.text 
-    LIKE '%$search_this%' 
+    LIKE '%$find%' 
 ORDER BY articles_text.article_id 
 DESC LIMIT 300
 EOT;
 
-# query articles_text.text for string and match 
-# article_text.article_id with articles_info.article_id 
-# to get the title and author username and stuff. 
-
-$res = mysql_query($query);
+$articleres = mysql_query($query);
 
 # get the number of returned rows for shits and giggles.
+$articlenum = mysql_num_rows($articleres);
 
-$num = mysql_num_rows($res);
-
-# here we go with the searched output
-echo "\n<P>from the articles</P>";
-
-# indent slightly
-echo "\n<BLOCKQUOTE>";
-
-# print the number of returns from a few lines up
-echo "\n<P>number of returns: $num</P>";
-
-# number the returns using html
-echo "\n<OL>";
-
-# start the return loop on $res
-while ($d=mysql_fetch_object($res)) {
-   # assign values
-   $date=$d->date;
-   $article_id=$d->article_id;
-   $title=$d->title;
-   $username=$d->username;
-   # print out record
-   echo "\n<LI><P>[$date] <a href=\"article.phtml?id=$article_id\">$title</a>"
-	   . "\n by <a href=\"userpages.phtml?username=$username\">$username</a></P>";
-
-} # close the $res loop
-
-# close the html numbered returns
-echo "\n</OL>";
-
-# close the indent
-echo "\n</BLOCKQUOTE>";
-
-
-$query = <<<EOT
+# query comments.comment for $find and 
+# get articles_info.title based on comments.article_id 
+$query2 = <<<EOT
   SELECT comments.comment_id,
   comments.article_id,
   comments.username,
@@ -89,55 +52,208 @@ $query = <<<EOT
   articles_info.date
   FROM comments, articles_info 
   WHERE comments.article_id=articles_info.article_id 
-  AND comment LIKE '%$search_this%' 
+  AND comment LIKE '%$find%' 
   ORDER BY article_id DESC
 EOT;
 
-# query comments.comment for $search_this and 
-# get articles_info.title based on comments.article_id 
-
-$res = mysql_query($query);
+$commentres = mysql_query($query2);
 
 # number of rows returned just for displays sake
-$num = mysql_num_rows($res);
+$commentnum = mysql_num_rows($commentres);
 
-# start output of comments search
-echo "\n<p>and from the comments<p>";
-# html indent for display, a little visual separation
-echo "\n<BLOCKQUOTE>";
-# show the number of records
-echo "\n<P>number of returns: $num</P>";
-# start html numbered list
-echo "\n<OL>";
+if ($articlenum == "0" and $commentnum == "0")
+{
+echo <<<EOT
+<tr>
+<td>
+<span class="subheader"><b>No Luck.</b></span><br>
+<span class="text">"<b>$find</b>" wasn't found in any entry or comment on swinney.org.</span>
+EOT;
+}
+else
+{
+
+if ($articlenum == "1")
+{
+$articleoccur = "match";
+}
+else
+{
+$articleoccur = "matches";
+}
+    
+
+if ($commentnum == "1")
+{
+$commentoccur = "match";
+}
+else
+{
+$commentoccur = "matches";
+}
+
+
+if ($articlenum > "299")
+{
+$articlevnum = "more than 300";
+}
+else
+{
+$articlevnum = $articlenum;
+}
+
+
+if ($commentnum > "299")
+{
+$commentvnum = "more than 300";
+}
+else
+{
+$commentvnum = $commentnum;
+}
+
+    
+echo <<<EOT
+<tr>
+<td nowrap>
+<span class="subheader"><b>Search Results for "$find" &raquo;</span></b></td>
+<td align="right" nowrap>
+EOT;
+
+if ($articlenum > "0") {
+echo "<span class=\"subheader\"><a href=\"#articles\">Articles</a>:</span></td>";
+}
+else
+{
+echo "<span class=\"subheader\">Articles:</span></td>";
+}
+
+echo <<<EOT
+<td valign="bottom" nowrap>
+<span class="text"><b>$articlevnum $articleoccur</b></span></td>
+</tr>
+
+<tr>
+<td>
+&nbsp;</td>
+<td align="right" nowrap>
+EOT;
+
+if ($commentnum > "0") {
+echo "<span class=\"subheader\"><a href=\"#comments\">Comments</a>:</span></td>";
+}
+else
+{
+echo "<span class=\"subheader\">Comments:</span></td>";
+}
+
+echo <<<EOT
+<td valign="bottom" nowrap>
+<span class="text"><b>$commentvnum $commentoccur</b></span></td>
+
+</tr>
+
+EOT;
+
+}
+
+if ($articlenum > "0")
+{
+echo <<<EOT
+<tr>
+<td colspan="3">
+<a name="articles">&nbsp;</a></td>
+</tr>
+
+<tr>
+<td colspan="3">
+<span class="subheader">
+<b>Matching Articles</b></span></td>
+</tr>
+
+<tr>
+<td colspan="3">
+
+EOT;
+
+# start the return loop on $res
+while ($d=mysql_fetch_object($articleres)) {
+   # assign values
+   $date=$d->date;
+   $article_id=$d->article_id;
+   $title=$d->title;
+   $username=$d->username;
+   # print out record
+   
+echo <<<EOT
+
+<p>
+<a href="article.phtml?id=$article_id">
+<b>$title</b></a> by $username<br>
+<span class="small">$date</span>
+</p>
+EOT;
+
+} # close the $articleres loop
+}
+
+if ($commentnum > "0")
+{
+echo <<<EOT
+</td>
+</tr>
+
+<tr>
+<td colspan="3">
+<a name="comments">&nbsp;</a></td>
+</tr>
+
+<tr>
+<td colspan="3">
+<span class="subheader">
+<b>Matching Comments</b></span></td>
+</tr>
+
+<tr>
+<td colspan="3">
+
+EOT;
 
 #loop through the records from $res
-while ($d=mysql_fetch_object($res)) {
+while ($d=mysql_fetch_object($commentres)) {
   $article_id=$d->article_id;
   $comment_id=$d->comment_id;
   $title=$d->title;
   $date=$d->date;
   $username=$d->username;
+  
+$commentres2 = mysql_query ("SELECT username,title FROM articles_info WHERE article_id=$article_id");
 
+$row = mysql_fetch_row($commentres2);
 
-	# this loop first determines if the first record has been printed
-	# if so, then format text with "... sez ", if not then just format
-	# with "sez" because it is picking up the idea from scratch
-  if ($title==$last) {
-    echo "... sez <a href=\"article.phtml?id=$article_id#$comment_id\">$username</a>";
-  } else {
-# there was no first record so ...
-    echo "\n<LI><P>[$date] <a href=\"article.phtml?id=$article_id\">$title</a><BR>";
-    echo "\n sez <a href=\"article.phtml?id=$article_id#$comment_id\">$username</a>";
+$writer = $row[0];
 
-	}
-	# loop has gone through once, there was the last title,
-	# unique to the loops last relavent run.  hope that 
-	# makes sense.
-	$last=$title;
+# this loop first determines if the first record has been printed
+# if so, then format text with "... sez ", if not then just format
+# with "sez" because it is picking up the idea from scratch
+
+echo <<<EOT
+<p>
+<b><a href="article.phtml?id=$article_id#$comment_id">$username</a></b> on <a href="article.phtml?id=$article_id">$title</a> by <a href="userpages.phtml?username=$writer">$writer</a><br>
+<span class="small">$date</span>
+</p>
+
+EOT;
+
 }
 
-echo "\n</OL>";
-echo "\n</BLOCKQUOTE>";
+echo <<<EOT
+</td>
+</tr>
+
+EOT;
+
+}
 
 # now we move on to the database.  we are keeping track of 
 # all search terms so as to better improve our search performance
@@ -157,7 +273,7 @@ echo "\n</BLOCKQUOTE>";
 # 5 rows in set (0.01 sec)
 
 
-$query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1, ip_addr='$ip_addr' WHERE word='$search_this'";
+$query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1, ip_addr='$ip_addr' WHERE word='$find'";
 # update the search terms number of rows and number of times searched
 $res = mysql_query($query);
 
@@ -167,10 +283,8 @@ $res = mysql_query($query);
 $affected = mysql_affected_rows();
 
 if ($affected==0) { # UPDATE was invalid, do INSERT
-
-	echo "<P>well, there is a first time for everything.</P>";
 	
-	$query = "INSERT INTO search_words (word_id,word,num_rows,num_times,ip_addr) VALUES ('','$search_this','$num','1','$ip_addr')";
+	$query = "INSERT INTO search_words (word_id,word,num_rows,num_times,ip_addr) VALUES ('','$find','$num','1','$ip_addr')";
 
 	# insert new search_words into table allong with the number of returns
 	# and the searcher's ip addr in case they try some sort of funny 
@@ -183,8 +297,25 @@ if ($affected==0) { # UPDATE was invalid, do INSERT
 }
 
 }
+else
+{
+echo <<<EOT
+
+<tr>
+<td>
+<span class="header"><b>Site Search</b></span><br>
+Enter a word or phrase in the box above to search for.
+EOT;
+}
+
+echo <<<EOT
+</table>
+EOT;
+
+
 # lets unset the search term
-unset($search_this);
+unset($find);
+include "templates/bottom.req";
 include "templates/footer.inc";
 ?>
 

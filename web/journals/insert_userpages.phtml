@@ -2,12 +2,7 @@
 
 // insert_userpages.inc/phtml
 
-
-
-
 $res1 = mysql( "", "SELECT * FROM articles_info WHERE username="$username" AND status='2' OR status='3' ORDER BY time DESC" );
-
-
 
 $url = "article.phtml?id=$d->article_id";
 
@@ -35,7 +30,6 @@ echo " | $numrows comments";
    echo "</td></tr></table>\n";
 
 }
-
 
 ?>
 

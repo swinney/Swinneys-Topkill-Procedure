@@ -1,46 +1,56 @@
 <?
 // $Id$
+?>
+
+<table cellpadding="2" cellspacing="0" border="0" width="375">
+<tr>
+<td>
+<p>
+<?
+
 if ($error_msg) {
   session_unregister("error_msg");
   echo <<<EOT
-<p>
-<b><font color="red">$error_msg</font></b>
-</p>
+<span class="header"><b>$error_msg</b></span>
 EOT;
 }
-
-if ($success_msg) {
+elseif ($success_msg) {
   session_unregister("success_msg");
   echo <<<EOT
-<p>
-<b><font color="green">$success_msg</font></b>
-</p>
+<span class="header"><b>$success_msg</b></span>
+EOT;
+}
+else
+{
+  echo <<<EOT
+<span class="header"><b>$title</b></span>
 EOT;
 }
 ?>
 
+<br>
+Is someone a clown? Don't want to see what they have to say? Add them
+to your bozolist and their articles and comments will be filtered from your view of the site.
+</p>
+</td>
+</tr>
+</table>
+
 <form method="POST" action="process_bozo.phtml">
 
-<p>
-Somebody is a clown? Dont want to see what they have to say? Add them
-to your bozo list below, and their articles and comments will be
-filtered from your view of the site.
-</p>
-
-<table>
+<table cellpadding="2" cellspacing="0" border="0">
 <tr>
-<td align="right" valign="middle">
-<p>username:</p>
-</td>
-<td align="left" valign="middle">
+<td align="right">
+<p>username:</p></td>
+<td align="left">
 <input type="text" name="username" size="20" maxlength="20">
 </td>
 </tr>
 <tr>
-<td align="left" valign="middle">
+<td align="left">
 &nbsp;
 </td>
-<td align="left" valign="middle">
+<td align="left">
 <input type="submit" name="add" value="add bozo">
 </td>
 </tr>
@@ -51,18 +61,28 @@ $num_bozos = count($bozos);
 if ($num_bozos) {
 
   echo <<<EOT
-<p>
-Or, if forgiveness is on order, select one or more names below and
-remove them from the list.
-</p>
+  
+<br>
 
-<table>
+<table cellpadding="2" cellspacing="0" border="0" width="375">
 <tr>
-<td align="right" valign="middle">
+<td>
+<p>
+If forgiveness is on order, select one or more usernames below and
+remove them from the list.
+</p></td>
+</tr>
+</table>
+
+<br>
+
+<table cellpadding="2" cellspacing="0" border="0">
+<tr>
+<td align="right" valign="top">
 <p>username:</p>
 </td>
-<td align="left" valign="middle">
-<select name="username[]" size="$num_bozos" multiple>
+<td align="left">
+<select name="username[]" size="5" multiple>
 
 EOT;
 

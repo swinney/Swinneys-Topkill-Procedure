@@ -37,10 +37,8 @@ $row = mysql_fetch_row($res);
 
 if (!$row) {
   echo <<<EOT
-<p>
-No comments!
+<span class="subheader"><b>No comments have been made.</b></span>
 
-</p>
 EOT;
 } else {
   $num_of_results = $row[0];
@@ -80,22 +78,81 @@ EOT;
 
   // write paginator
   $url = "article.phtml?id=$d->article_id";
+  
+// let's cut a nice little page header into here - J. 
 
-  if($page_num == 1){
-    print "<P>newer |";
+echo <<<EOT
+
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td nowrap>
+<span class="subheader"><b>All &raquo;</b></span></td>
+
+<td>&nbsp;&nbsp;&nbsp;</td>
+
+<td align="left">
+<span class="subheader"><a href="index.phtml">Entries</a> | <b>Comments</b>
+EOT;
+
+if ($page_num < $num_of_pages or $page_num > 1) {
+
+echo <<<EOT
+</span></td>
+</tr>
+
+<tr>
+<td colspan="2">&nbsp;</td>
+<td align="left">
+<span class="text">
+
+EOT;
+
+  if ($page_num < $num_of_pages) { 
+    echo <<<EOT
+<a href="$return?page_num=$page_forward">&laquo; earlier comments</a>
+
+EOT;
+  }  
+
+  if ($page_num < $num_of_pages and $page_num > 1) { 
+    echo ' - ';
+    }
+  
+  if ($page_num > 1){
+    echo <<<EOT
+<a href="$return?page_num=$page_back">later comments &raquo;</a>
+EOT;
   }
+    
+}
 
-  if($page_num > 1){
-    print "<P><a href=\"$return?&page_num=$page_back\">newer</a> |";
-  } 
+echo <<<EOT
 
-  if($page_num < $num_of_pages) { 
-    print " <a href=\"$return?page_num=$page_forward\">older</a>";
-  } 
+</span>
+</td>
+</tr>
+</table>
 
-  if($page_num == $num_of_pages) {
-    print "older</P>";
-  }
+<br>
+
+<table cellpadding="0" cellspacing="0" border="0" width="375">
+<tr>
+<td>
+<img src="img/no.gif" alt="" width="1" height="4" border="0"></a><br></td>
+</tr>
+
+<tr>
+<td bgcolor="#999999">
+<img src="img/no.gif" alt="" width="1" height="1" border="0"><br></td>
+</tr>
+
+<tr>
+<td>
+<img src="img/no.gif" alt="" width="1" height="4" border="0"><br></td>
+</tr>
+
+EOT;
+
 
   // write comments
   while ($d = mysql_fetch_object($res)) {
@@ -111,36 +168,69 @@ EOT;
 EOT;
     $res2 = mysql_query($query);
     $row = mysql_fetch_row($res2);
-    echo "\n<hr>";
     echo <<<EOT
-<P>$username on 
-"<a href='article.phtml?id=$article_id.txt#$comment_id'>$row[1]</A>" 
-by <a href='userpages.phtml?username=$row[0]'>$row[0]</a></P>
-<P>$comment</P>
+<tr>
+<td><a name="$comment_id"></a>
+<b><a href='article.phtml?id=$article_id.txt#$comment_id'>$username</a></b> on
+"<a href="article.phtml?id=$article_id.txt">$row[1]</a>" 
+by <a href='userpages.phtml?username=$row[0]'>$row[0]</a>:<br>
+
+$comment
+
+</td>
+</tr>
+
+<tr>
+<td>
+<img src="img/no.gif" alt="" width="1" height="4" border="0"></a><br></td>
+</tr>
+
+<tr>
+<td bgcolor="#999999">
+<img src="img/no.gif" alt="" width="1" height="1" border="0"><br></td>
+</tr>
+
+<tr>
+<td>
+<img src="img/no.gif" alt="" width="1" height="4" border="0"><br></td>
+</tr>
+
+EOT;
+}
+
+
+echo <<<EOT
+
+</table>
+
+EOT;
+
+if ($page_num < $num_of_pages or $page_num > 1) {
+
+echo <<<EOT
+
+<p>
+
+EOT;
+
+  if ($page_num < $num_of_pages) { 
+    echo <<<EOT
+<a href="$return?page_num=$page_forward">&lt;&lt; earlier comments</a>
+
+EOT;
+  }  
+
+  if ($page_num < $num_of_pages and $page_num > 1) { 
+    echo ' - ';
+    }
+  
+   if ($page_num > 1){
+    echo <<<EOT
+<a href="$return?&page_num=$page_back">later comments &gt;&gt;</a>
+
 EOT;
   }
-
-  if($page_num == 1){
-    print "<P>newer |";
+  
   }
-
-  if($page_num > 1){
-    print "<P><a href=\"$return?&page_num=$page_back\">newer</a> |";
-  } 
-
-  if($page_num < $num_of_pages) { 
-    print " <a href=\"$return?page_num=$page_forward\">older</a>";
-  } 
-
-  if($page_num == $num_of_pages) {
-    print "older</P>";
   }
-}
 ?>
-
-
-
-
-
-
-

@@ -5,5 +5,9 @@ $comments = mysql_fetch_row ( mysql_query ( "SELECT count(comment_id) FROM comme
 $thoughts = mysql_fetch_row ( mysql_query ( "SELECT count(comment_id) FROM thoughts" ) );
 $pending = mysql_fetch_row ( mysql_query ( "SELECT count(status) FROM articles_info where status=0") );
 
-echo "<BR><CENTER><TT>articles: $articles[0]; comments: $comments[0]; thoughts: $thoughts[0]; pending: $pending[0];</TT></CENTER><BR>";
+echo "<!--\n";
+echo "WORLD DOMINATION PROGRESS-O-METER\n";
+echo "articles: $articles[0]; comments: $comments[0]; thoughts: $thoughts[0]; pending: $pending[0];";
+echo "\n-->\n";
+
 ?>

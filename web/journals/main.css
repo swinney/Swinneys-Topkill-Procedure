@@ -1,25 +1,61 @@
-body {
-background: pink;
-color: black;
-font-family: Times New Roman,Times;
-font-size: 10pt;
-}
+table, tr, td, p, ol, ul, li, .text {  
+font-family: Times New Roman,Times,serif; 
+font-size: 13px;
+color: #000000;
+} 
 
-p {  
-font-family: Times New Roman,Times; 
-font-size: 10pt;
-color: black;
-A:link, A:visited {
-color: red;
-}
+tt, {  
+font-family: monospace; 
+font-size: 13px;
+color: #000000;
+} 
 
-H1,H2,H3,H4 {
-color: black;
-}
+.error {  
+font-family: Times New Roman,Times,serif; 
+font-size: 13px;
+color: #FF0000;
+} 
 
-pre { 
-color: navy 
+.thoughts {  
+font-family: Times New Roman,Times,serif; 
+font-size: 13px;
+color: #ffffff;
+} 
+
+.text-grey {  
+font-family: Times New Roman,Times,serif; 
+font-size: 13px;
+color: #666666;
+} 
+
+.small {  
+font-family: Times New Roman,Times,serif; 
+font-size: 11px;
+color: #000000;
+} 
+
+.header {  
+font-family: Times New Roman,Times,serif; 
+font-size: 19px;
+color: #000000;
+} 
+
+.subheader {  
+font-family: Times New Roman,Times,serif; 
+font-size: 15px;
+color: #000000;
+} 
+
+.subheader-grey {  
+font-family: Times New Roman,Times,serif; 
+font-size: 15px;
+color: #666666;
 } 
 
 
+pre { 
+font-family: monospace; 
+color: navy;
+font-size: 13px;
+} 
 

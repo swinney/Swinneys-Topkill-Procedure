@@ -29,21 +29,13 @@ $res = mysql_query($query);
 
 // multiple rows, limit 10 latest
 while ($d = mysql_fetch_object($res)) {
-  if ($d->web) {
-    $stripped = stripslashes($d->username);
-    $username = <<<EOT
-<a href="$d->web">$stripped</a>
-EOT;
-  } else {
     $username = $d->username;
-  }
 
   echo <<<EOT
 <p>
-$username wrote
+<a href="journals/userpages.phtml?username=$username">$username</a> wrote
 <a href="journals/article.phtml?id=$d->article_id.txt">
-<strong>$d->title</strong>
-</a>
+<strong>$d->title</strong></a>
 </p>
 
 EOT;

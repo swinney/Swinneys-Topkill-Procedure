@@ -6,11 +6,11 @@
 # global vars for use in the site
 # functions for use in the site
 
-define("URLBASE", "http://swinney.org/dev"); // no trailing slash!
+define("URLBASE", "/~jim/swinney.org"); // no trailing slash!
 define("CSS_URL", URLBASE . "/journals/main.css");
 define("DB_HOST", "localhost");
 define("DB_USER", "swinney");
-define("DB_PASSWD", "asasdfsd");
+define("DB_PASSWD", "mauf4rais");
 define("DB_NAME", "swinney");
 
 /*

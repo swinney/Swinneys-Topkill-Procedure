@@ -1,42 +1,51 @@
 <!-- BEGIN PHP Dynamically Required Page : swinney.req  -->
 
-
-
-
-<TABLE WIDTH="500" BORDER="0" CELLSPACING="0" CELLPADDING="0" align=center>
-<TR>
-<TD>
-<TABLE WIDTH="100%" CELLSPACING="0" CELLPADDING="10" BORDER="0" valign="top">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td valign=top width=20>
-<TABLE BORDER=0 WIDTH="100%" CELLPADDING="0" CELLSPACING="0">
-<TR ALIGN="left" VALIGN="top">
-<TD valign="top">
-<TABLE BORDER=0 CELLSPACING="0" CELLPADDING="2" WIDTH="100%" valign="top">
-<TR ALIGN="left" VALIGN="top">
-<TD>
-<P><A HREF="<? echo URLBASE ?>/index.phtml">swinney.org</A><BR>
-<?
+<td colspan="2" bgcolor="#666666">
+<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="5" border="0"></td>
+</tr>
+
+<tr>
+
+<td bgcolor="#666666" align="right" valign="bottom" nowrap width="50%">
+<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="5" height="1" border="0"><a href="<? echo URLBASE ?>/journals/index.phtml" accesskey="j" target="_top" onmouseover="MM2.mouseOver(); window.status='Entries'; return true" onmouseout="MM2.mouseOut(); window.status=' '; return true"><img src="<? echo URLBASE ?>/journals/img/entries.gif" alt="Entries" width="57" height="24" border="0" name="entries"></a><a href="<? echo URLBASE ?>/journals/comments.phtml" accesskey="c" target="_top" onmouseover="MM3.mouseOver(); window.status='Comments'; return true" onmouseout="MM3.mouseOut(); window.status=' '; return true"><img src="<? echo URLBASE ?>/journals/img/comments.gif" alt="Comments" width="73" height="24" border="0" name="comments"></a><a href="<? echo URLBASE ?>/journals/faq.phtml" accesskey="f" target="_top" onmouseover="MM4.mouseOver(); window.status='FAQ'; return true" onmouseout="MM4.mouseOut(); window.status=' '; return true"><img src="<? echo URLBASE ?>/journals/img/faq.gif" alt="FAQ" width="34" height="24" border="0" name="faq"></a><a href="<? echo URLBASE ?>/journals/submit_article.phtml" accesskey="e"  target="_top" onmouseover="MM5.mouseOver(); window.status='Submit'; return true" onmouseout="MM5.mouseOut(); window.status=' '; return true"><img src="<? echo URLBASE ?>/journals/img/submit.gif" alt="Submit" width="53" height="24" border="0" name="submit"></a><?
 if ($authenticated_username) {
-  echo ' <A HREF="'.URLBASE.'/journals/vip/index.phtml">VIP</A><BR>'."\n";
+  echo '<a href="'.URLBASE.'/journals/vip/index.phtml" target="_top" onmouseover="MM8.mouseOver(); window.status=\'Settings\'; return true" onmouseout="MM8.mouseOut(); window.status=\' \'; return true"><img src="'.URLBASE.'/journals/img/settings.gif" alt="" width="62" height="24" border="0" name="settings"></a><a href="'.URLBASE.'/journals/process_logout.phtml" target="_top" onmouseover="MM9.mouseOver(); window.status=\'Log Out\'; return true" onmouseout="MM9.mouseOut(); window.status=\' \'; return true"><img src="'.URLBASE.'/journals/img/logout.gif" alt="" width="57" height="24" border="0" name="logout"></a></td>';
 } else {
-  echo ' <A HREF="'.URLBASE.'/journals/login.phtml">log in</A><BR>'."\n";
-}
-?>
- <A HREF="<? echo URLBASE ?>/journals/index.phtml">articles</A><BR>
- <A HREF="<? echo URLBASE ?>/journals/comments.phtml">comments</A><BR>
- <A HREF="<? echo URLBASE ?>/journals/search.phtml">search</A><BR>
- <A HREF="<? echo URLBASE ?>/journals/admin/index.phtml">admin</A><BR>
-<?
-if ($authenticated_username) {
-  echo ' <A HREF="'.URLBASE.'/journals/process_logout.phtml">log out</A><BR>';
-  echo "\n";
-}
-?>
-</P>
-</TD>
-</TR>
-</TABLE>
-<BR>
+  echo '<a href="'.URLBASE.'/journals/submit_register.phtml" target="_top" onmouseover="MM6.mouseOver(); window.status=\'Register\'; return true" onmouseout="MM6.mouseOut(); window.status=\' \'; return true"><img src="'.URLBASE.'/journals/img/register.gif" alt="" width="63" height="24" border="0" name="register"></a><a href="'.URLBASE.'/journals/login.phtml" target="_top" onmouseover="MM7.mouseOver(); window.status=\'Log In\'; return true" onmouseout="MM7.mouseOut(); window.status=\' \'; return true"><img src="'.URLBASE.'/journals/img/login.gif" alt="" width="48" height="24" border="0" name="login"></a></td>';
+}?>
+
+<td bgcolor="#666666" align="right" valign="bottom" width="50%" nowrap>
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td nowrap>
+<form name="searchform" action="<? echo URLBASE ?>/journals/search.phtml" method="GET"></td>
+<td align="right" nowrap>
+<a href="<? echo URLBASE ?>/"><img src="<? echo URLBASE ?>/journals/img/swinneysmtop.gif" alt="" width="171" height="23" border="0"><img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="15" height="23" border="0"></a></td>
+</tr>
+</table></td>
+</tr>
+
+<tr>
+<td align="right" width="50%">
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td>
+<input type="text" size="12" name="find" value="<? if ($find) { echo "$find"; } ?>"></td>
+
+<td align="right" nowrap>&nbsp;<script type="text/javascript" language="JavaScript">
+//<!--
+document.write('<a href="javascript:document.searchform.submit()" target="_top" onmouseover="MM10.mouseOver(); window.status=\'Search\'; return true" onmouseout="MM10.mouseOut(); window.status=\' \'; return true"><img src="<? echo URLBASE ?>/journals/img/search.gif" alt="Search" name="search" width="54" height="23" border="0"></a>');
+//-->
+</script><noscript><input type=submit value="Search"></noscript></td>
+</tr>
+</table></form></td>
+
+<td align="right" valign="top" width="50%" nowrap>
+<a href="<? echo URLBASE ?>/"><img src="<? echo URLBASE ?>/journals/img/swinneysmbottom.gif" alt="" width="171" height="7" border="0"></a><img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="15" height="7" border="0"></td>
+</tr>
+</table>
+
 
 <!-- END PHP Dynamically Required Page: swinney.req -->

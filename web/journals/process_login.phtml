@@ -19,17 +19,17 @@ EOT;
     // verify the submitted credentials
     if (crypt($password, $user->password) == $user->password) {
     } else {
-      $error_msg = "Password mismatch";
+      $error_msg = "Incorrect password.  Please try again:";
       $error_redirect = "login.phtml";
     }
   } else {
     // username does not exist in the database
     $error_msg =
-      "Sorry, $username but you are going to have to register that.";
-    $error_redirect = "submit_register.phtml?username=$username";
+      "$username is unregistered. <a href=\"submit_register.phtml?username=$username\">Register it now</a>, or try again:";
+    $error_redirect = "login.phtml";
   }
 } else {
-  $error_msg = "You must specify both a username and a password.";
+  $error_msg = "Enter both username and password to log in:";
   $error_redirect = "login.phtml";
 }
 

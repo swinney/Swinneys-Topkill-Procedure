@@ -1,16 +1,5 @@
 <!-- begin login form-->
-
-<div align="center">
 <?
-if (error_msg) {
-  session_unregister("error_msg");
-  echo <<<EOT
-<p>
-<b><font color="red">$error_msg</font></b>
-</p>
-EOT;
-}
-
 // the first time the page is visited, save the location where the
 // "log in" link was clicked so we can redirect back to it upon
 // successful authentication
@@ -18,25 +7,53 @@ if (! session_is_registered("back_to")) {
   $back_to = $HTTP_REFERER;
   session_register("back_to");
 }
-
 ?>
-<TABLE><TR><TD>
+
 <form action="process_login.phtml" method="POST">
-<P>username:</P>
-</TD><TD>
-<input type="text" name="username" size="10" maxlength="20"
-  value="<? echo $username ?>">
-</TD></TR>
-<TR><TD>
-<P>password:</P>
-</TD><TD>
-<P><input type="password" name="password" size="10" maxlength="20"></P>
-</TD></TR>
-<TR><TD></TD><TD>
-<input type="submit" value="that's me">
+<table cellpadding="2" cellspacing="0" border="0">
+<tr>
+<td colspan="2">
+
+<?
+if ($error_msg) {
+  session_unregister("error_msg");
+  echo <<<EOT
+<span class="header"><b>$error_msg</b></span>
+EOT;
+    }
+else
+    {
+    echo '<span class="header"><b>'.$title.':</b></span>';
+    }
+?></td>
+</tr>
+
+<tr>
+<td align="right">
+<p>you are: </p></td>
+
+<td>
+<input type="text" name="username" size="25" maxlength="20"
+  value="<? echo $username ?>"></td>
+</tr>
+
+<tr>
+<td align="right">
+<p>password: </p></td>
+
+<td>
+<p><input type="password" name="password" size="25" maxlength="20"></p></td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>
+<input type="submit" value="that's me"></td>
+</tr>
+</table>
 </form>
-</div>
-</TD></TR></TABLE>
+
 <!-- end login form -->
 
 

@@ -1,102 +1,65 @@
 <?
-#$Id$
+// $Id$
 require_once("global.inc");
-include("templates/top.inc");
-?>
-<!-- begin login form-->
 
-<div align="center">
-<?
-if ($error_msg) {
-  session_unregister("error_msg");
-  echo <<<EOT
-<p>
-<b><font color="red">$error_msg</font></b>
-</p>
-EOT;
-} else {
-   echo "<P>please register your username.</P>";
+// doesn't make sense to display the register page for users who are
+// already logged in
+if ($authenticated_username) {
+  header("Location: " . $HTTP_REFERER);
 }
+
+// submit_register.phtml
+$inc = "index";
+$title = "Register a New Account";
+$into_template = "submit_register.inc";
+include "template_norollcall.inc";
 ?>
 
 
-<TABLE>
-<TR>
-	<TD ALIGN="left">
 
-	<form action="process_register.phtml" method="POST">
-	<P>username:</P>
-	</TD>
-	<TD VALIGN="left">
 
-	<input type="text" name="username" size="10" maxlength="20" value="<? echo $username ?>">
 
-	</TD>
 
-</TR>
-<TR>
 
-	<TD ALIGN="left">
 
-	<P>password:</P>
 
-	</TD>
 
-	<TD ALIGN="left">
 
-	<input type="password" name="password1" size="10" maxlength="20">
 
-	</TD>
 
-</TR>
-<TR>
 
-	<TD ALIGN="left">
 
-	<P>confirm:</P>
 
-	</TD>
 
-	<TD ALIGN="right">
 
-	<input type="password" name="password2" size="10" maxlength="20">
 
-	</TD>
 
-</TR>
 
-<TR>
 
-	<TD ALIGN="left">
 
-	<P>contact email:</P>
 
-	</TD>
 
-	<TD ALIGN="right">
 
-	<input type="text" name="email" value="<? echo $email; ?>" size="10" maxlength="40">
 
-	</TD>
 
-</TR>
 
-<TR>
-	<TD></TD>
-	<TD ALIGN="left">
 
-	<input type="submit" value="that's me">
-	</form>
-	</div>
-	</TD>
 
-</TR>
 
-</TABLE>
-<!-- end register form -->
 
-<?
-include("templates/footer.inc");
-?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

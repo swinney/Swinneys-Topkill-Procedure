@@ -11,10 +11,11 @@ here is where we voice our ideas.  raise you hands and ill call on you
 in order.
 -->
 
-<p align="center">
-<a href="submit_comment.phtml?article_id=$basename" accesskey="s">
-comment</a>
-</p>
+<table cellpadding="0" cellspacing="0" border="0" width="375">
+<tr>
+<td align="right">
+<img src="img/no.gif" alt="" width="1" height="20" border="0"><br>
+<a href="submit_comment.phtml?article_id=$basename" accesskey="s" target="_top" onmouseover="MM11.mouseOver(); window.status='Add a Comment'; return true" onmouseout="MM11.mouseOut(); window.status=' '; return true"><img src="img/addcomment.gif" alt="Add A Comment" width="104" height="23" border="0" name="addcomment1"></a></td></tr>
 
 EOT;
 
@@ -41,30 +42,68 @@ while ($d = mysql_fetch_object($res)) {
   $comment = stripslashes($d->comment);
 
   // LULU MADNESS
+  // the things we do for chicks - J.
   if ($username == "lulu") {
     $username = "<span style=\"background-color:pink\">$username"; 
     $comment = "$comment</span>";
   }
 
   echo <<<EOT
-<br>
-<p>
-<a name="$d->comment_id">$username:</a>
-$comment
-</p>
+
+<tr>
+<td>
+<a name="$d->comment_id"><img src="img/no.gif" alt="" width="1" height="4" border="0"></a><br></td>
+</tr>
+
+<tr>
+<td bgcolor="#999999">
+<img src="img/no.gif" alt="" width="1" height="1" border="0"><br></td>
+</tr>
+
+<tr>
+<td>
+<img src="img/no.gif" alt="" width="1" height="4" border="0"><br></td>
+</tr>
+
+<tr>
+<td>
+<b>$username:</b> $comment
+</td>
+</tr>
 
 EOT;
 }
 
+// man, I'm so glad this code is here.  I would have been up all
+// night trying to figure out how to do this simple thing.  thank you,
+// thank you Mr. Swinney. - J.
+
 if (mysql_num_rows($res) >= 5) {
   echo <<<EOT
-<br>
-<p align="center">
-<a href="submit_comment.phtml?article_id=$basename" accesskey="s">
-comment</a>
-</p>
+  
+<tr>
+<td>
+<img src="img/no.gif" alt="" width="1" height="4" border="0"><br></td>
+</tr>
+
+<tr>
+<td bgcolor="#999999">
+<img src="img/no.gif" alt="" width="1" height="1" border="0"><br></td>
+</tr>
+
+<tr>
+<td>
+<img src="img/no.gif" alt="" width="1" height="4" border="0"><br></td>
+</tr>
+
+<tr>
+<td align="right">
+<a href="submit_comment.phtml?article_id=$basename" accesskey="s" target="_top" onmouseover="MM12.mouseOver(); window.status='Add a Comment'; return true" onmouseout="MM12.mouseOut(); window.status=' '; return true"><img src="img/addcomment.gif" alt="Add A Comment" width="104" height="23" border="0" name="addcomment2"></a></td>
+</tr>
 
 EOT;
 }
 
 ?>
+
+</table>

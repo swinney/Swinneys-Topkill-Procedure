@@ -1,16 +1,27 @@
 <? 
-// $Id$
-include("../global.inc");
-include("../templates/top.inc");
-include("./admin_nav.inc");
+#$Id$
+$title="Administrate Comments";
+include "../global.inc";
+include "../templates/top.inc";
+include("../templates/swinney.req");
 ?>
 
-<TABLE border=1 cellspacing=0 cellpading=0>
+
+<center>
+<p class="subheader">
+<a href='index.phtml'>firebird</a> | 
+<a href='listcontent.phtml'>entries</a> | 
+<b>comments</b> | 
+<a href='users.phtml'>users</a>
+</p>
+</center>
+
+<table cellpadding=4 cellspacing=0 border=1 align=center width="98%">
 <TR>
-<TD>comment_id</TD>
-<TD>edit</TD>
-<TD>username</TD>
-<TD>comment</TD>
+<TD nowrap><b>Comment ID</b></TD>
+<TD><b>Edit</b></TD>
+<TD><b>Username</b></TD>
+<TD><b>Comment</b></TD>
 </TR>
 <?
 

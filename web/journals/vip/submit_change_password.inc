@@ -1,58 +1,55 @@
 <?
 // $Id$
-if ($error_msg) {
-  echo <<<EOT
-<p>
-<b><font color="red">$error_msg</font></b>
-</p>
-EOT;
-}
+?>
 
-if ($success_msg) {
-  echo <<<EOT
-<p>
-<b><font color="green">$success_msg</font></b>
-</p>
-EOT;
+<table cellpadding="2" cellspacing="0" border="0">
+<tr>
+<td colspan="2">
+<form method="POST" action="process_change_password.phtml">
+<span class="header">
+<?
+
+if ($error_msg) {
+  echo "<b>$error_msg</b>";
+}
+else
+{
+  echo "<b>Change Password for $authenticated_username:</b>";
 }
 ?>
-<p>
-Change your password:
-</p>
+</span></td>
+</tr>
 
-<form method="POST" action="process_change_password.phtml">
-
-<table>
 <tr>
-<td align="right" valign="middle">
-<p>old password:</p>
-</td>
-<td align="left" valign="middle">
-<input type="password" name="old_password" size="10" maxlength="20">
+<td align="right">
+<p>current password:</p></td>
+
+<td align="left">
+<input type="password" name="old_password" size="25" maxlength="20">
 </td>
 </tr>
 <tr>
-<td align="right" valign="middle">
+<td align="right">
 <p>new password:</p>
 </td>
-<td align="left" valign="middle">
-<input type="password" name="new_password1" size="10" maxlength="20">
+<td align="left">
+<input type="password" name="new_password1" size="25" maxlength="20">
 </td>
 </tr>
 <tr>
-<td align="right" valign="middle">
+<td align="right">
 <p>new password (again):</p>
 </td>
-<td align="left" valign="middle">
-<input type="password" name="new_password2" size="10" maxlength="20">
+<td align="left">
+<input type="password" name="new_password2" size="25" maxlength="20">
 </td>
 </tr>
 <tr>
-<td align="left" valign="middle">
+<td align="left">
 &nbsp;
 </td>
-<td align="left" valign="middle">
-<input type="submit" value="do it">
+<td align="left">
+<input type="submit" value="change it">
 </td>
 </tr>
 </table>

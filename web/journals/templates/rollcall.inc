@@ -11,24 +11,31 @@
 # i do this all for the bitches.  word up 
 # in two thousand.  -OMS 
 # Thu Jul 12, 2001 10:13 AM
+#
+# mmmm...the bitches. - J. 020010921
 
 ?>
 
 <!-- BEGIN PHP Dynamically Required File: rollcall.inc -->
 
 
-<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2" BORDERCOLOR="#333333">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td align="center">
 
-<TR>
-<TD>
-<P>By Author<BR>
-<a href="roll_call_all.phtml">big list</a></P>
-</TD>
-</TR>
-<TR ALIGN="left" VALIGN="top">
-<TD>
+<img src="img/no.gif" alt="" width="1" height="10" border="0"><br>
 
-<P>
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td width="150" valign="top" align="right" nowrap>
+<p>
+<img src="<? echo URLBASE ?>/journals/img/rollcall.gif" alt="Roll Call" width="65" height="13" border="0"><br>
+
+<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
+
+(<a href="roll_call_all.phtml">complete list</a>)<br>
+
+<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
 
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 
@@ -50,8 +57,13 @@
 # where 3 months= 60 sec * 60 min * 24 hrs * 30 day * 3 mon
 # aka    7776000= 60     * 60     * 24     * 30     * 3
 
+# wow, all math and shit.  I'm impressed, Austin!  now I will enter
+# a smaller random number, because that list is still too fucking 
+# long. hm, that didn't seem to change anything.  does this code even
+# work? - J. 020010921
+
 $minus=time();
-$minus=$minus-7776000;
+$minus=$minus-45343211;
 
 $query = <<<EOT
 SELECT DISTINCT username, count(username) AS number, status, time
@@ -81,21 +93,19 @@ $status=$row[2];
 $time=$row[3];
 
   if ($number >= 5) {
-  echo "<a href='userpages.phtml?username=$name'>$name($number)</a><br>\n";
+  echo "<a href='userpages.phtml?username=$name'>$name</a> ($number)<br>\n";
   }
 }
 
 
 ?>
 
-</P>
-</TD>
-</TR>
-</table>
+<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
 
-<!-- include that final line break or the entire thing will be fucked. -->
+(<a href="roll_call_all.phtml">complete list</a>)<br>
 
-<BR>
+<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
+</p></td>
 
 <!-- END PHP Dynamically Required File: rollcall.inc -->
 

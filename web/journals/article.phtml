@@ -1,6 +1,39 @@
 <? 
 #$Id$
 
+require_once("global.inc");
+
+$chunks = explode(".", $id);
+$article_id = $chunks[0];
+
+
+$query = <<<EOT
+  SELECT *
+    FROM articles_info
+   WHERE article_id=$article_id
+EOT;
+
+$res = mysql_query($query) or
+  die(error_page(mysql_error()));
+
+if ($d = mysql_fetch_object( $res)) {
+  // retrieve the article text
+  $query = <<<EOT
+  SELECT text
+    FROM articles_text
+   WHERE article_id=$article_id
+EOT;
+
+  $res = mysql_query($query) or
+    die(error_page(mysql_error()));
+
+  $text = mysql_result($res, 0);
+
+$articletitle = stripslashes($d->title);
+$usernamenourl = stripslashes($d->username);
+
+$title = "$articletitle, by $usernamenourl";
+
 $into_template="insert_article.inc";
 
 // do you have comments?
@@ -8,6 +41,7 @@ $into_template2="insert_comments.phtml";
 
 include "template.inc";
 
+}
 ?>
 
 

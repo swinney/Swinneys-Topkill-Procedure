@@ -2,8 +2,8 @@
 require_once("../global.inc");
 
 include("../templates/top.inc");
-include("./vip_nav.inc");
-include("../templates/endleft.inc");
+include "../templates/swinney.req";
+include("../templates/norollcall.inc");
 
 include($into_template);
 

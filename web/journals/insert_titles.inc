@@ -21,17 +21,12 @@ while ($d = mysql_fetch_object($res)) {
   // display title
 
   $username= stripslashes($d->username);
-  if ($d->web != "") {
-    $username=<<<EOT
- <a href="$d->web" target="_new">$username</a>
-EOT;
-  }
 
   echo <<<EOT
 <p>
-$username writes
+<a href="journals/userpages.phtml?username=$username">$username</a> writes
 <a href="journals/article.phtml?id=$d->article_id.txt">
-<strong>$d->title</strong></a>
+<b>$d->title</b></a>
 </p>
 
 EOT;

@@ -1,9 +1,22 @@
 <?
-// $Id$
-include("../global.inc");
-include("../templates/top.inc");
-include("admin_nav.inc");
+#$Id$
+# include the templates/top.inc
+$title="Administrate Entries";
+include "../global.inc";
+include "../templates/top.inc";
+include("../templates/swinney.req");
+?>
 
+<center>
+<p class="subheader">
+<a href='index.phtml'>firebird</a> | 
+<b>entries</b> | 
+<a href='admin_comments.phtml'>comments</a> | 
+<a href='users.phtml'>users</a>
+</p>
+</center>
+
+<?
 # i created an articles_user table for keeping
 # record of the most recent post by a person
 # this will eliminate the problem of green posting
@@ -246,7 +259,7 @@ if ( isset($article_id) ) {
   echo "<p>";
   $res = mysql_query("SELECT * FROM articles_info WHERE status<>4 ORDER BY article_id DESC LIMIT 20");
   
-  echo "<table cellpadding=4 cellspacing=0 border=1 align=center>";
+  echo "<table cellpadding=4 cellspacing=0 border=1 align=center width=\"98%\">";
   echo "<tr>";
   echo "<td align=center><b>ID</b></td>\n";
   echo "<td align=center><b>Username</b></td>\n";
@@ -254,7 +267,7 @@ if ( isset($article_id) ) {
   echo "<td align=center><b>Status</b></td>\n";
   echo "<td align=center><b>Title</b></td>\n";
   echo "<td align=center><b>Blurb</b></td>\n";
-  echo "<td align=center><b>comments</b></td>\n";
+  echo "<td align=center><b>Comments</b></td>\n";
 
   echo "</tr>";
   while ( $d = mysql_fetch_object($res) ) {

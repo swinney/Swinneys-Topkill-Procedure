@@ -1,117 +1,14 @@
 <?
-#$Id$
-#include the top with the global include 
+// $Id$
 
-include "global.inc";
-include "templates/top.inc";
+require_once("global.inc");
+
+// submit_article.phtml
+$inc = "index";
+$title = "Submit an Entry";
+$into_template = "submit_article.inc";
+include "template_norollcall.inc";
 ?>
-
-
-<form action="process_article.phtml" method=post>
-<TABLE WIDTH=400 BORDER=0 CELLSPACING=0 CELLPADDING=0>
-
-
-
-<TR>
-<TD>Name</TD>
-<TD ALIGN="right">
-<INPUT TYPE=TEXT NAME=username SIZE=30 maxlength=50>
-</TD>
-</TR>
-
-<TR>
-<TD>Website or email</TD>
-<TD ALIGN="right">
-<INPUT TYPE=TEXT NAME=web SIZE=30 maxlength=50>
-</TD>
-</TR>
-
-<TR>
-<TD>
-<P>Title</P>
-</TD>
-<TD ALIGN="right">
-<INPUT TYPE=text NAME=title SIZE=30 maxlength=50>
-</TD>
-</TR>
-
-<TR>
-<TD>
-<P>Blurb</P>
-</TD>
-<TD ALIGN="right">
-<INPUT TYPE=text NAME=blurb SIZE=30 maxlength=255>
-</TD>
-</TR>
-
-
-<TR>
-<TD ALIGN="left">
-<P>Keywords (delimited by commas)</P>
-</TD>
-<TD ALIGN="right">
-<INPUT TYPE=text NAME=keywords SIZE=30 maxlength=100>
-</TD>
-</TR>
-
-<TR>
-<TD colspan=2 ALIGN="RIGHT">
-<P>Got images?  
-<INPUT TYPE="radio" NAME="images_too" VALUE="yes">yes
-<INPUT TYPE="radio" NAME="images_too" VALUE="no" CHECKED>no</P>
-</TD></TR>
-
-
-<TR>
-<TD COLSPAN=2>
-<P>Please enclose your paragraphs in <TT>&lt;P&gt;...&lt;/P&gt;</TT> tags.  If you don't know what that means, then don't worry about it.</P>
-
-<TEXTAREA TYPE=text  NAME=content COLS=50 ROWS=20 wrap=virtual></TEXTAREA>
-</TD>
-</TR>
-</TABLE>
-
-
-<P>What category best describes you?</P>
-
-<?
-  
-$res = mysql_query("SELECT * FROM categories ORDER BY name ASC");
-
-echo "\n<TABLE><TR>";
-
-# for the next loop, index
-$index=1;
-
-while ($d=mysql_fetch_object($res)) {
-
-        $index++;
-        $remainder = $index % 3;
-        echo "\n<TD><input type='checkbox' name='cat$d->category_id'> $d->name </TD>";
-
-        if ($remainder==0) {
-
-                echo "\n</TR><TR>";
-
-        } # grand child loop
-
-
-} # child loop
-
-echo "\n</TR></TABLE>";
-
-?>
-
-<INPUT TYPE="SUBMIT" VALUE="submit"> 
-<INPUT TYPE="RESET" VALUE="reset">
-
-</form>
-</BODY>
-</HTML>
-
-
-
-
 
 
 

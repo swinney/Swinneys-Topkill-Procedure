@@ -1,8 +1,7 @@
 <? 
 require_once("../global.inc");
-
-include("../templates/top.inc");
-include("./admin_nav.inc");
+include "../templates/top.inc";
+include("../templates/swinney.req");
 
 include($into_template);
 

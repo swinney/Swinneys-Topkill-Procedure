@@ -53,44 +53,65 @@ if ($num_articles) {
   // next page number
   $page_forward = $page_num + 1;
 
-  // generate the paginator "<< i want to write >>" thinger
 
-  echo "<p>\n";
+echo <<<EOT
 
-  if ($page_num == 1){
-    echo <<<EOT
-<p>
-&lt;&lt; <a href="submit_article.phtml">I want to write</a>
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td nowrap>
+<span class="subheader"><b>All &raquo;</b></span></td>
 
-EOT;
-  }
+<td>&nbsp;&nbsp;&nbsp;</td>
 
-  if ($page_num > 1){
-    echo <<<EOT
-<p>
-<a href="index.phtml?select=$select&page_num=$page_back">&lt;&lt;</a>
-<a href="submit_article.phtml">I want to write</a>;
+<td align="left">
+<span class="subheader"><b>Entries</b> | <a href="comments.phtml">Comments</a>
 
 EOT;
-  } 
-  
+
+if ($page_num < $num_of_pages or $page_num > 1) {
+
+echo <<<EOT
+
+</span></td>
+</tr>
+
+<tr>
+<td colspan="2">&nbsp;</td>
+<td align="left">
+<span class="text">
+
+EOT;
+
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_forward">&gt;&gt;</a>
-</p>
+<a href="index.phtml?select=$select&page_num=$page_forward">&laquo; earlier entries</a>
 
 EOT;
-  }
+  }  
 
-  if ($page_num == $num_of_pages) {
+  if ($page_num < $num_of_pages and $page_num > 1) { 
+    echo ' - ';
+    }
+  
+  if ($page_num > 1){
     echo <<<EOT
-&gt;&gt;
-</p>
-
+<a href="index.phtml?select=$select&page_num=$page_back">later entries &raquo;</a>
 EOT;
   }
+  
+}
 
-  echo "</p>\n";
+echo <<<EOT
+
+</span>
+</td>
+</tr>
+</table>
+
+<br>
+
+EOT;
+
 
   // retrieve the article data
 
@@ -116,10 +137,9 @@ EOT;
   // generate the article listing table
 
   echo <<<EOT
-<table width="200" border="0" cellspacing="0" cellpadding="3">
+<table width="300" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td>
-<font size="2">
 EOT;
 
   while ($article = mysql_fetch_object($res)) {
@@ -149,11 +169,6 @@ EOT;
     }
 
     $username = $article->username;
-    if ($article->web) {
-      $username = <<<EOT
-<a href="$article->web" target="_new">$username</a>
-EOT;
-    }
 
     $blurb = $article->blurb;
     if ($blurb) {
@@ -163,18 +178,44 @@ EOT;
     echo <<<EOT
 <p>
 <a href="article.phtml?id=$article->article_id.txt">
-<strong>$article->title</strong></a> by $username<br>
+<b>$article->title</b></a> by <a href="userpages.phtml?username=$username">$username</a><br>
 $blurb
-<font size="1">$article->date</font> | $num_comments
+<span class="small">$article->date | $num_comments</span>
 </p>
 EOT;
   }
+
 
   echo <<<EOT
 </td>
 </tr>
 </table>
+<p>
+
 EOT;
 }
+
+  // generate the paginator 
+
+  if ($page_num < $num_of_pages) { 
+    echo <<<EOT
+<a href="index.phtml?select=$select&page_num=$page_forward">&laquo; earlier entries</a>
+
+EOT;
+  }  
+  
+    if ($page_num < $num_of_pages and $page_num > 1) { 
+    echo ' - ';
+    }
+  
+   if ($page_num > 1){
+    echo <<<EOT
+<a href="index.phtml?select=$select&page_num=$page_back">later entries &raquo;</a>
+
+EOT;
+  }
+  echo "</p>\n";
+
+
 
 ?>
