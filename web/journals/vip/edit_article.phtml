@@ -1,0 +1,33 @@
+<?
+require_once("../global.inc");
+
+if (isset($authenticated_username)) {
+  $query="SELECT articles_info.web,
+                 articles_info.title,
+                 articles_info.blurb,
+                 articles_info.keywords,
+                 articles_text.text 
+            FROM articles_info, 
+                 articles_text 
+           WHERE username='$authenticated_username' 
+             AND articles_info.article_id=articles_text.article_id 
+        ORDER BY articles_info.article_id DESC
+           LIMIT 1";
+$res=mysql_query($query) or die(error_page($query));
+$web=mysql_result($res,0,0);
+$title=mysql_result($res,0,1);
+$blurb=mysql_result($res,0,2);
+$keywords=mysql_result($res,0,3);
+$text=mysql_result($res,0,4);
+} else {
+  error_page("username unset");
+}
+
+include_once("../templates/top.inc");
+include("../templates/swinney.req");
+include("../templates/norollcall.inc");
+include_once("../submit_article.inc");
+include("../templates/bottom.req");
+include("../templates/footer.inc");
+
+?>
