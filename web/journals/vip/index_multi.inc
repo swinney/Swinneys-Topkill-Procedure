@@ -8,7 +8,7 @@
 //       
 
 if ($submit) {
-  $title=addslashes($title);
+  $mtitle=addslashes($mtitle);
   $query = "INSERT INTO multi_info SET user_id=$user_id, title='$mtitle'";
   $res = $db->query($query);
   if (DB::isError($res)) {
@@ -30,7 +30,7 @@ $query =<<<EOT
 SELECT multi_info.multi_id,
        multi_info.title
   FROM multi_info
- WHERE user_id=$user_id
+ WHERE user_id=$authenticated_user_id
 ORDER BY title
 EOT;
 // sweetness.

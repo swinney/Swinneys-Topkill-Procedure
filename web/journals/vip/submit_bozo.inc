@@ -7,7 +7,6 @@
 <td>
 <p>
 <?
-
 if ($error_msg) {
   session_unregister("error_msg");
   echo <<<EOT
@@ -28,37 +27,10 @@ EOT;
 }
 ?>
 
-<br>
-Is someone a clown? Don't want to see what they have to say? Add them
-to your bozolist and their articles and comments will be filtered from your view of the site.
-</p>
-</td>
-</tr>
-</table>
-
 <form method="POST" action="process_bozo.phtml">
-
-<table cellpadding="2" cellspacing="0" border="0">
-<tr>
-<td align="right">
-<p>username:</p></td>
-<td align="left">
-<input type="text" name="username" size="20" maxlength="20">
-</td>
-</tr>
-<tr>
-<td align="left">
-&nbsp;
-</td>
-<td align="left">
-<input type="submit" name="add" value="add bozo">
-</td>
-</tr>
-</table>
-
 <?
-$num_bozos = count($bozos);
-if ($num_bozos) {
+
+if ($bozo_set) {
 
   echo <<<EOT
   
@@ -86,9 +58,11 @@ remove them from the list.
 
 EOT;
 
-  foreach($bozos as $bozo) {
+$query = "SELECT bozo_id,bozoname FROM user_bozo WHERE user_id=$authenticated_user_id";
+$res = mysql_query($query) or die($query);
+while ($d=mysql_fetch_object($res)) {
     echo <<<EOT
-<option> $bozo
+<option value=$d->bozo_id> $d->bozoname
 EOT;
   }
 
@@ -109,5 +83,5 @@ EOT;
 EOT;
 }
 ?>
-
+</table>
 </form>

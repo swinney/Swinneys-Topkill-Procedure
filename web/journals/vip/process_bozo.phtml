@@ -6,97 +6,27 @@ require_once("./global.inc");
 
 if ($remove) {
   // maintain a list of usernames that have been successfully removed
-  $removed = array();
-
   foreach ($username as $u) {
-    if (in_array($u, $bozos)) {
-      // remove the username from the bozo table
+    if (!$del) {
+      $del = "$u";
+    } else {
+      $del .= ",$u";
+  }
+
       $query = <<<EOT
 DELETE FROM user_bozo
-      WHERE user_id=$user_id
-        AND bozo='$u'
+      WHERE user_id=$authenticated_user_id
+        AND bozo_id in ($del)
 EOT;
       $res = mysql_query($query) or
         die(error_page(mysql_error()));
-
       // remove the username from the session cache
-      $new_bozos = array();
-      for ($i = 0; $i < count($bozos); $i++) { 
-        if ($bozos[$i] && $bozos[$i] != $u) {
-	  array_push($new_bozos, $bozos[$i]);
-	}
-      }
-      $bozos = $new_bozos;
 
-      array_push($removed, $u);
-    } else {
-      // if the username is not in the bozo list, ignore and move on
-    }
   }
-
-  // again, set $bozo_set. i myself am a bozo for not making this a
-  // function etc, but i got's to meet swinney at the metreon for an
-  // 11am showing of "O"
-  $b = array();
-  foreach ($bozos as $x) {
-    array_push($b, "'$x'");
-  }
-  $bozo_set = '(' . implode(", ", $b) . ')';
-  session_register("bozo_set");
-
-  $success_msg = implode(', ', $removed) . ' removed from bozo list.';
-} else {
-  // don't check "if ($add)" since they may have just hit enter, in
-  // which case the button parameter won't be set
-
-  if ($username) {
-    // see if the submitted username is already in the list. be case
-    // insensitive, since the bozo table is that way.
-    foreach ($bozos as $b) {
-      if (strtolower($b) == strtolower($username)) {
-	$found = 1;
-	break;
-      }
-    }
-
-    if (! $found) {
-      // add the username to the bozo table
-      $query = "INSERT INTO user_bozo VALUES ($user_id, '$username')";
-      $res = mysql_query($query) or
-	die(error_page("database error for query $query: " . mysql_error()));
-
-      // ad the username to the session cache
-      array_push($bozos, $username);
-      natcasesort($bozos);
-      session_register("bozos");
-
-      // bozo array as a set suitable for use in a sql NOT IN string
-      // also set at login time!
-      $b = array();
-      foreach ($bozos as $x) {
-	array_push($b, "'$x'");
-      }
-      $bozo_set = '(' . implode(", ", $b) . ')';
-      session_register("bozo_set");
-
-      $success_msg = "$username added to bozo list.";
-    } else {
-      $error_msg = "That username is already in your bozo list.";
-    }
-  } else {
-    $error_msg = "You didn't specify a username. Try again.";
-  }
+  $bozo_set=get_bozo_set();
 }
 
-if ($error_msg) {
-  session_register("error_msg");
-}
-
-if ($success_msg) {
-  session_register("success_msg");
-}
-
-header("Location: submit_bozo.phtml");
+header("Location: $HTTP_REFERER");
 
 ?>
 
