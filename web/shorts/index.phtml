@@ -1,0 +1,27 @@
+<?
+// $Id$
+
+require_once("../journals/global.inc");
+
+include_once("./top.inc");
+
+$query="SELECT * FROM shorts ORDER BY article_id LIMIT 1";
+
+$res=mysql_query($query) or die (error_page($query));
+
+$article_id=mysql_result($res,0,0);
+$username=stripslashes(mysql_result($res,0,1));
+$text=stripslashes(mysql_result($res,0,2));
+
+echo <<<EOT
+<blockquote><P>
+$text
+</P></blockquote>
+<BR>
+<P><FONT class=".smaller">by $username</font></P>
+
+
+EOT;
+
+include_once("bottom.inc");
+?>

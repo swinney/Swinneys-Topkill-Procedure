@@ -1,0 +1,35 @@
+<?
+// $Id$
+require_once("../journals/global.inc");
+include_once("./top.inc");
+?>
+<P></P>
+<P></P>
+<TABLE ALIGN="center">
+<TR>
+  <TD VALIGN="TOP">
+<FORM NAME="short" METHOD="post" ACTION="./process_short.phtml">
+<P>username:</P>
+  </TD>
+  <TD>
+<INPUT TYPE="text" NAME="username">
+<INPUT TYPE="SUBMIT" NAME="submit" VALUE="shorts"> 
+  </TD>
+</TR>
+<TR>
+  <TD VALIGN="TOP">
+<P>short:</P>
+  </TD>
+  <TD>
+<TEXTAREA NAME="text" ROWS=15 COLS=30></TEXTAREA>
+  </TD>
+</TR>
+<TR>
+  <TD COLSPAN=2 ALIGN="RIGHT">  
+</FORM>
+  </TD>
+</TR>
+</TABLE>
+<?
+include_once("./bottom.inc");
+?>

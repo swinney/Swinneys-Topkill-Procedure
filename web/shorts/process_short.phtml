@@ -1,0 +1,14 @@
+<?
+// $Id$
+
+include_once("../journals/global.inc");
+
+$username =addslashes($username);
+$text     =addslashes($text);
+
+$query="INSERT INTO shorts VALUES ('','$username','$text')";
+$res=mysql_query($query) or die (error_page($query));
+
+
+header("Location: ./index.phtml");
+?>

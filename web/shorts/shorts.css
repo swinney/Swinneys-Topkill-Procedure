@@ -1,0 +1,15 @@
+table, tr, td, p, ol, ul, li, .text {  
+font-family: Times New Roman,Times,serif; 
+font-size: 12px;
+color: #CCCCCC;
+} 
+
+a { 
+color: red;
+}
+
+.smaller {  
+font-family: Times New Roman,Times,serif; 
+font-size: 10px;
+} 
+
