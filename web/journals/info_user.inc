@@ -96,7 +96,7 @@ $tpl->show("info");
  $a = new Articles();
  $articles_html = $a->getUserTitles($uid,"id",5);
  echo $articles_html;
- echo "<P><B>5 most recent comments<BR>\n<A HREF='usercomments.phtml?username=$username'>&laquo; more</a></B></P>\n";
+ echo "<P><B>5 most recent comments<BR>\n<A HREF='usercomments.phtml?uid=$uid'>&laquo; more</a></B></P>\n";
  $query = "select CONCAT('As ',comments.username,' on ',articles_info.username,'\'s <b>',articles_info.title,'</b>') as text,comments.article_id, comments.comment_id from comments,articles_info where comments.article_id=articles_info.article_id AND comments.user_id=$uid order by comment_id DESC limit 5";
  $res = $db->query($query);
  if (DB::isError($res)) {
