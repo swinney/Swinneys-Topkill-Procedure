@@ -68,11 +68,19 @@ EOT;
 
   }
 
+
+  if ($text) {
+    $text = stripslashes($text);
+  }
+
+  $title = stripslashes($d->title);
   $blurb = stripslashes($d->blurb);
+
+  $username = stripslashes($d->username);
   $username = $usernamenourl;
   if ($d->web) {
     $username = <<<EOT
-<a href="$d->web" target="_new">$username</a>
+<a href="$d->web">$username</a>
 EOT;
   }
 
