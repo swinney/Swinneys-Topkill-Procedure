@@ -10,18 +10,24 @@ include "journals/templates/top.inc";
 <p>
 <b>(
 <?
+
+$url = array (
+   "journals/index.phtml"		=> "JOURNALS",
+   "journals/comments.phtml"		=> "COMMENTS",
+   "journals/submit_article.phtml"	=> "SUBMIT",
+   "journals/faq.phtml"			=> "FAQ"
+);
+
+foreach ($url as $path => $ref) {
+   echo " <A HREF=\"$path\">$ref</A> | ";  
+}
+
 if ($authenticated_username) {
 } else {
-  echo '<a href="journals/login.phtml" accesskey="l">LOG IN</a> | ';
+  echo '<a href="journals/login.phtml" accesskey="l">LOG IN</a>  ';
 }
-?>
-<a href="journals/index.phtml" accesskey="j">JOURNAL</a> | 
-<a href="journals/comments.phtml" accesskey="c">COMMENTS</a> | 
-<a href="journals/submit_article.phtml" accesskey="s">SUBMIT</a> | 
-<a href="journals/faq.phtml" accesskey="f">ANSWERS</A>
-<?
+
 if ($authenticated_username) {
-  echo ' | ';
   echo '<a href="journals/vip/index.phtml" accesskey="v">VIP</a> | ';
   echo '<a href="journals/process_logout.phtml" accesskey="l">LOG OUT</a> ';
 }
