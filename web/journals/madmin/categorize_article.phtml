@@ -5,7 +5,46 @@ require_once("../global.inc");
 include_once("./top.inc");
 include_once("./nav.inc");
 
-echo "<P><I>Coming Soon</I> ...</P>";
+$query="SELECT category FROM articles_info WHERE article_id=$id";
+$category=$db->getOne($query);
+
+if (isset($category)) {
+  $query=<<<EOT
+  SELECT name, 
+         level1, 
+         level1 & $category as sexy 
+    FROM categories 
+   WHERE name<>'' 
+ORDER BY name ASC
+EOT;
+
+} else {
+  $query=<<<EOT
+     SELECT name, level1 
+    FROM categories 
+ORDER BY name ASC
+EOT;
+}
+  
+$res = mysql_query($query);
+$i=0;
+while ($d=mysql_fetch_object($res)) {
+
+    $form .= "<input type='checkbox' name='cat[$i]' value='$d->level1'";
+    if ($d->sexy!=0) {
+      $form .= " CHECKED";
+    }
+    $form .= "> $d->name <br>\n";
+    $i++;
+} # child loop
+
+echo <<<EOT
+<FORM NAME=categorize ACTION="./process_categorize.phtml" METHOD="POST">
+<INPUT TYPE=HIDDEN NAME="id" VALUE=$id>
+$form
+<INPUT TYPE=SUBMIT NAME="submit" VALUE="submit"> 
+</FORM>
+EOT;
 
 include_once("./bottom.inc");
 

@@ -1,0 +1,26 @@
+<?php
+require_once("../global.inc");
+
+if (isset($cat)) {
+    foreach ($cat as $one => $two) {
+       if (!isset($bin)) {
+           $bin=$two;
+       } else {
+           $bin.=" | ". $two;
+       }
+    }
+} else {
+  $bin=0;
+}
+
+ $query="UPDATE articles_info SET category=($bin) WHERE article_id=$id";
+$db->query($query);
+ if (DB::isError($res)) {
+   // get the portable error string
+   echo $res->getMessage();
+ }
+//echo "SELECT ($bin)";
+unset($bin);
+ header("Location: $HTTP_REFERER");
+
+?>
