@@ -33,9 +33,7 @@
 
 <img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
 
-(<a href="roll_call_all.phtml">complete list</a>)<br>
-
-<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
+recent writers:<br>
 
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 
@@ -65,7 +63,6 @@
 # no, it isnt on right now.  it pisses people off. 
 # - austin Fri Sep 28, 2001 10:49 AM
 #
-echo "<B>Recent Writers</B><BR>";
  $minus=time();
  $minus=$minus-7776000;
 $query = <<<EOT
@@ -105,9 +102,7 @@ $time=$row[3];
 
 <img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
 
-(<a href="roll_call_all.phtml">complete list</a>)<br>
-
-<img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
+(<a href="roll_call_all.phtml">a complete list</a>)<br>
 </p></td>
 
 <!-- END PHP Dynamically Required File: rollcall.inc -->
