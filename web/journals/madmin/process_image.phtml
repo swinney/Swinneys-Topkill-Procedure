@@ -12,8 +12,8 @@ if (isset($submit_image)) {
 $aindex=$aindex+1;
 $filename = $id . "_" . $aindex . "." . $ext;
 // Copy the file to our uploads directory
-// $copy=@copy($userfile, DIRBASE . IMGBASE . "/$filename");
-$copy=@copy($userfile, "/sky/www/swinney.org/html/journals/images/test_$filename");
+$copy=@copy($userfile, IMGBASE . "/$filename");
+  // $copy=@copy($userfile, "/sky/www/swinney.org/html/journals/images/test_$filename");
 
 }
 if ($copy=="TRUE") {

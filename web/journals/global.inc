@@ -7,12 +7,15 @@
 # functions for use in the site
 
 define("URLBASE", "http://swinney.org/dev"); // no trailing slash!
-define("DIRBASE", "/u/swinney/htdocs/dev/swinney.org ");
+define("DIRBASE", "/u/swinney/htdocs/dev/swinney.org");
+define("IMGBASE", "/sky/www/swinney.org/html/dev/journals/images");
+define("IMGURL", URLBASE . "/journals/images");
 define("CSS_URL", URLBASE . "/journals/main.css");
 define("DB_HOST", "localhost");
 define("DB_USER", "swinney");
-define("DB_PASSWD", "mauf4rais");
+define("DB_PASSWD", "jgf934nfg");
 define("DB_NAME", "swindev");
+
 
 /*
  * initialize the session
@@ -128,9 +131,78 @@ function get_cat_names($category) {
     $names=$names . $d->name;
     $i++;
     if ($i>0 && $i<$num) {
-      $names=$names . "/";
+      $names=$names . " / ";
     }
+  }
+  if ($names=="") {
+    $names="unsigned";
   }
      return $names;
 }
+
+/////////////////////////////////////////
+// GET_IMG() - retireve the image names
+/////////////////////////////////////////
+function get_img($id) {
+$query="SELECT image FROM articles_info WHERE article_id=$id";
+$res=mysql_query($query) or die (error_page($query));
+  if (mysql_num_rows($res)>0) {
+     $images=mysql_result($res,0,0);
+
+//
+// show images if they exist
+//
+    $img_name=array();
+    for ($i = 1; $i <= $images ; $i++) {
+        $noext = $id."_".$i;
+        if (file_exists(IMGBASE ."/$noext.jpg")) {
+            $imgfile = "$noext.jpg";
+        } else if (file_exists(IMGBASE ."/$noext.gif")) {
+            $imgfile = "$noext.gif";
+        } else if (file_exists(IMGBASE ."/$noext.png")) {
+            $imgfile = "$noext.png";
+        } else {
+            echo "unrecognized file upload: ". IMGBASE ."/$noext.*<BR>";   
+        }
+        if ($imgfile) {
+            array_push($img_name,$imgfile);
+        }
+    }
+    return $img_name;
+  }
+}
+///////////////////////////////////////
+// SHOW_IMG()
+///////////////////////////////////////
+function show_img($img,$text) {
+    preg_match_all("/(%%img)(\d{1,2})(%{2})/",$text,$out,PREG_PATTERN_ORDER);
+    for ($i=0;isset($out[0][$i]);$i++) {
+        $usekey=$out[2][$i]-1;
+        $replace= IMGBASE . "/" . $img[$usekey];
+        $text=ereg_replace($out[0][$i],$replace,$text);
+    }
+    return $text;
+}
+
+///////////////////////////
+// get_username(user_id)
+///////////////////////////
+
+function get_username($user_id) {
+  $query="SELECT username FROM user WHERE user_id=$user_id";
+  $res=mysql_query($query);
+  $username=mysql_result($res,0,0);
+  return $username;
+}
+
+////////////////////////////
+// check authorization
+///////////////////////////
+
+if (preg_match("/(vip)/i","$SCRIPT_NAME") && !$user_id) {
+  $msg = 'Please log in to continue.';
+  header("Location: ".URLBASE."/journals/login.phtml");
+  exit();
+}
+
 ?>
