@@ -87,7 +87,7 @@ EOT;
   }
 
 
-  include_once("Madmin/WebAddress.php");
+  include_once("Swinsite/WebAddress.php");
   $webAddress = new WebAddress();
   $web=$webAddress->checkWeb($d->web);
 
