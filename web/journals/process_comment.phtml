@@ -111,8 +111,7 @@ $res = mysql_query($query) or die("error inserting comment: $query");
 
 // this is for elly's cellphone
 // mail("ellys_cellphone@swinney.org", "comment: $username on $article_id", "$nature", "$comment"); 
-header ("Location: article.phtml?id=$article_id.txt");
-
+header ("Location: article.phtml?id=$article_id");
 ?>
 
 
