@@ -18,11 +18,12 @@ define("DB_NAME", "swinney");
 
 
 /*
- * initialize the session
+* initialize the session
  * 
  * XXX: make the session cookie persist until the user clicks logout
  * (and therefore causes a session_destroy().
  */
+session_set_cookie_params(time()+9999999 , dirname($SCRIPT_NAME), $URLBASE);
 session_cache_limiter('nocache');
 session_start();
 
@@ -199,9 +200,9 @@ function get_username($user_id) {
 // check authorization
 ///////////////////////////
 
-if (preg_match("/(vip|submit)/i","$SCRIPT_NAME") && !$user_id) {
+if (preg_match("/(vip|submit|admin)/i","$SCRIPT_NAME") && !$user_id) {
   session_register("back_to");
-  $back_to=$PHP_SELF;
+  $back_to="http://swinney.org". $PHP_SELF;
   $url=URLBASE;
   header("Location: $url/journals/login.phtml");
   exit();
