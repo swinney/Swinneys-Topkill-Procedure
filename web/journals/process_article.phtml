@@ -9,33 +9,7 @@
     echo("This username is not set");
     exit;
   }
-   // snafu saves the day with this one:
 
-/*
-17:38:39 chrissnafu: if (substr($url,0,7) != 'http://' && substr($url,0,7) !=
-'mailto:')
-17:38:40 chrissnafu: {
-17:39:15 chrissnafu: if (strstr($url,'@')) { $url = "mailto:$url"; }
-17:39:39 chrissnafu: else { $url = "http://$url"; }
-17:39:40 chrissnafu: }
-17:39:48 chrissnafu: slightly smarter
-17:42:09 chrissnafu: also
-17:42:39 chrissnafu: foreach ($image_arr as $index => $img_url)
-{
-17:43:37 chrissnafu: echo "<a>
-";
-}
-17:43:45 chrissnafu: oh, fucking aim.
-17:43:53 chrissnafu: nevermind
-17:43:56 robotec9: get on irc
-*/
-
-
-
-
-
-
- 
   // Work out what subjects
   $res = mysql("swinney", "SELECT MAX(category_id) FROM categories");
   $maxid = mysql_result($res, 0, 0);
@@ -76,19 +50,22 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
     exit;
   }
 
+
+
   // Create a file in  /pending_articles
   // if you don't have the auto_increment integer, then mysql_insert_id is not going to work
-  $article_id = mysql_insert_id();  
-  $filename = "pending/".mysql_insert_id().".txt";
-  $fp = fopen($filename, "w");
-  fwrite($fp, stripslashes($content) );
-  fclose($fp);
+  $article_id = mysql_insert_id();
+  $content = mysql_add_slashes($content);
+  $res = mysql ("$DB", "INSERT INTO article VALUES article_id=$article_id, text=$content");
 
   // Now get the images
 
  strip_tags($blurb);
  strip_tags($content);
- mail("article@swinney.org", "$title by $username\n", "$blurb\n $content");
+ mail("article@swinney.org", 
+      "$username makes a swinney\n", 
+      "$title\n\nby $username\n\n $blurb\n $content");
+
  header("Location:submit_image.phtml?article_id=$article_id" ); 
 
 ?>
