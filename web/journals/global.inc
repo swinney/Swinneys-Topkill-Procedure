@@ -5,6 +5,12 @@
 
   // Connect to the database
 
+function conn() {
+mysql_connect("localhost","root","maufrais");
+mysql_select_db("srtech");
+}
+
+
   $conn = mysql_connect("localhost", "swinney", "XXXXXXXX");
 
   if ( $conn == false) {
