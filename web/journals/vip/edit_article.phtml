@@ -8,7 +8,8 @@ if (isset($authenticated_username)) {
                  articles_info.keywords,
                  articles_info.category,
                  articles_text.text,
-                 articles_info.article_id
+                 articles_info.article_id,
+                 articles_info.status
             FROM articles_info, 
                  articles_text 
            WHERE username='$authenticated_username' 
@@ -24,6 +25,7 @@ if (isset($authenticated_username)) {
     $category     =             mysql_result($res,0,4);
     $text         =stripslashes(mysql_result($res,0,5));
     $temp_aid     =             mysql_result($res,0,6);
+    $status       =             pretty_status(mysql_result($res,0,7));
     // register this temp_aid to keep it from messing up the usual
     // var article_id.
     session_register("temp_aid");
