@@ -30,21 +30,26 @@ EOT;
         return $row;
     }
 
-    function is_multi($id) {
+    function is_multi() {
+      global $id;
         $query =<<<EOT
-SELECT count(multi_articles.article_id) as num 
-  FROM multi_articles 
- WHERE article_id=$id
+	  SELECT count(multi_articles.article_id) as num, 
+                 multi_articles.multi_id as multi_id 
+            FROM multi_articles 
+           WHERE article_id=$id
+        GROUP BY multi_id
 EOT;
         $res=mysql_query($query);
-        $num=@mysql_result($res,0);
+        $num[0]=@mysql_result($res,0,0);
+        $num[1]=@mysql_result($res,0,1);
         return $num;
     }
 
-    function get_multi($id) {
+    function get_multi() {
+      global $id;
+      global $multi_id;
         $query =<<<EOT
-      SELECT multi_info.multi_id,
-             multi_info.user_id as editor_id,
+      SELECT multi_info.user_id as editor_id,
              multi_info.title as multi_title,
              multi_articles.article_id, 
              articles_info.title,
@@ -53,8 +58,8 @@ EOT;
         FROM multi_info,
              multi_articles,
              articles_info 
-       WHERE multi_info.user_id=17 
-         AND multi_info.multi_id=multi_articles.multi_id 
+       WHERE multi_info.multi_id=$multi_id 
+         AND multi_articles.multi_id=$multi_id
          AND articles_info.article_id=multi_articles.article_id
 EOT;
         $res = mysql_query($query);
@@ -82,7 +87,7 @@ EOT;
 	        if ($d->blurb) {
 	            $html .="<BR>$d->blurb ";
 	        }
-	        $html .="by $d->multi_username\n";
+	        $html .="<BR>by $d->multi_username\n";
                 $html .="</P>";
 
 	    }
@@ -93,7 +98,7 @@ EOT;
 <td width="33">
 <img src="http://swinney.org/dev/journals/img/no.gif" alt="" width="33" height="1" border="0"></td>
 <TD WIDTH="150" ALIGN=RIGHT VALIGN=TOP>
-<IMG SRC="img/rollcall.gif">
+<IMG SRC="img/serial.gif">
 $html
 </TD>
 EOT;
