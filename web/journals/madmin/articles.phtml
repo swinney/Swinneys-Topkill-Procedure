@@ -19,7 +19,7 @@ include_once("./nav.inc");
 
 if (!isset($show)) $show=1;
 
-$query="SELECT article_id,title,username,date FROM articles_info WHERE status=$show ORDER BY article_id";
+$query="SELECT article_id,title,username,date FROM articles_info WHERE status=$show ORDER BY article_id DESC";
 $res=mysql_query($query) or die (error_page($query));
 
 if (mysql_num_rows($res)>0) {
