@@ -14,7 +14,6 @@ mysql> describe thoughts;
 +------------+---------------+------+-----+-------------+----------------+
 */
 
-$ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
   if ( $username == "name" ) {
     echo ("Names don't think, back up and try again.");
@@ -33,16 +32,29 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
     exit;
   }
 if (!$authenticated_user_id) {
+  if ($authenticated_username && !$authenticated_user_id) {
+    $authenticated_user_id=get_user_id($authenticated_username);
+  } else {
+
   $urlbase = URLBASE;
   header("Location: $urlbase/journals/login.phtml");
   exit();
-}
-$res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,$authenticated_user_id,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
-
-  if ( $res == false ) { 
-    echo ("Bollocks!");
-    exit;
   }
-//  mail("thoughts@swinney.org", "comment: $username",  "$thought"); 
+}
+if ($last_lang!=$language) {
+    if (!$last_lang) {
+      session_register("last_lang",$language);
+    }
+  $last_lang=$language;
+}
+
+
+
+$query = "INSERT INTO thoughts SET user_id=".addslashes($authenticated_user_id).",username='".addslashes($username)."',thought='".addslashes($thought)."',ip_addr='".addslashes($ip_addr)."',language='".addslashes($language)."';";
+
+$res = $db->query($query);
+if (DB::isError($res)) {
+  die($res->getMessage().$query);
+}
 header("Location: " . URLBASE);
 ?>

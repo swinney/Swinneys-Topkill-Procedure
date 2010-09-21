@@ -13,16 +13,6 @@ if ($a_user_id) {
 
 }
 
-  if ($a_text) {
-    if ($a_image>0) {
-      require_once("Madmin/Image.php");
-      $Image = new Image();
-      $img_array = $Image->get_img($image,$article_id);
-      $article_row['text'] = $Image->show_img($img_array,$article_row['text']);
-    }
-  }
-
-
   include_once("Swinsite/WebAddress.php");
   $webAddress = new WebAddress();
   $web=$webAddress->checkWeb($d->web);

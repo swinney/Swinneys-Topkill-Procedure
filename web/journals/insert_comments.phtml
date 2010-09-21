@@ -5,12 +5,12 @@
 require_once("./global.inc");
 
 if ($article_id) {
-$article_id = explode (".", $article_id);
-$id = $article_id[0];
+  $article_id = explode (".", $article_id);
+  $id = $article_id[0];
 }
 if ($id) {
-$id = explode (".", $id);
-$id = $id[0];
+  $id = explode (".", $id);
+  $id = $id[0];
 }
 
 $first .= <<<EOT
@@ -33,7 +33,8 @@ $query = <<<EOT
          comments.username,
          comments.comment,
          comments.nature,
-         comments.to_user_id
+         comments.to_user_id,
+         comments.language
     FROM comments
    WHERE article_id=$id 
      AND status=0 
@@ -62,6 +63,13 @@ if ($insert_since) {
 if ($limit_chars) {
   $query .= " AND chars > $limit_chars";
 }
+
+if ($sess_lang) {
+  $lang_str = implode("','",$sess_lang);
+  $query .= " AND language IN ('$lang_str') ";
+}
+
+
 $query .= <<<EOT
  ORDER BY comment_id
 EOT;
@@ -74,7 +82,7 @@ while ($d = mysql_fetch_object($res)) {
   $user_id = $d->user_id;
   $to_user_id = $d->to_user_id;
   $to_users["$user_id"]=$username;
-
+  $language= stripslashes($d->language);
   /* build the user link
    */
   if ($user_id!=0) {
@@ -83,15 +91,20 @@ while ($d = mysql_fetch_object($res)) {
 
   /* LULU MADNESS
    * the things we do for chicks - J.
-   * awwwwe yea - a.
+   * awwwwe yeah - a.
    */
-  if ($username == "lulu") {
-    $username = "<span style=\"background-color:pink\">$username";
+  if ($username == "s5") {
+    $username = "<span style=\"background-color:#500000\">$username";
     $comment = "$comment</span>";
   }
   if ($to_users[$to_user_id] && $to_user_id!=0) {
     $username .= " to <a href='./info_user.phtml?uid=". $to_user_id."'>" . $to_users[$to_user_id] ."</A>\n";
   }  
+  $username .= "</B>";
+
+  if (count($sess_lang)>1) {
+    $username .=" [$language]";
+  }
 
   $html .= <<<EOT
 

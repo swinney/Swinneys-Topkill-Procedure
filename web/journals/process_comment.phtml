@@ -98,17 +98,23 @@ INSERT INTO comments
 	      $char,
 	      $to_user,
 	      0,
-	      "$ip_addr"
+	     "$ip_addr",
+	     "$language"
               )
 EOT;
 
 $res = mysql_query($query) or die("error inserting comment: $query"); 
 
 $query=<<<EOT
-update articles_info set num_comments=(num_comments+1) WHERE article_id=$id
+update articles_info set num_comments=(num_comments+1) WHERE article_id=$article_id
 EOT;
 $res = mysql_query($query) or die("error inserting comment: $query"); 
-
+if ($last_lang!=$language) {
+    if (!$last_lang) {
+      session_register("last_lang",$language);
+    }
+  $last_lang=$language;
+}
 // this is for elly's cellphone
 // mail("ellys_cellphone@swinney.org", "comment: $username on $article_id", "$nature", "$comment"); 
 header ("Location: article.phtml?id=$article_id");

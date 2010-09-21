@@ -1,12 +1,19 @@
 <?
 // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 // $Id$
+
 require_once("./journals/global.inc");
 
-$title = "this is it.";
-include(INCDIR ."/top.inc");
+$ip_addr = getenv("REMOTE_ADDR");
 
-if ($success_msg) {
+$title = "this is it: $ip_addr";
+
+
+include(INCDIR ."/top.inc");
+#include("./newfeature.inc");
+#include("./index_pimp.html");
+
+if (!empty($success_msg)) {
   session_unregister("success_msg");
   // don't bother printing the success message
 }
@@ -15,8 +22,13 @@ if ($success_msg) {
 <table width="100%" cellpadding="20" cellspacing="0" border="0">
 <tr>
 <td bgcolor="#666666" align="center">
-<table cellpadding="2" cellspacing="1" border="0">
+<? 
+#include_once("./personals/personal.html");
+?>
+</td>
+<td bgcolor="#666666" align="center">
 
+<table cellpadding="2" cellspacing="0" border="0">
 <? 
 if ($error_msg) {
   echo "<FONT COLOR=\"red\"><B>$error_msg</B></FONT>";
@@ -24,13 +36,14 @@ if ($error_msg) {
   session_unregister("error_msg");
 }
 // include i thought it
-include("./journals/submit_thought.phtml");
+if ($authenticated_username) {
+	include("./journals/submit_thought.phtml");
+}
 ?>
 
 <tr>
 <td bgcolor="#666666">
 <table cellpadding="0" cellspacing="0" border="0" width="450">
-
 <? 
 // include the thoughts
 include "journals/insert_thought.phtml"; 
@@ -40,16 +53,13 @@ include "journals/insert_thought.phtml";
 </tr>
 </table></td>
 </tr>
-</table>
-
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td bgcolor="#666666" align="center">
 
 <table cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td bgcolor="#666666" valign="bottom" align="right" width="174" nowrap>
-<img src="journals/img/no.gif" alt="" width="5" height="1" border="0"><a href="journals/index.phtml" accesskey="j" target="_top" onmouseover="MM2.mouseOver(); window.status='Articles'; return true" onmouseout="MM2.mouseOut(); window.status=' '; return true"><img src="journals/img/articles.gif" alt="Articles" width="62" height="24" border="0" name="articles"></a><a href="journals/comments.phtml" accesskey="c" target="_top" onmouseover="MM3.mouseOver(); window.status='Comments'; return true" onmouseout="MM3.mouseOut(); window.status=' '; return true"><img src="journals/img/comments.gif" alt="Comments" width="73" height="24" border="0" name="comments"></a><a href="journals/faq.phtml" accesskey="f" target="_top" onmouseover="MM4.mouseOver(); window.status='FAQ'; return true" onmouseout="MM4.mouseOut(); window.status=' '; return true"><img src="journals/img/faq.gif" alt="FAQ" width="34" height="24" border="0" name="faq"></a></td>
+<td bgcolor="#666666" valign="bottom" align="right" width="174" nowrap><img src="journals/img/no.gif" alt="" width="5" height="1" border="0"><a href="journals/index.phtml" accesskey="j" target="_top" onmouseover="MM2.mouseOver(); window.status='Articles'; return true" onmouseout="MM2.mouseOut(); window.status=' '; return true"><img src="journals/img/articles.gif" alt="Articles" width="62" height="24" border="0" name="articles"></a><a href="journals/comments.phtml" accesskey="c" target="_top" onmouseover="MM3.mouseOver(); window.status='Comments'; return true" onmouseout="MM3.mouseOut(); window.status=' '; return true"><img src="journals/img/comments.gif" alt="Comments" width="73" height="24" border="0" name="comments"></a><a href="journals/faq.phtml" accesskey="f" target="_top" onmouseover="MM4.mouseOver(); window.status='FAQ'; return true" onmouseout="MM4.mouseOut(); window.status=' '; return true"><img src="journals/img/faq.gif" alt="FAQ" width="34" height="24" border="0" name="faq"></a></td>
 
 <td bgcolor="#666666" valign="bottom" align="center" width="284">
 <img src="journals/img/swinneylgtop.gif" alt="swinney.org" width="284" height="37" border="0"></td>
@@ -68,31 +78,47 @@ if ($authenticated_username) {
 ?>
 
 </tr>
-</table></td>
+</table>
+</td>
 </tr>
-
 <tr>
 <td align="center">
 <table cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td width="164">
-<form name="searchform" action="journals/search.phtml" method="get"></td>
-
+</td>
 <td align="center" valign="top" width="284">
 <img src="journals/img/swinneylgbottom.gif" alt="" width="284" height="13" border="0"></td>
-
 <td align="right" valign="top" width="172">
 <table cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td>
-<input type="text" size="12" name="find" value="<? if ($find) { echo "$find"; } ?>"></td>
+<?
+if ($authenticated_username) {
+echo <<<EOT
+<form name="searchform" action="journals/search.phtml" method="get">
+<input type="text" size="12" name="find" value="
+EOT;
+
+if ($find) { 
+	echo "$find"; 
+}
+
+echo <<<EOT
+"></td>
 <td>&nbsp;<script type="text/javascript" language="JavaScript">
 //<!--
 document.write('<a href="javascript:document.searchform.submit()" target="_top" onmouseover="MM10.mouseOver(); window.status=\'Search\'; return true" onmouseout="MM10.mouseOut(); window.status=\' \'; return true"><img src="journals/img/search.gif" alt="Search" name="search" width="54" height="23" border="0"></a>');
 //-->
-</script><noscript><input type=submit value="Search"></noscript></td>
+</script>
+<noscript><input type=submit value="Search"></noscript>
+</form>
+EOT;
+}
+?>
+</td>
 </tr>
-</table></form></td>
+</table></td>
 </tr>
 </table></td>
 </tr>
@@ -110,7 +136,6 @@ document.write('<a href="javascript:document.searchform.submit()" target="_top" 
 <table width="600">
 <tr>
 
-
 <td align="right" valign="top">
 <img src="journals/img/now.gif" alt="Now:" width="66" height="20" border="0"></td>
 
@@ -119,7 +144,7 @@ document.write('<a href="javascript:document.searchform.submit()" target="_top" 
 <?
 require_once("Swinsite/Articles.php");
 $a = new Articles();
-$articles = $a->getTitles("id",10);
+$articles = $a->getTitles($db,"id",5,$sess_lang);
 echo $articles;
 
 ?>
@@ -133,7 +158,7 @@ echo $articles;
 <td valign="top" colspan="2">
 
 <?
-$articles = $a->getTitles("rand",10);
+$articles = $a->getTitles($db,"rand",5,$sess_lang);
 echo $articles;
 ?>
 
@@ -142,7 +167,7 @@ echo $articles;
 </table></td>
 </tr>
 </table>
-
 <?
 include "journals/templates/footer.inc";
 ?>
+

@@ -4,6 +4,25 @@
 require_once("./global.inc");
 
 
+if (count($sess_lang) > 1) {
+  $opt_lang =<<<EOT
+<SELECT NAME="language">
+EOT;
+
+ foreach($sess_lang as $lang) {
+   if ($lang != $last_lang) {
+     $opt_lang .= "<OPTION VALUE='$lang'>$lang\n";
+   } else {
+     $opt_lang .= "<OPTION VALUE='$lang' SELECTED>$lang\n";     
+   }
+ }
+ $opt_lang .="</SELECT>\n";
+} else if ($sess_lang[0]) {
+  $opt_lang = "<INPUT TYPE=HIDDEN NAME=language VALUE='$sess_lang[0]'>\n";
+} else {
+  $opt_lang = "<INPUT TYPE=HIDDEN NAME=language VALUE='en'>\n";
+}
+
 ?>
 
 <form action="process_comment.phtml" method=post enctype="multipart/form-data">
@@ -29,13 +48,13 @@ EOT;
 
 <tr>
 <td align="right" COLSPAN=2><p>thus spake:
-<input type="text" size="10" name="username" value="<? if ($authenticated_username) { echo "$authenticated_username"; } ?>">
+<input type="text" size="10" name="username" value="<? if ($authenticated_username && $authenticated_user_id) { echo "$authenticated_username"; } ?>">
 
  to
 <SELECT NAME="to_user">
 <option value="0">all
 <?
-$query="SELECT distinct(username), user_id FROM comments WHERE article_id=$id AND username NOT LIKE '%to%' ORDER BY username";
+$query="SELECT distinct(username), user_id FROM comments WHERE article_id=$id AND username NOT LIKE '% to %' ORDER BY username";
 $res=mysql_query($query);
 while ($d=mysql_fetch_object($res)) {
   if ($d->user_id) echo "<option value='$d->user_id'>". stripslashes($d->username) ."\n";
@@ -66,6 +85,7 @@ while ($d=mysql_fetch_object($res)) {
   while ( $d = mysql_fetch_object($res) ) {
     echo "<input type='radio' name='nature' value='$d->nature_id'> $d->nature <br>";
   }
+echo $opt_lang;
 
 ?>
 <input type="submit" value="i said it">

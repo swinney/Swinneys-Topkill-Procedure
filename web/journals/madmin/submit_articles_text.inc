@@ -8,8 +8,7 @@
 // mess everything up later when pages try
 // to call aid.
 //
-// this session register is NECESSARY!
-// session_register("id");
+
 require_once("../global.inc");
 include_once("DB.php");
 include_once("./top.inc");
@@ -26,14 +25,14 @@ if (isset($id)) {
             AND articles_info.article_id=$id";
 
 
-    /*
+
     $res=mysql_query($query) or die (error_page($query));
     while ($d=mysql_fetch_object($res)) {
         $title=stripslashes($d->title);
         $blurb=stripslashes($d->blurb);
         $text=stripslashes($d->text);
     }
-    */
+
 echo <<<EOT
 <a href="../article.phtml?id=$id" target="new">Preview Page</a>
 <FORM NAME="edit" ACTION="process_articles_text.phtml" METHOD="post">

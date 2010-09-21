@@ -6,21 +6,13 @@ $html =<<<EOT
 
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 
-<!-- <*austin*> i am a fucking phat php coder and the dude ox at surfmetro can eat my spunk  -->
 <CENTER>
 <H1>THE GREAT WALL OF SWINNEY</H1>
 </CENTER>
 EOT;
 
 $query = <<<EOT
-  SELECT DISTINCT(username) as username,
-         COUNT(username) count 
-    FROM articles_info 
-   WHERE status IN (2,3) 
-     AND username<>"" 
-     AND username=username 
-GROUP BY username 
-ORDER BY username
+SELECT user.user_id,user.username,count(articles_info.user_id) as count FROM user,articles_info WHERE user.user_id=articles_info.user_id AND articles_info.status IN (2) GROUP BY user.user_id ORDER BY username
 EOT;
 
 $res = mysql_query ($query);
@@ -31,14 +23,14 @@ $res = mysql_query ($query);
   $index = 0;
 
 while ($d = mysql_fetch_object ($res)) {
-  $url_username=urlencode($d->username);
   // increment the index for modulo
   $index++;
   $remainder = $index % 3;
-  $username=strtoupper($d->username);
+  $username=stripslashes(strtoupper($d->username));
+  $user_id = stripslashes($d->user_id);
   $html .=<<<EOT
 <TD>
-<a href='userpages.phtml?username=$url_username'>$username</a>
+<a href='info_user.phtml?uid=$user_id'>$username</a>
     ($d->count)
 </TD>\n
 EOT;

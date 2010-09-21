@@ -4,14 +4,13 @@
 require_once("../journals/global.inc");
 $urlbase = URLBASE;
 include("../journals/insert_stats.inc");
+session_register("refreshrate");
 ?>
 
 <html>
 <head>
 <title>swinney.org: Thought-O-Matic</title>
-
-<meta http-equiv="expires" content="0">
-<meta name="keywords" content=" austin swinney ;">
+<meta name="keywords" content=" austin swinney php programmer for ever;">
 
 <?
  if ($refreshrate or $refreshrate = "0") {
@@ -34,6 +33,7 @@ MM1 = new rollover("ithoughtit","<? echo $urlbase; ?>/journals/img/ithoughtit.gi
 <body bgcolor="#cccccc" link="#000099" vlink="#330066" alink="#ff0000"
 marginwidth=0 marginheight=0 topmargin=0 leftmargin=0>
 
+
 <center><img src="../journals/img/thoughtomatic.gif" alt="The Swinney.org Thought-O-Matic" width="219" height="40" border="0"></center>
 
 <table width="100%" cellpadding="20" cellspacing="0" border="0">
@@ -54,6 +54,9 @@ include("./submit_thought.phtml");
 include("./insert_thought.phtml"); 
 ?>
 </table>
+<?
+include_once(INCDIR ."/adsense_120x600.inc");
+?>
 
 
 </td>
@@ -65,12 +68,16 @@ include("./insert_thought.phtml");
 include("./submit_thought.phtml");
 ?>
 
-</table></td>
+</table>
+</td>
 
 </tr>
 </table>
-
-
 <?
 include("../journals/templates/footer.inc");
+
 ?>
+
+
+
+

@@ -64,14 +64,8 @@ writers:<br>
 
  $minus=time();
  $minus=$minus-7776000;
-#SELECT DISTINCT(username),COUNT(username) AS number FROM articles_info WHERE status=2 GROUP BY username HAVING number>5 ORDER BY username;
-#SELECT DISTINCT(username),COUNT(username) AS number FROM articles_info WHERE status=2 
-#SELECT user.username,user.user_id,COUNT(articles_info.user_id) as num FROM user,articles_info WHERE user.user_id=articles_info.user_id AND user.user_id NOT IN (295,56,177) GROUP BY user.user_id HAVING num>5 ORDER BY user.username;
 
-$query = <<<EOT
-SELECT user.username,COUNT(articles_info.user_id) as num,user.user_id FROM user,articles_info WHERE user.user_id=articles_info.user_id AND status IN (2,3)
-EOT;
-
+$query = "SELECT user.username,articles_info.user_id,MAX(articles_info.date) AS date,user_priv.others,IFNULL(user_settings.lj_user,'') as lj_user,IFNULL(user_settings.cn_user,'') cn_user FROM user,articles_info,user_priv,user_settings WHERE DATE_SUB(CURDATE(),INTERVAL 9 MONTH) <= articles_info.date AND user.user_id=articles_info.user_id AND articles_info.user_id=user_priv.user_id AND articles_info.user_id=user_settings.user_id";
 //
 // Apply the bozo filter
 //
@@ -79,7 +73,17 @@ EOT;
 if ($bozo_set) {
   $query .= " AND user.user_id NOT IN $bozo_set";
 }
-$query .= " GROUP BY user.user_id HAVING num>5 ORDER BY user.username";
+
+$query .= " GROUP BY articles_info.user_id ORDER BY date DESC";
+
+if (ERROR_REP==1) {
+    echo $query;
+}
+echo <<<EOT
+<!--
+$query
+-->
+EOT;
 
 $res = $db->query($query);
 if (DB::isError($res)) {
@@ -94,9 +98,24 @@ while ($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 # $username.  so it will be called $user.
 # austin, Thu Jul 12, 2001  1:40 PM
 
-  $html_rollcall .= "<a href='info_user.phtml?uid=$row[user_id]'>".stripslashes($row[username])."</a> ($row[num])<br>\n";
-}
+    if ($row[username]=="Peter") {
+         $row[username]="<TT>Peter</TT>";
+    }
+    if ($row[others]=="n") {
+        $html_rollcall .= "<a href='".URLBASE."/journals/info_user.phtml?uid=$row[user_id]'>".stripslashes($row[username])."</a>";
+     } else {
+        $html_rollcall .= "<a href='".URLBASE."/journals/info_user.phtml?uid=$row[user_id]'><TT>@</TT>".stripslashes($row[username])."</a>";
+      }
+    if (!empty($row[lj_user]) && $row[lj_user] != "NULL") {
+#        $html_rollcall .= "&raquo;<a href='http://www.swinney.org/journals/lj/user_lj.phtml?uid=$row[user_id]'><B>LJ</B></A>\n";
+        $html_rollcall .= "&raquo;<a href='http://www.livejournal.com/users/$row[lj_user]'><B>LJ</B></A>\n";
+    }
+    if (!empty($row[cn_user])) {
+        $html_rollcall .= "&raquo;<a href='http://www.citynoise.org/author/$row[cn_user]'><B>CN</B></A>\n";
+    }
 
+$html_rollcall .= "<BR>\n";
+}
 echo $html_rollcall;
 ?>
 

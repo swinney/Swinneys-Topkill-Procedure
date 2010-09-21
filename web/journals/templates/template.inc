@@ -1,5 +1,8 @@
 <?php
 #  $Id$
+
+
+
 include (INCDIR ."/top.inc");
 include (INCDIR ."/swinney.req");
 if ($rollcall==1) {
@@ -26,10 +29,33 @@ if (basename($PHP_SELF)=="article.phtml") {
       /*
        * $multi is html returned.
        */
-      echo $multi;
+	$show_multi=$multi;
     }
 }
+?>
+<!-- Right Margin Matter Box -->
+</TD>
+<td width="33">
+<img src="http://swinney.org/dev/journals/img/no.gif" alt="" width="33" height="1" border="0"></td>
+<TD WIDTH="150" ALIGN=RIGHT VALIGN=TOP>
+
+<?
+if ($show_multi) {
+    echo '<IMG SRC="img/serial.gif">';
+    echo $multi;
+}
+if (isset($a_user_id)){
+    include_once(INCDIR ."/profiles.inc.php");
+} else if (preg_match("/search/i", $HTTP_REFERER)) {
+    include_once(INCDIR ."/adsense_160x600_googlers.inc");
+} else {
+    include_once(INCDIR ."/adsense_120x240.inc");
+}
+?>
+</TD>
+<?
 include (INCDIR ."/bottom.req");
 include (INCDIR ."/footer.inc");
 ?>
+
 

@@ -1,4 +1,3 @@
-
 <?
 
 $noslogan = array( 1 => 
@@ -53,4 +52,6 @@ if (defined("URLBASE")) {
 </table>
 </body>
 </html>
-
+<?
+$res = $db->disconnect();
+?>

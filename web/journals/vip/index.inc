@@ -17,13 +17,20 @@ else
 <p class="subheader">
 Things:<BR>
 <b>&raquo;</b> <a href="index_multi.phtml">Manage Series</a><BR>
-<b>&raquo;</b> <a href="edit_article.phtml">Edit Article</a>
+<b>&raquo;</b> <a href="edit_article.phtml">Edit Article</a><BR>
+<b>&raquo;</b> <a href="submit_languages.phtml">Language Filter</a><BR>
+<b>&raquo;</b> <a href="submit_lj.phtml">Your Livejournal RSS</a><BR>
+<b>&raquo;</b> <a href="submit_cn.phtml">Your Citynoise.org Images</a><BR>
+<b>&raquo;</b> <a href="submit_friendster.phtml">Your Friendster Profile</a>
+
 </P>
 </td><td>
 <p class="subheader">
 Stuff:<BR>
+<b>&raquo;</b> <a href="submit_location.phtml">Set Location/Flag</a><br>
 <b>&raquo;</b> <a href="submit_change_password.phtml">Change Password</a><br>
 <b>&raquo;</b> <a href="submit_bozo.phtml">Edit Bozolist</a><BR>
-<b>&raquo;</b> <a href="submit_noise.phtml">Noise Filter</a>
+<b>&raquo;</b> <a href="submit_noise.phtml">Noise Filter</a><BR>
+<b>&raquo;</b> <a href="submit_flicker.phtml">Your Flickr Profile</a>
 </P>
 </td></tr></table>

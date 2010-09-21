@@ -1,8 +1,12 @@
 <?
 // $Id$
+
 $title = "Submit an Article";
 $into_template = "./submit_article.inc";
 require_once("./global.inc");
+$thisurl = "http://swinney.org/journals/submit_article.phtml";
+is_auth($authenticated_username, $authenticated_user_id, $thisurl);
+
 include_once(INCDIR ."/template_norollcall.inc");
 ?>
 

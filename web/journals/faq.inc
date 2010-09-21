@@ -31,21 +31,30 @@ $Id$
 <li> <a href="#arethere">are there any HTML guidelines for submissions?</a>
 </ul>
 </p><p>
-<b>categorization, commenting, and the bozo list</b>:
+<b>categorization, commenting, the bozo list, and leaving</b>:
 </p><p>
 <ul>
 <li> <a href="#somemean">some mean person categorized my beloved article as "gay," when it is most surely not gay and is, in fact, a serious work of art. how can i rectify this situation???</a>
 <li> <a href="#howcome">how come i commented on something and it was there, but then disappeared?</a>
 <li> <a href="#someoneon">someone on the site annoys me. what can i do?</a>
+<li> <a href="#removeme">i'm done with you people, can you remove all traces of me from the site?</a>
 </ul>
-</p><p>
+</p>
+</p>
+<P><B>odds and ends:</b>
+</P><P>
+<UL>
+<LI> <A href="#lol">OMG, LOL, what?</A>
+</UL>
+
+
+<p>
 <b>credits and contact:</b>
 </p><p>
 <ul>
 <li> <a href="#whobrought">who brought this work to me?</a>
 <li> <a href="#forgeneral">for general assistance and inquiries</a>
 </ul>
-</p>
 <p>...</p>
 
 <p class="header">general:</p>
@@ -171,10 +180,6 @@ whatever you wrote just gets vetoed for nebulous editorial purposes.
 <p class="subheader"><b>are there any HTML guidelines for submissions?</b></p>
 <p>not really, but le's pet peeve is when people use a single &lt;BR&gt; instead of a double break to indicate a new paragraph. it also bugs her when people don't close their &lt;p&gt; tags. now, there was a time when she also didn't close her &lt;p&gt tags, so it's not that she doesn't relate, it's just that she's seen the light now. </p>
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
-<a name="iposted">
-<p class="subheader"><b>i posted something on swinney.org, and now somebody else wants to publish it?</b></p>
-<p>nice! uncle swinney is proud of his kiddies.  kindly get swinney.org a reference and send an autographed copy when it is published to: <i>uncle swinney, 4604 dawn ln., soquel CA 95073</i>.</P>
-<p align="right"><font size="1"><a href="#top">back to top</a></font></p>
 <p class="header">categorization, commenting, and the bozo list</p>
 <a name="somemean">
 <p class="subheader"><b>some mean person categorized my beloved article as "gay," when it is most surely not gay and is, in fact, a serious work of art. how can i rectify this situation???</b></p>
@@ -210,21 +215,39 @@ see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. war
 </p>
 
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
+<a name="removeme">
+<p class="subheader"><b>i'm done with you people, can you remove all traces of me from the site?</b></p>
+<P>no, this site does not do that.  if you wrote here and now you want to leave, just leave.  eventually anything you wrote here will be burried.  if you created some drama in your life by writing here, take a few deep breaths and keep in mind the internet does not matter.  please come back whenever you feel like it.</P>
+
+<p align="right"><font size="1"><a href="#top">back to top</a></font></p>
+
+<p class="header">odds and ends:</p>
+<a name="lol">
+<P class="subheader"><B>OMG, LOLZ, what?</B></P>
+<P>we all love internet acronyms, but don't put them in your article.</P>
+
+<p align="right"><font size="1"><a href="#top">back to top</a></font></p>
+
+
 
 <p class="header">credits and contact:</p>
 
 <a name="whobrought">
 <p class="subheader"><B>who brought this wonder to me?</B></P>
 
-<P>austin swinney of <a href="http://swinney.org">swinney.org</a> wrote the initial code and continues to make updates.</P>
+<P>austin swinney of <a href="http://swinney.org">swinney.org</a> wrote the initial code and continues to suck and evade responsibilities in a never ending quest remain a child.</P>
 
-<P>brian moseley of <a href="http://www.maz.org">maz.org</a> makes significant code rewrites and contributions.</P>
+<P>peter rhodamine of <a href="http://citynoise.org">citynoise.org</a> is the managing editor and likes to use this website to stock his harem with wives not leaving any girls for the rest of us.  he uses the thoughts section to wage passive aggressive arguements with his beautiful wife.
 
-<P> jim home of <a href="http://thisishomemade.com">thisishomemade.com</a> did the design of "<a href="http://swinney.org/journals/article.phtml?id=1869">Ye Olde Swinney</a>", as well as some code.</P>
+<P>brian moseley of <a href="http://www.maz.org">maz.org</a> is the dungeon master who runs <a href="http://warhorn.net">war horn</A> and has made significant code rewrites and contributions to the arts and humanities, without whom, there would be no dreams come true.  when he blows his horn, we go to battle.</P>
 
-<P>steve simitzis of <a href="http://www.steve.org">steve.org</a> owns and operates <a href="http://www.saturn5.com">atari.saturn5.com</a> upon which this website resides.
+<P> jim home of <a href="http://thisishomemade.com">thisishomemade.com</a> did the design of "<a href="http://swinney.org/journals/article.phtml?id=1869">Ye Olde Swinney</a>", as well as some code.  he does yoga with his wife (in bed), and makes <a href="http://www.longbets.org/">long bets</a>.</P>
 
-<P>elly millican of <a href="http://www.elly.org">elly.org</a> rewords this FAQ.</P>
+<P>_(pa[nic)k] pwnz, womanizes, and operates <a href="http://farc.ikami.com/">the internet whore house</a> upon which this twitchy trigger finger of the revolucion resides.  women run from him.  men race him.  austin and simon steal his car when he passes out.</P>
+
+<P>elly millican of <a href="http://www.elly.org">elly.org</a> rewords this FAQ.  she is a coyote trickster.  for a brief while, she worked at a soap store and never smelled so good.  she has since moved to the <a href="http://eff.org">frontier</a> never to be seen again.</P>
+
+<P>DA OLSEN TWINZZ OWN UR SHIT1!11!!! LOLZ WTF</P>
 
 <P>you are welcome to help.</P>
 
@@ -235,6 +258,9 @@ see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. war
 <a href="mailto:editorsNO@SPAMswinney.org">editorsNO@SPAMswinney.org</a></P>
 
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
+
+
+
 </td>
 </tr>
 </table>

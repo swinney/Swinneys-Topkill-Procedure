@@ -6,6 +6,18 @@
 require_once("global.inc");
 session_register("error_msg");
 
+if (!$language) {
+  $language='en';
+}
+
+if ($last_lang!=$language) {
+    if (!$last_lang) {
+      session_register("last_lang",$language);
+    }
+  $last_lang=$language;
+}
+
+
 if (!$title) {
   $title="This bitch left no title.";
 }
@@ -69,15 +81,18 @@ INSERT INTO articles_info
     SET
      user_id='$authenticated_user_id',
      username='$username',
-     date='$date',
-     time='$time',
+     date=NOW(),
+     time=NOW(),
+     ctime=NOW(),
+     ltime=NOW(),
      status=1,
      keywords='$esc_keywords',
      title='$esc_title',
      blurb='$esc_blurb',
      category='$category',
      image='$image',
-     ip_addr='$ip_addr'
+    ip_addr='$ip_addr',
+    language='$language'
 EOT;
   $res=$db->query($query);
   if (DB::isError($res)) {
@@ -200,9 +215,16 @@ if ($error_msg) {
   } else {
     $loc = "submit_image.phtml?article_id=$ins_article_id";
   }
-header("Location: $loc");
+  $query = "SELECT email FROM user WHERE user_id=$authenticated_user_id";
+
+  $res = mysql_query(addslashes($query));
+  $user_email = stripslashes(mysql_result($res,0));
+
+  $username = stripslashes($username);
+  $title = strip_tags(stripslashes($title));
+  $blurb = strip_tags(stripslashes($blurb));
+  $content = strip_tags(stripslashes($content));
+  mail("swinney@swinney.org", "$title by $username\n", "$blurb\n $content", "From: $user_email\nhttp://swinney.org/madmin/\n");
+  header("Location: $loc");
 }
-#
-# kill registered session
-session_unregister("bin");
 ?>

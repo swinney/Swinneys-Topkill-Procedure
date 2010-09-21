@@ -2,18 +2,6 @@
 #$Id$
 require_once("../journals/global.inc");
 
-/*
-mysql> describe thoughts;
-+------------+---------------+------+-----+-------------+----------------+
-| Field      | Type          | Null | Key | Default     | Extra          |
-+------------+---------------+------+-----+-------------+----------------+
-| comment_id | int(11)       |      | PRI | 0           | auto_increment |
-| timestamp  | timestamp(14) | YES  |     | NULL        |                |
-| username   | varchar(20)   | YES  |     | nappy_sucka |                |
-| thought    | text          | YES  |     | NULL        |                |
-+------------+---------------+------+-----+-------------+----------------+
-*/
-
 $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
   if ( $username == "name" ) {
@@ -37,12 +25,19 @@ if (!$authenticated_user_id) {
   header("Location: $urlbase/journals/login.phtml");
   exit();
 }
-$res = mysql_query ("INSERT INTO thoughts VALUES (NULL, NULL,$authenticated_user_id,'".addslashes($username)."','".addslashes($thought)."','0','$ip_addr')"); 
+if ($last_lang!=$language) {
+    if (!$last_lang) {
+      session_register("last_lang",$language);
+    }
+  $last_lang=$language;
+}
 
-  if ( $res == false ) { 
-    echo ("Bollocks!");
-    exit;
-  }
-//  mail("thoughts@swinney.org", "comment: $username",  "$thought"); 
-header("Location: " . URLBASE ."/chat");
+$query = "INSERT INTO thoughts SET user_id=".addslashes($authenticated_user_id).",username='".addslashes($username)."',thought='".addslashes($thought)."',ip_addr='".addslashes($ip_addr)."',language='".addslashes($language)."';";
+
+$res = $db->query($query);
+if (DB::isError($res)) {
+  die($res->getMessage().$query);
+}
+header("Location: " .$HTTP_REFERER);
 ?>
+

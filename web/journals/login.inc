@@ -11,7 +11,7 @@ if (!$back_to) {
 }
 ?>
 <!-- begin login form-->
-<form action="process_login.phtml" method="POST">
+<form action="./process_login.phtml" method="POST">
 <input type=hidden name=back_to value="<?=urldecode($back_to);?>">
 <table cellpadding="2" cellspacing="0" border="0">
 <tr>
@@ -45,22 +45,45 @@ EOT;
 <td>
 <p><input type="password" name="password" size="25" maxlength="20"></p></td>
 </tr>
+<tr>
+<td colspan=2>
 
+<? 
+
+require_once('../recap/recaptchalib.php');
+
+// Get a key from http://recaptcha.net/api/getkey
+$publickey = "6Lc2XwkAAAAAAGEm9BljcoLg8us0scyuB0WmTnd_";
+$privatekey = "6Lc2XwkAAAAAAJbXJrjQAK-hYqtFBAE4FW37wlPD";
+
+# the response from reCAPTCHA
+$resp = null;
+# the error code from reCAPTCHA, if any
+$error = null;
+
+echo $recap_html = recaptcha_get_html($publickey, $error);
+
+?>
+
+
+</td>
+</tr>
 <tr>
 <td>&nbsp;</td>
 
 <td>
-<input type="submit" value="that's me"></td></tr>
+<input type="submit" value="that's me">
+</td></tr>
 <tr>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
 <tr>
 <?php 
-if ($back_to) {
-  echo "<TD><P><B>You arrived from:</B></TD>"; 
-  echo "<TD><a href='$back_to'>$back_to</a></P></TD>";
-}
+#if ($back_to) {
+#  echo "<TD><P><B>You arrived from:</B></TD>"; 
+#  echo "<TD><a href='$back_to'>$back_to</a></P></TD>";
+#}
 ?>
 </tr>
 </table>

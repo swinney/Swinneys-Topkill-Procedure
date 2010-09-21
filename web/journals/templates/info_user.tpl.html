@@ -9,6 +9,10 @@
     <TD><B>{names_html}</B></TD>
   </TR>
   <TR>
+    <TD>location{edit}:  </TD>
+    <TD><B>{location}</B></TD>
+  </TR>
+  <TR>
     <TD>number of articles: </TD>
     <TD><B>{num_articles}</B></TD>
   </TR>
@@ -17,14 +21,38 @@
     <TD><B>{num_comments}</B></TD>
   </TR>
   <TR>
+    <TD>number of thoughts: </TD>
+    <TD><B>{num_thoughts}</B> <img src="./images/neworig.gif"></TD>
+  </TR>
+  <TR>
     <TD>average nature: </TD>
     <TD><B>{nature}</B></TD>
   </TR>
+  <TR>
+    <TD>LiveJournal: </TD>
+<!--
+    <TD><B><a href="./lj/user_lj.phtml?uid={uid}">{lj_user}</a></B></TD>
+-->
+    <TD><B><a href="http://www.livejournal.com/users/{lj_user}/">{lj_user}</a></B></TD>
+  </TR>
+  <TR>
+    <TD>CityNoise: </TD>
+    <TD><B><a href="http://www.citynoise.org/author/{cn_user}">{cn_user}</a></B></TD>
+  </TR>
+  <TR>
+    <TD VALIGN='TOP'>F this bozo!: </TD>
+    <TD>
+       <FORM NAME="bozo" METHOD="POST" ACTION="process_bozo_id.phtml">
+       <INPUT TYPE=HIDDEN NAME=uid VALUE={uid}>
+       <INPUT TYPE=SUBMIT NAME=add_bozo_id VALUE="add to bozo list">
+       </FORM>
+    </TD>
+</TR>
+  <TR>
+    <TD>{fr_user}</TD>
+    <TD>{fl_user}</TD>
+  </TR>
 </TABLE>
-<FORM NAME="bozo" METHOD="POST" ACTION="process_bozo_id.phtml">
-<INPUT TYPE=HIDDEN NAME=uid VALUE={uid}>
-<INPUT TYPE=SUBMIT NAME=add_bozo_id VALUE="add to bozo list">
-</FORM>
 <!-- END info -->
 <!-- BEGIN comments -->
 <a href="article.phtml?id={comment_article_id}#{comment_id}">{text}</a><BR>

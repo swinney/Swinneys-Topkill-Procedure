@@ -25,15 +25,21 @@ $num_intersect = count($yes);
 
 if($num_intersect>0) {
   $thisurl=urlencode($thisurl);
-  is_auth("$authenticated_username",$authenticated_user_id,"$thisurl");
+  if ($authenticated_username && !$authenticated_user_id) {
+    $authenticated_user_id=get_user_id($authenticated_username);
+  }
+  is_auth($authenticated_username,$authenticated_user_id,$thisurl);
   // should not need to exit, is_auth will exit if necessary.
 }
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- <? echo $HTTP_REFERER; ?> -->
+<!-- <? echo $REQUEST_URI; ?> -->
+<!-- <? echo $authenticated_username ." / ". $authenticated_user_id; ?> -->
 <!-- you madame of the internet,  -->
 <!-- you gigolo  of the world,    -->
-<!-- don't forget to breath.      -->
+<!-- don't forget to breathe.     -->
 <!-- EVERYTHING {c} Swinney.org   -->
 <!-- s.o is a technical product of
          (in order of appearance):
@@ -61,13 +67,21 @@ artist in residence
 
 <html>
 <head>
-<title>swinney.org: <? echo "$title"; ?></title>
+<meta name="verify-v1" content="nKFmiauH7M4SMFMItPEHTDSrz2Ca60IlV1TxnnllifE=" >
+<title>SWINNEY LIVES!! </title>
 
 <meta http-equiv="expires" content="0">
-<meta name="keywords" content=" austin swinney ;">
-
+<meta name="keywords" content=" austin swinney, <? echo $a_keywords;?> ;">
 <link rel="stylesheet" type="text/css" href="<? echo CSS_URL; ?>"> 
-
+<link rel="shortcut icon" href="http://www.swinney.org/favicon.ico">
+<script src="http://www.google-analytics.com/urchin.js"
+type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-689669-2";
+_udn="swinney.org";
+urchinTracker();
+</script>
 <script type="text/javascript" language="JavaScript" src="<? echo URLBASE; ?>/journals/rollover.js"></script>
 <script type="text/javascript" language="JavaScript">
 //<!--
@@ -93,4 +107,10 @@ MM13 = new rollover("isaidit","<? echo URLBASE; ?>/journals/img/isaidit.gif", "<
 marginwidth=0 marginheight=0 topmargin=0 leftmargin=0>
 
 <!-- END PHP Dynamically Required File: top.inc -->
+
+
+
+
+
+
 

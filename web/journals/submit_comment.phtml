@@ -1,5 +1,10 @@
 <? 
 // $Id$
+if (!$authenticated_username) {
+	$back_to = $URLBASE . $PHP_SELF;
+	header("Location: ./login.phtml");
+	
+}
 
 require_once("./global.inc");
 

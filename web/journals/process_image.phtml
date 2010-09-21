@@ -59,6 +59,8 @@ if ($copy=="TRUE") {
 
 if ($submit_image=="submit") {
   header("Location: submit_image.phtml?article_id=$article_id&index=$aindex");
+} else if ($exit=="exit") {
+  header("Location: ../journals/article.phtml?id=$article_id");
 }
 
 ?>

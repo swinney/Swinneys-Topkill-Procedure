@@ -1,5 +1,19 @@
 <?
 // $Id$ 
+if (count($sess_lang) > 1) {
+  $opt_lang =<<<EOT
+<SELECT NAME="language">
+EOT;
+
+ foreach($sess_lang as $lang) {
+   if ($lang != $last_lang) {
+     $opt_lang .= "<OPTION VALUE='$lang'>$lang\n";
+   } else {
+     $opt_lang .= "<OPTION VALUE='$lang' SELECTED>$lang\n";     
+   }
+ }
+ $opt_lang .="</SELECT>\n";
+}
 ?>
 
 <tr>
@@ -48,7 +62,11 @@
 </td>
 
 </tr>
-
+<?
+if (count($sess_lang)==1) {
+  echo "<INPUT TYPE=HIDDEN NAME=language VALUE='$sess_lang[0]'>\n";
+}
+?>
 <tr>
 <td>
 <input type="text" size="10" name="username" value="<?=$authenticated_username?>"></td>
@@ -57,7 +75,7 @@
 &nbsp;</td>
 
 <td>
-<input type="text" name="thought"></td>
+<input type="text" name="thought"><? echo $opt_lang;?></td>
 
 <td>&nbsp;
 <input type=submit value="I Thought It">

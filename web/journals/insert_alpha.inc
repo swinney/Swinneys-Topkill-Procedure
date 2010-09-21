@@ -12,7 +12,7 @@ EOT;
   $res=mysql_query($query);
   $num_rows=mysql_num_rows($res);
   if ($num_rows>0) {
-    $num_mssg="<P>These titles were brought to you by the letter <B><FONT SIZE=7>".strtoupper($alpha[$i])."</A></B>: $num_rows</P>";
+    $num_mssg="<P>These titles were brought to you by the letter <B><FONT SIZE=7>".strtoupper($alpha[$i])."</A></B>.</P>";
     while ($d=mysql_fetch_object($res)) {
       $html_body .= "\n<TR><TD><a href='./article.phtml?id=$d->article_id'>$d->title</a></TD></TR>";
     }

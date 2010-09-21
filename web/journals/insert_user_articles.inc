@@ -25,9 +25,10 @@ $num_of_results = $db->getOne($query);
 // lets try this userlist thingy $USERS
 
 if (!$uid) {
-$query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status in (2,3) AND username='". addslashes($username) ."' ORDER BY time DESC limit $page_start,$per_page";
+$query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status in (2,3) AND user_id='". addslashes($user_id) ."' ORDER BY time DESC limit $page_start,$per_page";
 } else {
-$query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status IN (2,3) AND user_id=$uid ORDER BY time DESC limit $page_start,$per_page";
+$query = "SELECT article_id,title,blurb,date,username,num_comments FROM articles_info WHERE status IN (2,3) AND user_id=$uid ORDER BY article_id DESC limit $page_start,$per_page";
+
 }
 
 $res = $db->query($query);
@@ -84,7 +85,7 @@ EOT;
 
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="$PHP_SELF?username=$username&page_num=$page_forward">&laquo; earlier articles</a>
+<a href="$PHP_SELF?uid=$uid&page_num=$page_forward">&laquo; earlier articles</a>
 
 EOT;
   }  
@@ -95,7 +96,7 @@ EOT;
   
   if ($page_num > 1){
     echo <<<EOT
-<a href="$PHP_SELF?username=$username&page_num=$page_back">later articles &raquo;</a>
+<a href="$PHP_SELF?uid=$uid&page_num=$page_back">later articles &raquo;</a>
 EOT;
   }
   
@@ -125,7 +126,7 @@ while ( $individual_row = $res->fetchRow(DB_FETCHMODE_OBJECT) ) {
    $title = stripslashes($individual_row->title);
 
 echo <<<EOT
-<p><a href="article.phtml?id=$articleno.txt">
+<p><a href="article.phtml?id=$articleno">
 <b>$title</b></a><br>
 
 EOT;
@@ -165,7 +166,7 @@ EOT;
 
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="$PHP_SELF?username=$username&page_num=$page_forward">&laquo; earlier articles</a>
+<a href="$PHP_SELF?uid=$uid&page_num=$page_forward">&laquo; earlier articles</a>
 
 EOT;
   }  
@@ -176,7 +177,7 @@ EOT;
   
    if ($page_num > 1){
     echo <<<EOT
-<a href="$PHP_SELF?username=$username&page_num=$page_back">later articles &raquo;</a>
+<a href="$PHP_SELF?uid=$uid&page_num=$page_back">later articles &raquo;</a>
 
 EOT;
   }

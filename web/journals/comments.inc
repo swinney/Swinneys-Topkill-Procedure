@@ -1,6 +1,6 @@
 <?
 // $Id$
-
+#var_dump($sess_lang);
 // what page would you like to return?
 $return="$PHP_SELF";
 
@@ -10,7 +10,7 @@ if(!$page_num || $page_num < 1) {
 }
 
 //How many pages per page will be displayed...
-$per_page = 20;
+$per_page = 15;
 
 //Set the page start variable...
 $page_start = ($page_num-1) * $per_page;
@@ -31,13 +31,21 @@ if ($bozo_set) {
 if ($limit_chars) {
   $query .= " AND chars > $limit_chars";
 }
+# this is taking way too long
+if ($sess_lang) {
+  $lang_str = implode("','",$sess_lang);
+  $query .= " AND language IN ('$lang_str') ";
+}
+
 if ($insert_since) {
   $query .= " AND timestamp > $insert_since ";
 }
 $query .= <<<EOT
  ORDER BY comment_id DESC
 EOT;
-
+if (ERROR_REP==1) {
+    echo $query;
+}
 $res = mysql_query($query) or
   die(error_page(mysql_error()));
 $row = mysql_fetch_row($res);
@@ -63,7 +71,7 @@ if ($row) {
 
   // pull the current page's comments
   $query = <<<EOT
-  SELECT username, user_id, to_user_id, comment, comment_id, comment, article_id
+    SELECT username, user_id, to_user_id, comment, comment_id, comment, article_id, language
     FROM comments
    WHERE status=0
 EOT;
@@ -73,12 +81,22 @@ EOT;
   if ($limit_chars) {
     $query .= " AND chars > $limit_chars";
   }
+
+  if ($sess_lang) {
+    $lang_str = implode("','",$sess_lang);
+    $query .= " AND language IN ('$lang_str') ";
+  }
+
   if ($insert_since) {
     $query .= " AND timestamp > $insert_since";
   }
   $query .= <<<EOT
  ORDER BY comment_id DESC limit $page_start,$per_page
 EOT;
+  if (ERROR_REP==1) {
+    echo $query;
+  }
+  // that is some old school s.o code right there:
   $res = mysql_query($query) or
     die(error_page(mysql_error()));
 
@@ -162,7 +180,7 @@ EOT;
 
  if (mysql_num_rows($res)==0) {
 echo <<<EOT
-  <P><FONT COLOR="red" SIZE=7>HA HA HA, it will be a cold day in hell when i read comments on this website.  i have my noise filter set to the max!</FONT>
+  <P>No comments.</P>
 EOT;
  }
   // write comments
@@ -173,7 +191,7 @@ EOT;
     $to_user_id = $d->to_user_id;
     $comment    = stripslashes($d->comment);
     $article_id = $d->article_id;
-
+    $language   = stripslashes($d->language);
 
   /* build the user link
    */
@@ -184,19 +202,25 @@ EOT;
    * the things we do for chicks - J.
    * awwwwe yea - a.
    */
-  if ($username == "lulu") {
-    $username = "<span style=\"background-color:pink\">$username";
-    $comment = "$comment</span>";
-  }
+    if ($username == "lulu") {
+      $username = "<span style=\"background-color:pink\">$username";
+      $comment = "$comment</span>";
+    }
+
+    $username .= "</B>";
+
+    if (count($sess_lang) > 1) {
+      $username .=" [$language]";
+    }
+    
     if ($to_user_id!=0) {
       $to_username = get_username($to_user_id);
       $username .= " to <a href='./info_user.phtml?uid=$to_user_id'>$to_username</a>";
     } 
 
 
-
     $query = <<<EOT
-  SELECT username, title
+      SELECT username, title, user_id
     FROM articles_info
    WHERE article_id=$article_id
 EOT;
@@ -209,7 +233,7 @@ EOT;
 <td><a name="$comment_id"></a>
 <b>$username</b> on
 "<a href="article.phtml?id=$article_id#$comment_id">$a_title</a>" 
-by <a href='userpages.phtml?username=$row[0]'>$a_username</a>:<br>
+by <a href='info_user.phtml?uid=$row[2]'>$a_username</a>:<br>
 
 $comment
 

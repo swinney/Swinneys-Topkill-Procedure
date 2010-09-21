@@ -2,12 +2,35 @@
 <!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
 
 <?
-$res = mysql_query ("SELECT * FROM thoughts ORDER BY comment_id DESC LIMIT 60");
+$query = "SELECT comment_id,timestamp,user_id,username,thought FROM thoughts WHERE status=0 ";
+if ($bozo_set && $bozo_set!="") {
+  if ($bozo_set=="()") {
+      $bozo_set=get_bozo_set();
+  }
+  $query .= " AND user_id NOT IN $bozo_set ";
+}
+
+if ($insert_since) {
+  $query .= " timestamp > $insert_since ";
+}
+
+if ($sess_lang) {
+  require_once("Swinsite/Language.php");
+  $lang = new Language();
+  $query .= " AND language IN ".$lang->parenLang($sess_lang);
+}
+
+$query .=" ORDER BY comment_id DESC LIMIT 40";
+if (ERROR_REP==1) {
+  echo $query;
+}
+$res = mysql_query ($query) or die($query);
 
 // multiple rows 
 while ( $d = mysql_fetch_object( $res ) ) {
 
 // move it to strip slashes
+$user_id=$d->user_id;
 $username=$d->username;
 $thought=$d->thought;
 $timestamp=$d->timestamp;
@@ -15,7 +38,10 @@ $timestamp=$d->timestamp;
 // echo and strip
 
 $username=stripslashes($username);
-$thought=eregi_replace("(bus|busse)","dong",stripslashes($thought));
+$thought = stripslashes($thought);
+if (!strstr($thought,"http")) {
+    $thought=eregi_replace("(bus|busse)","dong",$thought);
+}
 $timestamp=stripslashes($timestamp);
 $ext = substr($thought,-3);
 
@@ -23,7 +49,7 @@ $ext = substr($thought,-3);
 $hour = substr($timestamp, 8, 2);
 $min  = substr($timestamp, 10, 2);
 
-if ($ext == "jpg"||$ext == "gif"||$ext == "png") {
+if ($ext == "jpg"||$ext == "JPG"||$ext == "gif"||$ext == "png" || $ext== "bmp") {
 
 echo <<<EOT
 <tr>\n
@@ -37,7 +63,7 @@ EOT;
  */
 $encthought=urlencode(strip_tags($thought));
 echo "<tr>\n<td valign=\"top\" class=\"thoughts\"><a href=\"http://www.google.com/search?hl=en&ie=ISO-8859-1&q=$encthought&btnI=I%27m+Feeling+Lucky\">goo</A>
-\n$hour:$min &lt;$username&gt; $thought</td>\n</tr>
+\n$hour:$min &lt;<a href='../journals/info_user.phtml?uid=$user_id'>$username</a>&gt; $thought</td>\n</tr>
 \n\n";
    }
 }

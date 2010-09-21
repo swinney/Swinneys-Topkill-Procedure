@@ -3,6 +3,7 @@
 // $Id$
 
 require_once("global.inc");
+require_once("Swinsite/Language.php");
 
 // count the number of articles so we can calculate the number of
 // pages to use
@@ -17,8 +18,11 @@ if (count($bozos)) {
 if ($insert_since) {
   $query .= " AND time > $insert_since";
 }
+if ($sess_lang) {
+  $lang = new Language();
+  $query .= " AND language IN ".$lang->parenLang($sess_lang);
+}
 $query .= " ORDER BY article_id DESC";
-
 $res = $db->query($query);
 if (DB::isError($res)) {
   die($res->getMessage($query));
@@ -117,7 +121,7 @@ EOT;
   // retrieve the article data
 
   $query = <<<EOT
-    SELECT article_id, username, title, blurb, date, num_comments
+    SELECT article_id, username, user_id, title, blurb, DATE_FORMAT(date,'%Y-%m-%d') as time, num_comments, language
     FROM articles_info
    WHERE status=2 
 EOT;
@@ -126,6 +130,9 @@ EOT;
   }
   if ($insert_since) {
     $query .= " AND time > $insert_since ";
+  }
+  if ($sess_lang) {
+    $query .= " AND language IN ".$lang->parenLang($sess_lang);
   }
   $query .= <<<EOT
 ORDER BY article_id DESC
@@ -136,8 +143,7 @@ EOT;
     die($res->getMessage($query));
   }
   // generate the article listing table
-
-  echo <<<EOT
+ echo <<<EOT
 <table width="300" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td>
@@ -157,7 +163,7 @@ EOT;
     }
 
     $username = stripslashes($article->username);
-
+    $user_id = stripslashes($article->user_id);
     $blurb = stripslashes($article->blurb);
     if ($blurb) {
       $blurb .= "<br>\n";
@@ -167,11 +173,14 @@ EOT;
     echo <<<EOT
 <p>
 <a href="article.phtml?id=$article->article_id">
-<b>$title</b></a> by <a href="userpages.phtml?username=$username">$username</a><br>
+<b>$title</b></a> by <a href="info_user.phtml?uid=$user_id">$username</a><br>
 $blurb
-<span class="small">$article->date | $num_comments</span>
-</p>
+<span class="small">$article->time | $num_comments 
 EOT;
+      if (count($sess_lang) > 1) {
+	echo "| [$article->language]";
+      }
+    echo "</span></p>";
   }
 
 

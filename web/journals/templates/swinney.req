@@ -1,5 +1,4 @@
 <!-- BEGIN PHP Dynamically Required Page : swinney.req  -->
-
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
 <td colspan="2" bgcolor="#666666">
@@ -21,8 +20,7 @@ if ($authenticated_username) {
 <td bgcolor="#666666" align="right" valign="bottom" width="50%" nowrap>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td nowrap>
-<form name="searchform" action="<? echo URLBASE ?>/journals/search.phtml" method="GET"></td>
+<td nowrap></td>
 <td align="right" nowrap>
 <a href="<? echo URLBASE ?>/"><img src="<? echo URLBASE ?>/journals/img/swinneysmtop.gif" alt="" width="171" height="23" border="0"><img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="15" height="23" border="0"></a></td>
 </tr>
@@ -31,18 +29,32 @@ if ($authenticated_username) {
 
 <tr>
 <td align="right" width="50%">
+<?
+$URLBASE = URLBASE;
+if ($authenticated_username) {
+echo <<<EOT
 <table cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td>
-<input type="text" size="12" name="find" value="<? if ($find) { echo "$find"; } ?>"></td>
-
+<form name="searchform" action="$URLBASE/journals/search.phtml" method="GET">
+<input type="text" size="12" name="find" value="
+EOT;
+	if ($find) { 
+		echo "$find"; 
+	}
+	echo <<<EOT
+"></td>
 <td align="right" nowrap>&nbsp;<script type="text/javascript" language="JavaScript">
 //<!--
-document.write('<a href="javascript:document.searchform.submit()" target="_top" onmouseover="MM10.mouseOver(); window.status=\'Search\'; return true" onmouseout="MM10.mouseOut(); window.status=\' \'; return true"><img src="<? echo URLBASE ?>/journals/img/search.gif" alt="Search" name="search" width="54" height="23" border="0"></a>');
+document.write('<a href="javascript:document.searchform.submit()" target="_top" onmouseover="MM10.mouseOver(); window.status=\'Search\'; return true" onmouseout="MM10.mouseOut(); window.status=\' \'; return true"><img src="$URLBASE/journals/img/search.gif" alt="Search" name="search" width="54" height="23" border="0"></a>');
 //-->
-</script><noscript><input type=submit value="Search"></noscript></td>
+</script><noscript><input type=submit value="Search"></noscript></form></td>
 </tr>
-</table></form></td>
+</table>
+EOT;
+}
+?>
+</td>
 
 <td align="right" valign="top" width="50%" nowrap>
 <a href="<? echo URLBASE ?>/"><img src="<? echo URLBASE ?>/journals/img/swinneysmbottom.gif" alt="" width="171" height="7" border="0"></a><img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="15" height="7" border="0"></td>

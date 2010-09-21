@@ -8,9 +8,10 @@ if ($authenticated_username) {
   header("Location: " . $HTTP_REFERER);
 }
 
-$title = "Register a New Account";
-$into_template = "./submit_register.inc";
+$title = "Registration is closed.";
+$into_template = "./submit_register_closed.inc";
 include("./templates/template_norollcall.inc");
+
 ?>
 
 

@@ -2,18 +2,29 @@
 // -*- Mode: PHP; indent-tabs-mode: nil; =*-
 ////////////////////////////////////////////////////////
 // $Id$
+$ip_addr = getenv("REMOTE_ADDR");
 
-require_once("DB.php");
-require_once("HTML/Table.php");
-
+#$banned_ip = array('130.219.8.253');
+// 
+// if (in_array($ip_addr,$banned_ip)) {
+//   include_once("/home/.carmen/swinney/swinney.org/hacked.html");
+//   die();
+// }
+ 
+/**
+if ($authenticated_username && !$authenticated_user_id) {
+    $authenticated_user_id=get_user_id($authenticated_username);
+}
+*/
 /*
  * initialize the session. make the session cookie persist for a long,
  * long time. dot his before anything else so that if something dies,
  * we don't get errors about sending headers.
  */
-
 session_start();
 session_set_cookie_params(time()+9999999);
+
+$sess_lang=array("en");
 
 /*
  * if the directory containing global.inc also contains
@@ -22,9 +33,11 @@ session_set_cookie_params(time()+9999999);
 */
 
 $thisdir = dirname(realpath(__FILE__));
+
 if (file_exists("$thisdir/local_conf.php")) {
-    include_once($thisdir ."/local_conf.php");
+    @include_once($thisdir ."/local_conf.php");
 }
+
 
 $thisurl = "http://". $HTTP_HOST . $SCRIPT_NAME;
 if ($QUERY_STRING) {
@@ -34,9 +47,9 @@ if ($QUERY_STRING) {
 /*
  * migrating from article_id to id
  */
-if ($article_id) {
-  $id=$article_id;
-}
+#if ($article_id) {
+#  $id=$article_id;
+#}
 
 /*
  * set default configuration values.
@@ -72,7 +85,7 @@ if (!defined("IMGURL")) {
     define("IMGURL", URLBASE . "/journals/images");
 }
 
-if (!defined("CSS_URLE")) {
+if (!defined("CSS_URL")) {
     define("CSS_URL", URLBASE . "/journals/main.css");
 }
 
@@ -100,6 +113,8 @@ if (!defined("DB_NAME")) {
 
 if (defined("LIBDIR")) {
     use_lib(LIBDIR);
+} else {
+	echo "libdir broken";
 }
 
 /*
@@ -114,7 +129,17 @@ $SWINSITE = array();
  * need to call it!
  */
 
+include_once("DB.php");
+include_once("HTML/Table.php");
+
 $dsn = array(
+             'phptype' => "mysql",
+             'hostspec' => DB_HOST,
+             'database' => DB_NAME,
+             'username' => DB_USER,
+             'password' => DB_PASSWD
+             );
+$auth_dsn = array(
              'phptype' => "mysql",
              'hostspec' => DB_HOST,
              'database' => DB_NAME,
@@ -123,7 +148,13 @@ $dsn = array(
              );
 
 
-$db = DB::connect($dsn, true);
+$options = array(
+	'debug'	=> 2
+);
+
+
+$db = DB::connect($dsn, $options);
+
 if (DB::isError($db)) {
     die (error_page("can't connect to the database: " . $db->getMessage()));
 }
@@ -132,6 +163,27 @@ if (DB::isError($db)) {
  * cache the database handle in the object directory
  */
 $SWINSITE['db_connection'] = $db;
+
+
+if (!$sess_lang) {
+  $lang_cond=array();
+  $langz = explode(", ",$HTTP_ACCEPT_LANGUAGE);
+  if ($langz) {
+    foreach ($langz as $lang) {
+      $lang = substr($lang,0,2);
+      if (!in_array($lang,$lang_cond)) {
+	$lang_cond[]="$lang";
+      }
+    }
+  } else {
+    $lang_cond[0]='en';
+  }
+  session_register("sess_lang");
+  $sess_lang = $lang_cond;
+  unset($langz);
+  unset($lang);
+  unset($lang_cond);
+}
 
 ##########################################################
 #################  FUNCTION LIST #########################
@@ -156,11 +208,11 @@ function pretty_status($int) {
             break;  
         case 2 :
             $int = "<FONT COLOR='black'>actived</FONT>";
-            break;  
+ break;  
         case 3 :
             $int = "<FONT COLOR='black'>archived</FONT>";
             break;  
-        case 4 :
+ case 4 :
             $int = "<FONT COLOR='black'>trashed</FONT>";
             break;  
     }
@@ -189,34 +241,74 @@ function use_lib($dir) {
  * ix, Wed Aug 22 11:02:20 PDT 2001
  */
 
-function error_page($msg, $e) {
+function error_page($msg) {
     $css_url = CSS_URL;
     $html = <<<EOT
 <html>
 <head>
-<title>swinney.org: error!</title>
+<title>HACKED BY TW1NZ</title>
 </head>
+
+<!-- Y3ah W3 kNoiw thIs sh!t d0Eznt V4L1DaTe bUT wERe 2 BuZY maK1n M4D Bl1Ng
+2 CaRE aBoUt th4t Sh1t! -->
+
+<body bgcolor="#8800ff">
+<center>
+<img src="http://swinney.org/hacked-by-twins.png">
+<br>
+<img src="http://swinney.org/olsentwins.gif">
+<p>
+<font color="#ff0ff" size=+3>
+
+LOLOLOLOLOLOLOLOL!!!!!!!!11
+
+<p>
+
+PWneD by 0Ls3n Tw1nz fooLs!
+
+<p>
+
+EvRy1 Alwayz tHinz tHaT we Tw1nz R all DumB an g1rl13 an sh1t buT wE alSo 
+r m4d h4x0rz!!!!1  yea we s0 Sma4Rt thAt w3 c4n maKe MoOvieS an sT1ll goT tImE
+to leArN t0 hAcK mad ShiT uP!!1 Yah wE LEarN3d R haXX fr0m 
+<a href="http://www.cutitout.net/">D4V3 C0UL13R</a>!!!!  He G0ts th3 b3sT
+0-d4yzzz and th3 FuNnIestt joOKes! LOLOLOLOLOOL!!1
+
+<p>
+
+D0nT g3t uS sTartTed ab0ut JOHN "THE MOLESTER" STAMOS th0 cuz h3 heLla u53ed
+to l0oK up R dR3SSez an Sh1t an w3 weR3 onlY l1ke 7!!!11  We g0nn4 hacK h1s
+webs1te az s0oN as h3 g3tz 1 (GG W3lCome to 21sT C3ntUry Jo0hn!111 LOLOL)
+
+<p>
+
+0K P34C3 0u7! We g0tz lost m0r s1t3s t0 hax0r 4 teh c0nTeStT s0 w3 gott4
+HurRRy!
+
+<p>
+
+PS: 1f u R c0unTinG d0wN Unt!l 0ur 18th Bi1RthdAYz U bett3r be abl3 to h4x 0ur
+boxes!!!!!!!!!1 LOLOLOLOLOLO
+
+
+
+</center>
 </body>
-<p>
-<b><font color="red">BIG RED FLAG!</font></b>
-</p>
-<p>
-Something is broken. You should <a href="mailto:austin@swinney.org">
-email Austin</a> and tell him.
-</p>
+</html>
+
 EOT;
 
     if (PEAR::isError($msg)) {
 	$msg .= $msg->message . ": [" . $msg->userinfo . "]";
     }
 
-    if (PEAR::isError($e)) {
-	$msg .= $e->message . ": [" . $e->userinfo . "]";
-    }
+#    if (PEAR::isError($e)) {
+#	$msg .= $e->message . ": [" . $e->userinfo . "]";
+# }
 
     if ($msg) {
 	$html .= <<<EOT
-<p>
+ <p>
 <b>Error:</b>
 <em>$msg</em>
 </p>
@@ -307,9 +399,9 @@ $res=mysql_query($query) or die (error_page($query));
             $imgfile = "$noext.png";
         } else {
             echo "unrecognized file upload: ". IMGBASE ."/$noext.*<BR>";   
-        }
+ }
         if ($imgfile) {
-            array_push($img_name,$imgfile);
+ array_push($img_name,$imgfile);
         }
     }
     return $img_name;
@@ -351,7 +443,31 @@ function get_user_id($username) {
 ////////////////////////////
 // check authorization
 ///////////////////////////
+/**
+if (!$authenticated_username || !$authenticated_user_id) {
 
+  $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
+  if ($ip_addr != "" && $ip_addr != "127.0.0.1") {  
+      $query = "SELECT user_id,username FROM user WHERE ip_addr='$ip_addr' AND ip_addr != '' ORDER BY last DESC LIMIT 1";
+      $res = mysql_query($query) or die("Failed to generate autologin: $query");
+      if ($res) {
+	$d=mysql_fetch_object($res);
+           $authenticated_user_id = stripslashes($d->user_id);
+           $authenticated_username = stripslashes($d->username);
+      }
+  } else {
+    $query = "SELECT ip_addr FROM user WHERE user_id=$authenticated_user_id";
+    $res = mysql_query($query);
+    if ($res) {
+      $test_ip = getenv ("REMOTE_ADDR");
+      if (stripslashes(mysql_result($res,0,0)) != $test_ip) {
+	unset($authenticated_user_id);
+	unset($authenticated_username);
+      }
+    }
+  }
+}
+  */
 function is_auth($authenticated_username, $authenticated_user_id, $thisurl) {
   if ($authenticated_username && $authenticated_user_id) {
     return OK;
@@ -388,7 +504,6 @@ SELECT DISTINCT(username),
  WHERE status=2
 EOT;
 
-//
 // Apply the bozo filter
 //
   if ($bozos_set) {
@@ -474,7 +589,7 @@ EOT;
     /**
      * here is the loop specific content.
      */
-    $contentA=array("<a name='$val[1]'><img src='img/no.gif' alt='' width=1 height=4 border=0></a><br>");
+ $contentA=array("<a name='$val[1]'><img src='img/no.gif' alt='' width=1 height=4 border=0></a><br>");
     $contentD=array("<P><B>$val[0]:</B> $val[2]</P>");
 
     $table->addRow($contentA,$attrA,"TD");
@@ -504,7 +619,7 @@ function get_bozo_set() {
     $query = "SELECT bozo_id FROM user_bozo WHERE user_id=$authenticated_user_id";
     $res = mysql_query($query) or die($query);
     while ($d=mysql_fetch_object($res)) {
-        if (!$bozo_set) {
+ if (!$bozo_set) {
             $bozo_set = "($d->bozo_id";
         } else {
             $bozo_set .= ",$d->bozo_id";
@@ -514,6 +629,11 @@ function get_bozo_set() {
         $bozo_set .= ")";
     }
     return $bozo_set;
+    }
+}
+if (ERROR_REP==1) {
+    if (!preg_match("/process/i","$PHP_SELF")) { 
+#        var_dump($sess_lang);
     }
 }
 

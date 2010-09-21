@@ -1,23 +1,27 @@
-
-<!-- here is where we voice our ideas.  raise you hands and i'll call on you in order. -->
-
 <?
-$query = "SELECT * FROM thoughts ";
+
+$query = "SELECT comment_id,user_id,username,thought FROM thoughts WHERE status=0 ";
 if ($bozo_set && $bozo_set!="") {
   if ($bozo_set=="()") {
       $bozo_set=get_bozo_set();
   }
-  $query .= " WHERE user_id NOT IN $bozo_set ";
+  $query .= " AND user_id NOT IN $bozo_set ";
 }
+
 if ($insert_since) {
-  if (!$bozo_set) {
-      $query .= " WHERE";
-  } else {
-      $query .= " AND";
-  }
   $query .= " timestamp > $insert_since ";
 }
+
+if ($sess_lang) {
+  require_once("Swinsite/Language.php");
+  $lang = new Language();
+  $query .= " AND language IN ".$lang->parenLang($sess_lang);
+}
+
 $query .=" ORDER BY comment_id DESC LIMIT 5";
+if (ERROR_REP==1) {
+  echo $query;
+}
 $res = mysql_query ($query) or die($query);
 
 // multiple rows 
@@ -26,25 +30,23 @@ while ( $d = mysql_fetch_object( $res ) ) {
 // move it to strip slashes
 $username=$d->username;
 $thought=$d->thought;
-
+ $user_id=$d->user_id;
 // echo and strip
-
 $username=stripslashes($username);
-$thought=eregi_replace("(bus|busse)","dong",stripslashes($thought));
+$thought=stripslashes($thought);
+
 $ext = substr($thought,-3);
 
-if ($ext == "jpg"||$ext == "JPG"||$ext == "gif"||$ext == "png") {
-
-echo <<<EOT
-<tr>\n
-<td colspan=3 align="center" class="thoughts"><IMG SRC="$thought" ALT="$username"></td>\n
-<tr>
-EOT;
-
-} else {
-
-echo "<tr>\n<td align=\"right\" valign=\"top\" class=\"thoughts\" nowrap>\n$username</td>\n\n<td valign=\"top\" class=\"thoughts\" nowrap>\n&nbsp;.o0O</td>\n\n<td valign=\"top\" class=\"thoughts\">\n($thought)</td>\n</tr>\n\n";
-   }
+ if (preg_match("/src/i","$thought") || $ext == "jpg"||$ext == "JPG"||$ext == "gif"||$ext == "png" || $ext=="bmp") {
+#	echo"<tr>\n<td align=\"right\" valign=\"top\"
+#	class=\"thoughts\" nowrap>\n</td>\n\n<td valign=\"top\"
+#	class=\"thoughts\" nowrap></td>\n\n<td valign=\"top\"
+#	class=\"thoughts\">\n( IMAGE )</td>\n</tr>\n\n";
+   echo"<tr>\n<td align=\"right\" valign=\"top\" class=\"thoughts\" nowrap>\n</td>\n\n<td valign=\"top\" class=\"thoughts\" nowrap></td>\n\n<td valign=\"top\" class=\"thoughts\">\n<img src='$thought'></td>\n</tr>\n\n";
+ } else {
+       
+   echo "<tr>\n<td align=\"right\" valign=\"top\" class=\"thoughts\" nowrap>\n<a href='./journals/info_user.phtml?uid=$user_id'>$username</a></td>\n\n<td valign=\"top\" class=\"thoughts\" nowrap>\n&nbsp;.o0O</td>\n\n<td valign=\"top\" class=\"thoughts\">\n($thought)</td>\n</tr>\n\n";
+ }
 }
 ?>
 
