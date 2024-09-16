@@ -3,7 +3,7 @@
  * $Id$
  */
 
-require_once("Swinsite/Multi.php");
+require_once("Multi.php");
 
 $m = new Multi();
 $nav = $m->get_nav($multi_id);
@@ -14,7 +14,7 @@ $url_editor = urlencode($editor);
 $html .=<<<EOT
 $nav
 <P><B>$multi[title]</B></P>
-<P> - edited by <a href="../userpages.phtml?username=$url_editor">$editor</a></P>
+<P> - edited by <a href="../userpages.php?username=$url_editor">$editor</a></P>
 <P>$multi[abstract]</P>
 EOT;
 

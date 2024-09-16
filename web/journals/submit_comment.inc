@@ -1,7 +1,7 @@
 <?
 // $Id$
 
-require_once("./global.inc");
+require_once("./global.php");
 
 
 if (count($sess_lang) > 1) {
@@ -25,7 +25,7 @@ EOT;
 
 ?>
 
-<form action="process_comment.phtml" method=post enctype="multipart/form-data">
+<form action="process_comment.php" method=post enctype="multipart/form-data">
 <input type="hidden" name="article_id" value="<? echo "$id"?>">
 
 <table width="375" border="0" cellspacing="0" cellpadding="2">
@@ -48,7 +48,7 @@ EOT;
 
 <tr>
 <td align="right" COLSPAN=2><p>thus spake:
-<input type="text" size="10" name="username" value="<? if ($authenticated_username && $authenticated_user_id) { echo "$authenticated_username"; } ?>">
+<input type="text" size="10" name="username" value="<? if ($_SESSION['authenticated_username'] && $_SESSION['authenticated_user_id']) { echo "$_SESSION['authenticated_username']"; } ?>">
 
  to
 <SELECT NAME="to_user">

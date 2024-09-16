@@ -1,11 +1,16 @@
 <?
 #$Id$
-if (!$username && $uid) {
+if (isset( $_GET['uid'])) {
+  $uid = $_GET['uid'];
   $username = $db->getOne("SELECT username FROM user WHERE user_id=$uid");
   $url_username = urlencode($username);
+} else if (isset( $_GET['username'])) {
+  $username = $_GET['username'];
+  $uid = $db->getOne("SELECT user_id FROM user WHERE username='". addslashes($username) ."'");  
 }
-if(!$page_num || $page_num < 1) { //No Page Number? Set it to Page 1 then...
-        $page_num = 1;
+
+if (!isset($page_num) || $page_num < 1) { // No Page Number? Set it to Page 1 then...
+    $page_num = 1;
 }
 
 //How many pages per page will be displayed...
@@ -17,10 +22,14 @@ $page_start = ($page_num-1) * $per_page;
 //Do a number query to see how many results match the category...
  if ($uid) {
   $query="SELECT count(*) as num_articles FROM articles_info WHERE status in (2,3) AND user_id=$uid ORDER BY article_id DESC";
+  $num_of_results = $db->getOne($query);
+
 } elseif ($username) {
   $query="SELECT count(*) as num_articles FROM articles_info WHERE status in (2,3) AND username='". addslashes($username) ."' ORDER BY article_id DESC";
+  $num_of_results = $db->getOne($query);
+
 }
-$num_of_results = $db->getOne($query);
+// $num_of_results = $db->getOne($query);
 
 // lets try this userlist thingy $USERS
 
@@ -35,8 +44,7 @@ $res = $db->query($query);
 
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
-$num_of_pages = $num_of_results/$per_page; 
-
+$num_of_pages = ($per_page > 0) ? ceil($num_of_results / $per_page) : 0;
 // Find out if the num_of_pages was a decimal.. Can't have 2.1 pages...
 $remainders = $num_of_results%$per_page; 
 
@@ -49,10 +57,7 @@ $page_forward = $page_num + 1;
 
 
 if (isset($res)) {
-
-$url = "article.phtml?id=$d->article_id";
-
-
+  
 // let's cut a nice little page header into here - J. 
 
 echo <<<EOT
@@ -84,8 +89,9 @@ echo <<<EOT
 EOT;
 
   if ($page_num < $num_of_pages) { 
+    $page_self = htmlspecialchars($_SERVER['PHP_SELF']);
     echo <<<EOT
-<a href="$PHP_SELF?uid=$uid&page_num=$page_forward">&laquo; earlier articles</a>
+<a href="$page_self?uid=$uid&page_num=$page_forward">&laquo; earlier articles</a>
 
 EOT;
   }  
@@ -122,11 +128,11 @@ EOT;
 
 while ( $individual_row = $res->fetchRow(DB_FETCHMODE_OBJECT) ) {
 
-   $articleno = $individual_row->article_id;
+   $article_id = $individual_row->article_id;
    $title = stripslashes($individual_row->title);
 
 echo <<<EOT
-<p><a href="article.phtml?id=$articleno">
+<p><a href="article.php?id=$article_id">
 <b>$title</b></a><br>
 
 EOT;
@@ -165,9 +171,9 @@ echo <<<EOT
 EOT;
 
   if ($page_num < $num_of_pages) { 
+    $page_self = htmlspecialchars($_SERVER['PHP_SELF']);
     echo <<<EOT
-<a href="$PHP_SELF?uid=$uid&page_num=$page_forward">&laquo; earlier articles</a>
-
+<a href="$page_self?uid=$uid&page_num=$page_forward">&laquo; earlier articles</a>
 EOT;
   }  
 

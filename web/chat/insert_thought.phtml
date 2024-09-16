@@ -15,7 +15,7 @@ if ($insert_since) {
 }
 
 if ($sess_lang) {
-  require_once("Swinsite/Language.php");
+  require_once("Language.php");
   $lang = new Language();
   $query .= " AND language IN ".$lang->parenLang($sess_lang);
 }
@@ -63,7 +63,7 @@ EOT;
  */
 $encthought=urlencode(strip_tags($thought));
 echo "<tr>\n<td valign=\"top\" class=\"thoughts\"><a href=\"http://www.google.com/search?hl=en&ie=ISO-8859-1&q=$encthought&btnI=I%27m+Feeling+Lucky\">goo</A>
-\n$hour:$min &lt;<a href='../journals/info_user.phtml?uid=$user_id'>$username</a>&gt; $thought</td>\n</tr>
+\n$hour:$min &lt;<a href='../journals/info_user.php?uid=$user_id'>$username</a>&gt; $thought</td>\n</tr>
 \n\n";
    }
 }

@@ -3,7 +3,7 @@
  * $Id$
  */
 
-require_once("Swinsite/Articles.php");
+require_once("Articles.php");
 $a = new Articles();
 $article = $a->getArticle($id,$db);
 
@@ -17,7 +17,7 @@ $article[text]
 EOT;
 
 $html .= <<<EOT
-<FORM NAME=category METHOD=POST ACTION="process_category.phtml">
+<FORM NAME=category METHOD=POST ACTION="process_category.php">
 <INPUT TYPE=HIDDEN NAME=id VALUE=$id>
 EOT;
 $category=$article[category];

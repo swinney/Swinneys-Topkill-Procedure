@@ -2,6 +2,10 @@
 // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 // $Id$
 
+$db = DB::connect($_SESSION['dsn'], $options);
+if (PEAR::isError($db)) {
+    die (error_page("can't connect to the database: " . $db->getMessage()));
+}
 
 $chunks = explode(".", $id);
 $article_id = $chunks[0];
@@ -9,15 +13,15 @@ $article_id = $chunks[0];
 // retrieve the article info
 
 if ($a_user_id) {
-  // retrieve the id of the author's previous article
+  // retrieve the id of the authors previous article
 
 }
 
-  include_once("Swinsite/WebAddress.php");
+  include_once("WebAddress.php");
   $webAddress = new WebAddress();
-  $web=$webAddress->checkWeb($d->web);
+  @$web=$webAddress->checkWeb($webAddress->web);
 
-  if ($d->web) {
+  if (@$d->web) {
     $username = <<<EOT
 <a href="$a_web">$a_username</a>
 EOT;
@@ -49,7 +53,7 @@ EOT;
 <tr>
 <td>
 <div class="subheader">
-<b>by <a href="info_user.phtml?uid=$a_user_id">$a_username</a></b></div>
+<b>by <a href="info_user.php?uid=$a_user_id">$a_username</a></b></div>
 <div class="text">
 <b>$a_date</b></div></td>
 
@@ -60,13 +64,13 @@ EOT;
 <p class="text">
 EOT;
 
-  if ($p_article_id or $newer_article_id) {
-  echo "<b><a href=\"userpages.phtml?uid=$a_user_id\">more from this writer</a>:</b><br>";
+  if ($p_article_id or @$newer_article_id) {
+  echo "<b><a href=\"userpages.php?uid=$a_user_id\">more from this writer</a>:</b><br>";
   }
 
   if ($p_article_id) {
     echo <<<EOT
-<a href="article.phtml?id=$p_article_id">&laquo; earlier</a>
+<a href="article.php?id=$p_article_id">&laquo; earlier</a>
 EOT;
     }
 
@@ -76,7 +80,7 @@ EOT;
   
   if ($n_article_id) {
     echo <<<EOT
-<a href="article.phtml?id=$n_article_id">later &raquo;</a>
+<a href="article.php?id=$n_article_id">later &raquo;</a>
 EOT;
     }
 

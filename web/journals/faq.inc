@@ -66,7 +66,7 @@ $Id$
 Swinney.org provides an outlet of sorts to kindred
 spirits across this land. Those creative souls that feel the
 darkness of jobs, school and oppressive family units bearing
-down on them at all times.<BR>--wb, <a href="./usercomments.phtml?username=wb">swinney.org's critic</a>
+down on them at all times.<BR>--wb, <a href="./usercomments.php?username=wb">swinney.org's critic</a>
 </I></BLOCKQUOTE>
 
 
@@ -76,7 +76,7 @@ the word 'swinney' can be used to refer to a few different things:
 
 <p>
 <OL>
-<LI><a href="userpages.phtml?username=austin">austin swinney</a>, the dashing young libra who created swinney.org, or;
+<LI><a href="userpages.php?username=austin">austin swinney</a>, the dashing young libra who created swinney.org, or;
 
 <br>
 <br>
@@ -99,11 +99,11 @@ the word 'swinney' can be used to refer to a few different things:
 <a name="whowrites">
 <p class="subheader"><b>who writes on swinney.org?</b></p>
 <p>
-anyone! <a href="submit_article.phtml">including you</a>, if you want.
+anyone! <a href="submit_article.php">including you</a>, if you want.
 </p>
 
 <p>
-in the past, <a href="roll_call_all.phtml">these people</a> have
+in the past, <a href="roll_call_all.php">these people</a> have
 written on swinney.org. 
 </p>
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
@@ -113,8 +113,8 @@ written on swinney.org.
 <a name="doi">
 <p class="subheader"><b>do i have to sign up or log in or something?</b></p>
 <p>
-yes, you have to have an account on swinney.org to write here. after you've <a href="/journals/submit_register.phtml">registered</a>, just <a
-href="submit_article.phtml">submit an article here</a>. 
+yes, you have to have an account on swinney.org to write here. after you've <a href="/journals/submit_register.php">registered</a>, just <a
+href="submit_article.php">submit an article here</a>. 
 </p>
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
 <a name="whathappens">
@@ -143,7 +143,7 @@ this isn't a BBS and this isn't a mailing list. articles that make us
 feel like this is a BBS or a mailing list might not make it through
 our not-so-rigorous editorial process.  swinney user cyantist wrote a good article
 about this: <a
-href="http://swinney.org/journals/article.phtml?id=935.txt">who
+href="http://swinney.org/journals/article.php?id=935.txt">who
 censors the censor?</a>
 </p>
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
@@ -173,7 +173,7 @@ whatever you wrote just gets vetoed for nebulous editorial purposes.
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
 <a name="isubmitted">
 <p class="subheader"><b>i submitted something, then i realized i made a big mistake somewhere in the text. what do i do?</b></p>
-<p>login and click on settings. click on "edit article" on the settings page. here is a <a href="http://swinney.org/journals/vip/edit_article.phtml">direct link</a> to that page. in this area you are able to make whatever edits you want to the last article you submitted, whether it's been activated by an editor already or not.
+<p>login and click on settings. click on "edit article" on the settings page. here is a <a href="http://swinney.org/journals/vip/edit_article.php">direct link</a> to that page. in this area you are able to make whatever edits you want to the last article you submitted, whether it's been activated by an editor already or not.
 </p>
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
 <a name="arethere">
@@ -185,7 +185,7 @@ whatever you wrote just gets vetoed for nebulous editorial purposes.
 <p class="subheader"><b>some mean person categorized my beloved article as "gay," when it is most surely not gay and is, in fact, a serious work of art. how can i rectify this situation???</b></p>
 <p>any article can be recategorized by entering the article number (found in the URL of the article) into the URL of the categorization page. for example:<br><br>
 <tt>
-http://swinney.org/journals/submit_category.phtml?id=000
+http://swinney.org/journals/submit_category.php?id=000
 </tt>
 </p><p>
 in the above url, change "000" to the number of your article.
@@ -205,7 +205,7 @@ href="mailto:editorsNO@SPAMswinney.org">editorsNO@SPAMswinney.org</a>.
 </p>
 
 <p>
-see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. wars have changed</a> by one of our resident moms, <a href="userpages.phtml?username=auntie">auntie</a>.
+see <a href="article.php?id=1223.txt">energy monsters, or how the F.O.L.K. wars have changed</a> by one of our resident moms, <a href="userpages.php?username=auntie">auntie</a>.
 </p>
 
 <p align="right"><font size="1"><a href="#top">back to top</a></font></p>
@@ -241,7 +241,7 @@ see <a href="article.phtml?id=1223.txt">energy monsters, or how the F.O.L.K. war
 
 <P>brian moseley of <a href="http://www.maz.org">maz.org</a> is the dungeon master who runs <a href="http://warhorn.net">war horn</A> and has made significant code rewrites and contributions to the arts and humanities, without whom, there would be no dreams come true.  when he blows his horn, we go to battle.</P>
 
-<P> jim home of <a href="http://thisishomemade.com">thisishomemade.com</a> did the design of "<a href="http://swinney.org/journals/article.phtml?id=1869">Ye Olde Swinney</a>", as well as some code.  he does yoga with his wife (in bed), and makes <a href="http://www.longbets.org/">long bets</a>.</P>
+<P> jim home of <a href="http://thisishomemade.com">thisishomemade.com</a> did the design of "<a href="http://swinney.org/journals/article.php?id=1869">Ye Olde Swinney</a>", as well as some code.  he does yoga with his wife (in bed), and makes <a href="http://www.longbets.org/">long bets</a>.</P>
 
 <P>_(pa[nic)k] pwnz, womanizes, and operates <a href="http://farc.ikami.com/">the internet whore house</a> upon which this twitchy trigger finger of the revolucion resides.  women run from him.  men race him.  austin and simon steal his car when he passes out.</P>
 

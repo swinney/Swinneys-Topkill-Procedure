@@ -2,7 +2,7 @@
 ////////////////////////////////
 // $Id$
 // converting binary form
-require_once('./global.inc');
+require_once('./global.php');
 
 if (isset($num)) {
   $bin=bin($bit,$num);

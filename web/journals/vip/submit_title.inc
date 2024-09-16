@@ -19,7 +19,7 @@ if ($mtitle) {
   $mtitle = $db->getOne($query);
 }
 
-require_once("Swinsite/Multi.php");
+require_once("Multi.php");
 $m = new Multi();
 $nav = $m->get_nav($multi_id);
 

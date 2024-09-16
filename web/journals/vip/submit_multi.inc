@@ -33,16 +33,16 @@ if (DB::isError($res)) {
 while ($row = $res->fetchRow()) {
   $html .= <<<EOT
 <INPUT TYPE=CHECKBOX NAME="del_id" VALUE=$row[0]>
-<A HREF='../article.phtml?id=$row[0]'>$row[1]</A><BR>
+<A HREF='../article.php?id=$row[0]'>$row[1]</A><BR>
 EOT;
 }
 
-require_once("Swinsite/Multi.php");
+require_once("Multi.php");
 $m = new Multi();
 $nav = $m->get_nav($multi_id);
 echo <<<EOT
 $nav
-<FORM NAME="multi_articles" ACTION="./process_multi.phtml" METHOD=POST>
+<FORM NAME="multi_articles" ACTION="./process_multi.php" METHOD=POST>
 <P><B>Submit Articles to <i>$title</i></B></P>
 <INPUT TYPE=HIDDEN NAME=multi_id VALUE=$multi_id>
 <INPUT TYPE=SUBMIT NAME=submit VALUE="Add">article by id:

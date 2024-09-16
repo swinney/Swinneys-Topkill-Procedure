@@ -1,7 +1,7 @@
 <?
 // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 // $Id$
-require_once("../journals/global.inc");
+require_once("../journals/global.php");
 $urlbase = URLBASE;
 include("../journals/insert_stats.inc");
 session_register("refreshrate");
@@ -14,7 +14,7 @@ session_register("refreshrate");
 
 <?
  if ($refreshrate or $refreshrate = "0") {
-echo "<meta http-equiv=\"refresh\" content=\"$refreshrate; url=index.phtml?refreshrate=$refreshrate\">"; 
+echo "<meta http-equiv=\"refresh\" content=\"$refreshrate; url=index.php?refreshrate=$refreshrate\">"; 
 }
 ?>
 
@@ -42,7 +42,7 @@ marginwidth=0 marginheight=0 topmargin=0 leftmargin=0>
 <table cellpadding="2" cellspacing="1" border="0">
 <?
 // include i thought it
-include("./submit_thought.phtml");
+include("./submit_thought.php");
 ?>
 
 <tr>
@@ -51,7 +51,7 @@ include("./submit_thought.phtml");
 
 <? 
 // include the thoughts
-include("./insert_thought.phtml"); 
+include("./insert_thought.php"); 
 ?>
 </table>
 <?
@@ -65,7 +65,7 @@ include_once(INCDIR ."/adsense_120x600.inc");
 
 <?
 // include i thought it
-include("./submit_thought.phtml");
+include("./submit_thought.php");
 ?>
 
 </table>
