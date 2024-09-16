@@ -1,7 +1,7 @@
 <?php   // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 
-require_once("Swinsite/Persistent/DBPeer.php");
-require_once("Swinsite/Persistent/Globals.php");
+require_once("Persistent/DBPeer.php");
+require_once("Persistent/Globals.php");
 
 class Swinsite_DBPeer_UserPeer extends Swinsite_Persistent_DBPeer {
 

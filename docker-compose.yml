@@ -1,0 +1,55 @@
+networks:
+  app-tier:
+    driver: bridge
+services:
+    nginx:
+        hostname: so_nginx
+        container_name: so_nginx
+        image: 'bitnami/nginx:latest'
+        depends_on:
+        - phpfpm
+        networks:
+        - app-tier
+        ports:
+        - '80:80'
+        - '443:443'
+        volumes:
+        - ./web:/app:ro
+        - ./etc/nginx/default.conf:/opt/bitnami/nginx/conf/server_blocks/swinney.conf
+        - ./etc/nginx/fastcgi_params:/opt/bitnami/nginx/conf/fastcgi_params
+
+    phpfpm:
+        hostname: so_phpfmp
+        build:
+            context: ./
+            dockerfile: phpfpm.Dockerfile
+        container_name: so_phpfmp
+        networks:
+            - app-tier
+        restart: always
+        volumes:
+            - ./web:/app
+            - ./lib/Swinsite:/usr/local/lib/swinney
+            - ./pear/share/pear:/pear/share/pear
+            - ./etc/php/php.ini:/usr/local/etc/php/php.ini
+
+
+    mysqldb:
+        hostname: so_mysql
+        container_name: so_mysql
+        image: mysql:latest
+        restart: always
+        networks:
+            - app-tier
+        env_file:
+            - ".env"
+        environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+            - "3306:3306"
+        volumes:
+            - "./data/db/mysql:/var/lib/mysql"
+            - "./db/swinney.db.2011.02.16.sql:/usr/local/tmp/swinney.sql"

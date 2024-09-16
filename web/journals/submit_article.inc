@@ -14,7 +14,7 @@
 //
 if ($temp_aid) {
   echo <<<EOT
-  (<a href="../article.phtml?id=$temp_aid" target="new">preview</a>)</P>
+  (<a href="../article.php?id=$temp_aid" target="new">preview</a>)</P>
 EOT;
 }
 
@@ -31,13 +31,13 @@ EOT;
 </tr>
 
 
-<form action="process_article.phtml" method="POST" name="isaiditform" ENCTYPE="multipart/form-data">
+<form action="process_article.php" method="POST" name="isaiditform" ENCTYPE="multipart/form-data">
 
 <tr>
 <td align="right" nowrap>
 <p>you are: </p></td>
 <td>
-<input type=text name=username size=25 maxlength=50  value="<?=$authenticated_username?>">
+<input type=text name=username size=25 maxlength=50  value="<?=$_SESSION['authenticated_username']?>">
 </td>
 <td>&nbsp;</td>
 </tr>
@@ -166,7 +166,7 @@ $page=split('/',$SCRIPT_NAME);
 $last=end($page);
 
 
-if ($last=="edit_article.phtml") {
+if ($last=="edit_article.php") {
   $subval="update it";
 } else {
   $subval="i said it";

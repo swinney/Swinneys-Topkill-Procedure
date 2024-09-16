@@ -30,7 +30,7 @@ while ($d = mysql_fetch_object ($res)) {
   $user_id = stripslashes($d->user_id);
   $html .=<<<EOT
 <TD>
-<a href='info_user.phtml?uid=$user_id'>$username</a>
+<a href='info_user.php?uid=$user_id'>$username</a>
     ($d->count)
 </TD>\n
 EOT;

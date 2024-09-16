@@ -5,7 +5,7 @@
 
 <!-- begin registration form-->
 
-<form action="./process_register.phtml" method="POST">
+<form action="./process_register.php" method="POST">
 
 <table border="0" cellspacing="0" cellpadding="2">
 <tr>

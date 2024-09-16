@@ -3,7 +3,7 @@
 # $Id$
 # process them articles
 #
-require_once("global.inc");
+require_once("global.php");
 $username = $_POST['username'];
 $title = $_POST['title'];
 $blurb = $_POST['blurb'];
@@ -130,7 +130,7 @@ if ($error_msg) {
   if ($images_too=="no") {
     $loc = $HTTP_REFERER;
   } else {
-    $loc = "../submit_image.phtml?article_id=$temp_aid";
+    $loc = "../submit_image.php?article_id=$temp_aid";
   }
 
     header("Location: $loc");

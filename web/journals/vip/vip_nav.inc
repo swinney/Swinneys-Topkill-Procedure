@@ -10,28 +10,28 @@
 <TABLE BORDER=0 CELLSPACING="0" CELLPADDING="2" WIDTH="100%" valign="top">
 <TR ALIGN="left" VALIGN="top">
 <TD>
-<P><A HREF="<? echo URLBASE ?>/index.phtml">swinney.org</A><BR>
+<P><A HREF="<? echo URLBASE ?>/index.php">swinney.org</A><BR>
 <?
-if ($authenticated_username) {
-  echo ' <A HREF="'.URLBASE.'/journals/vip/index.phtml">VIP</A><BR>'."\n";
+if ($_SESSION['authenticated_username']) {
+  echo ' <A HREF="'.URLBASE.'/journals/vip/index.php">VIP</A><BR>'."\n";
 } else {
-  echo ' <A HREF="'.URLBASE.'/journals/login.phtml">log in</A><BR>'."\n";
+  echo ' <A HREF="'.URLBASE.'/journals/login.php">log in</A><BR>'."\n";
 }
 
 
 $url = array (
-   "entries.phtml"			=> "entries",
-   "vip_edit_comments.phtml"		=> "comments",
-   "submit_change_password.phtml"	=> "passwd",
-   "submit_bozo.phtml"                  => "bozo",
+   "entries.php"			=> "entries",
+   "vip_edit_comments.php"		=> "comments",
+   "submit_change_password.php"	=> "passwd",
+   "submit_bozo.php"                  => "bozo",
 );
 
 foreach ($url as $path => $ref) {
    echo "<A HREF=\"$path\">$ref</A><BR>";  
 }
 
-if ($authenticated_username) {
-  echo ' <A HREF="'.URLBASE.'/journals/process_logout.phtml">log out</A><BR>';
+if ($_SESSION['authenticated_username']) {
+  echo ' <A HREF="'.URLBASE.'/journals/process_logout.php">log out</A><BR>';
   echo "\n";
 }
 ?>

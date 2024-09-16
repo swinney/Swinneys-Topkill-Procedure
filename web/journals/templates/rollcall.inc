@@ -18,6 +18,8 @@
 # shitscript of all time.  you people need to
 # learn to wipe your ass when you code.
 # Mon Feb  4, 2002  3:44 PM, austin.
+
+
 ?>
 
 <!-- BEGIN PHP Dynamically Required File: rollcall.inc -->
@@ -29,7 +31,7 @@
 <tr>
 <td width="150" valign="top" align="right" nowrap>
 <p>
-<a href="roll_call_all.phtml"><img src="<? echo URLBASE ?>/journals/img/rollcall.gif" alt="Roll Call" width="65" height="13" border="0"></a><br>
+<a href="roll_call_all.php"><img src="<? echo URLBASE ?>/journals/img/rollcall.gif" alt="Roll Call" width="65" height="13" border="0"></a><br>
 <img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
 
 writers:<br>
@@ -60,36 +62,54 @@ writers:<br>
 #
 # i fixed it and turned it back on :)
 # - austin Fri Sep 28, 2001 10:49 AM
-#
+
 
  $minus=time();
  $minus=$minus-7776000;
 
-$query = "SELECT user.username,articles_info.user_id,MAX(articles_info.date) AS date,user_priv.others,IFNULL(user_settings.lj_user,'') as lj_user,IFNULL(user_settings.cn_user,'') cn_user FROM user,articles_info,user_priv,user_settings WHERE DATE_SUB(CURDATE(),INTERVAL 9 MONTH) <= articles_info.date AND user.user_id=articles_info.user_id AND articles_info.user_id=user_priv.user_id AND articles_info.user_id=user_settings.user_id";
+$query = "SELECT 
+    user.username,
+    articles_info.user_id,
+    MAX(articles_info.date) AS date,
+    user_priv.others,
+    IFNULL(user_settings.lj_user, '') AS lj_user,
+    IFNULL(user_settings.cn_user, '') AS cn_user
+FROM 
+    user
+JOIN 
+    articles_info ON user.user_id = articles_info.user_id
+JOIN 
+    user_priv ON articles_info.user_id = user_priv.user_id
+JOIN 
+    user_settings ON articles_info.user_id = user_settings.user_id
+GROUP BY 
+    user.username,
+    articles_info.user_id,
+    user_priv.others,
+    user_settings.lj_user,
+    user_settings.cn_user
+ORDER BY 
+    date DESC limit 10";
 //
 // Apply the bozo filter
 //
 
-if ($bozo_set) {
-  $query .= " AND user.user_id NOT IN $bozo_set";
-}
+// if (@$bozo_set) {
+//   $query .= " AND user.user_id NOT IN $bozo_set";
+// }
 
-$query .= " GROUP BY articles_info.user_id ORDER BY date DESC";
+// $query .= " GROUP BY articles_info.user_id ORDER BY date DESC";
 
-if (ERROR_REP==1) {
-    echo $query;
+$db = DB::connect($_SESSION['dsn'], $options);
+if (PEAR::isError($db)) {
+    die (error_page("can't connect to the database: " . $db->getMessage()));
 }
-echo <<<EOT
-<!--
-$query
--->
-EOT;
 
 $res = $db->query($query);
 if (DB::isError($res)) {
     die($res->getMessage());
 }
-
+$html_rollcall = "";
 while ($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 
 ##########################################
@@ -98,19 +118,19 @@ while ($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 # $username.  so it will be called $user.
 # austin, Thu Jul 12, 2001  1:40 PM
 
-    if ($row[username]=="Peter") {
-         $row[username]="<TT>Peter</TT>";
+    if ($row['username']=="Peter") {
+         $row['username']="<TT>Peter</TT>";
     }
-    if ($row[others]=="n") {
-        $html_rollcall .= "<a href='".URLBASE."/journals/info_user.phtml?uid=$row[user_id]'>".stripslashes($row[username])."</a>";
+    if ($row['others']=="n") {
+        $html_rollcall .= "<a href='".URLBASE."/journals/info_user.php?uid=$row[user_id]'>".stripslashes($row['username'])."</a>";
      } else {
-        $html_rollcall .= "<a href='".URLBASE."/journals/info_user.phtml?uid=$row[user_id]'><TT>@</TT>".stripslashes($row[username])."</a>";
+        $html_rollcall .= "<a href='".URLBASE."/journals/info_user.php?uid=$row[user_id]'><TT>@</TT>".stripslashes($row['username'])."</a>";
       }
-    if (!empty($row[lj_user]) && $row[lj_user] != "NULL") {
-#        $html_rollcall .= "&raquo;<a href='http://www.swinney.org/journals/lj/user_lj.phtml?uid=$row[user_id]'><B>LJ</B></A>\n";
+    if (!empty($row['lj_user']) && $row['lj_user'] != "NULL") {
+#        $html_rollcall .= "&raquo;<a href='http://www.swinney.org/journals/lj/user_lj.php?uid=$row[user_id]'><B>LJ</B></A>\n";
         $html_rollcall .= "&raquo;<a href='http://www.livejournal.com/users/$row[lj_user]'><B>LJ</B></A>\n";
     }
-    if (!empty($row[cn_user])) {
+    if (!empty($row['cn_user']) && $row['cn_user'] != "NULL") {
         $html_rollcall .= "&raquo;<a href='http://www.citynoise.org/author/$row[cn_user]'><B>CN</B></A>\n";
     }
 
@@ -121,7 +141,7 @@ echo $html_rollcall;
 
 <img src="<? echo URLBASE ?>/journals/img/no.gif" alt="" width="1" height="7" border="0"><br>
 
-(<a href="roll_call_all.phtml">a complete list</a>)<br>
+(<a href="roll_call_all.php">a complete list</a>)<br>
 </p></td>
 
 <!-- END PHP Dynamically Required File: rollcall.inc -->

@@ -7,10 +7,10 @@ $last=end($page);
 $username=get_username($user_id);
 
 $url = array(
-             "index.phtml" => "Home",
-	     "users.phtml" => "Users",
-             "comments.phtml" => "Comments",
-             "articles.phtml" => "Articles"
+             "index.php" => "Home",
+	     "users.php" => "Users",
+             "comments.php" => "Comments",
+             "articles.php" => "Articles"
 	     );
 
 foreach ($url as $key => $val) {
@@ -41,13 +41,13 @@ EOT;
 //
 
 $article_sub=array(
-		   "Info" => "article_info.phtml",
-		   "Preview" => "preview_article.phtml",
-		   "Edit" => "submit_articles_text.phtml",
-		   "View Images" => "view_images.phtml",
-		   "Add Image" => "submit_image.phtml",
-		   "Categorize" => "categorize_article.phtml",
-		   "Status" => "status.phtml"
+		   "Info" => "article_info.php",
+		   "Preview" => "preview_article.php",
+		   "Edit" => "submit_articles_text.php",
+		   "View Images" => "view_images.php",
+		   "Add Image" => "submit_image.php",
+		   "Categorize" => "categorize_article.php",
+		   "Status" => "status.php"
 		   );
 
 if (in_array("$last", $article_sub)) {
