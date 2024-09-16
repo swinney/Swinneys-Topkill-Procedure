@@ -11,7 +11,7 @@ if (!$back_to) {
 }
 ?>
 <!-- begin login form-->
-<form action="./process_login.phtml" method="POST">
+<form action="./process_login.php" method="POST">
 <input type=hidden name=back_to value="<?=urldecode($back_to);?>">
 <table cellpadding="2" cellspacing="0" border="0">
 <tr>

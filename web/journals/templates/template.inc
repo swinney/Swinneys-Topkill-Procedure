@@ -1,11 +1,7 @@
 <?php
-#  $Id$
-
-
-
 include (INCDIR ."/top.inc");
 include (INCDIR ."/swinney.req");
-if ($rollcall==1) {
+if (@$rollcall==1) {
     include (INCDIR ."/rollcall.inc");
 } else {
     include (INCDIR ."/norollcall.inc");
@@ -15,11 +11,11 @@ include ("$into_template");
 if (isset($into_template2)) {
     include "$into_template2";
 }
-if (basename($PHP_SELF)=="article.phtml") {
+if (basename($_SERVER['PHP_SELF'])=="article.php") {
     /*
      * this is the multi display.
      */
-    require_once("Swinsite/Multi.php");
+    require_once("Multi.php");
     $m = new Multi();
     $multi=$m->is_multi($id);
     $is_multi_num=$multi[0];
@@ -40,16 +36,16 @@ if (basename($PHP_SELF)=="article.phtml") {
 <TD WIDTH="150" ALIGN=RIGHT VALIGN=TOP>
 
 <?
-if ($show_multi) {
+if (@$show_multi) {
     echo '<IMG SRC="img/serial.gif">';
     echo $multi;
 }
 if (isset($a_user_id)){
-    include_once(INCDIR ."/profiles.inc.php");
-} else if (preg_match("/search/i", $HTTP_REFERER)) {
-    include_once(INCDIR ."/adsense_160x600_googlers.inc");
+    @include_once(INCDIR ."/profiles.inc.php");
+} else if (preg_match("/search/i", $_SERVER['HTTP_REFERER'])) {
+    @include_once(INCDIR ."/adsense_160x600_googlers.inc");
 } else {
-    include_once(INCDIR ."/adsense_120x240.inc");
+    @include_once(INCDIR ."/adsense_120x240.inc");
 }
 ?>
 </TD>

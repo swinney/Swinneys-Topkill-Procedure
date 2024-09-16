@@ -47,7 +47,7 @@ class Swinsite_Persistent_DBPeer extends PEAR {
             return PERSISTENT_ERROR_NOT_FOUND;
         }
 
-        $rv = $this->fill_obj(&$obj, $row);
+        $rv = $this->fill_obj($obj, $row);
         if (PEAR::isError($rv) || $rv != PERSISTENT_OK) {
             return $rv;
         }

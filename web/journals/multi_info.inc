@@ -1,5 +1,5 @@
 <?
-require_once("Swinsite/Multi.php");
+require_once("Multi.php");
 
 
 if (!$mid) {

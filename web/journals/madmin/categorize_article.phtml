@@ -1,7 +1,7 @@
 <?php
 // -*- Mode: PHP; indent-tabs-mode: nil; =*-
 // $Id$
-require_once("../global.inc");
+require_once("../global.php");
 include_once("./top.inc");
 include_once("./nav.inc");
 
@@ -39,7 +39,7 @@ while ($d=mysql_fetch_object($res)) {
 } # child loop
 
 echo <<<EOT
-<FORM NAME=categorize ACTION="./process_categorize.phtml" METHOD="POST">
+<FORM NAME=categorize ACTION="./process_categorize.php" METHOD="POST">
 <INPUT TYPE=HIDDEN NAME="id" VALUE=$id>
 $form
 <INPUT TYPE=SUBMIT NAME="submit" VALUE="submit"> 

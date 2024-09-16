@@ -3,9 +3,9 @@
 ?>
 <center>
 <p class="subheader">
-<a href='index.phtml'>firebird</a> | 
-<a href='listcontent.phtml'>articles</a> | 
-<a href='admin_comments.phtml'>comments</a> | 
-<a href='users.phtml'>users</a>
+<a href='index.php'>firebird</a> | 
+<a href='listcontent.php'>articles</a> | 
+<a href='admin_comments.php'>comments</a> | 
+<a href='users.php'>users</a>
 </p>
 </center>

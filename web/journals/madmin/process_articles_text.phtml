@@ -3,7 +3,7 @@
 ############################################
 # $Id$
 # process the text submit
-require_once ("../global.inc");
+require_once ("../global.php");
 include "DB.php";
 
 //
@@ -43,7 +43,7 @@ if ($submit=="update") {
         error_page ("text was not set");
     }
 // send them to thier new article_info page
-   header("Location: ./article_info.phtml?article_id=$article_id");
+   header("Location: ./article_info.php?article_id=$article_id");
 }
 //
 // if they just want to preview it then show them what it looks like
@@ -75,7 +75,7 @@ if ($submit=="preview") {
     $res=mysql_query($query) or die (error_page("$query"));
     } else you_sorry("There is no text set.");
   }
-  header("Location: preview_articles.phtml");
+  header("Location: preview_articles.php");
 }
 
 // 
@@ -87,14 +87,14 @@ if ($submit=="preview") {
 // of memory.
 //
 if ($submit=="edit") {    
-header ("Location: ./submit_articles_text.phtml");
+header ("Location: ./submit_articles_text.php");
 }
 //
 // if they want to delete an article, let it go
 //
 
 if ($submit=="done") {
-    header("Location: article_info.phtml?id=$article_id");
+    header("Location: article_info.php?id=$article_id");
 }
 ?>
 
