@@ -4,7 +4,7 @@
 // $Id$
 
 if ($submit=="update") {
-  include_once("../global.inc");
+  include_once("../global.php");
   $query="UPDATE articles_info SET status=$status WHERE article_id=$id";
   $res=mysql_query($query) or die(error_page($query));
 }

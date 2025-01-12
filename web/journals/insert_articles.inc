@@ -2,8 +2,8 @@
 // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 // $Id$
 
-require_once("global.inc");
-require_once("Swinsite/Language.php");
+require_once("global.php");
+require_once("Language.php");
 
 // count the number of articles so we can calculate the number of
 // pages to use
@@ -12,10 +12,10 @@ SELECT count(article_id) AS num_articles
   FROM articles_info
  WHERE status=2 
 EOT;
-if (count($bozos)) {
+if (isset($bozos) && count($bozos)) {
   $query .= " AND user_id NOT IN $bozo_set";
 }
-if ($insert_since) {
+if (isset($insert_since)) {
   $query .= " AND time > $insert_since";
 }
 if ($sess_lang) {
@@ -33,7 +33,7 @@ $num_articles = $article_info ? $article_info->num_articles : 0;
 if ($num_articles) {
 
   // default to page 1
-  if (!$page_num || $page_num < 1) {
+  if (!isset($page_num) || $page_num < 1) {
     $page_num = 1;
   }
 
@@ -69,7 +69,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><b>Articles</b> by <a href="./alpha.phtml">Alpha</a> | <a href="comments.phtml">Comments</a>
+<span class="subheader"><b>Articles</b> by <a href="./alpha.php">Alpha</a> | <a href="comments.php">Comments</a>
 
 EOT;
 
@@ -89,7 +89,7 @@ EOT;
 
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="index.phtml?page_num=$page_forward">&laquo; earlier articles</a>
+<a href="index.php?page_num=$page_forward">&laquo; earlier articles</a>
 
 EOT;
   }  
@@ -100,7 +100,7 @@ EOT;
   
   if ($page_num > 1){
     echo <<<EOT
-<a href="index.phtml?page_num=$page_back">later articles &raquo;</a>
+<a href="index.php?page_num=$page_back">later articles &raquo;</a>
 EOT;
   }
   
@@ -125,13 +125,13 @@ EOT;
     FROM articles_info
    WHERE status=2 
 EOT;
-  if ($bozo_set) {
+  if (isset($bozo_set)) {
     $query .= " AND user_id NOT IN $bozo_set";
   }
-  if ($insert_since) {
+  if (isset($insert_since)) {
     $query .= " AND time > $insert_since ";
   }
-  if ($sess_lang) {
+  if (isset($sess_lang)) {
     $query .= " AND language IN ".$lang->parenLang($sess_lang);
   }
   $query .= <<<EOT
@@ -172,8 +172,8 @@ EOT;
 
     echo <<<EOT
 <p>
-<a href="article.phtml?id=$article->article_id">
-<b>$title</b></a> by <a href="info_user.phtml?uid=$user_id">$username</a><br>
+<a href="article.php?id=$article->article_id">
+<b>$title</b></a> by <a href="info_user.php?uid=$user_id">$username</a><br>
 $blurb
 <span class="small">$article->time | $num_comments 
 EOT;
@@ -197,7 +197,7 @@ EOT;
 
   if ($page_num < $num_of_pages) { 
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_forward">&laquo; earlier articles</a>
+<a href="index.php?page_num=$page_forward">&laquo; earlier articles</a>
 
 EOT;
   }  
@@ -208,7 +208,7 @@ EOT;
   
    if ($page_num > 1){
     echo <<<EOT
-<a href="index.phtml?select=$select&page_num=$page_back">later articles &raquo;</a>
+<a href="index.php?page_num=$page_back">later articles &raquo;</a>
 
 EOT;
   }

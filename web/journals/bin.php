@@ -4,7 +4,7 @@
 # experiments in binary
 # funny how little it takes.
 
-require_once("./global.inc");
+require_once("./global.php");
 
 $title = "Php & Binary for Categorical Systems";
 $rollcall = "0";

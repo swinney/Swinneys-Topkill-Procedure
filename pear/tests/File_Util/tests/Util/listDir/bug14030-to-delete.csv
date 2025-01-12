@@ -1,0 +1,8 @@
+1;I may be quoted;1
+2;"I ""must"" ""be"" quoted";2
+3;"   I must be quoted";3
+4;"I must be quoted   ";4
+5;"I must; ""be""; quoted";5
+6;"I must
+be
+quoted";6

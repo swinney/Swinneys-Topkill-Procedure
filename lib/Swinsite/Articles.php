@@ -3,7 +3,14 @@
  * $Id$
  */
 
+
 class Articles {
+
+    private $db;
+
+    public function __construct(DB_mysqli $db) {
+        $this->db = $db;
+    }
 
     //////////////////////////////////////////
     // get_article() -- retrieve the article info
@@ -61,12 +68,13 @@ EOT;
 
 
 
-    function getTitles($order,$limit) {
+    function getTitles($order,$limit,$db) {
+      global $db;
       global $id;
        $query = <<<EOT
 	 SELECT articles_info.article_id,
 	 articles_info.username,
-         articles_info.user_id,
+   articles_info.user_id,
 	 articles_info.title,
 	 articles_info.web,
 	 articles_info.category
@@ -74,7 +82,7 @@ EOT;
    WHERE articles_info.article_id=articles_front.article_id
 EOT;
 
-	if (count($bozos)) {
+	if (isset($bozo) && count($bozos)) {
 	    $query .= " AND articles_info.user_id NOT IN $bozo_set ";
 	}
 
@@ -86,25 +94,34 @@ EOT;
 	}
 	$query .= " LIMIT $limit";
 
-	$res = mysql_query($query);
-
-	while ($d = mysql_fetch_object($res)) {
+  $db = DB::connect($_SESSION['dsn']);
+  if (DB::isError($db)) {
+      die (error_page("can't connect to the database: " . $db->getMessage()));
+  }
+  $db->setFetchMode(DB_FETCHMODE_OBJECT);
+  $res=$db->query($query);
+  if (DB::isError($res)) {
+    die($res->getMessage(). " $query");
+  }
+  $html="";
+	while ( $d =& $res->fetchRow() ) {
 	    $aid=$d->article_id;
-            $uid=$d->user_id;
+      $uid=$d->user_id;
 	    // display title
 	    if ($category=$d->category) {
 	    $names=get_cat_names($category);
 	    } else {
 	    $names=get_cat_none($aid);
 	    }
-            unset($category);
+      unset($category);
 	    $username=stripslashes($d->username);
 	    $url_username=urlencode(stripslashes($d->username));
 	    $title=stripslashes($d->title);
+
 	    $html .= <<<EOT
 <P>
-<a href="journals/info_user.phtml?uid=$uid">$username</a> writes
-<a href="journals/article.phtml?id=$aid">
+<a href="journals/info_user.php?uid=$uid">$username</a> writes
+<a href="journals/article.php?id=$aid">
 <b>$title</b></a>
 <br>
 <font size=1>$names</FONT>
@@ -116,11 +133,14 @@ EOT;
 
 
     function getUserTitles($uid,$order,$limit) {
+      global $db;
+      
        $query = <<<EOT
 	 SELECT articles_info.article_id,
 	 articles_info.title,
 	 articles_info.web,
-	 articles_info.category
+	 articles_info.category,
+   articles_info.username
 	 FROM articles_info
    WHERE articles_info.user_id=$uid
 	 AND status IN (2,3)
@@ -132,29 +152,36 @@ EOT;
 	  $query .= " ORDER BY article_id DESC";
 	}
 	$query .= " LIMIT $limit";
-	$res = mysql_query($query);
-	while ($d = mysql_fetch_object($res)) {
-	    $aid=$d->article_id;
-	    // display title
-	    if ($category=$d->category) {
-	    $names=get_cat_names($category);
-	    } else {
-	    $names=get_cat_none($aid);
-	    }
-            unset($category);
-	    $username=stripslashes($d->username);
-	    $url_username=urlencode(stripslashes($d->username));
-	    $title=stripslashes($d->title);
-	    $html .= <<<EOT
+  $res = $db->query($query);
+  while ($d = $res->fetchRow(DB_FETCHMODE_OBJECT)) {
+    $aid = $d->article_id;
+    // display title
+    if ($category = $d->category) {
+      $names = get_cat_names($category);
+    } else {
+      $names = get_cat_none($aid);
+    }
+    unset($category);
+    $username = stripslashes($d->username);
+    $url_username = urlencode(stripslashes($d->username));
+    $title = stripslashes($d->title);
+    $html .= <<<EOT
 <P>
-<a href="./article.phtml?id=$aid">
+<a href="journals/info_user.php?uid=$uid">$username</a> writes
+<a href="journals/article.php?id=$aid">
+<b>$title</b></a>
+<br>
+<font size=1>$names</FONT>
+</P>
+<P>
+<a href="./article.php?id=$aid">
 <b>$title</b></a>
 <br>
 <font size=1>$names</FONT>
 </P>
 EOT;
 	}
-        $html = "<P><B>5 most recent articles</B><BR><B><a href='userpages.phtml?uid=$uid'>&laquo; more from this writer</a></B></P>". $html;
+        $html = "<P><B>5 most recent articles</B><BR><B><a href='userpages.php?uid=$uid'>&laquo; more from this writer</a></B></P>". $html;
 
 	return $html;
     }
@@ -193,7 +220,7 @@ EOT;
                 where article_id=$aid";
       $res=$db->query($query);
       if (DB::isError($res)) {
-	die($res->getMessage());
+	      die($res->getMessage());
       }
     }
 }

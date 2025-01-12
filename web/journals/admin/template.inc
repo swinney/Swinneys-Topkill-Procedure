@@ -1,5 +1,5 @@
 <? 
-require_once("../global.inc");
+require_once("../global.php");
 include "../templates/top.inc";
 include(INCDIR ."/swinney.req");
 

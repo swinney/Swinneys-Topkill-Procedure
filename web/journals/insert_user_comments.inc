@@ -45,7 +45,7 @@ $page_forward = $page_num + 1;
 //while ($row = mysql_fetch_object($res)) {
 if (isset($res)) {
 
-$url = "article.phtml?id=$d->article_id";
+$url = "article.php?id=$d->article_id";
 
 // let's cut a nice little page header into here - J. 
 
@@ -59,7 +59,7 @@ echo <<<EOT
 <td>&nbsp;&nbsp;&nbsp;</td>
 
 <td align="left">
-<span class="subheader"><a href="userpages.phtml?uid=$uid">Articles</a> | <b>Comments</b>
+<span class="subheader"><a href="userpages.php?uid=$uid">Articles</a> | <b>Comments</b>
 EOT;
 
 if ($page_num < $num_of_pages or $page_num > 1) {
@@ -138,9 +138,9 @@ while ($d=mysql_fetch_object($res2)) {
 
 <tr>
 <td><a name="$comment_id"></a>
-<a href="info_user.phtml?uid=$d->user_id">$username</a> on
-"<b><a href="article.phtml?id=$article_id#$comment_id">$title</a></b>" 
-by <a href='userpages.phtml?username=$articlewriter'>$articlewriter</a>:<br>
+<a href="info_user.php?uid=$d->user_id">$username</a> on
+"<b><a href="article.php?id=$article_id#$comment_id">$title</a></b>" 
+by <a href='userpages.php?username=$articlewriter'>$articlewriter</a>:<br>
 $comment</td>
 </tr>
 

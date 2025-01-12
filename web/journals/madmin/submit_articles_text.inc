@@ -9,7 +9,7 @@
 // to call aid.
 //
 
-require_once("../global.inc");
+require_once("../global.php");
 include_once("DB.php");
 include_once("./top.inc");
 include_once("./nav.inc");
@@ -34,8 +34,8 @@ if (isset($id)) {
     }
 
 echo <<<EOT
-<a href="../article.phtml?id=$id" target="new">Preview Page</a>
-<FORM NAME="edit" ACTION="process_articles_text.phtml" METHOD="post">
+<a href="../article.php?id=$id" target="new">Preview Page</a>
+<FORM NAME="edit" ACTION="process_articles_text.php" METHOD="post">
 <TABLE BORDER=0>
 <TR><TD>Title: </TD>
 <TD ALIGN="RIGHT"><INPUT TYPE="text" NAME="title" VALUE="$title" SIZE=80>

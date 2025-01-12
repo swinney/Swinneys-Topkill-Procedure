@@ -6,11 +6,11 @@
 class WebAddress {
 
     function checkWeb($web) {
-        if (ereg("@",$web) && !ereg("mailto",$web)) {
-            $web="mailto:$web";
+        if (strpos($web, "@") !== false && strpos($web, "mailto") === false) {
+            $web = "mailto:$web";
         }
-        if (!ereg("@",$web) && !ereg("http",$web)) {
-            $web="http://$web";
+        if (strpos($web, "@") === false && strpos($web, "http") === false) {
+            $web = "http://$web";
         }
         return $web;
      }

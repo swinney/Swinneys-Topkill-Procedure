@@ -1,6 +1,6 @@
 <?
 #$Id$
-require_once("../journals/global.inc");
+require_once("../journals/global.php");
 
 $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
 
@@ -20,9 +20,9 @@ $ip_addr = getenv ("REMOTE_ADDR"); // get the ip number of the user
     echo("In nothing, there exists blankness.  Back up and try again.");
     exit;
   }
-if (!$authenticated_user_id) {
+if (!$_SESSION['authenticated_user_id']) {
   $urlbase = URLBASE;
-  header("Location: $urlbase/journals/login.phtml");
+  header("Location: $urlbase/journals/login.php");
   exit();
 }
 if ($last_lang!=$language) {
@@ -32,7 +32,7 @@ if ($last_lang!=$language) {
   $last_lang=$language;
 }
 
-$query = "INSERT INTO thoughts SET user_id=".addslashes($authenticated_user_id).",username='".addslashes($username)."',thought='".addslashes($thought)."',ip_addr='".addslashes($ip_addr)."',language='".addslashes($language)."';";
+$query = "INSERT INTO thoughts SET user_id=".addslashes($_SESSION['authenticated_user_id']).",username='".addslashes($username)."',thought='".addslashes($thought)."',ip_addr='".addslashes($ip_addr)."',language='".addslashes($language)."';";
 
 $res = $db->query($query);
 if (DB::isError($res)) {

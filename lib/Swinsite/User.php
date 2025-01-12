@@ -1,8 +1,8 @@
 <?php   // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 
-require_once("Swinsite/Bozos.php");
-require_once("Swinsite/DBPeer/UserPeer.php");
-require_once("Swinsite/Persistent/Object.php");
+require_once("Bozos.php");
+require_once("DBPeer/UserPeer.php");
+require_once("Persistent/Object.php");
 
 class Swinsite_User extends Swinsite_Persistent_Object {
     var $username;

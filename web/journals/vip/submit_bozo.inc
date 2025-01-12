@@ -1,8 +1,8 @@
 <?
 // $Id$
-require_once("Swinsite/User.php");
+require_once("User.php");
 
-$user = new Swinsite_User($authenticated_user_id);
+$user = new Swinsite_User($_SESSION['authenticated_user_id']);
 $rv = $user->restore();
 if (PEAR::isError($rv)) {
     die(error_page($rv));
@@ -50,7 +50,7 @@ your view of the site.
 </tr>
 </table>
 
-<form method="POST" action="process_bozo.phtml">
+<form method="POST" action="process_bozo.php">
 
 <table cellpadding="2" cellspacing="0" border="0">
 <tr>
