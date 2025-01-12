@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////
 // $Id$
 // for setting and changing statuses
-require_once("../global.inc");
+require_once("../global.php");
 include_once("./top.inc");
 include_once("./nav.inc");
 
@@ -27,7 +27,7 @@ if (isset($id)) {
 </TR>
 <TR>
 <TD VALIGN="TOP">status:</TD><TD>
-<FORM METHOD="POST" ACTION="process_status.phtml?id=<? echo $id;?>">
+<FORM METHOD="POST" ACTION="process_status.php?id=<? echo $id;?>">
 <INPUT TYPE="radio" NAME="status" VALUE=1<? if ($status==1) echo " checked";?>>pending<BR>
 <INPUT TYPE="radio" NAME="status" VALUE=2<? if ($status==2) echo " checked";?>>active<BR>
 <INPUT TYPE="radio" NAME="status" VALUE=3<? if ($status==3) echo " checked";?>>archive<BR>

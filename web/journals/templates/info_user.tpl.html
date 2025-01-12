@@ -31,7 +31,7 @@
   <TR>
     <TD>LiveJournal: </TD>
 <!--
-    <TD><B><a href="./lj/user_lj.phtml?uid={uid}">{lj_user}</a></B></TD>
+    <TD><B><a href="./lj/user_lj.php?uid={uid}">{lj_user}</a></B></TD>
 -->
     <TD><B><a href="http://www.livejournal.com/users/{lj_user}/">{lj_user}</a></B></TD>
   </TR>
@@ -42,7 +42,7 @@
   <TR>
     <TD VALIGN='TOP'>F this bozo!: </TD>
     <TD>
-       <FORM NAME="bozo" METHOD="POST" ACTION="process_bozo_id.phtml">
+       <FORM NAME="bozo" METHOD="POST" ACTION="process_bozo_id.php">
        <INPUT TYPE=HIDDEN NAME=uid VALUE={uid}>
        <INPUT TYPE=SUBMIT NAME=add_bozo_id VALUE="add to bozo list">
        </FORM>
@@ -55,7 +55,7 @@
 </TABLE>
 <!-- END info -->
 <!-- BEGIN comments -->
-<a href="article.phtml?id={comment_article_id}#{comment_id}">{text}</a><BR>
+<a href="article.php?id={comment_article_id}#{comment_id}">{text}</a><BR>
 <!-- END comments -->
 
 

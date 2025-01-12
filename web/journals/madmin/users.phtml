@@ -1,7 +1,7 @@
 <?php
 // -*- Mode: PHP; indent-tabs-mode: nil; =*-
 // $Id$
-require_once("../global.inc");
+require_once("../global.php");
 include_once("./top.inc");
 include_once("./nav.inc");
 ?>
@@ -48,7 +48,7 @@ EOT;
     // present a drop down box so a user can be selected
 
     echo <<<EOT
-<form method="GET" action="users.phtml">
+<form method="GET" action="users.php">
 <p>
 <select name="username">
 
@@ -111,7 +111,7 @@ EOT;
     if ($u->confidence==0) $lo="SELECTED ";
     if ($u->confidence==1) $hi="SELECTED ";
     echo <<<EOT
-<form method="POST" action="process_modify_user.phtml">
+<form method="POST" action="process_modify_user.php">
 <input type="hidden" name="username" value="$u->username">
 <input type="hidden" name="email" value="$u->email">
 <input type="hidden" name="confidence" value="$u->confidence">
@@ -202,7 +202,7 @@ EOT;
 
 ?>
 
-<form method="GET" action="users.phtml">
+<form method="GET" action="users.php">
 <p>
 <input type="text" name="search" size="30" maxlength="50">
 <input type="submit" value="find a user">

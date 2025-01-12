@@ -3,7 +3,7 @@
 
 ?>
 
-<FORM NAME="message" ACTION="process_message.phtml" METHOD="POST">
+<FORM NAME="message" ACTION="process_message.php" METHOD="POST">
 <TABLE WIDTH=600>
   <TR>
     <TD>
@@ -19,7 +19,7 @@ while ($d=mysql_fetch_object($res)) {
 }
 ?>
 </SELECT>
-    <a href="./add_alias.phtml">add alias</a>
+    <a href="./add_alias.php">add alias</a>
     </TD>
   </TR>   
   <TR>

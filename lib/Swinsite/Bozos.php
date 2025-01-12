@@ -1,7 +1,7 @@
 <?php   // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 
-require_once("Swinsite/DBPeer/BozosPeer.php");
-require_once("Swinsite/Persistent/Set.php");
+require_once("DBPeer/BozosPeer.php");
+require_once("Persistent/Set.php");
 
 class Swinsite_Bozos extends Swinsite_Persistent_Set {
     var $bozos;

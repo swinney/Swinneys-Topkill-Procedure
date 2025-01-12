@@ -2,11 +2,11 @@
 // -*- Mode: PHP; indent-tabs-mode: nil; =*-
 //////////////////////////////////////////////////////////////////
 // $Id$
-require_once("../global.inc");
+require_once("../global.php");
 include_once("./top.inc");
 include_once("./nav.inc");
 
-if (!$id) header("./articles.phtml");
+if (!$id) header("./articles.php");
 
 $query="SELECT articles_info.*,articles_text.text FROM articles_info,articles_text WHERE articles_info.article_id=$id AND articles_info.article_id=articles_text.article_id";
 $res=mysql_query($query) or die($query);
@@ -19,7 +19,7 @@ echo <<<EOT
 Username:
 </TD>
 <TD>
-<a href="./users.phtml?search=$row[username]">$row[username]</a>
+<a href="./users.php?search=$row[username]">$row[username]</a>
 </TD>
 </TR>
 <TR>

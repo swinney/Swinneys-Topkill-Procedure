@@ -1,7 +1,7 @@
 <?php
 // -*- Mode: PHP; indent-tabs-mode: nil; =*-
 // $Id$
-require_once("../global.inc");
+require_once("../global.php");
 include_once("./top.inc");
 include_once("./nav.inc");
 ?>
@@ -25,7 +25,7 @@ $res=mysql_query($query) or die (error_page($query));
 
 if (mysql_num_rows($res)>0) {
   while ($d=mysql_fetch_object($res)) {
-    echo "<FONT SIZE='-1'>[$d->date]</FONT> <A HREF=\"article_info.phtml?id=$d->article_id\"><B>$d->title</B></A> by $d->username<BR>";
+    echo "<FONT SIZE='-1'>[$d->date]</FONT> <A HREF=\"article_info.php?id=$d->article_id\"><B>$d->title</B></A> by $d->username<BR>";
   }
 } else {
   echo "<P>There are currently no articles in this category.</P>";

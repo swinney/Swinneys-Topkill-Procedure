@@ -32,7 +32,7 @@ EOT;
 <td>
 &nbsp;</td>
 
-<td rowspan="2" nowrap><img src="../journals/img/no.gif" alt="" width="70" height="1" border="0"><form name="refreshform" action="index.phtml" method="POST" enctype="multipart/form-data"></td>
+<td rowspan="2" nowrap><img src="../journals/img/no.gif" alt="" width="70" height="1" border="0"><form name="refreshform" action="index.php" method="POST" enctype="multipart/form-data"></td>
 
 
 <td class="thoughts" align="center" valign="bottom" rowspan="2">
@@ -58,7 +58,7 @@ EOT;
 
 <td rowspan="2">
 
-<form name="ithoughtitform" action="./process_thought.phtml" method="POST" enctype="multipart/form-data">
+<form name="ithoughtitform" action="./process_thought.php" method="POST" enctype="multipart/form-data">
 </td>
 
 </tr>
@@ -69,7 +69,7 @@ if (count($sess_lang)==1) {
 ?>
 <tr>
 <td>
-<input type="text" size="10" name="username" value="<?=$authenticated_username?>"></td>
+<input type="text" size="10" name="username" value="<?=$_SESSION['authenticated_username']?>"></td>
 
 <td>
 &nbsp;</td>

@@ -5,7 +5,7 @@
 <table cellpadding="2" cellspacing="0" border="0">
 <tr>
 <td colspan="2">
-<form method="POST" action="process_change_password.phtml">
+<form method="POST" action="process_change_password.php">
 <span class="header">
 <?
 
@@ -14,7 +14,7 @@ if ($error_msg) {
 }
 else
 {
-  echo "<b>Change Password for $authenticated_username:</b>";
+  echo "<b>Change Password for $_SESSION['authenticated_username']:</b>";
 }
 ?>
 </span></td>

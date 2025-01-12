@@ -1,7 +1,7 @@
 <?php
 // -*- Mode: PHP; indent-tabs-mode: nil; =*-
 // $Id$
-require_once("../global.inc");
+require_once("../global.php");
 
 // these variables are propagated via hidden fields so we always know
 // what the original values were
@@ -76,5 +76,5 @@ if ($error_msg) {
   session_register("error_msg");
 }
 
-header("Location: ./users.phtml?username=$username");
+header("Location: ./users.php?username=$username");
 ?>

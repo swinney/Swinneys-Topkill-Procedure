@@ -10,5 +10,5 @@
 </HEAD>
 <BODY>
 <?
-echo "<CENTER>logged in: ". $authenticated_username ."</CENTER>";
+echo "<CENTER>logged in: ". $_SESSION['authenticated_username'] ."</CENTER>";
 ?>

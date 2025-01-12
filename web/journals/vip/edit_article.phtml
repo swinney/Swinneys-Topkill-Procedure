@@ -1,7 +1,7 @@
 <?
-require_once("../global.inc");
+require_once("../global.php");
 $title="Edit last submitted article";
-if (isset($authenticated_username)) {
+if (isset($_SESSION['authenticated_username'])) {
   $query="SELECT articles_info.web,
                  articles_info.title,
                  articles_info.blurb,
@@ -12,7 +12,7 @@ if (isset($authenticated_username)) {
                  articles_info.status
             FROM articles_info, 
                  articles_text 
-           WHERE username='$authenticated_username' 
+           WHERE username='$_SESSION['authenticated_username']' 
              AND articles_info.article_id=articles_text.article_id 
         ORDER BY articles_info.article_id DESC
            LIMIT 1";

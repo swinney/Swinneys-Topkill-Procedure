@@ -1,8 +1,8 @@
 <?php   // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 
-require_once("Swinsite/Persistent/DBSetPeer.php");
-require_once("Swinsite/Persistent/Globals.php");
-require_once("Swinsite/User.php");
+require_once("Persistent/DBSetPeer.php");
+require_once("Persistent/Globals.php");
+require_once("User.php");
 
 class Swinsite_DBPeer_BozosPeer extends Swinsite_Persistent_DBSetPeer {
 

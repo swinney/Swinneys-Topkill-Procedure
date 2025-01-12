@@ -1,7 +1,7 @@
 <?php   // -*- Mode: PHP; indent-tabs-mode: nil; -*-
 
 require_once("PEAR.php");
-require_once("Swinsite/Persistent/Globals.php");
+require_once("Persistent/Globals.php");
 
 class Swinsite_Persistent_Object extends PEAR {
     var $id;

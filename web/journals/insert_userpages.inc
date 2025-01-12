@@ -6,10 +6,10 @@ $res1 = mysql_query("SELECT * FROM articles_info WHERE user_id='".addslashes($us
 
 
 
-$url = "article.phtml?id=$d->article_id";
+$url = "article.php?id=$d->article_id";
 
    echo "<h1>Journal Entries</h1>";
-   echo "<P><a href='submit_article.phtml'>I want to contribute!</a></P>";
+   echo "<P><a href='submit_article.php'>I want to contribute!</a></P>";
 
 // multiple rows 
 while ( $individual_row = mysql_fetch_object( $res1 ) ) {

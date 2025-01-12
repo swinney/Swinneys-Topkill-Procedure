@@ -3,7 +3,7 @@
  * noise filter
  */
 
-if (!$authenticated_user_id) {
+if (!$_SESSION['authenticated_user_id']) {
   $error_msg .= "<P>you dont have an authenticated_user_id.</P>";
 } else {
     if ($SUBMIT) {
@@ -11,7 +11,7 @@ if (!$authenticated_user_id) {
       $query = <<<EOT
            UPDATE user_settings 
               SET noise_filter=$set_limit_chars 
-            WHERE user_id=$authenticated_user_id
+            WHERE user_id=$_SESSION['authenticated_user_id']
 EOT;
       $res = $db->query($query);
       if (DB::isError($res)) {
@@ -22,15 +22,15 @@ EOT;
 #unset($limit_chars);
 function get_limit_chars() {
   global $db;
-  global $authenticated_user_id;
+  global $_SESSION['authenticated_user_id'];
   global $set_limit_chars;
-  if (!$authenticated_user_id) {
+  if (!$_SESSION['authenticated_user_id']) {
     $error_msg .= "<P>you dont have an authenticated_user_id.</P>";
   } else {
-    $query = "SELECT * FROM user_settings WHERE user_id=$authenticated_user_id";
+    $query = "SELECT * FROM user_settings WHERE user_id=$_SESSION['authenticated_user_id']";
     $row = $db->getRow($query);
-    if (!$authenticated_user_id==$row[0]) {
-      $query = "INSERT INTO user_settings (user_id,noise_filter) VALUES ($authenticated_user_id,0)";
+    if (!$_SESSION['authenticated_user_id']==$row[0]) {
+      $query = "INSERT INTO user_settings (user_id,noise_filter) VALUES ($_SESSION['authenticated_user_id'],0)";
       $res=$db->query($query);
       if (DB::isError($res)) {
 	die($res->getMessages());

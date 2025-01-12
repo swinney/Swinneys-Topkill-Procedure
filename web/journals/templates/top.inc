@@ -1,4 +1,4 @@
-<?
+<?php
 #####################################
 # $Id$
 # top.inc - super hyper dynamic
@@ -10,11 +10,13 @@
 # with no small amount of inspiration
 # from Gavin Cruickshank.
 #####################################
-session_unregister("back_to");
-$url = split('/',$SCRIPT_NAME);
+
+unset($_SESSION['back_to']);
+
+$url = explode('/',$_SERVER['SCRIPT_NAME']);
 $auth_these=array(
-		  "submit_comment.phtml",
-		  "submit_article.phtml",
+		  "submit_comment.php",
+		  "submit_article.php",
 		  "vip",
 		  "madmin",
 		  "admin",
@@ -25,18 +27,15 @@ $num_intersect = count($yes);
 
 if($num_intersect>0) {
   $thisurl=urlencode($thisurl);
-  if ($authenticated_username && !$authenticated_user_id) {
-    $authenticated_user_id=get_user_id($authenticated_username);
+  if ($_SESSION['authenticated_username'] && !$_SESSION['authenticated_user_id']) {
+    $_SESSION['authenticated_user_id']=get_user_id($_SESSION['authenticated_username']);
   }
-  is_auth($authenticated_username,$authenticated_user_id,$thisurl);
+  is_auth($_SESSION['authenticated_username'],$_SESSION['authenticated_user_id'],$thisurl);
   // should not need to exit, is_auth will exit if necessary.
 }
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- <? echo $HTTP_REFERER; ?> -->
-<!-- <? echo $REQUEST_URI; ?> -->
-<!-- <? echo $authenticated_username ." / ". $authenticated_user_id; ?> -->
 <!-- you madame of the internet,  -->
 <!-- you gigolo  of the world,    -->
 <!-- don't forget to breathe.     -->
@@ -71,7 +70,7 @@ artist in residence
 <title>SWINNEY LIVES!! </title>
 
 <meta http-equiv="expires" content="0">
-<meta name="keywords" content=" austin swinney, <? echo $a_keywords;?> ;">
+<meta name="keywords" content=" austin swinney, <? echo $a_keywords ?? '' ; ?> ;">
 <link rel="stylesheet" type="text/css" href="<? echo CSS_URL; ?>"> 
 <link rel="shortcut icon" href="http://www.swinney.org/favicon.ico">
 <script src="http://www.google-analytics.com/urchin.js"

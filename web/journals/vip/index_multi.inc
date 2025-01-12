@@ -9,7 +9,7 @@
 
 if ($submit) {
   $mtitle=addslashes($mtitle);
-  $query = "INSERT INTO multi_info SET user_id=$authenticated_user_id, title='$mtitle'";
+  $query = "INSERT INTO multi_info SET user_id=$_SESSION['authenticated_user_id'], title='$mtitle'";
   $res = $db->query($query);
   if (DB::isError($res)) {
     die($res->getMessage());
@@ -30,7 +30,7 @@ $query =<<<EOT
 SELECT multi_info.multi_id,
        multi_info.title
   FROM multi_info
- WHERE user_id=$authenticated_user_id
+ WHERE user_id=$_SESSION['authenticated_user_id']
 ORDER BY title
 EOT;
 // sweetness.
@@ -40,7 +40,7 @@ if (DB::isError($res)) {
   die($res->getMessage());
 }
 while ($row = $res->fetchRow()) {
-  $html .= "\n<b>&raquo;</b> <A HREF='submit_multi.phtml?multi_id=$row[0]'>$row[1]</A><BR>";
+  $html .= "\n<b>&raquo;</b> <A HREF='submit_multi.php?multi_id=$row[0]'>$row[1]</A><BR>";
 }
 
 echo $html;

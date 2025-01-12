@@ -1,8 +1,8 @@
 <?   /* -*- Mode: PHP; indent-tabs-mode: nil; -*- */
-require_once("./global.inc");
-require_once("Swinsite/User.php");
+require_once("./global.php");
+require_once("User.php");
 
-$user = new Swinsite_User($authenticated_user_id);
+$user = new Swinsite_User($_SESSION['authenticated_user_id']);
 $rv = $user->restore();
 if (PEAR::isError($rv)) {
     die(error_page($rv));
