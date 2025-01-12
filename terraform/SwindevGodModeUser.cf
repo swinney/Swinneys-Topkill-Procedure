@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "CloudFormation template to create a user SwindevGodMode with permissions to manage deployment users."
+
+Resources:
+  SwindevGodModeUser:
+    Type: "AWS::IAM::User"
+    Properties:
+      UserName: "SwindevGodMode"
+      LoginProfile:
+        Password: !Sub "p@O34IrxYjj$E5Lm" # Replace or use AWS Secrets Manager
+        PasswordResetRequired: true
+      Policies:
+        - PolicyName: "ManageDeploymentUsersPolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "iam:CreateUser"
+                  - "iam:DeleteUser"
+                  - "iam:UpdateUser"
+                  - "iam:ListUsers"
+                  - "iam:CreateAccessKey"
+                  - "iam:DeleteAccessKey"
+                  - "iam:ListAccessKeys"
+                  - "iam:UpdateAccessKey"
+                  - "iam:AttachUserPolicy"
+                  - "iam:DetachUserPolicy"
+                  - "iam:ListAttachedUserPolicies"
+                  - "iam:PutUserPolicy"
+                  - "iam:DeleteUserPolicy"
+                  - "iam:GetUserPolicy"
+                  - "iam:TagUser"
+                  - "iam:UntagUser"
+                Resource: "*"
+
+Outputs:
+  SwindevGodModeUserName:
+    Description: "The name of the IAM user created."
+    Value: !Ref "SwindevGodModeUser"

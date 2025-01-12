@@ -1,0 +1,26 @@
+<?php
+require_once("../global.php");
+
+if (empty($_POST['bozo_username'])) {
+    $_SESSION['error_msg'] = "<p>You must provide a username.</p>";
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    exit();
+}
+
+$bozo_username = htmlspecialchars($_POST['bozo_username'], ENT_QUOTES);
+$bozo_id = get_user_id($bozo_username);
+
+if (empty($bozo_id)) {
+    $_SESSION['error_msg'] = "<p>No such user found!</p>";
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    exit();
+}
+
+$query = "INSERT INTO user_bozo (user_id, bozo_id, bozoname) VALUES (?, ?, ?)";
+$stmt = $db->prepare($query);
+$stmt->execute([$_SESSION['authenticated_user_id'], $bozo_id, $bozo_username]);
+
+$_SESSION['success_msg'] = "User added to the bozo list.";
+header("Location: " . $_SERVER['HTTP_REFERER']);
+exit();
+?>

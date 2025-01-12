@@ -2,54 +2,41 @@ networks:
   app-tier:
     driver: bridge
 services:
-    nginx:
-        hostname: so_nginx
-        container_name: so_nginx
-        image: 'bitnami/nginx:latest'
-        depends_on:
-        - phpfpm
-        networks:
-        - app-tier
-        ports:
-        - '80:80'
-        - '443:443'
-        volumes:
-        - ./web:/app:ro
-        - ./etc/nginx/default.conf:/opt/bitnami/nginx/conf/server_blocks/swinney.conf
-        - ./etc/nginx/fastcgi_params:/opt/bitnami/nginx/conf/fastcgi_params
+  app:
+    platform: linux/amd64
+    env_file:
+      - .env
+    hostname: so_app
+    container_name: so_app
+    image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/swinney/so-app:202509062209"
+    networks:
+      - app-tier
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWD=${DB_PASSWD}
+      - DB_NAME=${DB_NAME}
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
 
-    phpfpm:
-        hostname: so_phpfmp
-        build:
-            context: ./
-            dockerfile: phpfpm.Dockerfile
-        container_name: so_phpfmp
-        networks:
-            - app-tier
-        restart: always
-        volumes:
-            - ./web:/app
-            - ./lib/Swinsite:/usr/local/lib/swinney
-            - ./pear/share/pear:/pear/share/pear
-            - ./etc/php/php.ini:/usr/local/etc/php/php.ini
-
-
-    mysqldb:
-        hostname: so_mysql
-        container_name: so_mysql
-        image: mysql:latest
-        restart: always
-        networks:
-            - app-tier
-        env_file:
-            - ".env"
-        environment:
-            - MYSQL_DATABASE=${MYSQL_DATABASE}
-            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-            - MYSQL_USER=${MYSQL_USER}
-            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        ports:
-            - "3306:3306"
-        volumes:
-            - "./data/db/mysql:/var/lib/mysql"
-            - "./db/swinney.db.2011.02.16.sql:/usr/local/tmp/swinney.sql"
+  mysqldb:
+    hostname: so_mysql
+    container_name: so_mysql
+    image: mysql:latest
+    restart: always
+    networks:
+      - app-tier
+    env_file:
+      - ".env"
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./data/db/mysql:/var/lib/mysql"
+      - "./db/swinney.db.2011.02.16.sql:/usr/local/tmp/swinney.sql"

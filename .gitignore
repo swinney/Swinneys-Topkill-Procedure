@@ -3,4 +3,65 @@ composer.lock
 composer.phar
 vendor/
 *.tgz
-containers/
+containers/.bxcache
+ERROR
+NOTES*
+*.sh
+*.log
+*.txt
+*.zip
+*.bak
+.registry
+.bxcache/
+*.phar
+# Local Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Backup files
+*.backup
+
+# .terraform directory
+.terraform/
+.terraform.lock.hcl
+
+# Ignore override files as they are usually for local development only
+*.override.tf
+*.override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+
+# Docker images and containers
+*.log
+
+# Docker Compose override files (local only)
+docker-compose.override.yml
+
+# Ignore Docker build cache
+**/build/
+
+# Sensitive environment files
+.env
+.env.*
+
+
+
+# PEAR package files
+package.xml
+package2.xml
+
+# Build and distribution directories
+build/
+dist/
+
+# PEAR-generated files
+**/Makefile
+**/Makefile.global
+**/autom4te.cache/
+**/configure

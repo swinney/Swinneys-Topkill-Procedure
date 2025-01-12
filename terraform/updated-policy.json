@@ -1,0 +1,52 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:*",
+                "ecs:*",
+                "ecr:*",
+                "iam:PassRole",
+                "s3:*"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:RequestedRegion": "us-west-2"
+                }
+            },
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "iam:CreateGroup",
+                "iam:GetGroup",
+                "iam:DeleteGroup",
+                "iam:UpdateGroup",
+                "iam:PutGroupPolicy",
+                "iam:GetGroupPolicy",
+                "iam:CreateUser",
+                "iam:GetUser",
+                "iam:ListGroupsForUser",
+                "iam:CreatePolicy",
+                "iam:GetPolicy",
+                "iam:ListPolicyVersions",
+                "iam:DeletePolicy",
+                "iam:CreateRole",
+                "iam:GetRole",
+                "iam:ListRolePolicies",
+                "iam:ListAttachedRolePolicies",
+                "iam:GetPolicyVersion",
+                "iam:ListInstanceProfilesForRole",
+                "iam:DeleteGroupPolicy"
+            ],
+            "Resource": [
+                "arn:aws:iam::905418316682:group/*",
+                "arn:aws:iam::905418316682:user/*",
+                "arn:aws:iam::905418316682:policy/*",
+                "arn:aws:iam::905418316682:role/*"
+            ],
+            "Effect": "Allow"
+        }
+    ]
+}
