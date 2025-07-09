@@ -3,6 +3,9 @@ networks:
     driver: bridge
 services:
   app:
+    build:
+        context: ./so_app/
+        dockerfile: Dockerfile.local
     platform: linux/amd64
     env_file:
       - .env
@@ -20,6 +23,8 @@ services:
       - '80:80'
       - '443:443'
     restart: always
+    volumes:
+      - ./so_app/src:/app
 
   mysqldb:
     hostname: so_mysql
@@ -39,4 +44,4 @@ services:
       - "3306:3306"
     volumes:
       - "./data/db/mysql:/var/lib/mysql"
-      - "./db/swinney.db.2011.02.16.sql:/usr/local/tmp/swinney.sql"
+      - "./so_mysql/src/data.sql:/docker-entrypoint-initdb.d/data.sql"

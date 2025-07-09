@@ -8,11 +8,11 @@ define("IMGBASE", DIRBASE . "/images");
 define("INCDIR", DIRBASE . "/templates");
 define("LIBDIR", HOME . "/lib");
 
-define("DB_USER", trim(file_get_contents("/etc/container_environment/DB_USER")) ?: 'not set');
-define("DB_PASSWD", trim(file_get_contents("/etc/container_environment/DB_PASSWD")) ?: 'not set');
-define("DB_NAME", trim(file_get_contents("/etc/container_environment/DB_NAME")) ?: 'not set');
-define("DB_HOST", trim(file_get_contents("/etc/container_environment/DB_HOST")) ?: 'not set');
-define("ERROR_REP", 0);
+define("DB_USER", getenv('DB_USER') ?: 'not set');
+define("DB_PASSWD", getenv('DB_PASSWD') ?: 'not set');
+define("DB_NAME", getenv('DB_NAME') ?: 'not set');
+define("DB_HOST", getenv('DB_HOST') ?: 'not set');
+define("ERROR_REP", 1);
 define("RECAPTCHA_SECRET_KEY", "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe");
 define('RECAPTCHA_SITE_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
 
