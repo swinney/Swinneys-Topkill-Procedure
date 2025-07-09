@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --chown=www-data:www-data ./src /app
 
 # Copy configuration files
-COPY ./etc/php/php.ini /etc/php/8.3/fpm/conf.d/custom.ini
+COPY ./etc/php/php.ini /etc/php/8.4/fpm/conf.d/custom.ini
 COPY ./etc/nginx/swinney /etc/nginx/sites-enabled/default
 
 # Copy custom libraries

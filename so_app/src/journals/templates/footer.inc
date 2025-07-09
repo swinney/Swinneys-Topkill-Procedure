@@ -1,4 +1,4 @@
-<?
+<?php 
 
 $noslogan = array( 1 => 
 		   'affectation',

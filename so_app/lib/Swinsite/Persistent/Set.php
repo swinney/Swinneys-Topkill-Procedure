@@ -4,11 +4,11 @@ require_once("PEAR.php");
 require_once("Persistent/Globals.php");
 
 class Swinsite_Persistent_Set extends PEAR {
-    var $id;
-    var $set;
+    public ?int $id = null;
+    public ?array $set = null;
 
-    function Swinsite_Persistent_Set($id=null) {
-        $this->PEAR();
+    public function __construct(?int $id = null) {
+        parent::__construct();
 
         if (isset($id)) {
             $this->id = $id;
@@ -17,7 +17,7 @@ class Swinsite_Persistent_Set extends PEAR {
 
     // accessor methods
 
-    function id($id=null) {
+    public function id(?int $id = null): ?int {
         if (isset($id)) {
             $this->id = $id;
         }
@@ -26,7 +26,7 @@ class Swinsite_Persistent_Set extends PEAR {
 
     // persistence methods
 
-    function add($obj) {
+    public function add(mixed $obj): mixed {
         $peer = $this->peer();
         if (PEAR::isError($peer)) {
             return $peer;
@@ -37,12 +37,12 @@ class Swinsite_Persistent_Set extends PEAR {
             return $rv;
         }
 
-        array_push($this->set, $obj);
+        $this->set[] = $obj;
 
         return PERSISTENT_OK;
     }
 
-    function getAll() {
+    public function getAll(): mixed {
         if (isset($this->set)) {
             return $this->set;
         }
@@ -61,7 +61,7 @@ class Swinsite_Persistent_Set extends PEAR {
         return $this->set;
     }
 
-    function remove($obj) {
+    public function remove(mixed $obj): mixed {
         $peer = $this->peer();
         if (PEAR::isError($peer)) {
             return $peer;
@@ -72,11 +72,11 @@ class Swinsite_Persistent_Set extends PEAR {
             return $rv;
         }
 
-        $tmp = array();
+        $tmp = [];
         $id = $obj->id();
         foreach ($this->set as $o) {
             if ($id != $o->id()) {
-                array_push($tmp, $o);
+                $tmp[] = $o;
             }
         }
         $this->set = $tmp;

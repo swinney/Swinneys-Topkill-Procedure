@@ -1,4 +1,4 @@
-<? 
+<?php  
 require_once("../global.php");
 
 include(INCDIR ."/top.inc");

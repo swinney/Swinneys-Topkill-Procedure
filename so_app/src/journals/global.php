@@ -2,7 +2,7 @@
 // -*- Mode: PHP; indent-tabs-mode: nil; =*-
 
 $ip_addr = getenv("REMOTE_ADDR");
-// Ex: $banned_ip = array('130.219.8.253');
+// Ex: $banned_ip = ['130.219.8.253'];
 // 
 // if (in_array($ip_addr,$banned_ip)) {
 //   include_once("/home/.carmen/swinney/swinney.org/hacked.html");
@@ -23,7 +23,7 @@ session_set_cookie_params(time()+9999999);
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
-$sess_lang=array("en");
+$sess_lang = ["en"];
 
 /*
  * if the directory containing global.php also contains
@@ -104,7 +104,7 @@ if (defined("LIBDIR")) {
  * poor man's object directory: set up a global array in which we can
  * store named resources
  */
-$_SESSION['SWINSITE'] = array();
+$_SESSION['SWINSITE'] = [];
 
 /*
  * connect to the database. if unsuccessful, display an error message.
@@ -115,25 +115,25 @@ $_SESSION['SWINSITE'] = array();
 include_once("DB/DB.php");
 include_once("HTML/Table.php");
 
-$dsn = array(
+$dsn = [
              'phptype' => "mysqli",
              'hostspec' => DB_HOST,
              'database' => DB_NAME,
              'username' => DB_USER,
              'password' => DB_PASSWD
-             );
-$auth_dsn = array(
+             ];
+$auth_dsn = [
              'phptype' => "mysqli",
              'hostspec' => DB_HOST,
              'database' => DB_NAME,
              'username' => DB_USER,
              'password' => DB_PASSWD
-             );
+             ];
 
 $_SESSION['dsn'] = $dsn;
-$options = array(
+$options = [
 	'debug'	=> 2
-);
+];
 $db = DB::connect($_SESSION['dsn'], $options);
 if (PEAR::isError($db)) {
     die (error_page("can't connect to the database in global: " . var_dump($dsn) . $db->getMessage()));
@@ -144,8 +144,8 @@ if (PEAR::isError($db)) {
  */
 
 if (!$sess_lang) {
-  $lang_cond=array();
-  $langz = explode(", ",$HTTP_ACCEPT_LANGUAGE);
+  $lang_cond = [];
+  $langz = explode(", ", $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '');
   if ($langz) {
     foreach ($langz as $lang) {
       $lang = substr($lang,0,2);
@@ -156,7 +156,7 @@ if (!$sess_lang) {
   } else {
     $lang_cond[0]='en';
   }
-  session_register("sess_lang");
+  // session_register is deprecated - session variable already set above
   $sess_lang = $lang_cond;
   unset($langz);
   unset($lang);

@@ -1,4 +1,4 @@
-<? 
+<?php  
 // $Id$
 
 include_once(INCDIR ."/top.inc");

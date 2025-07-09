@@ -4,14 +4,14 @@ require_once("PEAR.php");
 require_once("Persistent/Globals.php");
 
 class Swinsite_Persistent_Object extends PEAR {
-    var $id;
-    var $isNew;
-    var $isDirty;
-    var $isDeleted;
-    var $peer;
+    public ?int $id = null;
+    public int $isNew = 0;
+    public int $isDirty = 0;
+    public int $isDeleted = 0;
+    public mixed $peer = null;
 
-    function Swinsite_Persistent_Object($id=null) {
-        $this->PEAR();
+    public function __construct(?int $id = null) {
+        parent::__construct();
 
         if (isset($id)) {
             $this->id = $id;
@@ -27,7 +27,7 @@ class Swinsite_Persistent_Object extends PEAR {
 
     // accessor methods
 
-    function id($id=null) {
+    public function id(?int $id = null): ?int {
         if (isset($id)) {
             $this->id = $id;
             $this->isDirty = 1;
@@ -37,7 +37,7 @@ class Swinsite_Persistent_Object extends PEAR {
 
     // persistence methods
 
-    function restore() {
+    public function restore(): mixed {
         $peer = $this->peer();
         if (PEAR::isError($peer)) {
             return $peer;
@@ -55,7 +55,7 @@ class Swinsite_Persistent_Object extends PEAR {
         return $rv;
     }
 
-    function save() {
+    public function save(): mixed {
         if (!($this->isDirty || $this->isDeleted)) {
             return PERSISTENT_OK;
         }
@@ -74,7 +74,7 @@ class Swinsite_Persistent_Object extends PEAR {
             $this->isNew = 1;
             $this->isDirty = 0;
             $this->isDeleted = 0;
-        } else if ($this->isNew) {
+        } elseif ($this->isNew) {
             $rv = $peer->insert($this);
             if (PEAR::isError($rv) || $rv != PERSISTENT_OK) {
                 return $rv;
@@ -97,7 +97,7 @@ class Swinsite_Persistent_Object extends PEAR {
         return $rv;
     }
 
-    function remove() {
+    public function remove(): mixed {
         $this->isDeleted = 1;
         return $this->save();
     }

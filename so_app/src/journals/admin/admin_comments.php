@@ -1,4 +1,4 @@
-<? 
+<?php  
 #$Id$
 $title="Administrate Comments";
 require_once("../global.php");

@@ -3,20 +3,20 @@
 require_once("PEAR.php");
 
 class Swinsite_Persistent_DBPeer extends PEAR {
-    var $connection;
+    public mixed $connection = null;
 
-    function Swinsite_Persistent_DBPeer() {
-        $this->PEAR();
+    public function __construct() {
+        parent::__construct();
     }
 
     // accessor methods
 
-    function connection() {
-        if (! $this->connection) {
+    public function connection(): mixed {
+        if (!$this->connection) {
             global $SWINSITE;
 
             $tmp = $SWINSITE['db_connection'];
-            if (! $tmp) {
+            if (!$tmp) {
                 return $this->raiseError("no db connection");
             }
 
@@ -28,7 +28,7 @@ class Swinsite_Persistent_DBPeer extends PEAR {
 
     // persistence methods
 
-    function select(&$obj) {
+    public function select(mixed &$obj): mixed {
         $query = $this->get_select_sql($obj);
         if (PEAR::isError($query)) {
             return $query;
@@ -55,9 +55,9 @@ class Swinsite_Persistent_DBPeer extends PEAR {
         return PERSISTENT_OK;
     }
 
-    function insert($obj) {
+    public function insert(mixed $obj): mixed {
         $query = $this->get_insert_sql($obj);
-        if (! $query) {
+        if (!$query) {
             return PERSISTENT_ERROR_BAD_REQUEST;
         }
 
@@ -70,7 +70,7 @@ class Swinsite_Persistent_DBPeer extends PEAR {
         // XXX: is there a better portable way of retrieving the id?
 
         $query = $this->get_last_insert_id_sql();
-        if (! $query) {
+        if (!$query) {
             return PERSISTENT_ERROR_BAD_REQUEST;
         }
 
@@ -88,9 +88,9 @@ class Swinsite_Persistent_DBPeer extends PEAR {
         return PERSISTENT_OK;
     }
 
-    function update($obj) {
+    public function update(mixed $obj): mixed {
         $query = $this->get_update_sql($obj);
-        if (! $query) {
+        if (!$query) {
             return PERSISTENT_ERROR_BAD_REQUEST;
         }
 
@@ -103,9 +103,9 @@ class Swinsite_Persistent_DBPeer extends PEAR {
         return PERSISTENT_OK;
     }
 
-    function delete($obj) {
+    public function delete(mixed $obj): mixed {
         $query = $this->get_delete_sql($obj);
-        if (! $query) {
+        if (!$query) {
             return PERSISTENT_ERROR_BAD_REQUEST;
         }
 

@@ -1,4 +1,4 @@
-<?
+<?php
 // $Id$ 
 if (count($sess_lang) > 1) {
   $opt_lang =<<<EOT
@@ -33,20 +33,20 @@ EOT;
 <form name="ithoughtitform" action="journals/process_thought.php" method="POST" enctype="multipart/form-data" >
 &nbsp;</td>
 </tr>
-<?
+<?php
 if (count($sess_lang)==1) {
   echo "<INPUT TYPE=HIDDEN NAME=language VALUE='$sess_lang[0]'>\n";
 }
 ?>
 <tr>
 <td>
-<input type="text" size="10" name="username" value="<? if ($_SESSION['authenticated_username']) { echo "$_SESSION['authenticated_username']"; } ?>"></td>
+<input type="text" size="10" name="username" value="<?php if ($_SESSION['authenticated_username']) { echo $_SESSION['authenticated_username']; } ?>"></td>
 
 <td>
 &nbsp;</td>
 
 <td>
-<input type="text" name="thought"><? echo $opt_lang;?></td>
+<input type="text" name="thought"><?php echo $opt_lang ?? '';?></td>
 
 <td valign="center">&nbsp;
 <input type=submit value="I Thought It">

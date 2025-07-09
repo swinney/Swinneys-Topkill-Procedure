@@ -1,4 +1,4 @@
-<? 
+<?php  
 // $Id$
 if (!$_SESSION['authenticated_username']) {
 	$back_to = $URLBASE . $PHP_SELF;

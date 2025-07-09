@@ -29,7 +29,7 @@ if (!empty($success_msg)) {
 <table cellpadding="2" cellspacing="0" border="0">
 <?php
 if ($error_msg = error_get_last()) {
-  echo "<FONT COLOR=\"red\"><B>". var_dump($error_msg) ."</B></FONT>";
+  echo "<FONT COLOR=\"red\"><B>" . var_dump($error_msg) . "</B></FONT>";
   unset($error_msg);
 }
 // include i thought it

@@ -5,19 +5,19 @@ require_once("DBPeer/UserPeer.php");
 require_once("Persistent/Object.php");
 
 class Swinsite_User extends Swinsite_Persistent_Object {
-    var $username;
-    var $email;
-    var $password;
-    var $ip_addr;
-    var $confidence;
+    public ?string $username = null;
+    public ?string $email = null;
+    public ?string $password = null;
+    public ?string $ip_addr = null;
+    public ?int $confidence = null;
 
-    function Swinsite_User($id=null) {
-        $this->Swinsite_Persistent_Object($id);
+    public function __construct(?int $id = null) {
+        parent::__construct($id);
     }
 
     // accessor methods
 
-    function username($username=null) {
+    public function username(?string $username = null): ?string {
         if (isset($username)) {
             $this->username = $username;
             $this->isDirty = 1;
@@ -25,7 +25,7 @@ class Swinsite_User extends Swinsite_Persistent_Object {
         return $this->username;
     }
 
-    function email($email=null) {
+    public function email(?string $email = null): ?string {
         if (isset($email)) {
             $this->email = $email;
             $this->isDirty = 1;
@@ -33,7 +33,7 @@ class Swinsite_User extends Swinsite_Persistent_Object {
         return $this->email;
     }
 
-    function password($password=null) {
+    public function password(?string $password = null): ?string {
         if (isset($password)) {
             $this->password = $password;
             $this->isDirty = 1;
@@ -41,7 +41,7 @@ class Swinsite_User extends Swinsite_Persistent_Object {
         return $this->password;
     }
 
-    function ip_addr($ip_addr=null) {
+    public function ip_addr(?string $ip_addr = null): ?string {
         if (isset($ip_addr)) {
             $this->ip_addr = $ip_addr;
             $this->isDirty = 1;
@@ -49,7 +49,7 @@ class Swinsite_User extends Swinsite_Persistent_Object {
         return $this->ip_addr;
     }
 
-    function confidence($confidence=null) {
+    public function confidence(?int $confidence = null): ?int {
         if (isset($confidence)) {
             $this->confidence = $confidence;
             $this->isDirty = 1;
@@ -59,8 +59,8 @@ class Swinsite_User extends Swinsite_Persistent_Object {
 
     // public methods
 
-    function bozos() {
-        if (! $this->bozos) {
+    public function bozos(): Swinsite_Bozos {
+        if (!$this->bozos) {
             $tmp = new Swinsite_Bozos($this->id());
             if (PEAR::isError($tmp)) {
                 return $tmp;
@@ -74,8 +74,8 @@ class Swinsite_User extends Swinsite_Persistent_Object {
 
     // private methods
 
-    function peer() {
-        if (! $this->peer) {
+    public function peer(): Swinsite_DBPeer_UserPeer {
+        if (!$this->peer) {
             $this->peer = new Swinsite_DBPeer_UserPeer();
         }
 
