@@ -37,8 +37,9 @@ crash.log
 terraform.rc
 
 
-# Docker images and containers
+# Docker images, cache, and containers
 *.log
+**/docker-cache/
 
 # Docker Compose override files (local only)
 docker-compose.override.yml
