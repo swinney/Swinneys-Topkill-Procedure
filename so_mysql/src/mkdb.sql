@@ -1,7 +1,6 @@
 -- MySQL dump 8.22
 --
 -- Host: localhost    Database: swinney
----------------------------------------------------------
 -- Server version	3.23.51
 
 --

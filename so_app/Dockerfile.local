@@ -1,0 +1,45 @@
+FROM 905418316682.dkr.ecr.us-west-2.amazonaws.com/swinney/so-base:202556062156
+# Set environment variables to ensure consistent behavior
+ENV DEBIAN_FRONTEND=noninteractive \
+    HOME=/root \
+    LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8
+
+RUN apt-get update && apt-get install -y --no-install-recommends  mysql-client vim telnet
+# Create necessary directories for service operation
+RUN mkdir -p /run/php \
+    /etc/service/app \
+    /var/log/php \
+    /var/lib/php/sessions \
+    /usr/local/php/share/pear \
+    /usr/local/lib/php/vendor
+
+# Set up the application directory
+WORKDIR /app
+
+VOLUME /app
+
+# Copy configuration files
+COPY ./etc/php/php.ini /etc/php/8.4/fpm/conf.d/custom.ini
+COPY ./etc/nginx/swinney /etc/nginx/sites-enabled/default
+
+# Copy custom libraries
+COPY --chown=www-data:www-data ./lib/Swinsite /usr/local/lib/swinney
+COPY --chown=www-data:www-data ./lib/share/pear /usr/local/php/share/pear
+COPY --chown=www-data:www-data ./lib/vendor /usr/local/lib/php/vendor
+
+# # Set up container environment configuration with secure permissions
+# COPY container_environment.json /etc/container_environment.json
+# RUN chmod 0600 /etc/container_environment.json
+
+# Configure supervisor to manage our processes
+COPY ./etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Set proper permissions
+RUN chown -R www-data:www-data /var/lib/php/sessions /var/log/php 
+
+# Expose web ports
+EXPOSE 80 443
+
+# Start supervisor which will manage our processes
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
