@@ -117,7 +117,7 @@ class File {
     for ($i=0;isset($out[0][$i]);$i++) {
         $usekey=$out[3][$i]-1;
         $replace= SITE_IMGURL . "/" . $img[$usekey];
-        $text=ereg_replace($out[0][$i],$replace,$text);
+        $text=preg_replace("/".preg_quote($out[0][$i],"/")."/", $replace, $text);
     }
     return $text;
   }

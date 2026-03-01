@@ -298,7 +298,7 @@ Function dice( $number, $value ) {
 # decimals to binary.
 function bin($pos,$dec){
   $bin = sprintf("%". $pos."b", $dec);
-  $bin = ereg_replace(" ","0",$bin);
+  $bin = preg_replace("/ /","0",$bin);
   $bin = chunk_split($bin,4); 
   return $bin;
 }
@@ -375,7 +375,7 @@ function show_img($img,$text) {
     for ($i=0;isset($out[0][$i]);$i++) {
         $usekey=$out[2][$i]-1;
         $replace= IMGBASE . "/" . $img[$usekey];
-        $text=ereg_replace($out[0][$i],$replace,$text);
+        $text=preg_replace("/".preg_quote($out[0][$i],"/")."/", $replace, $text);
     }
     return $text;
 }

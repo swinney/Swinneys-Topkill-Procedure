@@ -6,9 +6,9 @@
 
 ## 2. Replace ereg_replace() with preg_replace()
 
-- [ ] 2.1 Replace `ereg_replace(" ","0",$bin)` with `preg_replace("/ /","0",$bin)` in `web/journals/global.php:297` (`bin()` function)
-- [ ] 2.2 Replace `ereg_replace($out[0][$i],$replace,$text)` with `preg_replace("/".preg_quote($out[0][$i],"/")."/", $replace, $text)` in `web/journals/global.php:374` (`show_img()` function)
-- [ ] 2.3 Replace `ereg_replace($out[0][$i],$replace,$text)` with `preg_replace("/".preg_quote($out[0][$i],"/")."/", $replace, $text)` in `lib/Swinsite/File.php:120` (`regexNames()` method)
+- [x] 2.1 Replace `ereg_replace(" ","0",$bin)` with `preg_replace("/ /","0",$bin)` in `web/journals/global.php:297` (`bin()` function)
+- [x] 2.2 Replace `ereg_replace($out[0][$i],$replace,$text)` with `preg_replace("/".preg_quote($out[0][$i],"/")."/", $replace, $text)` in `web/journals/global.php:374` (`show_img()` function)
+- [x] 2.3 Replace `ereg_replace($out[0][$i],$replace,$text)` with `preg_replace("/".preg_quote($out[0][$i],"/")."/", $replace, $text)` in `lib/Swinsite/File.php:120` (`regexNames()` method)
 
 ## 3. Replace session_register() with $_SESSION
 
