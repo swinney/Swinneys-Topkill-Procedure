@@ -1,4 +1,6 @@
 site_name: Swinney.org Documentation
 nav:
   - Home: index.md
-  - Modernization: MODERNIZATION.md
+  - MVP Design: MVP-DESIGN.md
+  - Docker Dev Environment: DOCKER-DEV.md
+  - Modernization Roadmap: MODERNIZATION.md

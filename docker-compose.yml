@@ -1,55 +1,70 @@
 networks:
-  app-tier:
-    driver: bridge
+    swinney:
+        driver: bridge
+
+volumes:
+    mysql_data:
+
 services:
     nginx:
-        hostname: so_nginx
+        image: nginx:1.27-alpine
         container_name: so_nginx
-        image: 'bitnami/nginx:latest'
         depends_on:
-        - phpfpm
+            phpfpm:
+                condition: service_started
         networks:
-        - app-tier
+            - swinney
         ports:
-        - '80:80'
-        - '443:443'
+            - "80:80"
         volumes:
-        - ./web:/app:ro
-        - ./etc/nginx/default.conf:/opt/bitnami/nginx/conf/server_blocks/swinney.conf
-        - ./etc/nginx/fastcgi_params:/opt/bitnami/nginx/conf/fastcgi_params
+            - .:/app:ro
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
 
     phpfpm:
-        hostname: so_phpfmp
         build:
-            context: ./
-            dockerfile: phpfpm.Dockerfile
-        container_name: so_phpfmp
+            context: .
+            dockerfile: docker/php/Dockerfile
+        container_name: so_phpfpm
+        depends_on:
+            mysql:
+                condition: service_healthy
         networks:
-            - app-tier
-        restart: always
-        volumes:
-            - ./web:/app
-            - ./lib/Swinsite:/usr/local/lib/swinney
-            - ./pear/share/pear:/pear/share/pear
-            - ./etc/php/php.ini:/usr/local/etc/php/php.ini
-
-
-    mysqldb:
-        hostname: so_mysql
-        container_name: so_mysql
-        image: mysql:latest
-        restart: always
-        networks:
-            - app-tier
-        env_file:
-            - ".env"
+            - swinney
         environment:
-            - MYSQL_DATABASE=${MYSQL_DATABASE}
-            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-            - MYSQL_USER=${MYSQL_USER}
-            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        ports:
-            - "3306:3306"
+            XDEBUG_MODE: "${XDEBUG_MODE:-off}"
         volumes:
-            - "./data/db/mysql:/var/lib/mysql"
-            - "./db/swinney.db.2011.02.16.sql:/usr/local/tmp/swinney.sql"
+            - .:/app
+            - ./docker/php/dev.ini:/usr/local/etc/php/conf.d/zz-dev.ini:ro
+        working_dir: /app
+
+    mysql:
+        image: mysql:8.4
+        container_name: so_mysql
+        restart: unless-stopped
+        networks:
+            - swinney
+        environment:
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - "${DB_PORT:-3306}:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+            - ./docker/mysql/dev.cnf:/etc/mysql/conf.d/dev.cnf:ro
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+            interval: 5s
+            timeout: 3s
+            retries: 10
+            start_period: 30s
+
+    mailpit:
+        image: axllent/mailpit:latest
+        container_name: so_mailpit
+        networks:
+            - swinney
+        ports:
+            - "8025:8025"
+            - "1025:1025"

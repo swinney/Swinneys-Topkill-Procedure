@@ -1,0 +1,11 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+<div class="section-header">{{ title|default('Welcome') }}</div>
+{% if placeholder is defined %}
+    <p>{{ placeholder }}</p>
+{% else %}
+    <p>Welcome to Swinney.org. The resurrection is underway.</p>
+    <p>Night of the Living Dead but for 90s websites.</p>
+{% endif %}
+{% endblock %}
