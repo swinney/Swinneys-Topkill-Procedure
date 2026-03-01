@@ -16,9 +16,9 @@ include_once(INCDIR ."/admin_nav.inc");
 
 $previous=1;
 
-$res = mysql_query("select * from comments where article_id=$article_id order by comment_id DESC");
+$res = $db->query("select * from comments where article_id=$article_id order by comment_id DESC");
 
-while ( $d = mysql_fetch_object ($res) ) {
+while ( $d = $res->fetchRow(DB_FETCHMODE_OBJECT) ) {
 $comment_id = $d->comment_id;
 $username = $d->username;
 $comment = $d->comment;

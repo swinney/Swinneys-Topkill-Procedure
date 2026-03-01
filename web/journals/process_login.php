@@ -97,7 +97,7 @@ $ip_addr = getenv("REMOTE_ADDR");
 
 $query = "UPDATE user SET ip_addr='$ip_addr',last=NOW() WHERE user_id=$_SESSION['authenticated_user_id']";
 
-@mysql_query($query);
+@$db->query($query);
 
 
 $bozo_set=get_bozo_set();

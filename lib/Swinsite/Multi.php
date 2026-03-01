@@ -4,9 +4,12 @@ require_once("global.php");
 class Multi {
 
     function get_multi_id($id) {
+        global $db;
         $query = "SELECT multi_id FROM multi_articles WHERE article_id=$id";
         $res = $db->query($query);
-        $mid = $res->fetchOne();
+        if (DB::isError($res)) { return null; }
+        $row = $res->fetchRow();
+        $mid = $row ? $row[0] : null;
         return $mid;
     }
 
@@ -23,18 +26,23 @@ EOT;
     }
 
     function get_abstract($mid) {
+        global $db;
         $query = "SELECT abstract FROM multi_info WHERE multi_id=$mid";
-        $res = mysql_query($query);
-        $abstract = stripslashes(mysql_result($res,0));
+        $res = $db->query($query);
+        if (DB::isError($res)) { return ''; }
+        $row = $res->fetchRow();
+        $abstract = $row ? stripslashes($row[0]) : '';
         return $abstract;
     } 
 
     function get_multi_fm_id ($mid) {
-        $query .= <<<EOT
+        global $db;
+        $query = <<<EOT
   SELECT multi_info.user_id,multi_info.title,multi_info.abstract FROM multi_info WHERE multi_info.multi_id=$mid
 EOT;
-        $res=mysql_query($query);
-        $row=mysql_fetch_array($res);
+        $res = $db->query($query);
+        if (DB::isError($res)) { return null; }
+        $row = $res->fetchRow();
         return $row;
     }
 
@@ -60,6 +68,7 @@ EOT;
         }
     }
     function get_multi($id,$multi_id,$location) {
+        global $db;
         $query =<<<EOT
       SELECT multi_info.user_id as editor_id,
              multi_info.title as multi_title,

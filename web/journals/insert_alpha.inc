@@ -9,11 +9,11 @@ if ($i) {
      SELECT article_id, title FROM articles_info WHERE status=2 AND title REGEXP '^([0-9]{1,4}[/-]{0,1}[0-9]{0,4} +){0,1}($alpha[$i])+' ORDER BY title ASC
 EOT;
 
-  $res=mysql_query($query);
-  $num_rows=mysql_num_rows($res);
+  $res=$db->query($query);
+  $num_rows=$res->numRows();
   if ($num_rows>0) {
     $num_mssg="<P>These titles were brought to you by the letter <B><FONT SIZE=7>".strtoupper($alpha[$i])."</A></B>.</P>";
-    while ($d=mysql_fetch_object($res)) {
+    while ($d=$res->fetchRow(DB_FETCHMODE_OBJECT)) {
       $html_body .= "\n<TR><TD><a href='./article.php?id=$d->article_id'>$d->title</a></TD></TR>";
     }
   } else {

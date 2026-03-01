@@ -55,8 +55,8 @@ EOT;
 <option value="0">all
 <?
 $query="SELECT distinct(username), user_id FROM comments WHERE article_id=$id AND username NOT LIKE '% to %' ORDER BY username";
-$res=mysql_query($query);
-while ($d=mysql_fetch_object($res)) {
+$res=$db->query($query);
+while ($d=$res->fetchRow(DB_FETCHMODE_OBJECT)) {
   if ($d->user_id) echo "<option value='$d->user_id'>". stripslashes($d->username) ."\n";
 }
 ?>
@@ -80,9 +80,9 @@ while ($d=mysql_fetch_object($res)) {
 <p>
 <?
 
-  $res = mysql_query ( "select * from nature order by nature_id asc");
+  $res = $db->query( "select * from nature order by nature_id asc");
 
-  while ( $d = mysql_fetch_object($res) ) {
+  while ( $d = $res->fetchRow(DB_FETCHMODE_OBJECT) ) {
     echo "<input type='radio' name='nature' value='$d->nature_id'> $d->nature <br>";
   }
 echo $opt_lang;

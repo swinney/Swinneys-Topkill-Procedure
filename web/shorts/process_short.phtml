@@ -7,7 +7,8 @@ $username =addslashes($username);
 $text     =addslashes($text);
 
 $query="INSERT INTO shorts VALUES ('','$username','$text')";
-$res=mysql_query($query) or die (error_page($query));
+$res=$db->query($query);
+if (DB::isError($res)) { die(error_page($res->getMessage())); }
 
 
 header("Location: ./index.php");

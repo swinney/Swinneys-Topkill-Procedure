@@ -39,12 +39,12 @@ ORDER BY name ASC
 EOT;
 }
   
-$res = mysql_query($query);
+$res = $db->query($query);
 
 # for the next loop, index
 $i=0;
 
-while ($d=mysql_fetch_object($res)) {
+while ($d=$res->fetchRow(DB_FETCHMODE_OBJECT)) {
 
     $html .= "<input type='checkbox' name='cat[$i]' value='$d->level1'";
     if ($d->sexy!=0) {

@@ -40,11 +40,12 @@ if ($copy=="TRUE") {
   $query = 'UPDATE '. ARTICLES_INFO_TBL .' 
             SET '. IMAGE .'='. IMAGE .'+1
             WHERE '. AID .'='. $article_id;
-  if (mysql_query($query)) {
+  $res = $db->query($query);
+  if (!DB::isError($res)) {
   $error_msg .= "<P>Update went fine.</P>";
   } else {
   // XXX: partially committed transaction! how to handle?
-    $error_msg .= "<P>Error updating database: " . mysql_error() ."</P>";
+    $error_msg .= "<P>Error updating database: " . $res->getMessage() ."</P>";
   }
   include_once("File.php");
   $f = new File();

@@ -20,8 +20,10 @@ if (!$uid) {
   }
 
   $query = "SELECT count(bozo_id) FROM user_bozo WHERE bozo_id=$uid AND user_id=$_SESSION['authenticated_user_id']";
-  $res = mysql_query($query) or die($query);
-  $num = mysql_result($res,0);
+  $res = $db->query($query);
+  if (DB::isError($res)) { die($query); }
+  $row = $res->fetchRow();
+  $num = $row[0];
   if ($num>0) {
       $_SESSION['error_msg'] = "<P>this person is already a bozo!</P>";
       $error_msg .= "<P>this person is already a bozo!</P>";

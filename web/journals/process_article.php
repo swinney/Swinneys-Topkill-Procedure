@@ -103,7 +103,7 @@ EOT;
     $success_msg .= "<P>Articles info saved.</P>";
   }
 
-  $ins_article_id = mysql_insert_id();
+  $ins_article_id = $db->getOne("SELECT LAST_INSERT_ID()");
 
   /* check for that ins_article_id */
   if (!$ins_article_id) {
@@ -199,7 +199,7 @@ EOT;
       $success_msg = "<P>Article's text saved.</P>";
     }
   } else {
-      $error_msg = "Problem saving the article text: " . mysql_error();
+      $error_msg = "Problem saving the article text (query was empty)";
   }
 } else {
   $error_msg = "<P>Submit value not specified.</P>";
@@ -217,8 +217,11 @@ if ($error_msg) {
   }
   $query = "SELECT email FROM user WHERE user_id=$_SESSION['authenticated_user_id']";
 
-  $res = mysql_query(addslashes($query));
-  $user_email = stripslashes(mysql_result($res,0));
+  $res = $db->query($query);
+  if (DB::isError($res)) { $user_email = ''; } else {
+    $row = $res->fetchRow();
+    $user_email = $row ? stripslashes($row[0]) : '';
+  }
 
   $username = stripslashes($username);
   $title = strip_tags(stripslashes($title));

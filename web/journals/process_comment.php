@@ -103,12 +103,14 @@ INSERT INTO comments
               )
 EOT;
 
-$res = mysql_query($query) or die("error inserting comment: $query"); 
+$res = $db->query($query);
+if (DB::isError($res)) { die("error inserting comment: " . $res->getMessage()); }
 
 $query=<<<EOT
 update articles_info set num_comments=(num_comments+1) WHERE article_id=$article_id
 EOT;
-$res = mysql_query($query) or die("error inserting comment: $query"); 
+$res = $db->query($query);
+if (DB::isError($res)) { die("error inserting comment: " . $res->getMessage()); }
 if ($last_lang!=$language) {
     if (!$last_lang) {
       $_SESSION['last_lang'] = $language;

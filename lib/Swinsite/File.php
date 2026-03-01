@@ -62,7 +62,7 @@ class File {
    * @see DB::getMessage
    */
  
-  function addInfo($db,$aid,$file_id,$file_size,$filename,$ext) {
+  function addInfo($db,$aid,$file_id,$file_size,$filename,$ext,$description='') {
     $ext=end(explode(".",$filename));
     $filename=addslashes($filename);
     $description=addslashes($description);

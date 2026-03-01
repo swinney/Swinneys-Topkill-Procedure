@@ -2,13 +2,13 @@
 // $Id$
 include("../global.php");
 
-$res = mysql_query("UPDATE comments 
-                    SET comment='$comment', 
-                        timestamp=$timestamp, 
+$res = $db->query("UPDATE comments
+                    SET comment='$comment',
+                        timestamp=$timestamp,
                         status=$status
                     WHERE comment_id=$comment_id");
 
-  if ($res == false) {
+  if (DB::isError($res)) {
      echo "update failed for:";
   }
 

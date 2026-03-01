@@ -13,8 +13,8 @@ include_once("./nav.inc");
 //
 if (isset($id)) {
   $query="SELECT title, status FROM articles_info WHERE article_id=$id";
-  $res=mysql_query($query) or die (error_page($query));
-  $row=mysql_fetch_row($res);
+  $res=$db->query($query); if (DB::isError($res)) { die(error_page($res->getMessage())); }
+  $row=$res->fetchRow();
   $title=$row[0];
   $status=$row[1];
   ?>

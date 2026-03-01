@@ -336,10 +336,13 @@ function get_cat_names($category) {
 // GET_IMG() - retireve the image names
 /////////////////////////////////////////
 function get_img($id) {
-$query="SELECT image FROM articles_info WHERE article_id=$id";
-$res=mysql_query($query) or die (error_page($query));
-  if (mysql_num_rows($res)>0) {
-     $images=mysql_result($res,0,0);
+  global $db;
+  $query="SELECT image FROM articles_info WHERE article_id=$id";
+  $res=$db->query($query);
+  if (DB::isError($res)) { die(error_page($res->getMessage())); }
+  if ($res->numRows()>0) {
+     $row=$res->fetchRow();
+     $images=$row[0];
 
 //
 // show images if they exist
@@ -406,10 +409,13 @@ function get_username($user_id) {
 }
 
 function get_user_id($username) {
+  global $db;
   $query="SELECT user_id FROM user WHERE username='$username'";
-  $res=mysql_query($query);
-  if (mysql_num_rows($res)>0) {
-    $user_id=mysql_result($res,0,0);
+  $res=$db->query($query);
+  if (DB::isError($res)) { return 0; }
+  if ($res->numRows()>0) {
+    $row=$res->fetchRow();
+    $user_id=$row[0];
   } else {
     $user_id=0;
   }
@@ -468,6 +474,7 @@ function is_auth($thisurl) {
 ///////////////////////////
 
 function get_rollcall() {
+  global $db;
   $minus=time();
   $minus=$minus-7776000;
   $query = <<<EOT
@@ -486,10 +493,10 @@ EOT;
   }
   $query .= " GROUP BY username";
 
-  $res = mysql_query($query) or
-    die(error_page(mysql_error()));
+  $res = $db->query($query);
+  if (DB::isError($res)) { die(error_page($res->getMessage())); }
 
-  while ($row = mysql_fetch_row ($res)) {
+  while ($row = $res->fetchRow()) {
 
 ##########################################
 # this cannot be called $username
@@ -588,18 +595,19 @@ EOT;
 }
 
 function get_bozo_set() {
+  global $db;
   // Use the session superglobal directly
   if (isset($_SESSION['authenticated_user_id'])) {
       // Initialize $bozo_set to ensure it's available within this scope
       $bozo_set = null;
-      
-      // Use a prepared statement or at least properly escape your SQL to avoid SQL injection
-      $user_id = intval($_SESSION['authenticated_user_id']); // Make sure the user ID is safe to use directly
+
+      $user_id = intval($_SESSION['authenticated_user_id']);
       $query = "SELECT bozo_id FROM user_bozo WHERE user_id=$user_id";
-      $res = mysql_query($query) or die(mysql_error());
+      $res = $db->query($query);
+      if (DB::isError($res)) { die($res->getMessage()); }
 
       // Construct the bozo set string
-      while ($d = mysql_fetch_object($res)) {
+      while ($d = $res->fetchRow(DB_FETCHMODE_OBJECT)) {
           if (!$bozo_set) {
               $bozo_set = "($d->bozo_id";
           } else {

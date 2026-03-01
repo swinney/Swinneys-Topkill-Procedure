@@ -21,10 +21,10 @@ include_once("./nav.inc");
 if (!isset($show)) $show=1;
 
 $query="SELECT article_id,title,username,date FROM articles_info WHERE status=$show ORDER BY article_id DESC";
-$res=mysql_query($query) or die (error_page($query));
+$res=$db->query($query); if (DB::isError($res)) { die(error_page($res->getMessage())); }
 
-if (mysql_num_rows($res)>0) {
-  while ($d=mysql_fetch_object($res)) {
+if ($res->numRows()>0) {
+  while ($d=$res->fetchRow(DB_FETCHMODE_OBJECT)) {
     echo "<FONT SIZE='-1'>[$d->date]</FONT> <A HREF=\"article_info.php?id=$d->article_id\"><B>$d->title</B></A> by $d->username<BR>";
   }
 } else {

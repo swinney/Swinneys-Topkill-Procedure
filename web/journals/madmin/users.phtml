@@ -10,7 +10,7 @@ include_once("./nav.inc");
 
 <?
 if ($error_msg) {
-  session_unregister("error_msg");
+  unset($_SESSION['error_msg']);
   echo <<<EOT
 <p>
 <b><font color="red">$error_msg</font></b>
@@ -19,7 +19,7 @@ EOT;
 }
 
 if ($success_msg) {
-  session_unregister("success_msg");
+  unset($_SESSION['success_msg']);
   echo <<<EOT
 <p>
 <b><font color="green">$success_msg</font></b>
@@ -40,9 +40,9 @@ if ($search) {
 ORDER BY username
 EOT;
 
-  $res = mysql_query($query) or
-    die(error_page(mysql_error()));
-  $num_users = mysql_num_rows($res);
+  $res = $db->query($query);
+  if (DB::isError($res)) { die(error_page($res->getMessage())); }
+  $num_users = $res->numRows();
 
   if ($num_users > 1) {
     // present a drop down box so a user can be selected
@@ -54,7 +54,7 @@ EOT;
 
 EOT;
 
-    while ($u = mysql_fetch_object($res)) {
+    while ($u = $res->fetchRow(DB_FETCHMODE_OBJECT)) {
       echo <<<EOT
 <option> $u->username
 
@@ -78,7 +78,7 @@ EOT;
     // there was only one match, so drop right into the modification
     // form for that user
 
-    $u = mysql_fetch_object($res);
+    $u = $res->fetchRow(DB_FETCHMODE_OBJECT);
     $username = $u->username;
   } else {
     // no hits
@@ -104,10 +104,10 @@ SELECT *
  WHERE username='$username'
 EOT;
 
-  $res = mysql_query($query) or
-    die(error_page(mysql_error()));
+  $res = $db->query($query);
+  if (DB::isError($res)) { die(error_page($res->getMessage())); }
 
-  if ($u = mysql_fetch_object($res)) {
+  if ($u = $res->fetchRow(DB_FETCHMODE_OBJECT)) {
     if ($u->confidence==0) $lo="SELECTED ";
     if ($u->confidence==1) $hi="SELECTED ";
     echo <<<EOT

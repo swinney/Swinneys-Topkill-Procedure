@@ -38,8 +38,10 @@ shelved as:<br>
 <!-- WHAT IS GOING ON IN THE WORLD...  WHO?  -->
 <?
 $query="SELECT category FROM articles_info WHERE article_id=$article_id";
-$res=mysql_query($query) or die (error_page($query));
-$article_bin=mysql_result($res,0,0);
+$res=$db->query($query);
+if (DB::isError($res)) { die(error_page($res->getMessage())); }
+$row=$res->fetchRow();
+$article_bin=$row[0];
 $query=<<<EOT
 SELECT level1 as cat_bin,name,level1&$article_bin as sexy 
 FROM categories 
@@ -47,9 +49,9 @@ WHERE name<>''
 ORDER BY name ASC
 EOT;
 
-$res=mysql_query($query);
+$res=$db->query($query);
 $i=0;
-while ($d=mysql_fetch_object($res)) {
+while ($d=$res->fetchRow(DB_FETCHMODE_OBJECT)) {
     $cat_bin=$d->cat_bin;
     $name=$d->name;
     $sexy=$d->sexy;

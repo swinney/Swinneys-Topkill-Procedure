@@ -26,17 +26,17 @@ include(INCDIR ."/top.inc");
   ---------------------------------------------------------------------------*/
 
 
-$res = mysql_query("SELECT comment_id, article_id, username, comment, nature, timestamp,status FROM comments WHERE comment_id=$comment_id");
+$res = $db->query("SELECT comment_id, article_id, username, comment, nature, timestamp,status FROM comments WHERE comment_id=$comment_id");
 
+$row = $res->fetchRow();
 
-
-$comment_id = mysql_result($res,0,0);
-$article_id = mysql_result($res,0,1);
-$username   = mysql_result($res,0,2);
-$comment    = stripslashes(mysql_result($res,0,3));
-$nature     = mysql_result($res,0,4);
-$timestamp  = mysql_result($res,0,5);
-$status     = mysql_result($res,0,6);
+$comment_id = $row[0];
+$article_id = $row[1];
+$username   = $row[2];
+$comment    = stripslashes($row[3]);
+$nature     = $row[4];
+$timestamp  = $row[5];
+$status     = $row[6];
    echo "<CENTER>";
    echo <<<EOT
 <H1>NO COMMENTS SHOULD BE DELETED</H1>

@@ -3,18 +3,18 @@
 require_once("../global.php");
 
 if (isset($article_id)) {
-    $res = mysql_query("
+    $res = $db->query("
                 SELECT  username,
                         date,
-			keywords, 
-			title, 
-			blurb, 
-			status, 
-			image, 
-			web 
-		FROM articles_info 
+			keywords,
+			title,
+			blurb,
+			status,
+			image,
+			web
+		FROM articles_info
 		WHERE article_id='$article_id'");
-    $d=mysql_fetch_object($res);
+    $d=$res->fetchRow(DB_FETCHMODE_OBJECT);
     $username = $d->username;
     $date = $d->date;
     $keywords = $d->keywords;
@@ -119,9 +119,9 @@ EOT;
 
 // Look up the article
 
-$res = mysql_query("SELECT text FROM articles_text WHERE article_id='$article_id'");
+$res = $db->query("SELECT text FROM articles_text WHERE article_id='$article_id'");
 
-$row = mysql_fetch_row($res);
+$row = $res->fetchRow();
 $text = stripslashes($row[0]);
 
 if ( isset($article_id) ) {

@@ -24,11 +24,10 @@ UPDATE articles_info
  WHERE article_id='$id'
 EOT;
 
-  if (mysql_query($query)) {
-  // suppress success message.
-  } else {
+  $res = $db->query($query);
+  if (DB::isError($res)) {
   // XXX: partially committed transaction! how to handle?
-  $error_msg = "Error updating database: " . mysql_error();
+  $error_msg = "Error updating database: " . $res->getMessage();
   }
 } else {
   $error_msg = "Error saving image $userfile to ". DIRBASE . IMGBASE .".";

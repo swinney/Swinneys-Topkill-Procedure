@@ -9,8 +9,8 @@ include_once("./nav.inc");
 if (!$id) header("./articles.php");
 
 $query="SELECT articles_info.*,articles_text.text FROM articles_info,articles_text WHERE articles_info.article_id=$id AND articles_info.article_id=articles_text.article_id";
-$res=mysql_query($query) or die($query);
-$row=mysql_fetch_array($res);
+$res=$db->query($query); if (DB::isError($res)) { die(error_page($res->getMessage())); }
+$row=$res->fetchRow();
 
 echo <<<EOT
 <TABLE>

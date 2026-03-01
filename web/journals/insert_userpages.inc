@@ -2,7 +2,7 @@
 
 // insert_userpages.inc/phtml
 
-$res1 = mysql_query("SELECT * FROM articles_info WHERE user_id='".addslashes($user_id)."' AND status='2' ORDER BY time DESC" );
+$res1 = $db->query("SELECT * FROM articles_info WHERE user_id='".addslashes($user_id)."' AND status='2' ORDER BY time DESC" );
 
 
 
@@ -12,7 +12,7 @@ $url = "article.php?id=$d->article_id";
    echo "<P><a href='submit_article.php'>I want to contribute!</a></P>";
 
 // multiple rows 
-while ( $individual_row = mysql_fetch_object( $res1 ) ) {
+while ( $individual_row = $res1->fetchRow(DB_FETCHMODE_OBJECT) ) {
 
 // one row
 //$individual_row = mysql_fetch_object( $res1 ); 
@@ -23,9 +23,9 @@ while ( $individual_row = mysql_fetch_object( $res1 ) ) {
    echo "$individual_row->blurb</font><br>";
    echo "<font face=\"arial\" size='1'>$individual_row->date "; 
 
-$res2 = mysql_db_query("swinney", "SELECT * FROM comments WHERE article_id='$individual_row->article_id'");
+$res2 = $db->query("SELECT * FROM comments WHERE article_id='$individual_row->article_id'");
 
-$numrows =  mysql_num_rows($res2);
+$numrows =  $res2->numRows();
 
 echo " | $numrows comments";
 

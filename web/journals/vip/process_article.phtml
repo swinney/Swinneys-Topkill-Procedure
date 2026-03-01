@@ -69,11 +69,14 @@ if ($username) {
      article_id=$temp_aid
 EOT;
 
-  if (mysql_query($query) or die($query)) { 
+  $res = $db->query($query);
+  if (DB::isError($res)) {
+    $error_msg = "Problem saving the article info: " . $res->getMessage();
+  } else {
     //
     //  HERE WE GO WITH NEW STUFF
     //
-    // if we have a userfile for this form, 
+    // if we have a userfile for this form,
     // then let us process it.
     //
         if (isset($userfile) && $userfile!="none" && isset($temp_aid)) {
@@ -93,11 +96,11 @@ EOT;
       //
       // add slashes before putting into the database.
       // if you dont do this on these html file that
-      // contain every possible bonker, 
+      // contain every possible bonker,
       // the insert WILL bomb.
       $buffer=addslashes($buffer);
       $query=<<<EOT
-        UPDATE articles_text 
+        UPDATE articles_text
            SET text='$buffer'
          WHERE article_id=$temp_aid
 EOT;
@@ -109,13 +112,12 @@ EOT;
          WHERE article_id=$temp_aid
 EOT;
     }
-    if (mysql_query($query) or die ($query)) {
-      $success_msg = "Article saved.";
+    $res2 = $db->query($query);
+    if (DB::isError($res2)) {
+      $error_msg = "Problem saving the article text: " . $res2->getMessage();
     } else {
-      $error_msg = "Problem saving the article text: " . mysql_error();
+      $success_msg = "Article saved.";
     }
-  } else {
-    $error_msg = "Problem saving the article info: " . mysql_error();
   }
 } else {
   $error_msg = "You must specify a username.";

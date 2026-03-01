@@ -15,14 +15,14 @@ $query = <<<EOT
 SELECT user.user_id,user.username,count(articles_info.user_id) as count FROM user,articles_info WHERE user.user_id=articles_info.user_id AND articles_info.status IN (2) GROUP BY user.user_id ORDER BY username
 EOT;
 
-$res = mysql_query ($query);
+$res = $db->query($query);
 
   $html .= "<TABLE ALIGN=CENTER><TR>";
 
   // initialize index at zero for modulo
   $index = 0;
 
-while ($d = mysql_fetch_object ($res)) {
+while ($d = $res->fetchRow(DB_FETCHMODE_OBJECT)) {
   // increment the index for modulo
   $index++;
   $remainder = $index % 3;

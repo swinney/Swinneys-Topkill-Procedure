@@ -26,8 +26,8 @@ if (isset($id)) {
 
 
 
-    $res=mysql_query($query) or die (error_page($query));
-    while ($d=mysql_fetch_object($res)) {
+    $res=$db->query($query); if (DB::isError($res)) { die(error_page($res->getMessage())); }
+    while ($d=$res->fetchRow(DB_FETCHMODE_OBJECT)) {
         $title=stripslashes($d->title);
         $blurb=stripslashes($d->blurb);
         $text=stripslashes($d->text);

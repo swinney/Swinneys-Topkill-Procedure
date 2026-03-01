@@ -13,14 +13,16 @@ require_once("../global.php");
 if ($status==2 && $front=="yes") {
 
 	$query = "UPDATE articles_user SET most_recent=$article_id, total_submitted=total_submitted+1 WHERE username='$username'";
-	$res = mysql_query($query) or die("\n<P>update failed</P>");
-#	echo (mysql_affected_rows()?"success":"failure"); 
-	$affected=mysql_affected_rows(); 
+	$res = $db->query($query);
+	if (DB::isError($res)) { die("\n<P>update failed</P>"); }
+#	echo ($db->affectedRows()?"success":"failure");
+	$affected=$db->affectedRows(); 
 } 
 
 if ($affected=="0"||$affected=="-1") { # UPDATE was invalid, do INSERT
 	$query = "INSERT INTO articles_user (user_id,username,most_recent,total_submitted) VALUES ('','$username',$article_id,1)";
-	$front_res = mysql_query($query) or die ("\n<P>insert failed</P>");
+	$front_res = $db->query($query);
+	if (DB::isError($front_res)) { die("\n<P>insert failed</P>"); }
 }
 
 
@@ -28,7 +30,7 @@ if ($affected=="0"||$affected=="-1") { # UPDATE was invalid, do INSERT
 
   if ( $type == "resubmit" ) {
 
-    $res = mysql_query ("UPDATE articles_text SET text='$update' WHERE article_id=$article_id");
+    $res = $db->query("UPDATE articles_text SET text='$update' WHERE article_id=$article_id");
 
 
 
@@ -50,7 +52,7 @@ if ($affected=="0"||$affected=="-1") { # UPDATE was invalid, do INSERT
 	$cat_str="(". $query . $end .")";
       }
 
-$res = mysql_query("UPDATE articles_info SET web='$web', status='$status', title='$article_title', blurb='$blurb', category=$cat_str WHERE article_id='$article_id'");
+$res = $db->query("UPDATE articles_info SET web='$web', status='$status', title='$article_title', blurb='$blurb', category=$cat_str WHERE article_id='$article_id'");
 
     }
 
@@ -91,17 +93,17 @@ $res = mysql_query("UPDATE articles_info SET web='$web', status='$status', title
 
 if ( isset($article_id) ) {
 
-	$res = mysql_query("
+	$res = $db->query("
 		SELECT  username,
-			keywords, 
-			title, 
-			blurb, 
-			status, 
-			image, 
-			web 
-		FROM articles_info 
+			keywords,
+			title,
+			blurb,
+			status,
+			image,
+			web
+		FROM articles_info
 		WHERE article_id='$article_id'");
-	$d=mysql_fetch_object($res);
+	$d=$res->fetchRow(DB_FETCHMODE_OBJECT);
     $username = $d->username;
     $keywords = $d->keywords;
     $article_title = $d->title;
@@ -201,9 +203,9 @@ if ($web != "") {
 
 // Look up the article
 
-$res = mysql_query("SELECT text FROM articles_text WHERE article_id='$article_id'");
+$res = $db->query("SELECT text FROM articles_text WHERE article_id='$article_id'");
 
-$row = mysql_fetch_row($res);
+$row = $res->fetchRow();
 $text = stripslashes($row[0]);
 
 if ( isset($article_id) ) {
@@ -265,7 +267,7 @@ echo <<<EOT
 EOT;
 
   echo "<p>";
-  $res = mysql_query("SELECT * FROM articles_info WHERE status<>4 ORDER BY article_id DESC LIMIT 20");
+  $res = $db->query("SELECT * FROM articles_info WHERE status<>4 ORDER BY article_id DESC LIMIT 20");
   
   echo "<table cellpadding=4 cellspacing=0 border=1 align=center width=\"98%\">";
   echo "<tr>";
@@ -278,7 +280,7 @@ EOT;
   echo "<td align=center><b>Comments</b></td>\n";
 
   echo "</tr>";
-  while ( $d = mysql_fetch_object($res) ) {
+  while ( $d = $res->fetchRow(DB_FETCHMODE_OBJECT) ) {
     echo "<tr>";
     echo "<td align=center><b><a href='../article.php?id=$d->article_id.txt'>$d->article_id</a></b></td>\n";
     echo "<td align=center><b>$d->username</b></td>\n";
@@ -304,10 +306,10 @@ EOT;
 //  so i changed to mysql_num_rows() on the results from selecting all the comment_id's associated
 //  with the article_id's.  :)    
 
-    $comments = mysql_query("SELECT comment_id 
-		FROM comments 
+    $comments = $db->query("SELECT comment_id
+		FROM comments
 		WHERE article_id=$d->article_id");
-    $num_comments=mysql_num_rows($comments);
+    $num_comments=$comments->numRows();
     echo "<td align=center><a href='admin_comments_article.php?article_id=$d->article_id'>$num_comments</a></td>\n";
     echo "</tr>\n";
 

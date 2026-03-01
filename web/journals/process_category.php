@@ -18,7 +18,8 @@ if ($ckcat>0) {
 */
 if (!isset($cat)) {
   $query="UPDATE articles_info SET category=0 WHERE article_id=$id";
-  $res=mysql_query($query) or die (error_page("meh: $query"));
+  $res=$db->query($query);
+  if (DB::isError($res)) { die(error_page("meh: " . $res->getMessage())); }
   header("Location: $HTTP_REFERER");
 }
 if (isset($cat)) {
@@ -27,7 +28,8 @@ if (isset($cat)) {
       $query=$query . $value . " | ";
     }
     $query="UPDATE articles_info SET category=(". $query . $end .") WHERE article_id=$id";
-    $res=mysql_query($query) or die (error_page("buh: $query"));
+    $res=$db->query($query);
+    if (DB::isError($res)) { die(error_page("buh: " . $res->getMessage())); }
 }
 header("Location: $HTTP_REFERER");
 unset($cat);

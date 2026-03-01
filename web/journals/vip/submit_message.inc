@@ -13,8 +13,8 @@
 <option value="">*userlist*
 <?
 $query="SELECT user_id,username FROM user ORDER BY username";
-$res=mysql_query($query);
-while ($d=mysql_fetch_object($res)) {
+$res=$db->query($query);
+while ($d=$res->fetchRow(DB_FETCHMODE_OBJECT)) {
   echo "<option value='$d->user_id'>$d->username\n";
 }
 ?>

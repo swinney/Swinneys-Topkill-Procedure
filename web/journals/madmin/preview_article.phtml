@@ -14,9 +14,9 @@ $query="SELECT articles_info.username,
          WHERE articles_info.article_id=$id 
            AND articles_info.article_id=articles_text.article_id";
 
-$res=mysql_query($query) or die (error_page($query));
+$res=$db->query($query); if (DB::isError($res)) { die(error_page($res->getMessage())); }
 
-$row=mysql_fetch_array($res);
+$row=$res->fetchRow();
 $username=stripslashes($row[username]);
 $title=stripslashes($row[title]);
 $blurb=stripslashes($row[blurb]);

@@ -30,9 +30,9 @@ include_once(INCDIR ."/swinney.req");
 $previous=0;
 echo "<!-- previous: $previous -->\n";
 
-$res = mysql_query("select comment_id,username,comment,article_id from comments where status=0 order by comment_id DESC limit 20");
+$res = $db->query("select comment_id,username,comment,article_id from comments where status=0 order by comment_id DESC limit 20");
 
-while ( $d = mysql_fetch_object ($res) ) {
+while ( $d = $res->fetchRow(DB_FETCHMODE_OBJECT) ) {
 
 $comment_id = $d->comment_id;
 $username = $d->username;

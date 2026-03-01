@@ -37,10 +37,11 @@ ORDER BY articles_text.article_id
 DESC LIMIT 300
 EOT;
 
-$articleres = mysql_query($query);
+$articleres = $db->query($query);
+if (DB::isError($articleres)) { die(error_page($articleres->getMessage())); }
 
 # get the number of returned rows for shits and giggles.
-$articlenum = mysql_num_rows($articleres);
+$articlenum = $articleres->numRows();
 
 # query comments.comment for $find and 
 # get articles_info.title based on comments.article_id 
@@ -56,10 +57,11 @@ $query2 = <<<EOT
   ORDER BY article_id DESC
 EOT;
 
-$commentres = mysql_query($query2);
+$commentres = $db->query($query2);
+if (DB::isError($commentres)) { die(error_page($commentres->getMessage())); }
 
 # number of rows returned just for displays sake
-$commentnum = mysql_num_rows($commentres);
+$commentnum = $commentres->numRows();
 
 if ($articlenum == "0" and $commentnum == "0")
 {
@@ -177,7 +179,7 @@ echo <<<EOT
 EOT;
 
 # start the return loop on $res
-while ($d=mysql_fetch_object($articleres)) {
+while ($d=$articleres->fetchRow(DB_FETCHMODE_OBJECT)) {
    # assign values
    $date=$d->date;
    $article_id=$d->article_id;
@@ -220,16 +222,17 @@ echo <<<EOT
 EOT;
 
 #loop through the records from $res
-while ($d=mysql_fetch_object($commentres)) {
+while ($d=$commentres->fetchRow(DB_FETCHMODE_OBJECT)) {
   $article_id=$d->article_id;
   $comment_id=$d->comment_id;
   $title=$d->title;
   $date=$d->date;
   $username=$d->username;
   
-$commentres2 = mysql_query ("SELECT username,title FROM articles_info WHERE article_id=$article_id");
+$commentres2 = $db->query("SELECT username,title FROM articles_info WHERE article_id=$article_id");
+if (DB::isError($commentres2)) { die(error_page($commentres2->getMessage())); }
 
-$row = mysql_fetch_row($commentres2);
+$row = $commentres2->fetchRow();
 
 $writer = $row[0];
 
@@ -275,12 +278,13 @@ EOT;
 
 $query = "UPDATE search_words SET num_rows=$num, num_times=num_times+1, ip_addr='$ip_addr' WHERE word='$find'";
 # update the search terms number of rows and number of times searched
-$res = mysql_query($query);
+$res = $db->query($query);
+if (DB::isError($res)) { die(error_page($res->getMessage())); }
 
 # get affected rows in case none were affected, in which case we need
 # to do an insert because there is a first time for everything.
 
-$affected = mysql_affected_rows();
+$affected = $db->affectedRows();
 
 if ($affected==0) { # UPDATE was invalid, do INSERT
 	
@@ -289,10 +293,10 @@ if ($affected==0) { # UPDATE was invalid, do INSERT
 	# insert new search_words into table allong with the number of returns
 	# and the searcher's ip addr in case they try some sort of funny 
 	# business we can send qq and yeti to destroy them.
-	$res = mysql_query($query) 
-		# if this thing doesnt work at all, then die. 
-		# but we tested it.
-		or die ("<P>invalid query</P>");
+	# if this thing doesnt work at all, then die.
+	# but we tested it.
+	$res = $db->query($query);
+	if (DB::isError($res)) { die("<P>invalid query</P>"); }
 
 }
 

@@ -7,11 +7,13 @@ include_once("./top.inc");
 
 $query="SELECT * FROM shorts ORDER BY article_id DESC LIMIT 1";
 
-$res=mysql_query($query) or die (error_page($query));
+$res=$db->query($query);
+if (DB::isError($res)) { die(error_page($res->getMessage())); }
 
-$article_id=mysql_result($res,0,0);
-$username=stripslashes(mysql_result($res,0,1));
-$text=stripslashes(mysql_result($res,0,2));
+$row=$res->fetchRow();
+$article_id=$row[0];
+$username=stripslashes($row[1]);
+$text=stripslashes($row[2]);
 
 echo <<<EOT
 <TABLE BORDER=0 width=400 align=center>

@@ -24,7 +24,7 @@ $query2="SELECT username,comment_id,comment,article_id FROM comments WHERE statu
 
 $query = "select comments.comment_id,comments.comment,comments.article_id,comments.username,articles_info.title,articles_info.username,comments.user_id from comments, articles_info where comments.article_id=articles_info.article_id AND comments.user_id = $uid order by comment_id DESC limit $page_start,$per_page";
 
-$res2 = mysql_query ($query);
+$res2 = $db->query($query);
 
 // Find out how many pages there are going to be
 // number of results returned divided by the number per page displayed
@@ -124,10 +124,10 @@ echo <<<EOT
 EOT;
 
 
-$res = mysql_query($query);
-$num = mysql_num_rows($res);
+$res = $db->query($query);
+$num = $res->numRows();
 
-while ($d=mysql_fetch_object($res2)) {
+while ($d=$res2->fetchRow(DB_FETCHMODE_OBJECT)) {
     $article_id=$d->article_id;
 	$comment_id=$d->comment_id;
 	$comment  = stripslashes($d->comment);

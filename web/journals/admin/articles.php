@@ -27,8 +27,8 @@ echo <<<EOT
 </TR>
 EOT;
 $query="SELECT article_id, username, status, title, blurb FROM articles_info ORDER BY article_id DESC LIMIT 10";  
-$res = mysql_query($query);
-  while ( $d = mysql_fetch_object($res) ) {
+$res = $db->query($query);
+  while ( $d = $res->fetchRow(DB_FETCHMODE_OBJECT) ) {
 
     switch ( $d->status ) {
       case 0 : $str = "";  break;

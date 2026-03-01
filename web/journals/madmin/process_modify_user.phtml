@@ -59,8 +59,8 @@ if ($mods && !$error_msg) {
   // input errors, so perform the update
   $query = "UPDATE user SET $mods WHERE username='$username'";
 
-  mysql_query($query) or
-    die(error_page(mysql_error()));
+  $res = $db->query($query);
+  if (DB::isError($res)) { die(error_page($res->getMessage())); }
 
   $success_msg = "The user has been updated.";
   $_SESSION['success_msg'] = $success_msg;

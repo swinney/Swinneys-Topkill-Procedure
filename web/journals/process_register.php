@@ -51,9 +51,11 @@ if ($username) {
   }
   // check to see if the username is taken
   $query = "SELECT username FROM user WHERE username='$username'";
-  $res = mysql_query($query) or
-    die(error_page("database error for query $query: " . mysql_error()));
-  $matches = mysql_num_rows($res);
+  $res = $db->query($query);
+  if (DB::isError($res)) {
+    die(error_page("database error for query $query: " . $res->getMessage()));
+  }
+  $matches = $res->numRows();
 
   if (! $matches) {
     // make sure the password and a confirmation were submitted
@@ -67,12 +69,14 @@ if ($username) {
           "INSERT INTO user (username,password,email,ip_addr) 
            VALUES ('$username','$encrypted_password','$email','$ip_addr')";
 
-        $res = mysql_query($query) or
-          die(error_page("database error for query $query: " . mysql_error()));
+        $res = $db->query($query);
+        if (DB::isError($res)) {
+          die(error_page("database error for query $query: " . $res->getMessage()));
+        }
         // log the user in and store some info in the session
-        $user_id = mysql_insert_id();
+        $user_id = $db->getOne("SELECT LAST_INSERT_ID()");
 
-        $res_ins_setting = mysql_query("INSERT INTO user_settings SET user_id=$user_id");
+        $res_ins_setting = $db->query("INSERT INTO user_settings SET user_id=$user_id");
 
 
 
