@@ -44,7 +44,7 @@ if ($remove) {
         array_push($cur_bozos, $bozo->id());
     }
     $bozo_set = "(" . implode(",", $cur_bozos) . ")";
-    session_register("bozo_set");
+    $_SESSION['bozo_set'] = $bozo_set;
 
     $success_msg = "Removed " . (implode(", ", $removed)) . ".";
 }
@@ -84,7 +84,7 @@ else {
                     array_push($cur_bozos, $bozo->id());
                 }
                 $bozo_set = "(" . implode(",", $cur_bozos) . ")";
-                session_register("bozo_set");
+                $_SESSION['bozo_set'] = $bozo_set;
 
                 $success_msg = "Added $bozo_username.";
             }
@@ -102,11 +102,11 @@ else {
 }
 
 if ($error_msg) {
-    session_register("error_msg");
+    $_SESSION['error_msg'] = $error_msg;
 }
 
 if ($success_msg) {
-    session_register("success_msg");
+    $_SESSION['success_msg'] = $success_msg;
 }
 
 header("Location: $HTTP_REFERER");

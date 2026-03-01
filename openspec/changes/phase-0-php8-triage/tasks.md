@@ -12,23 +12,23 @@
 
 ## 3. Replace session_register() with $_SESSION
 
-- [ ] 3.1 Replace `session_register("sess_lang")` → `$_SESSION['sess_lang'] = $lang_cond` in `web/journals/global.php:177`
-- [ ] 3.2 Replace all `session_register()` calls in `web/journals/process_comment.php` (lines 19, 25, 31, 37, 114) — 4 error_msg + 1 last_lang
-- [ ] 3.3 Replace all `session_register()` calls in `web/journals/process_login.php` (lines 35, 79) — error_msg
-- [ ] 3.4 Replace all `session_register()` calls in `web/journals/process_register.php` (lines 42, 82, 85) — error_msg, user_id, authenticated_username
-- [ ] 3.5 Replace all `session_register()` calls in `web/journals/process_bozo_id.php` (lines 8, 17, 20, 27, 34, 49) — error_msg, authenticated_user_id, success_msg
-- [ ] 3.6 Replace all `session_register()` calls in `web/journals/process_article.php` (lines 7, 15, 34, 209, 212) — error_msg, last_lang, bin, success_msg
-- [ ] 3.7 Replace `session_register("last_lang")` in `web/journals/process_thought.php:46` and `web/chat/process_thought.phtml:30`
-- [ ] 3.8 Replace `session_register("refreshrate")` in `web/chat/index.phtml:7`
-- [ ] 3.9 Replace `session_register("back_to")` in `web/journals/login.inc:9`
-- [ ] 3.10 Replace all `session_register()` calls in `web/journals/vip/process_article.phtml` (lines 20, 125, 128) — bin, error_msg, success_msg
-- [ ] 3.11 Replace `session_register("temp_aid")` in `web/journals/vip/edit_article.phtml:31`
-- [ ] 3.12 Replace `session_register()` calls in `web/journals/vip/process_bozo.phtml` (lines 47, 87, 105, 109) — bozo_set, error_msg, success_msg
-- [ ] 3.13 Replace `session_register()` calls in `web/journals/madmin/process_modify_user.phtml` (lines 66, 76) — success_msg, error_msg
-- [ ] 3.14 Replace `session_register("aindex")` in `web/journals/madmin/submit_image.phtml:8`
-- [ ] 3.15 Replace `session_register("limit_chars")` in `web/journals/vip/submit_noise.inc:59`
-- [ ] 3.16 Replace `session_register("error_msg")` in `web/journals/process_category.php:12`
-- [ ] 3.17 Replace `session_register("bin")` in `web/journals/process_article.php:34` (if not already covered by 3.6)
+- [x] 3.1 Replace `session_register("sess_lang")` → `$_SESSION['sess_lang'] = $lang_cond` in `web/journals/global.php:177`
+- [x] 3.2 Replace all `session_register()` calls in `web/journals/process_comment.php` (lines 19, 25, 31, 37, 114) — 4 error_msg + 1 last_lang
+- [x] 3.3 Replace all `session_register()` calls in `web/journals/process_login.php` (lines 35, 79) — error_msg
+- [x] 3.4 Replace all `session_register()` calls in `web/journals/process_register.php` (lines 42, 82, 85) — error_msg, user_id, authenticated_username
+- [x] 3.5 Replace all `session_register()` calls in `web/journals/process_bozo_id.php` (lines 8, 17, 20, 27, 34, 49) — error_msg, authenticated_user_id, success_msg
+- [x] 3.6 Replace all `session_register()` calls in `web/journals/process_article.php` (lines 7, 15, 34, 209, 212) — error_msg, last_lang, bin, success_msg
+- [x] 3.7 Replace `session_register("last_lang")` in `web/journals/process_thought.php:46` and `web/chat/process_thought.phtml:30`
+- [x] 3.8 Replace `session_register("refreshrate")` in `web/chat/index.phtml:7`
+- [x] 3.9 Replace `session_register("back_to")` in `web/journals/login.inc:9`
+- [x] 3.10 Replace all `session_register()` calls in `web/journals/vip/process_article.phtml` (lines 20, 125, 128) — bin, error_msg, success_msg
+- [x] 3.11 Replace `session_register("temp_aid")` in `web/journals/vip/edit_article.phtml:31`
+- [x] 3.12 Replace `session_register()` calls in `web/journals/vip/process_bozo.phtml` (lines 47, 87, 105, 109) — bozo_set, error_msg, success_msg
+- [x] 3.13 Replace `session_register()` calls in `web/journals/madmin/process_modify_user.phtml` (lines 66, 76) — success_msg, error_msg
+- [x] 3.14 Replace `session_register("aindex")` in `web/journals/madmin/submit_image.phtml:8`
+- [x] 3.15 Replace `session_register("limit_chars")` in `web/journals/vip/submit_noise.inc:59`
+- [x] 3.16 Replace `session_register("error_msg")` in `web/journals/process_category.php:12` — inside comment block, no active call
+- [x] 3.17 Replace `session_register("bin")` in `web/journals/process_article.php:34` (covered by 3.6)
 
 ## 4. Replace mysql_* in global.php
 

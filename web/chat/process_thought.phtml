@@ -27,7 +27,7 @@ if (!$_SESSION['authenticated_user_id']) {
 }
 if ($last_lang!=$language) {
     if (!$last_lang) {
-      session_register("last_lang",$language);
+      $_SESSION['last_lang'] = $language;
     }
   $last_lang=$language;
 }

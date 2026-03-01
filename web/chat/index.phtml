@@ -4,7 +4,7 @@
 require_once("../journals/global.php");
 $urlbase = URLBASE;
 include("../journals/insert_stats.inc");
-session_register("refreshrate");
+$_SESSION['refreshrate'] = isset($refreshrate) ? $refreshrate : null;
 ?>
 
 <html>

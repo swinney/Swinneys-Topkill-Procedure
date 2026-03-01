@@ -32,7 +32,7 @@ if ($_POST["recaptcha_response_field"]) {
 }
 
 if ($error_msg) {
-  session_register("error_msg");
+  $_SESSION['error_msg'] = $error_msg;
   header("Location: $error_redirect");
   exit;
 }
@@ -76,7 +76,7 @@ EOT;
 }
 
 if ($error_msg) {
-  session_register("error_msg");
+  $_SESSION['error_msg'] = $error_msg;
   header("Location: $error_redirect");
   exit;
 }

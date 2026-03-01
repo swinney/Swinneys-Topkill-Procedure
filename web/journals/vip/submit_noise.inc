@@ -53,11 +53,11 @@ You <B>do not</B> want to see posts with <B>less characters than</B>:
 </P>
 EOT;
 
-if (session_is_registered("limit_chars") && $limit_chars!=0) {
+if (isset($_SESSION['limit_chars']) && $limit_chars!=0) {
   // debug
 } else {
-  session_register("limit_chars");
   $limit_chars=get_limit_chars();
+  $_SESSION['limit_chars'] = $limit_chars;
 }
 
 

@@ -16,25 +16,25 @@ $article_id = $article_id[0];
 
   if ( $username == "" ) {
       $error_msg = "No one's a nobody on Swinney.org.  Enter your name.";
-      session_register("error_msg");
+      $_SESSION['error_msg'] = $error_msg;
       include("./submit_comment.php");
   }
 
   if ( $username == "name" ) {
       $error_msg = "Names are nice, but you should get your own.";
-      session_register("error_msg");
+      $_SESSION['error_msg'] = $error_msg;
       include("./submit_comment.php");
   }
 
   if ( $comment == "" ) {
       $error_msg = "Please speak louder, I can't hear you.";
-      session_register("error_msg");
+      $_SESSION['error_msg'] = $error_msg;
       include("./submit_comment.php");
   }
 
   if ( $comment == "comment" ) {
       $error_msg = "Commenting on this site is not like some other cultures.  Less is not more.";
-      session_register("error_msg");
+      $_SESSION['error_msg'] = $error_msg;
       include("./submit_comment.php");
   }
 
@@ -111,7 +111,7 @@ EOT;
 $res = mysql_query($query) or die("error inserting comment: $query"); 
 if ($last_lang!=$language) {
     if (!$last_lang) {
-      session_register("last_lang",$language);
+      $_SESSION['last_lang'] = $language;
     }
   $last_lang=$language;
 }

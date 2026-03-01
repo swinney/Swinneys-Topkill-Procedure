@@ -4,7 +4,7 @@
 # process them articles
 #
 require_once("global.php");
-session_register("error_msg");
+$_SESSION['error_msg'] = isset($error_msg) ? $error_msg : '';
 
 if (!$language) {
   $language='en';
@@ -12,7 +12,7 @@ if (!$language) {
 
 if ($last_lang!=$language) {
     if (!$last_lang) {
-      session_register("last_lang",$language);
+      $_SESSION['last_lang'] = $language;
     }
   $last_lang=$language;
 }
@@ -31,7 +31,7 @@ if (!$username) {
  * combination.
  */
 
-session_register("bin");
+$_SESSION['bin'] = 0;
 $bin=0;
 
 /*
@@ -206,10 +206,10 @@ EOT;
 }
 
 if ($error_msg) {
-  session_register("error_msg");
+  $_SESSION['error_msg'] = $error_msg;
   include("./submit_article.php");
 } else {
-  session_register("success_msg");
+  $_SESSION['success_msg'] = $success_msg;
   if ($images_too=="no") {
     $loc = URLBASE;
   } else {

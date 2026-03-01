@@ -28,7 +28,7 @@ if (isset($_SESSION['authenticated_username'])) {
     $status       =             pretty_status(mysql_result($res,0,7));
     // register this temp_aid to keep it from messing up the usual
     // var article_id.
-    session_register("temp_aid");
+    $_SESSION['temp_aid'] = $temp_aid;
   }   
 } else {
   error_page("username unset");

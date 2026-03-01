@@ -178,7 +178,7 @@ if (!$sess_lang) {
   } else {
     $lang_cond[0]='en';
   }
-  session_register("sess_lang");
+  $_SESSION['sess_lang'] = $lang_cond;
   $sess_lang = $lang_cond;
   unset($langz);
   unset($lang);

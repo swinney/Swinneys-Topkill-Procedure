@@ -63,7 +63,7 @@ if ($mods && !$error_msg) {
     die(error_page(mysql_error()));
 
   $success_msg = "The user has been updated.";
-  session_register("success_msg");
+  $_SESSION['success_msg'] = $success_msg;
 
   // change to the new username so the included page can render itself
   // appropriately
@@ -73,7 +73,7 @@ if ($mods && !$error_msg) {
 }
 
 if ($error_msg) {
-  session_register("error_msg");
+  $_SESSION['error_msg'] = $error_msg;
 }
 
 header("Location: ./users.php?username=$username");

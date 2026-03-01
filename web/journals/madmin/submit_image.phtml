@@ -5,7 +5,7 @@
 require_once("../global.php");
 #
 # set aindex
-session_register("aindex");
+$_SESSION['aindex'] = isset($aindex) ? $aindex : null;
 
 include("./top.inc");
 include("./nav.inc");

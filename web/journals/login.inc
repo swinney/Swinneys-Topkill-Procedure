@@ -6,7 +6,7 @@ $error_msg.=<<<EOT
 <P><B>Please log in first:</B></P>
 EOT;
 if (!$back_to) {
-  session_register("back_to");
+  $_SESSION['back_to'] = $HTTP_REFERER;
   $back_to="$HTTP_REFERER";
 }
 ?>

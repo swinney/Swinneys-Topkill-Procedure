@@ -17,7 +17,7 @@ $userfile= $_POST['userfile'];
 # register session var for $bin used in category 
 # combination.
 #
-session_register("bin");
+$_SESSION['bin'] = 0;
 $bin=0;
 
 #
@@ -122,10 +122,10 @@ EOT;
 }
 
 if ($error_msg) {
-  session_register("error_msg");
+  $_SESSION['error_msg'] = $error_msg;
   include("../submit_article.inc");
 } else {
-  session_register("success_msg");
+  $_SESSION['success_msg'] = $success_msg;
 
   if ($images_too=="no") {
     $loc = $HTTP_REFERER;

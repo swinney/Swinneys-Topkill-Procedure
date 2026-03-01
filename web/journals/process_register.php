@@ -39,7 +39,7 @@ if ($_POST["recaptcha_response_field"]) {
 }
 
 if ($error_msg) {
-  session_register("error_msg");
+  $_SESSION['error_msg'] = $error_msg;
   header("Location: $error_redirect");
   exit;
 }
@@ -79,10 +79,9 @@ if ($username) {
         include_once("Madmin/User.php");
 	$u = new User();
 	$u->startPriv($user_id);
-        session_register("user_id");
+        $_SESSION['user_id'] = $user_id;
 
         $_SESSION['authenticated_username'] = $username;
-        session_register("authenticated_username");
       } else {
         $error_msg = "Those passwords don't match.  Try again:";
       }
