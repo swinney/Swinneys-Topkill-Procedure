@@ -1,0 +1,20 @@
+schema: spec-driven
+
+context: |
+  Tech stack: PHP 8.2, MySQL, Nginx, Docker Compose
+  Legacy app: Early 2000s article/comment publishing platform
+  ORM: Hand-rolled Swinsite\Persistent framework (PEAR naming)
+  DB access: Mix of PEAR DB and raw mysql_* (removed in PHP 7)
+  Templates: Include-based .inc files with global variable contracts
+  Auth: crypt() passwords, session_register() (removed in PHP 5.4)
+  Modernization plan: swindoc/docs/MODERNIZATION.md
+
+rules:
+  proposal:
+    - Reference the relevant Phase from MODERNIZATION.md
+    - Ensure the site remains functional after every change
+    - Prefer mechanical replacements over rewrites
+  tasks:
+    - Each task must be independently deployable
+    - Include the specific files and line numbers affected
+    - Mark security-critical tasks clearly
