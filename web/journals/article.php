@@ -56,8 +56,6 @@ if ($a_image > 0) {
     }  
     include_once("File.php");
     $f = new File();
-    var_dump($img_names);
-    
     $a_text = $f->regexNames($img_names,$a_text);
 }
 

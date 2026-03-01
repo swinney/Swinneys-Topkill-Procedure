@@ -106,6 +106,10 @@ if (!defined("DB_NAME")) {
     define("DB_NAME", "swinney");
 }
 
+if (!defined("OK")) {
+    define("OK", true);
+}
+
 /*
  * put all include files other than global.php in this library
  * directory, which should be located outside the site's document
