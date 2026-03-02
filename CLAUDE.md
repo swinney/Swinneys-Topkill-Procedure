@@ -56,3 +56,15 @@ Nginx (port 80) → FastCGI to PHP-FPM (port 9000) → PHP scripts include `glob
 
 ### Database Schema (MySQL, database: `swinney`)
 Core tables: `articles_info` (metadata + PK `article_id`), `articles_text` (content body), `comments` (per-article), `user` (auth + profile), `categories`, `articles_user` (user stats), `articles_front` (featured). Supporting: `multi_info`/`multi_articles` (article series), `user_bozo` (ignore lists), `user_perm`/`perm_set` (permissions), `thoughts` (chat), `search_words`.
+
+## Verification Standard
+
+All code verification MUST use Intelephense LSP diagnostics, not grep/rg. This applies to OpenSpec specs, tasks, and all post-implementation checks.
+
+- **P1010** — undefined function (e.g., removed `mysql_*`, `session_register`, `ereg_replace`)
+- **P1008** — undefined variable (e.g., missing `global $db`)
+- **P1011** — undefined constant (e.g., missing `define('OK', true)`)
+- **P1006** — type mismatch
+- **P1014** — undefined property
+
+Use grep/rg only for text/pattern searches (comments, strings, config values) where LSP has no coverage.

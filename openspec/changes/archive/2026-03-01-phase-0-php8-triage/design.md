@@ -66,5 +66,5 @@ The legacy Swinney.org codebase (~148 PHP files) uses three categories of functi
 - **PEAR DB fetch mode differences** → Some `mysql_fetch_object` returns are accessed with `$d->column`. PEAR's `fetchRow(DB_FETCHMODE_OBJECT)` returns the same structure, so this should be transparent.
 - **mysql_result() column index** → `mysql_result($res, 0, N)` picks a specific column by index. PEAR has no direct equivalent — must fetch the full row and index into it. Risk: column order must match.
 - **mysql_affected_rows() is global** → `mysql_affected_rows()` reads from the last query on the default connection. PEAR's `$db->affectedRows()` does the same but explicitly references the connection object.
-- **Missed call sites** → If any `mysql_*` call is missed, the page will fatal. Mitigation: grep sweep after all changes, plus smoke test of every major page.
+- **Missed call sites** → If any `mysql_*` call is missed, the page will fatal. Mitigation: LSP diagnostics (P1010 undefined function errors) after all changes, plus smoke test of every major page.
 - **PEAR DB quirks** → PEAR `$db->query()` returns a `DB_result` object on SELECT and `DB_OK` on non-SELECT. Code that checks the return value of INSERT/UPDATE/DELETE queries needs to handle this.
